@@ -13,7 +13,7 @@ Add your own name (do not add the names for others!) to the section below.
 | ![](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/6074/avatar.png?width=400) | Aykut Emre Celen | a.e.celen@student.tudelft.nl |
 | ![](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/5913/avatar.png?width=400)               | Thijs van der Valk | T.C.J.vanderValk@student.tudelft.nl |
 | ![](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/6133/avatar.png?width=400) | Stefan Bud | bud@student.tudelft.nl |
-|  | Benjamin Sherlock | B.A.sherlock@student.tudelft.nl |
+| ![](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/5839/avatar.png?width=400) | Benjamin Sherlock | B.A.sherlock@student.tudelft.nl |
 
 <!-- Instructions (remove once assignment has been completed -->
 <!-- - Add (only!) your own name to the table above (use Markdown formatting) -->
