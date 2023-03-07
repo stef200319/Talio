@@ -18,7 +18,6 @@ package server.api;
 import java.util.List;
 import java.util.Random;
 
-import commons.Card;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +35,6 @@ public class QuoteController {
 
     private final Random random;
     private final QuoteRepository repo;
-
 
     public QuoteController(Random random, QuoteRepository repo) {
         this.random = random;
@@ -67,7 +65,6 @@ public class QuoteController {
         Quote saved = repo.save(quote);
         return ResponseEntity.ok(saved);
     }
-
 
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
