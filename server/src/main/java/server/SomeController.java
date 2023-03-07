@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/")
 public class SomeController {
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @GetMapping("/")
     @ResponseBody
     public String index() {
