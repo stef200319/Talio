@@ -68,4 +68,9 @@ public class QuoteOverviewCtrl implements Initializable {
         data = FXCollections.observableList(quotes);
         table.setItems(data);
     }
+
+    public void showClientConnect() {
+        mainCtrl.showClientConnect();
+    }
+
 }

@@ -13,9 +13,10 @@ public class TaskDetailsCtrl {
     public TaskDetailsCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+
     }
 
-    public void goBoardOverview() {
+    public void showBoardOverview() {
         mainCtrl.showBoardOverview();
     }
 }

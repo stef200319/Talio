@@ -16,10 +16,10 @@ public class BoardOverviewCtrl {
 
     }
 
-    public void goQuoteOverview() {
+    public void showQuoteOverview() {
         mainCtrl.showOverview();
     }
-    public void goTaskDetails() {
+    public void showTaskDetails() {
         mainCtrl.showTaskDetails();
     }
 }

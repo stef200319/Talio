@@ -15,7 +15,7 @@ public class ClientConnectCtrl {
         this.server = server;
     }
 
-    public void goBoardOverview() {
+    public void showBoardOverview() {
         mainCtrl.showBoardOverview();
     }
 }
