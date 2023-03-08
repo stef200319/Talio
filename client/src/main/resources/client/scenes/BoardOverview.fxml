@@ -34,5 +34,6 @@
          </children>
       </VBox>
       <Button layoutX="528.0" layoutY="108.0" mnemonicParsing="false" onAction="#addList" text="Add List" />
+      <Button layoutX="119.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTask" text="Add Task" />
    </children>
 </AnchorPane>

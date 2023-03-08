@@ -40,4 +40,6 @@ public class BoardOverviewCtrl {
     public void addList() {
         mainCtrl.showListAdd();
     }
+
+    public void addTask() {mainCtrl.showAddTask();}
 }
