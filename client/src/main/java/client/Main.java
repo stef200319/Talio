@@ -54,7 +54,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
-        var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
+        var add = FXML.load(AddListCtrl.class, "client", "scenes", "AddList.fxml");
         var boardOverview = FXML.load(BoardOverviewCtrl.class, "client", "scenes", "BoardOverview.fxml");
         var clientConnect = FXML.load(ClientConnectCtrl.class, "client", "scenes", "ClientConnect.fxml");
         var taskDetails = FXML.load(TaskDetailsCtrl.class, "client", "scenes", "TaskDetails.fxml");
