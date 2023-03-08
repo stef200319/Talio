@@ -34,3 +34,7 @@ public class BoardOverviewCtrl {
         mainCtrl.showTaskDetails();
     }
 }
+
+    public void addBoard() {
+        mainCtrl.showListAdd();
+    }
