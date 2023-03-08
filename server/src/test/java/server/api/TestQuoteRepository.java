@@ -31,107 +31,127 @@ import server.database.QuoteRepository;
 
 public class TestQuoteRepository implements QuoteRepository {
 
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     public final List<Quote> quotes = new ArrayList<>();
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     public final List<String> calledMethods = new ArrayList<>();
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     private void call(String name) {
         calledMethods.add(name);
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public List<Quote> findAll() {
         calledMethods.add("findAll");
         return quotes;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public List<Quote> findAll(Sort sort) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public List<Quote> findAllById(Iterable<Long> ids) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> List<S> saveAll(Iterable<S> entities) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public void flush() {
         // TODO Auto-generated method stub
 
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> S saveAndFlush(S entity) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> List<S> saveAllAndFlush(Iterable<S> entities) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public void deleteAllInBatch(Iterable<Quote> entities) {
         // TODO Auto-generated method stub
 
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public void deleteAllByIdInBatch(Iterable<Long> ids) {
         // TODO Auto-generated method stub
 
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public void deleteAllInBatch() {
         // TODO Auto-generated method stub
 
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public Quote getOne(Long id) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public Quote getById(Long id) {
         call("getById");
         return find(id).get();
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     private Optional<Quote> find(Long id) {
         return quotes.stream().filter(q -> q.id == id).findFirst();
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> List<S> findAll(Example<S> example) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> List<S> findAll(Example<S> example, Sort sort) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public Page<Quote> findAll(Pageable pageable) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> S save(S entity) {
         call("save");
@@ -140,77 +160,90 @@ public class TestQuoteRepository implements QuoteRepository {
         return entity;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public Optional<Quote> findById(Long id) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public boolean existsById(Long id) {
         call("existsById");
         return find(id).isPresent();
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public long count() {
         return quotes.size();
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public void deleteById(Long id) {
         // TODO Auto-generated method stub
 
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public void delete(Quote entity) {
         // TODO Auto-generated method stub
 
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public void deleteAllById(Iterable<? extends Long> ids) {
         // TODO Auto-generated method stub
 
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public void deleteAll(Iterable<? extends Quote> entities) {
         // TODO Auto-generated method stub
 
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public void deleteAll() {
         // TODO Auto-generated method stub
 
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> Optional<S> findOne(Example<S> example) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> Page<S> findAll(Example<S> example, Pageable pageable) {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> long count(Example<S> example) {
         // TODO Auto-generated method stub
         return 0;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote> boolean exists(Example<S> example) {
         // TODO Auto-generated method stub
         return false;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public <S extends Quote, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
         // TODO Auto-generated method stub
