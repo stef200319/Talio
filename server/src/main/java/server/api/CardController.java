@@ -93,6 +93,27 @@ public class CardController {
         }
     }
 
+
+    /**
+     * Get a single card whose id matches the input cardId, if a card with the input id exists.
+     * @param cardId id of the card that is to be retrieved.
+     * @return The card that is requested using its ID. Return null if a card with the given id
+     * does not exist.
+     */
+    @GetMapping("/cardGet/{cardId}")
+    @ResponseBody
+    public Card getCard(@PathVariable("cardId") long cardId) {
+        Optional<Card> optionalCard = repo.findById(cardId);
+
+        if (optionalCard.isPresent()) {
+            Card card = optionalCard.get();
+            return card;
+        } else {
+            return null;
+        }
+    }
+
+
     /**
      * Return all the cards which are stored in the database
      * @return all the cards in the database
