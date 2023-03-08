@@ -29,11 +29,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Entity
 public class Person {
 
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
 
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     public String firstName;
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     public String lastName;
 
     @SuppressWarnings("unused")
@@ -41,21 +44,25 @@ public class Person {
         // for object mapper
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);

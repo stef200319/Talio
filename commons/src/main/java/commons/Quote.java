@@ -31,12 +31,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Entity
 public class Quote {
 
+
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
 
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     @OneToOne(cascade = CascadeType.PERSIST)
     public Person person;
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     public String quote;
 
     @SuppressWarnings("unused")
@@ -44,21 +48,25 @@ public class Quote {
         // for object mappers
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     public Quote(Person person, String quote) {
         this.person = person;
         this.quote = quote;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
