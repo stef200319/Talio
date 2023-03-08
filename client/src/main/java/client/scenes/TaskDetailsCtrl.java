@@ -8,7 +8,10 @@ public class TaskDetailsCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-
+    /**
+     * @param server the server that you want to connect to
+     * @param mainCtrl the main screen?
+     */
     @Inject
     public TaskDetailsCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -16,6 +19,10 @@ public class TaskDetailsCtrl {
 
     }
 
+
+    /**
+     * show the board overview
+     */
     public void showBoardOverview() {
         mainCtrl.showBoardOverview();
     }

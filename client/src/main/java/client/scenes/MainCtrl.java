@@ -90,16 +90,25 @@ public class MainCtrl {
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
+    /**
+     * Show all the boards
+     */
     public void showBoardOverview() {
         primaryStage.setTitle("Board Overview");
         primaryStage.setScene(boardOverview);
     }
 
+    /**
+     * Connect to client
+     */
     public void showClientConnect() {
         primaryStage.setTitle("Client Connect");
         primaryStage.setScene(clientConnect);
     }
 
+    /**
+     * Show the task details
+     */
     public void showTaskDetails() {
         primaryStage.setTitle("Task Details");
         primaryStage.setScene(taskDetails);

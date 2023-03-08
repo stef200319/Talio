@@ -85,6 +85,9 @@ public class QuoteOverviewCtrl implements Initializable {
         table.setItems(data);
     }
 
+    /**
+     * Shows all the client connections
+     */
     public void showClientConnect() {
         mainCtrl.showClientConnect();
     }
