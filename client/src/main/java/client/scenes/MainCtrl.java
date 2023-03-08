@@ -49,6 +49,7 @@ public class MainCtrl {
      * @param boardOverview
      * @param clientConnect
      * @param taskDetails
+     * @param addTask
      */
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
 
