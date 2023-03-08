@@ -24,7 +24,7 @@ public class MainCtrl {
 
     private Stage primaryStage;
 
-    private BoardOverviewCtrl overviewCtrl;
+    private QuoteOverviewCtrl overviewCtrl;
     private Scene overview;
     private AddListCtrl addListCtrl;
     private Scene addList;
@@ -49,7 +49,7 @@ public class MainCtrl {
      */
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
 
-                           Pair<AddQuoteCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
+                           Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
                            Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails) {
 
         this.primaryStage = primaryStage;
@@ -68,7 +68,6 @@ public class MainCtrl {
         this.taskDetailsCtrl = taskDetails.getKey();
         this.taskDetails = new Scene(taskDetails.getValue());
 
-//        showOverview();
         showClientConnect();
         primaryStage.show();
     }
@@ -89,6 +88,11 @@ public class MainCtrl {
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+    }
+
+    /**
+     * Show add list page
+     */
     public void showListAdd() {
         primaryStage.setTitle("Adding List");
         primaryStage.setScene(addList);

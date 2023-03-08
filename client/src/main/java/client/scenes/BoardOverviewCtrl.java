@@ -33,8 +33,11 @@ public class BoardOverviewCtrl {
     public void showTaskDetails() {
         mainCtrl.showTaskDetails();
     }
-}
 
-    public void addBoard() {
+    /**
+     * Method that shows the add list page on screen
+     */
+    public void addList() {
         mainCtrl.showListAdd();
     }
+}

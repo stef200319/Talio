@@ -11,17 +11,42 @@ public class AddListCtrl {
     private final MainCtrl mainCtrl;
 
     @FXML
-    private TextField boardName;
+    private TextField listName;
 
+    /**
+     *
+     * @param server the server connected to
+     * @param mainCtrl the main controller
+     */
     @Inject
     public AddListCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server=server;
         this.mainCtrl=mainCtrl;
     }
 
+    /**
+     * cancel adding and return to overview
+     */
     public void cancel() {
-        //clearFields();
-        mainCtrl.showOverview();
+        listName.clear();
+        mainCtrl.showBoardOverview();
+    }
+
+    /**
+     * will return a new list with title listName (once database running)
+     */
+    public void getList() {
+        var l = listName.getText();
+        //return new list (needs backend)
+    }
+
+    /**
+     * adds list to server and returns to overview
+     */
+    public void confirm() {
+        //add list to server (needs backend)
+        listName.clear();
+        mainCtrl.showBoardOverview();
     }
 
 }
