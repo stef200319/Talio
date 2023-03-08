@@ -29,15 +29,14 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
-
     public String title;
-    public int list;
+    public long listId;
     private Card() {
         // for object mappers
     }
-    public Card(String title) {
+    public Card(String title, long listId) {
         this.title = title;
-        this.list = 1;
+        this.listId = listId;
     }
 
     @Override

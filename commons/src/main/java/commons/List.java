@@ -14,20 +14,29 @@ public class List {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private long id;
     private String title;
-    public int board;
-
+    private long boardId;
 
     private List() {
         // for object mappers
     }
-    public List(String title) {
+
+    /**
+     * Constructor for a list to organize cards in
+     * @param title Title of the list
+     * @param boardId Id of the board the list belongs to
+     */
+    public List(String title, long boardId) {
         this.title = title;
-        this.board = 1;
+        this.boardId = boardId;
     }
 
+    /**
+     * Return whether the calling object is equals to the parameter (obj)
+     * @param obj Object to be compared to for equality
+     * @return True if obj is equals to the calling object, false if
+     */
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
