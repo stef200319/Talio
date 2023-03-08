@@ -26,29 +26,47 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Entity
 public class Card {
 
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     public String title;
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     public long listId;
     private Card() {
         // for object mappers
     }
+
+    /**
+     * @param title of the Card
+     * @param listId the list on which the card is going to be present
+     */
     public Card(String title, long listId) {
         this.title = title;
         this.listId = listId;
     }
 
+    /**
+     * @param obj other object that you want to compare to this
+     * @return whether the objects are the same
+     */
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    /**
+     * @return a hashcode of the current object
+     */
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    /**
+     * @return a string of all the properties in the method
+     */
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
