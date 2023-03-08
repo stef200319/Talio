@@ -31,12 +31,13 @@ public class Card {
     public long id;
 
     public String title;
-
+    public int list;
     private Card() {
         // for object mappers
     }
     public Card(String title) {
         this.title = title;
+        this.list = 1;
     }
 
     @Override
