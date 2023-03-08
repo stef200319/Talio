@@ -29,9 +29,27 @@ public class MainCtrl {
 
     private AddQuoteCtrl addCtrl;
     private Scene add;
+    private BoardOverviewCtrl boardOverviewCtrl;
+    private Scene boardOverview;
+    private ClientConnectCtrl clientConnectCtrl;
+    private Scene clientConnect;
+    private TaskDetailsCtrl taskDetailsCtrl;
+    private Scene taskDetails;
 
+
+    /**
+     * @param primaryStage
+     * @param overview
+     * @param add
+     * @param boardOverview
+     * @param clientConnect
+     * @param taskDetails
+     */
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-            Pair<AddQuoteCtrl, Parent> add) {
+
+                           Pair<AddQuoteCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
+                           Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails) {
+
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
@@ -39,19 +57,61 @@ public class MainCtrl {
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
 
-        showOverview();
+        this.boardOverviewCtrl = boardOverview.getKey();
+        this.boardOverview = new Scene(boardOverview.getValue());
+
+        this.clientConnectCtrl = clientConnect.getKey();
+        this.clientConnect = new Scene(clientConnect.getValue());
+
+        this.taskDetailsCtrl = taskDetails.getKey();
+        this.taskDetails = new Scene(taskDetails.getValue());
+
+//        showOverview();
+        showClientConnect();
         primaryStage.show();
     }
 
+
+    /**
+     *
+     */
     public void showOverview() {
         primaryStage.setTitle("Quotes: Overview");
         primaryStage.setScene(overview);
         overviewCtrl.refresh();
     }
 
+    /**
+     *
+     */
     public void showAdd() {
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
+
+    /**
+     * Show all the boards
+     */
+    public void showBoardOverview() {
+        primaryStage.setTitle("Board Overview");
+        primaryStage.setScene(boardOverview);
+    }
+
+    /**
+     * Connect to client
+     */
+    public void showClientConnect() {
+        primaryStage.setTitle("Client Connect");
+        primaryStage.setScene(clientConnect);
+    }
+
+    /**
+     * Show the task details
+     */
+    public void showTaskDetails() {
+        primaryStage.setTitle("Task Details");
+        primaryStage.setScene(taskDetails);
+    }
+
 }

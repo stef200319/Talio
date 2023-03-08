@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.TaskDetailsCtrl">
+   <children>
+      <Label alignment="CENTER" layoutX="227.0" layoutY="14.0" text="Task Details">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="273.0" layoutY="131.0" prefHeight="64.0" prefWidth="200.0" />
+      <Label layoutX="109.0" layoutY="155.0" text="Task Description:">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="521.0" layoutY="363.0" mnemonicParsing="false" onAction="#showBoardOverview" text="Go Back">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

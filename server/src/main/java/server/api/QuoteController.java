@@ -33,19 +33,24 @@ import server.database.QuoteRepository;
 @RequestMapping("/api/quotes")
 public class QuoteController {
 
+
+
     private final Random random;
     private final QuoteRepository repo;
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     public QuoteController(Random random, QuoteRepository repo) {
         this.random = random;
         this.repo = repo;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @GetMapping(path = { "", "/" })
     public List<Quote> getAll() {
         return repo.findAll();
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @GetMapping("/{id}")
     public ResponseEntity<Quote> getById(@PathVariable("id") long id) {
         if (id < 0 || !repo.existsById(id)) {
@@ -54,6 +59,7 @@ public class QuoteController {
         return ResponseEntity.ok(repo.findById(id).get());
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @PostMapping(path = { "", "/" })
     public ResponseEntity<Quote> add(@RequestBody Quote quote) {
 
@@ -70,6 +76,7 @@ public class QuoteController {
         return s == null || s.isEmpty();
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     @GetMapping("rnd")
     public ResponseEntity<Quote> getRandom() {
         var quotes = repo.findAll();
