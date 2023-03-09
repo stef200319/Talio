@@ -43,7 +43,8 @@ public class CardController {
      * appropriate response to the client.
      */
     @PostMapping("/editTitle/{cardId}/{title}")
-    public ResponseEntity<String> editCardTitle(@PathVariable("cardId") long cardId, @PathVariable("title") String title) {
+    public ResponseEntity<String> editCardTitle(@PathVariable("cardId") long cardId,
+                                                @PathVariable("title") String title){
         Optional<Card> optionalCard = repo.findById(cardId);
 
         if (optionalCard.isPresent()) {
@@ -63,7 +64,8 @@ public class CardController {
      * appropriate response to the client.
      */
     @PostMapping("/editList/{cardId}/{listId}")
-    public ResponseEntity<String> editCardList(@PathVariable("cardId") long cardId, @PathVariable("listId") long listId) {
+    public ResponseEntity<String> editCardList(@PathVariable("cardId") long cardId, @PathVariable("listId") long listId)
+    {
         Optional<Card> optionalCard = repo.findById(cardId);
 
         if (optionalCard.isPresent()) {
