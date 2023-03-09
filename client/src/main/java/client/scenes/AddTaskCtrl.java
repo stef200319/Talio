@@ -47,4 +47,11 @@ public class AddTaskCtrl {
         taskName.clear();
         mainCtrl.showBoardOverview();
     }
+
+    /**
+     * Show Task Details scene
+     */
+    public void showTaskDetails() {
+        mainCtrl.showTaskDetails();
+    }
 }
