@@ -26,6 +26,8 @@ public class MainCtrl {
 
     private QuoteOverviewCtrl overviewCtrl;
     private Scene overview;
+    private AddListCtrl addListCtrl;
+    private Scene addList;
 
     private AddQuoteCtrl addCtrl;
     private Scene add;
@@ -36,6 +38,9 @@ public class MainCtrl {
     private TaskDetailsCtrl taskDetailsCtrl;
     private Scene taskDetails;
 
+    private AddTaskCtrl addTaskCtrl;
+    private Scene addTask;
+
 
     /**
      * @param primaryStage
@@ -44,18 +49,20 @@ public class MainCtrl {
      * @param boardOverview
      * @param clientConnect
      * @param taskDetails
+     * @param addTask
      */
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
 
-                           Pair<AddQuoteCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
-                           Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails) {
+                           Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
+                           Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
+                           Pair<AddTaskCtrl, Parent> addTask) {
 
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
 
-        this.addCtrl = add.getKey();
-        this.add = new Scene(add.getValue());
+        this.addListCtrl = add.getKey();
+        this.addList = new Scene(add.getValue());
 
         this.boardOverviewCtrl = boardOverview.getKey();
         this.boardOverview = new Scene(boardOverview.getValue());
@@ -66,7 +73,9 @@ public class MainCtrl {
         this.taskDetailsCtrl = taskDetails.getKey();
         this.taskDetails = new Scene(taskDetails.getValue());
 
-//        showOverview();
+        this.addTaskCtrl = addTask.getKey();
+        this.addTask = new Scene(addTask.getValue());
+
         showClientConnect();
         primaryStage.show();
     }
@@ -76,9 +85,8 @@ public class MainCtrl {
      *
      */
     public void showOverview() {
-        primaryStage.setTitle("Quotes: Overview");
+        primaryStage.setTitle("Board: Overview");
         primaryStage.setScene(overview);
-        overviewCtrl.refresh();
     }
 
     /**
@@ -88,6 +96,15 @@ public class MainCtrl {
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+    }
+
+    /**
+     * Show add list page
+     */
+    public void showListAdd() {
+        primaryStage.setTitle("Adding List");
+        primaryStage.setScene(addList);
+        //add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     /**
@@ -112,6 +129,14 @@ public class MainCtrl {
     public void showTaskDetails() {
         primaryStage.setTitle("Task Details");
         primaryStage.setScene(taskDetails);
+    }
+
+    /**
+     * Show add task page
+     */
+    public void showAddTask() {
+        primaryStage.setTitle("Add Task");
+        primaryStage.setScene(addTask);
     }
 
 }
