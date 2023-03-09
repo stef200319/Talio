@@ -15,22 +15,22 @@ import java.util.function.Function;
 
 @SuppressWarnings("checkstyle:*")
 public class TestCardRepository implements CardRepository {
-
+    @SuppressWarnings("checkstyle.*")
     private final List<Card> cards;
-
+    @SuppressWarnings("checkstyle.*")
     public final List<String> calledMethods = new ArrayList<>();
 
     @SuppressWarnings("checkstyle:MissingJavadocMethod")
     private void call(String name) {
         calledMethods.add(name);
     }
-
+    @SuppressWarnings("checkstyle.*")
     public TestCardRepository() {
         cards = new ArrayList<>();
         cards.add(new Card("Test1", 1));
         cards.add(new Card("Test2", 1));
     }
-
+    @SuppressWarnings("checkstyle.*")
     @Override
     public <S extends Card> S save(S entity) {
         call("save");
@@ -38,7 +38,7 @@ public class TestCardRepository implements CardRepository {
         cards.add(entity);
         return entity;
     }
-
+    @SuppressWarnings("checkstyle.*")
     @Override
     public Optional<Card> findById(Long id) {
         if (id > 0 && id <= cards.size()) {
@@ -47,7 +47,7 @@ public class TestCardRepository implements CardRepository {
             return Optional.empty();
         }
     }
-
+    @SuppressWarnings("checkstyle.*")
     @Override
     public List<Card> findAll() {
         return cards;
