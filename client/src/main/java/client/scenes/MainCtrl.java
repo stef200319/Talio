@@ -38,6 +38,9 @@ public class MainCtrl {
     private TaskDetailsCtrl taskDetailsCtrl;
     private Scene taskDetails;
 
+    private AddTaskCtrl addTaskCtrl;
+    private Scene addTask;
+
 
     /**
      * @param primaryStage
@@ -46,11 +49,13 @@ public class MainCtrl {
      * @param boardOverview
      * @param clientConnect
      * @param taskDetails
+     * @param addTask
      */
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
 
                            Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
-                           Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails) {
+                           Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
+                           Pair<AddTaskCtrl, Parent> addTask) {
 
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
@@ -67,6 +72,9 @@ public class MainCtrl {
 
         this.taskDetailsCtrl = taskDetails.getKey();
         this.taskDetails = new Scene(taskDetails.getValue());
+
+        this.addTaskCtrl = addTask.getKey();
+        this.addTask = new Scene(addTask.getValue());
 
         showClientConnect();
         primaryStage.show();
@@ -121,6 +129,14 @@ public class MainCtrl {
     public void showTaskDetails() {
         primaryStage.setTitle("Task Details");
         primaryStage.setScene(taskDetails);
+    }
+
+    /**
+     * Show add task page
+     */
+    public void showAddTask() {
+        primaryStage.setTitle("Add Task");
+        primaryStage.setScene(addTask);
     }
 
 }

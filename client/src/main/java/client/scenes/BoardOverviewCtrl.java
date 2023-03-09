@@ -69,6 +69,11 @@ public class BoardOverviewCtrl implements Initializable {
     }
 
     /**
+     * Method that shows the add Task page on screen
+     */
+    public void addTask() {mainCtrl.showAddTask();}
+
+    /**
      * Method that refreshes the board
      */
     public void refresh() {

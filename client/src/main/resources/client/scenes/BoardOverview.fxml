@@ -33,6 +33,7 @@
             <Label prefHeight="83.0" prefWidth="71.0" rotate="270.0" text="Card 1" />
          </children>
       </VBox>
+      <Button layoutX="119.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTask" text="Add Task" />
       <Button layoutX="595.0" layoutY="73.0" mnemonicParsing="false" onAction="#addList" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Add List" />
    </children>
 </AnchorPane>

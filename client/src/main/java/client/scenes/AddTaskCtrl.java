@@ -1,17 +1,16 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-import com.google.inject.Inject;
-
-public class AddListCtrl {
+public class AddTaskCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     @FXML
-    private TextField listName;
+    private TextField taskName;
 
     /**
      *
@@ -19,7 +18,7 @@ public class AddListCtrl {
      * @param mainCtrl the main controller
      */
     @Inject
-    public AddListCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    AddTaskCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server=server;
         this.mainCtrl=mainCtrl;
     }
@@ -28,7 +27,7 @@ public class AddListCtrl {
      * cancel adding and return to overview
      */
     public void cancel() {
-        listName.clear();
+        taskName.clear();
         mainCtrl.showBoardOverview();
     }
 
@@ -36,17 +35,16 @@ public class AddListCtrl {
      * will return a new list with title listName (once database running)
      */
     public void getList() {
-        var l = listName.getText();
-        //return new list (needs backend)
+        var c = taskName.getText();
+        //return new card (needs backend)
     }
 
     /**
      * adds list to server and returns to overview
      */
     public void confirm() {
-        //add list to database (needs backend)
-        listName.clear();
+        //add card to database (needs backend)
+        taskName.clear();
         mainCtrl.showBoardOverview();
     }
-
 }
