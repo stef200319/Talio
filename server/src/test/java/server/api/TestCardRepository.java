@@ -1,3 +1,4 @@
+// checkstyle:off
 package server.api;
 
 import org.springframework.data.domain.Example;
@@ -188,3 +189,4 @@ public class TestCardRepository implements CardRepository {
         }
     }
 }
+// checkstyle:on
