@@ -7,33 +7,33 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="786.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
    <children>
-      <Label layoutX="262.0" layoutY="52.0" prefHeight="56.0" prefWidth="76.0" text="My board">
+      <Label alignment="CENTER" layoutX="341.0" layoutY="73.0" prefHeight="38.0" prefWidth="104.0" style="-fx-border-color: red;" text="My board">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <HBox layoutX="33.0" layoutY="20.0" prefHeight="32.0" prefWidth="547.0" spacing="150.0">
+      <HBox layoutX="125.0" layoutY="14.0" prefHeight="32.0" prefWidth="537.0" spacing="150.0">
          <children>
-            <Button mnemonicParsing="false" text="My Boards" />
-            <Button mnemonicParsing="false" text="Create board" />
-            <Button mnemonicParsing="false" text="Join board" />
+            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" style="-fx-border-color: black; -fx-background-color: orange;" text="My Boards" />
+            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="99.0" style="-fx-border-color: black; -fx-background-color: lightgreen;" text="Create board" />
+            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="84.0" style="-fx-border-color: black; -fx-background-color: cyan;" text="Join board" />
          </children>
       </HBox>
-      <Separator layoutY="60.0" prefHeight="3.0" prefWidth="600.0" />
-      <VBox layoutX="114.0" layoutY="131.0" onMouseClicked="#showTaskDetails" prefHeight="200.0" prefWidth="56.0" style="-fx-border-style: solid;">
+      <Separator layoutY="47.0" prefHeight="16.0" prefWidth="786.0" />
+      <VBox layoutX="180.0" layoutY="117.0" onMouseClicked="#showTaskDetails" prefHeight="145.0" prefWidth="59.0" rotate="90.0" style="-fx-border-style: solid;">
          <children>
-            <Text onMouseClicked="#showTaskDetails" strokeType="OUTSIDE" strokeWidth="0.0" text="Card 1" wrappingWidth="72.13671875">
+            <Button mnemonicParsing="false" prefHeight="21.0" prefWidth="25.0" text="X">
                <font>
-                  <Font name="Arial" size="24.0" />
+                  <Font size="10.0" />
                </font>
-            </Text>
+            </Button>
+            <Label prefHeight="83.0" prefWidth="71.0" rotate="270.0" text="Card 1" />
          </children>
       </VBox>
-      <Button layoutX="528.0" layoutY="108.0" mnemonicParsing="false" onAction="#addList" text="Add List" />
       <Button layoutX="119.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTask" text="Add Task" />
+      <Button layoutX="595.0" layoutY="73.0" mnemonicParsing="false" onAction="#addList" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Add List" />
    </children>
 </AnchorPane>
