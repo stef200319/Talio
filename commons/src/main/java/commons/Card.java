@@ -71,4 +71,5 @@ public class Card {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
     }
+
 }
