@@ -305,10 +305,10 @@ public class TestCardRepository implements CardRepository {
     }
 
     /**
-     * @param id must not be {@literal null}. 
+     * @param id must not be {@literal null}.
      * @return
      */
-    @Override
+    @Override   
     public boolean existsById(Long id) {
         if (id > 0 && id <= cards.size()) {
             return true;
