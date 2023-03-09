@@ -9,7 +9,7 @@ import server.database.CardRepository;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/some")
 public class SomeController {
     private final CardRepository repo;
 
@@ -43,5 +43,4 @@ public class SomeController {
     public List<Card> getAllCards() {
         return repo.findAll();
     }
-
 }
