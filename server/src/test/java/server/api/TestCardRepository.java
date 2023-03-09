@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+@SuppressWarnings("checkstyle:*")
 public class TestCardRepository implements CardRepository {
 
     private final List<Card> cards;
