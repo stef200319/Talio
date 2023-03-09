@@ -2,27 +2,34 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.TaskDetailsCtrl">
+<AnchorPane prefHeight="329.0" prefWidth="507.0" style="-fx-background-color: lightyellow; -fx-border-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.TaskDetailsCtrl">
    <children>
-      <Label alignment="CENTER" layoutX="227.0" layoutY="14.0" text="Task Details">
+      <Button layoutX="457.0" layoutY="32.0" mnemonicParsing="false" onAction="#showBoardOverview" prefHeight="16.0" prefWidth="15.0" style="-fx-border-color: black;" text="X">
          <font>
-            <Font name="Arial Bold" size="25.0" />
-         </font>
-      </Label>
-      <TextArea layoutX="273.0" layoutY="131.0" prefHeight="64.0" prefWidth="200.0" />
-      <Label layoutX="109.0" layoutY="155.0" text="Task Description:">
-         <font>
-            <Font name="Arial Bold" size="14.0" />
-         </font>
-      </Label>
-      <Button layoutX="521.0" layoutY="363.0" mnemonicParsing="false" onAction="#showBoardOverview" text="Go Back">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
+            <Font name="Arial Bold" size="8.0" />
          </font>
       </Button>
+      <TextField layoutX="66.0" layoutY="48.0" style="-fx-border-color: black;" text="Title">
+         <font>
+            <Font name="Arial Italic" size="13.0" />
+         </font>
+      </TextField>
+      <TextArea layoutX="67.0" layoutY="91.0" prefHeight="80.0" prefWidth="327.0" style="-fx-border-color: black;" text="Description">
+         <font>
+            <Font name="Arial Italic" size="13.0" />
+         </font>
+      </TextArea>
+      <ListView layoutX="67.0" layoutY="211.0" prefHeight="74.0" prefWidth="327.0" style="-fx-border-color: black;" />
+      <Label layoutX="66.0" layoutY="185.0" text="Tasks">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
