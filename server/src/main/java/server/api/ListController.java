@@ -36,10 +36,14 @@ public class ListController {
         return ResponseEntity.ok(saved);
     }
 
-    @DeleteMapping("/delete/{ID}")
-    @ResponseBody public ResponseEntity<String> removeList(@PathVariable long ID) {
-        if (listRepository.existsById(ID)) {
-            List l = listRepository.getById(ID);
+    /**
+     * @param id the id of the list that needs to be removed
+     * @return a response which says that the list was removed from the database or not.
+     */
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody public ResponseEntity<String> removeList(@PathVariable long id) {
+        if (listRepository.existsById(id)) {
+            List l = listRepository.getById(id);
             listRepository.delete(l);
             return ResponseEntity.ok("List deleted successfully");
         }
@@ -47,11 +51,16 @@ public class ListController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/put/{ID}/{title}")
-    @ResponseBody public ResponseEntity<String> editList(@PathVariable long ID,
+    /**
+     * @param id the id of the list which should be updated
+     * @param title the new title of the list
+     * @return whether the list was successfully updated
+     */
+    @PutMapping("/put/{id}/{title}")
+    @ResponseBody public ResponseEntity<String> editList(@PathVariable long id,
                                                        @PathVariable String title) {
-        if (listRepository.existsById(ID)) {
-            List l = listRepository.getById(ID);
+        if (listRepository.existsById(id)) {
+            List l = listRepository.getById(id);
             l.setTitle(title);
             listRepository.save(l);
             return ResponseEntity.ok("Card edited successfully");
@@ -60,16 +69,23 @@ public class ListController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/get/{ID}")
-    @ResponseBody public ResponseEntity<List> getListByID(@PathVariable long ID) {
-        if (listRepository.existsById(ID)) {
-            List l = listRepository.getById(ID);
+    /**
+     * @param id the id of the list which will be retrieved
+     * @return the list according to the input id
+     */
+    @GetMapping("/get/{id}")
+    @ResponseBody public ResponseEntity<List> getListByID(@PathVariable long id) {
+        if (listRepository.existsById(id)) {
+            List l = listRepository.getById(id);
             return ResponseEntity.ok(l);
         }
 
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * @return all lists in the database
+     */
     @GetMapping("/get")
     @ResponseBody public ResponseEntity<java.util.List<List>> getAllLists() {
         java.util.List<List> lists = listRepository.findAll();

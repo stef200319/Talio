@@ -20,6 +20,9 @@ public class List {
     private String title;
     private long boardId;
 
+    /**
+     * Constructor for object mappers
+     */
     public List() {
         // for object mappers
     }

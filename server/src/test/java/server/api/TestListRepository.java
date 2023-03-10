@@ -17,7 +17,7 @@ public class TestListRepository implements ListRepository {
     private final java.util.List<String> calledMethods = new ArrayList<>();
 
     /**
-     * @param name
+     * @param name of the method which was executed
      */
     private void call(String name) {
         calledMethods.add(name);
@@ -53,9 +53,10 @@ public class TestListRepository implements ListRepository {
      * @param id must not be {@literal null}.
      * @return
      */
-    @SuppressWarnings("checkstyle.*")
     @Override
     public Optional<List> findById(Long id) {
+        call("findById");
+
         if (id > 0 && id <= lists.size()) {
             return Optional.of(lists.get(id.intValue() - 1));
         } else {
@@ -66,7 +67,6 @@ public class TestListRepository implements ListRepository {
     /**
      * @return
      */
-    @SuppressWarnings("checkstyle.*")
     @Override
     public java.util.List<List> findAll() {
         return lists;
@@ -125,6 +125,11 @@ public class TestListRepository implements ListRepository {
 
     }
 
+    /**
+     * @param entity entity to be saved. Must not be {@literal null}.
+     * @param <S> sut
+     * @return null
+     */
     @Override
     public <S extends List> S saveAndFlush(S entity) {
         return null;
