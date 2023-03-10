@@ -20,7 +20,7 @@ public class List {
     private String title;
     private long boardId;
 
-    private List() {
+    public List() {
         // for object mappers
     }
 
@@ -32,6 +32,41 @@ public class List {
     public List(String title, long boardId) {
         this.title = title;
         this.boardId = boardId;
+    }
+
+    /**
+     * @return the ID of the current object
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @return The title of the list
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @return the ID of the board on which the list is situated
+     */
+    public long getBoardId() {
+        return boardId;
+    }
+
+    /**
+     * @param title the new title of the list
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @param id new id of the entry
+     */
+    public void setId(long id) {
+        this.id = id;
     }
 
     /**
