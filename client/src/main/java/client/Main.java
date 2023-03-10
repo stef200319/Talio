@@ -59,9 +59,11 @@ public class Main extends Application {
         var clientConnect = FXML.load(ClientConnectCtrl.class, "client", "scenes", "ClientConnect.fxml");
         var taskDetails = FXML.load(TaskDetailsCtrl.class, "client", "scenes", "TaskDetails.fxml");
         var addTask = FXML.load(AddTaskCtrl.class, "client", "scenes", "AddTask.fxml");
-
+        var taskManagement = FXML.load(TaskManagementCtrl.class, "client", "scenes", "TagManagement.fxml");
+        var workspace = FXML.load(WorkspaceCtrl.class, "client", "scenes", "Workspace.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        mainCtrl.initialize(primaryStage, overview, add, boardOverview, clientConnect, taskDetails, addTask);
+        mainCtrl.initialize(primaryStage, overview, add, boardOverview, clientConnect, taskDetails,
+                addTask, taskManagement, workspace);
     }
 }
