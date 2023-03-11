@@ -28,7 +28,7 @@ public class CardController {
      * @param listId the list on which the card needs to be
      * @return if successful, the method returns an ok
      */
-    @PostMapping("/add/{title}/{listId}")
+    @PostMapping("/{title}/{listId}")
     public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("listId") long listId) {
         Card newCard = new Card(title, listId);
 
@@ -86,7 +86,7 @@ public class CardController {
      * @return Returns a conformation message if the card is found and deleted. Else, receive an
      * appropriate response to the client.
      */
-    @DeleteMapping("/delete/{cardId}")
+    @DeleteMapping("/{cardId}")
     public ResponseEntity<String> deleteCard(@PathVariable("cardId") long cardId){
         if (repo.existsById(cardId)) {
             repo.deleteById(cardId);
@@ -100,7 +100,7 @@ public class CardController {
      * @param listId id of the list of which all cards should be retrieved
      * @return a list of cards which all have the same listId corresponding to the input
      */
-    @GetMapping("/get/{listId}")
+    @GetMapping("/getByListId/{listId}")
     @ResponseBody public List<Card> getCardByListId(@PathVariable("listId") long listId) {
         List<Card> cards = repo.findAll();
         List<Card> cardsOnList = new LinkedList<>();
@@ -120,7 +120,7 @@ public class CardController {
      * @return The card that is requested using its ID. Return null if a card with the given id
      * does not exist.
      */
-    @GetMapping("/get/{cardId}")
+    @GetMapping("/getByCardId/{cardId}")
     @ResponseBody
     public Card getCardByCardId(@PathVariable("cardId") long cardId) {
         Optional<Card> optionalCard = repo.findById(cardId);
@@ -138,7 +138,7 @@ public class CardController {
      * Return all the cards which are stored in the database
      * @return all the cards in the database
      */
-    @GetMapping("/getAll")
+    @GetMapping("/")
     @ResponseBody
     public List<Card> getAllCards() {
         return repo.findAll();
