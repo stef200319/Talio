@@ -1,6 +1,8 @@
 package server.api;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -100,7 +102,7 @@ class CardControllerTest {
     @Test
     void testDeleteCard_CardDoesNotExist() {
         ResponseEntity<String> response = controller.deleteCard(1L);
-        assertEquals(controller.getCard(1L).title, "Test2");
+        assertEquals(controller.getCardByCardId(1L).title, "Test2");
     }
 
     @Test
@@ -124,26 +126,26 @@ class CardControllerTest {
 
 
     @Test
-    void testGetCard_ReturnedCardIsNotNull() {
-        Card card = controller.getCard(1);
+    void testGetCardByCardId_ReturnedCardIsNotNull() {
+        Card card = controller.getCardByCardId(1);
         assertNotNull(card);
     }
 
     @Test
-    void testGetCard_ReturnedCardTitleIsCorrect() {
-        Card card = controller.getCard(1);
+    void testGetCardByCardId_ReturnedCardTitleIsCorrect() {
+        Card card = controller.getCardByCardId(1);
         assertEquals("Test1", card.title);
     }
 
     @Test
-    void testGetCard_ReturnedCardListIdIsCorrect() {
-        Card card = controller.getCard(1);
+    void testGetCardByCardId_ReturnedCardListIdIsCorrect() {
+        Card card = controller.getCardByCardId(1);
         assertEquals(1, card.listId);
     }
 
     @Test
-    void testGetCard_NotFound() {
-        Card card = controller.getCard(100);
+    void testGetCardByCardId_NotFound() {
+        Card card = controller.getCardByCardId(100);
         assertNull(card);
     }
 
@@ -151,5 +153,35 @@ class CardControllerTest {
     void testGetAllCards() {
         List<Card> cards = controller.getAllCards();
         assertEquals(2, cards.size());
+    }
+
+    @Test
+    void testGetCardByListId_2entries() {
+        List<Card> ret = controller.getCardByListId(1);
+
+        List<Card> expected = new ArrayList<>();
+        expected.add(new Card("Test1", 1));
+        expected.add(new Card("Test2", 1));
+        assertEquals(expected, ret);
+    }
+
+    @Test
+    void testGetCardByListId_noMatch() {
+        List<Card> ret = controller.getCardByListId(2);
+
+        List<Card> expected = new ArrayList<>();
+
+        assertEquals(expected, ret);
+    }
+
+    @Test
+    void testGetCardByListId_empty() {
+        controller.deleteCard(1L);
+        controller.deleteCard(1L);
+
+        List<Card> ret = controller.getCardByListId(1);
+        List<Card> expected = new ArrayList<>();
+
+        assertEquals(expected, ret);
     }
 }

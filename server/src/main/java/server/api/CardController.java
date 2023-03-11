@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,6 +96,23 @@ public class CardController {
         }
     }
 
+    /**
+     * @param listId id of the list of which all cards should be retrieved
+     * @return a list of cards which all have the same listId corresponding to the input
+     */
+    @GetMapping("/get/{listId}")
+    @ResponseBody public List<Card> getCardByListId(@PathVariable("listId") long listId) {
+        List<Card> cards = repo.findAll();
+        List<Card> cardsOnList = new LinkedList<>();
+
+        for (Card c : cards) {
+            if (c.listId == listId) {
+                cardsOnList.add(c);
+            }
+        }
+
+        return cardsOnList;
+    }
 
     /**
      * Get a single card whose id matches the input cardId, if a card with the input id exists.
@@ -104,7 +122,7 @@ public class CardController {
      */
     @GetMapping("/get/{cardId}")
     @ResponseBody
-    public Card getCard(@PathVariable("cardId") long cardId) {
+    public Card getCardByCardId(@PathVariable("cardId") long cardId) {
         Optional<Card> optionalCard = repo.findById(cardId);
 
         if (optionalCard.isPresent()) {
