@@ -167,4 +167,12 @@ public class MainCtrl {
         primaryStage.setScene(addTask);
     }
 
+    /**
+     * Create a new list
+     * @param text title of the list
+     */
+    public void createList(String text) {
+        boardOverviewCtrl.createList(text);
+    }
+
 }
