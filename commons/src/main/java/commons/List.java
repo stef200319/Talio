@@ -2,14 +2,10 @@ package commons;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
 public class List {
@@ -30,7 +26,7 @@ public class List {
     /**
      * Constructor for a list to organize cards in
      * @param title Title of the list
-     * @param boardId Id of the board the list belongs to
+     * @param boardId id of the board the list belongs to
      */
     public List(String title, long boardId) {
         this.title = title;
@@ -73,6 +69,13 @@ public class List {
     }
 
     /**
+     * @param boardId the id of the board that replaces the current board the list belongs to
+     */
+    public void setBoardId(long boardId) {
+        this.boardId = boardId;
+    }
+
+    /**
      * Return whether the calling object is equals to the parameter (obj)
      * @param obj Object to be compared to for equality
      * @return True if obj is equals to the calling object, false if
@@ -95,6 +98,7 @@ public class List {
      */
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+        return "The title of this List is: " + getTitle() +
+                ", and the ID of the Board this List belongs to is: " + getBoardId();
     }
 }

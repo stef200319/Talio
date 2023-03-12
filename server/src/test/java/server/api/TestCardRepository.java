@@ -44,7 +44,7 @@ public class TestCardRepository implements CardRepository {
     @Override
     public <S extends Card> S save(S entity) {
         call("save");
-        entity.id = (long) cards.size();
+        entity.setId((long) cards.size());
         cards.add(entity);
         return entity;
     }
@@ -309,6 +309,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
+
     public boolean existsById(Long id) {
         if (id > 0 && id <= cards.size()) {
             return true;
