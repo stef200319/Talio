@@ -62,6 +62,11 @@ public class CardTest {
     }
 
     @Test
+    public void testEqualsNull() {
+        assertNotnull(card);
+    }
+
+    @Test
     public void testHashCode() {
         Card otherCard = new Card("Test", 1L);
         assertEquals(card.hashCode(), otherCard.hashCode());

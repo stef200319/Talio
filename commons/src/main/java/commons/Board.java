@@ -11,12 +11,10 @@ import javax.persistence.Id;
 @Entity
 public class Board {
 
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     private String title;
 
 

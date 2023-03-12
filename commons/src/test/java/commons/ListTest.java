@@ -61,6 +61,11 @@ public class ListTest {
     }
 
     @Test
+    public void testEqualsNull() {
+        assertNotnull(list);
+    }
+
+    @Test
     public void testHashCode() {
         List otherList = new List("Test", 1L);
         assertEquals(list.hashCode(), otherList.hashCode());

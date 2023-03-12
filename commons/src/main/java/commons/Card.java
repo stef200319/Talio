@@ -23,13 +23,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @Entity
 public class Card {
 
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     private String title;
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     private long listId;
 
 
