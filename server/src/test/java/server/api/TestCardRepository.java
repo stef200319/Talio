@@ -323,7 +323,7 @@ public class TestCardRepository implements CardRepository {
      * @return to be filled
      */
     @Override
-    public int findMaxPositionByListId(Long listId) {
+    public Integer findMaxPositionByListId(Long listId) {
         return 0;
     }
 }
