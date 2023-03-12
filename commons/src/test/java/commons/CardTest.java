@@ -63,7 +63,7 @@ public class CardTest {
 
     @Test
     public void testEqualsNull() {
-        assertNotnull(card);
+        assertNotNull(card);
     }
 
     @Test

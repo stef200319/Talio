@@ -52,7 +52,7 @@ public class BoardTest {
 
     @Test
     public void testEqualsNull() {
-        assertNotnull(board);
+        assertNotNull(board);
     }
 
     @Test

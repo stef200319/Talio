@@ -62,7 +62,7 @@ public class ListTest {
 
     @Test
     public void testEqualsNull() {
-        assertNotnull(list);
+        assertNotNull(list);
     }
 
     @Test
