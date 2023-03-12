@@ -30,7 +30,12 @@ public class CardController {
      */
     @PostMapping("/addCard/{title}/{listId}")
     public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("listId") long listId) {
+        Integer maxPosition = repo.findMaxPositionByListId(listId);
+
+        int newPosition = maxPosition == null ? 1 : maxPosition + 1;
+
         Card newCard = new Card(title, listId);
+        newCard.setPosition(newPosition);
 
         Card saved = repo.save(newCard);
         return ResponseEntity.ok(saved);

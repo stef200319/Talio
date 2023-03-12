@@ -317,4 +317,13 @@ public class TestCardRepository implements CardRepository {
             return false;
         }
     }
+
+    /**
+     * @param listId to be filled
+     * @return to be filled
+     */
+    @Override
+    public int findMaxPositionByListId(Long listId) {
+        return 0;
+    }
 }

@@ -23,14 +23,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @Entity
 public class Card {
 
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     private String title;
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     private long listId;
+    private Integer position;
 
 
 
@@ -87,6 +85,20 @@ public class Card {
      */
     public void setListId(long listId) {
         this.listId = listId;
+    }
+
+    /**
+     * @return the position of the card in the list it belongs to (at the time)
+     */
+    public int getPosition() {
+        return position;
+    }
+
+    /**
+     * @return the new position of the card in the list it belongs to (at the time), which replaces the old position
+     */
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     /**
