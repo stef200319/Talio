@@ -37,13 +37,13 @@ class CardControllerTest {
     @Test
     void testAddCard_responseTitleEqualsExpected() {
         ResponseEntity<Card> response = controller.addCard("Test1", 1);
-        assertEquals("Test1", response.getBody().title);
+        assertEquals("Test1", response.getBody().getTitle());
     }
 
     @Test
     void testAddCard_responseListIdEqualsExpected() {
         ResponseEntity<Card> response = controller.addCard("Test1", 1);
-        assertEquals(1, response.getBody().listId);
+        assertEquals(1, response.getBody().getListId());
     }
 
 
@@ -63,7 +63,7 @@ class CardControllerTest {
     void testEditCardTitle_cardTitleEqualsExpected() {
         ResponseEntity<String> response = controller.editCardTitle(1, "editTitle");
         Card card = repo.findById(1L).get();
-        assertEquals("editTitle", card.title);
+        assertEquals("editTitle", card.getTitle());
     }
 
     @Test
@@ -89,7 +89,7 @@ class CardControllerTest {
     void testEditCardList_cardListIdEqualsExpected() {
         ResponseEntity<String> response = controller.editCardList(1, 2);
         Card card = repo.findById(1L).get();
-        assertEquals(2, card.listId);
+        assertEquals(2, card.getListId());
     }
 
     @Test
@@ -102,7 +102,7 @@ class CardControllerTest {
     @Test
     void testDeleteCard_CardDoesNotExist() {
         ResponseEntity<String> response = controller.deleteCard(1L);
-        assertEquals(controller.getCardByCardId(1L).title, "Test2");
+        assertEquals(controller.getCardByCardId(1L).getTitle(), "Test2");
     }
 
     @Test
@@ -134,13 +134,13 @@ class CardControllerTest {
     @Test
     void testGetCardByCardId_ReturnedCardTitleIsCorrect() {
         Card card = controller.getCardByCardId(1);
-        assertEquals("Test1", card.title);
+        assertEquals("Test1", card.getTitle());
     }
 
     @Test
     void testGetCardByCardId_ReturnedCardListIdIsCorrect() {
         Card card = controller.getCardByCardId(1);
-        assertEquals(1, card.listId);
+        assertEquals(1, card.getListId());
     }
 
     @Test

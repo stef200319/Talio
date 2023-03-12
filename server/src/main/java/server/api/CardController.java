@@ -28,7 +28,7 @@ public class CardController {
      * @param listId the list on which the card needs to be
      * @return if successful, the method returns an ok
      */
-    @PostMapping("/{title}/{listId}")
+    @PostMapping("/addCard/{title}/{listId}")
     public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("listId") long listId) {
         Card newCard = new Card(title, listId);
 
@@ -50,7 +50,7 @@ public class CardController {
 
         if (optionalCard.isPresent()) {
             Card card = optionalCard.get();
-            card.title=title;
+            card.setTitle(title);
             repo.save(card);
             return ResponseEntity.ok("Card title updated successfully");
         } else {
@@ -71,7 +71,7 @@ public class CardController {
 
         if (optionalCard.isPresent()) {
             Card card = optionalCard.get();
-            card.listId=listId;
+            card.setListId(listId);
             repo.save(card);
             return ResponseEntity.ok("Card list updated successfully");
         } else {
@@ -86,7 +86,7 @@ public class CardController {
      * @return Returns a conformation message if the card is found and deleted. Else, receive an
      * appropriate response to the client.
      */
-    @DeleteMapping("/{cardId}")
+    @DeleteMapping("/deleteCard/{cardId}")
     public ResponseEntity<String> deleteCard(@PathVariable("cardId") long cardId){
         if (repo.existsById(cardId)) {
             repo.deleteById(cardId);
@@ -106,7 +106,7 @@ public class CardController {
         List<Card> cardsOnList = new LinkedList<>();
 
         for (Card c : cards) {
-            if (c.listId == listId) {
+            if (c.getListId() == listId) {
                 cardsOnList.add(c);
             }
         }
@@ -138,7 +138,7 @@ public class CardController {
      * Return all the cards which are stored in the database
      * @return all the cards in the database
      */
-    @GetMapping("/")
+    @GetMapping("/getAllCards")
     @ResponseBody
     public List<Card> getAllCards() {
         return repo.findAll();

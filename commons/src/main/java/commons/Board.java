@@ -17,10 +17,11 @@ public class Board {
     @SuppressWarnings("checkstyle:VisibilityModifier")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @SuppressWarnings("checkstyle:VisibilityModifier")
-    public String title;
+    private String title;
+
 
     private Board() {
         // for object mappers
@@ -33,7 +34,32 @@ public class Board {
         this.title = title;
     }
 
+    /**
+     * @return the id of the board stored in the database
+     */
+    public Long getId() {
+        return id;
+    }
+    /**
+     * @param id new id of the entry
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    /**
+     * @return the title of the board
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title which should replace the board's current title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
     /**
      * @param obj other object that you want to compare to this
      * @return whether the objects are the same
@@ -56,6 +82,6 @@ public class Board {
      */
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+        return "This board is called: " + getTitle();
     }
 }

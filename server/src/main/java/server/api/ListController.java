@@ -24,7 +24,7 @@ public class ListController {
      * @param boardId The board on which the list belongs
      * @return A response entity of the saved list
      */
-    @PostMapping("/{boardId}/{title}")
+    @PostMapping("/addList/{title}/{boardId}")
     @ResponseBody public ResponseEntity<List> addList(@PathVariable String title,
                                                       @PathVariable long boardId) {
         List newList = new List(title, boardId);
@@ -40,7 +40,7 @@ public class ListController {
      * @param id the id of the list that needs to be removed
      * @return a response which says that the list was removed from the database or not.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteList/{id}")
     @ResponseBody public ResponseEntity<String> removeList(@PathVariable long id) {
         if (listRepository.existsById(id)) {
             List l = listRepository.getById(id);
@@ -56,7 +56,7 @@ public class ListController {
      * @param title the new title of the list
      * @return whether the list was successfully updated
      */
-    @PutMapping("/{id}/{title}")
+    @PutMapping("/editTitle/{listId}/{title}")
     @ResponseBody public ResponseEntity<String> editList(@PathVariable long id,
                                                        @PathVariable String title) {
         if (listRepository.existsById(id)) {
@@ -73,7 +73,7 @@ public class ListController {
      * @param id the id of the list which will be retrieved
      * @return the list according to the input id
      */
-    @GetMapping("/{id}")
+    @GetMapping("/getByListId/{listId}")
     @ResponseBody public ResponseEntity<List> getListByID(@PathVariable long id) {
         if (listRepository.existsById(id)) {
             List l = listRepository.getById(id);
@@ -86,7 +86,7 @@ public class ListController {
     /**
      * @return all lists in the database
      */
-    @GetMapping("/")
+    @GetMapping("/getAllLists")
     @ResponseBody public ResponseEntity<java.util.List<List>> getAllLists() {
         java.util.List<List> lists = listRepository.findAll();
 

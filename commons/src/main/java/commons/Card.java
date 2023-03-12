@@ -15,13 +15,10 @@
  */
 package commons;
 
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
-
 import javax.persistence.*;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+
 
 @Entity
 public class Card {
@@ -29,11 +26,14 @@ public class Card {
     @SuppressWarnings("checkstyle:VisibilityModifier")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long id;
+    private long id;
     @SuppressWarnings("checkstyle:VisibilityModifier")
-    public String title;
+    private String title;
     @SuppressWarnings("checkstyle:VisibilityModifier")
-    public long listId;
+    private long listId;
+
+
+
     private Card() {
         // for object mappers
     }
@@ -44,6 +44,48 @@ public class Card {
      */
     public Card(String title, long listId) {
         this.title = title;
+        this.listId = listId;
+    }
+
+    /**
+     * @return the id of the card stored in the database
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @param id new id of the entry
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the title of the card
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title which should replace the card's current title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return the id of the list the card belongs to (at the time)
+     */
+    public long getListId() {
+        return listId;
+    }
+
+    /**
+     * @param listId the id of the list that replaces the current list the card belongs to
+     */
+    public void setListId(long listId) {
         this.listId = listId;
     }
 
@@ -69,7 +111,8 @@ public class Card {
      */
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+        return "The title of this Card is: " + getTitle() +
+                ", and the ID of the List this Card belongs to is: " + getListId();
     }
 
 }
