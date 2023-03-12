@@ -51,6 +51,11 @@ public class BoardTest {
     }
 
     @Test
+    public void testEqualsNull() {
+        assertNotNull(board);
+    }
+
+    @Test
     public void testHashCode() {
         Board otherBoard = new Board("Test");
         assertEquals(board.hashCode(), otherBoard.hashCode());
