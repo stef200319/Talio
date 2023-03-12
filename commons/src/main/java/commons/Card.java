@@ -95,7 +95,8 @@ public class Card {
     }
 
     /**
-     * @param position the new position of the card in the list it belongs to (at the time), which replaces the old position
+     * @param position the new position of the card in the list it belongs to (at the time),
+     *                 which replaces the old position
      */
     public void setPosition(Integer position) {
         this.position = position;
