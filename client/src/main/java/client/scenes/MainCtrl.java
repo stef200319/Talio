@@ -41,6 +41,11 @@ public class MainCtrl {
     private AddTaskCtrl addTaskCtrl;
     private Scene addTask;
 
+    private TaskManagementCtrl taskManagementCtrl;
+    private Scene taskManagement;
+
+    private WorkspaceCtrl workspaceCtrl;
+    private Scene workspace;
 
     /**
      * @param primaryStage
@@ -50,12 +55,16 @@ public class MainCtrl {
      * @param clientConnect
      * @param taskDetails
      * @param addTask
+     * @param workspace
+     * @param taskManagement
      */
+    @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
 
                            Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
                            Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
-                           Pair<AddTaskCtrl, Parent> addTask) {
+                           Pair<AddTaskCtrl, Parent> addTask, Pair<TaskManagementCtrl, Parent> taskManagement,
+                           Pair<WorkspaceCtrl, Parent> workspace) {
 
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
@@ -76,6 +85,12 @@ public class MainCtrl {
         this.addTaskCtrl = addTask.getKey();
         this.addTask = new Scene(addTask.getValue());
 
+        this.taskManagementCtrl = taskManagement.getKey();
+        this.taskManagement = new Scene(taskManagement.getValue());
+
+        this.workspaceCtrl = workspace.getKey();
+        this.workspace = new Scene(workspace.getValue());
+
         showClientConnect();
         primaryStage.show();
     }
@@ -88,7 +103,20 @@ public class MainCtrl {
         primaryStage.setTitle("Board: Overview");
         primaryStage.setScene(overview);
     }
-
+    /**
+     * show workspace page
+     */
+    public void showWorkspace(){
+        primaryStage.setTitle("Workspace");
+        primaryStage.setScene(workspace);
+    }
+    /**
+     * show task management page
+     */
+    public void showTaskManagement(){
+        primaryStage.setTitle("Task management");
+        primaryStage.setScene(taskManagement);
+    }
     /**
      *
      */

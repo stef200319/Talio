@@ -6,21 +6,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import server.database.CardRepository;
-import commons.Card;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import commons.List;
+import server.database.ListRepository;
 
-public class TestCardRepository implements CardRepository {
-    private final List<Card> cards;
-    private final List<String> calledMethods = new ArrayList<>();
+public class TestListRepository implements ListRepository {
+    private final java.util.List<List> lists;
+    private final java.util.List<String> calledMethods = new ArrayList<>();
 
     /**
-     * @param name
+     * @param name of the method which was executed
      */
-    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     private void call(String name) {
         calledMethods.add(name);
     }
@@ -28,11 +26,13 @@ public class TestCardRepository implements CardRepository {
     /**
      *
      */
-    @SuppressWarnings("checkstyle.*")
-    public TestCardRepository() {
-        cards = new ArrayList<>();
-        cards.add(new Card("Test1", 1));
-        cards.add(new Card("Test2", 1));
+    public TestListRepository() {
+        lists = new ArrayList<>();
+        lists.add(new List("Test1", 5));
+        lists.get(0).setId(1);
+
+        lists.add(new List("Test2", 5));
+        lists.get(1).setId(2);
     }
 
     /**
@@ -40,12 +40,12 @@ public class TestCardRepository implements CardRepository {
      * @param <S>
      * @return
      */
-    @SuppressWarnings("checkstyle.*")
     @Override
-    public <S extends Card> S save(S entity) {
+    public <S extends List> S save(S entity) {
         call("save");
-        entity.id = (long) cards.size();
-        cards.add(entity);
+
+        entity.setId((long) lists.size());
+        lists.add(entity);
         return entity;
     }
 
@@ -53,11 +53,12 @@ public class TestCardRepository implements CardRepository {
      * @param id must not be {@literal null}.
      * @return
      */
-    @SuppressWarnings("checkstyle.*")
     @Override
-    public Optional<Card> findById(Long id) {
-        if (id > 0 && id <= cards.size()) {
-            return Optional.of(cards.get(id.intValue() - 1));
+    public Optional<List> findById(Long id) {
+        call("findById");
+
+        if (id > 0 && id <= lists.size()) {
+            return Optional.of(lists.get(id.intValue() - 1));
         } else {
             return Optional.empty();
         }
@@ -66,10 +67,9 @@ public class TestCardRepository implements CardRepository {
     /**
      * @return
      */
-    @SuppressWarnings("checkstyle.*")
     @Override
-    public List<Card> findAll() {
-        return cards;
+    public java.util.List<List> findAll() {
+        return lists;
     }
 
     /**
@@ -77,7 +77,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public List<Card> findAll(Sort sort) {
+    public java.util.List<List> findAll(Sort sort) {
         return null;
     }
 
@@ -86,7 +86,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public Page<Card> findAll(Pageable pageable) {
+    public Page<List> findAll(Pageable pageable) {
         return null;
     }
 
@@ -95,7 +95,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public List<Card> findAllById(Iterable<Long> longs) {
+    public java.util.List<List> findAllById(Iterable<Long> longs) {
         return null;
     }
 
@@ -113,7 +113,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public <S extends Card> List<S> saveAll(Iterable<S> entities) {
+    public <S extends List> java.util.List<S> saveAll(Iterable<S> entities) {
         return null;
     }
 
@@ -127,11 +127,11 @@ public class TestCardRepository implements CardRepository {
 
     /**
      * @param entity entity to be saved. Must not be {@literal null}.
-     * @param <S>
-     * @return
+     * @param <S> sut
+     * @return null
      */
     @Override
-    public <S extends Card> S saveAndFlush(S entity) {
+    public <S extends List> S saveAndFlush(S entity) {
         return null;
     }
 
@@ -141,7 +141,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public <S extends Card> List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends List> java.util.List<S> saveAllAndFlush(Iterable<S> entities) {
         return null;
     }
 
@@ -149,7 +149,7 @@ public class TestCardRepository implements CardRepository {
      * @param entities entities to be deleted. Must not be {@literal null}.
      */
     @Override
-    public void deleteAllInBatch(Iterable<Card> entities) {
+    public void deleteAllInBatch(Iterable<List> entities) {
 
     }
 
@@ -174,7 +174,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public Card getOne(Long aLong) {
+    public List getOne(Long aLong) {
         return null;
     }
 
@@ -183,7 +183,12 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public Card getById(Long aLong) {
+    public List getById(Long aLong) {
+        for (List l : lists) {
+            if (l.getId() == aLong) {
+                return l;
+            }
+        }
         return null;
     }
 
@@ -193,7 +198,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public <S extends Card> Optional<S> findOne(Example<S> example) {
+    public <S extends List> Optional<S> findOne(Example<S> example) {
         return Optional.empty();
     }
 
@@ -203,7 +208,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public <S extends Card> List<S> findAll(Example<S> example) {
+    public <S extends List> java.util.List<S> findAll(Example<S> example) {
         return null;
     }
 
@@ -214,7 +219,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public <S extends Card> List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends List> java.util.List<S> findAll(Example<S> example, Sort sort) {
         return null;
     }
 
@@ -225,7 +230,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public <S extends Card> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends List> Page<S> findAll(Example<S> example, Pageable pageable) {
         return null;
     }
 
@@ -235,7 +240,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public <S extends Card> long count(Example<S> example) {
+    public <S extends List> long count(Example<S> example) {
         return 0;
     }
 
@@ -245,7 +250,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public <S extends Card> boolean exists(Example<S> example) {
+    public <S extends List> boolean exists(Example<S> example) {
         return false;
     }
 
@@ -257,7 +262,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public <S extends Card, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R>
+    public <S extends List, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R>
             queryFunction) {
         return null;
     }
@@ -267,8 +272,8 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public void deleteById(Long id) {
-        if (id > 0 && id <= cards.size()) {
-            cards.remove(id.intValue() - 1);
+        if (id > 0 && id <= lists.size()) {
+            lists.remove(id.intValue() - 1);
         }
     }
 
@@ -276,8 +281,8 @@ public class TestCardRepository implements CardRepository {
      * @param entity must not be {@literal null}.
      */
     @Override
-    public void delete(Card entity) {
-
+    public void delete(List entity) {
+        lists.remove(entity);
     }
 
     /**
@@ -292,7 +297,7 @@ public class TestCardRepository implements CardRepository {
      * @param entities must not be {@literal null}. Must not contain {@literal null} elements.
      */
     @Override
-    public void deleteAll(Iterable<? extends Card> entities) {
+    public void deleteAll(Iterable<? extends List> entities) {
 
     }
 
@@ -305,16 +310,16 @@ public class TestCardRepository implements CardRepository {
     }
 
     /**
-     * @param id must not be {@literal null}. 
+     * @param id must not be {@literal null}.
      * @return
      */
     @Override
-
     public boolean existsById(Long id) {
-        if (id > 0 && id <= cards.size()) {
-            return true;
-        } else {
-            return false;
+        for (List l : lists) {
+            if (l.getId() == id) {
+                return true;
+            }
         }
+        return false;
     }
 }
