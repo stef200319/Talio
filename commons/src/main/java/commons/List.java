@@ -68,6 +68,9 @@ public class List {
         this.id = id;
     }
 
+    /**
+     * @param boardId the id of the board that replaces the current board the list belongs to
+     */
     public void setBoardId(long boardId) {
         this.boardId = boardId;
     }
