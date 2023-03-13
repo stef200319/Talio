@@ -326,4 +326,15 @@ public class TestCardRepository implements CardRepository {
     public Integer findMaxPositionByListId(Long listId) {
         return 0;
     }
+
+    /**
+     * @param listId   List of the Card in which it is located in
+     * @param position Current position of the Card, where you want to fetch all the Cards whose positions are larger
+     *                 that this postion
+     * @return
+     */
+    @Override
+    public List<Card> findByListIdAndPositionGreaterThan(long listId, int position) {
+        return null;
+    }
 }

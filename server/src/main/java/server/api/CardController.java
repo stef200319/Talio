@@ -1,10 +1,13 @@
 package server.api;
 
 import commons.Card;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -83,6 +86,7 @@ public class CardController {
             return ResponseEntity.notFound().build();
         }
     }
+    
 
     /**
      * Delete a card from the database and receive a conformation using the card's id, if the card exists.
@@ -93,9 +97,24 @@ public class CardController {
      */
     @DeleteMapping("/deleteCard/{cardId}")
     public ResponseEntity<String> deleteCard(@PathVariable("cardId") long cardId){
-        if (repo.existsById(cardId)) {
+        Optional<Card> cardToDeleteOptional = repo.findById(cardId);
+
+        if (cardToDeleteOptional.isPresent()) {
+            Card cardToDelete = cardToDeleteOptional.get();
+            long listId = cardToDelete.getListId();
+            int position = cardToDelete.getPosition();
+
+            // Delete the card
             repo.deleteById(cardId);
-            return ResponseEntity.ok("Card list deleted successfully");
+
+            // Decrement the positions of all cards in front of the deleted card
+            List<Card> cardsToUpdate = repo.findByListIdAndPositionGreaterThan(listId, position);
+            for (Card cardToUpdate : cardsToUpdate) {
+                int currentPosition = cardToUpdate.getPosition();
+                cardToUpdate.setPosition(currentPosition - 1);
+                repo.save(cardToUpdate);
+            }
+            return ResponseEntity.ok("Card deleted successfully");
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -103,11 +122,11 @@ public class CardController {
 
     /**
      * @param listId id of the list of which all cards should be retrieved
-     * @return a list of cards which all have the same listId corresponding to the input
+     * @return a list of cards which all have the same listId corresponding to the input, ordered by position
      */
     @GetMapping("/getByListId/{listId}")
     @ResponseBody public List<Card> getCardByListId(@PathVariable("listId") long listId) {
-        List<Card> cards = repo.findAll();
+        List<Card> cards = repo.findAll(Sort.by(Sort.Direction.ASC, "position"));
         List<Card> cardsOnList = new LinkedList<>();
 
         for (Card c : cards) {
@@ -115,7 +134,6 @@ public class CardController {
                 cardsOnList.add(c);
             }
         }
-
         return cardsOnList;
     }
 
