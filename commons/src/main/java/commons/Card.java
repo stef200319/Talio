@@ -28,6 +28,7 @@ public class Card {
     private long id;
     private String title;
     private long listId;
+    private Integer position;
 
 
 
@@ -84,6 +85,21 @@ public class Card {
      */
     public void setListId(long listId) {
         this.listId = listId;
+    }
+
+    /**
+     * @return the position of the card in the list it belongs to (at the time)
+     */
+    public Integer getPosition() {
+        return position;
+    }
+
+    /**
+     * @param position the new position of the card in the list it belongs to (at the time),
+     *                 which replaces the old position
+     */
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     /**

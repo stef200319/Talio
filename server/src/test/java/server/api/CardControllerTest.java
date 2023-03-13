@@ -46,6 +46,19 @@ class CardControllerTest {
         assertEquals(1, response.getBody().getListId());
     }
 
+//    @Test
+//    void testAddCard_positionExpectedSameList() {
+//        ResponseEntity<Card> response = controller.addCard("Test1", 1);
+//        assertEquals(1, response.getBody().getPosition());
+//    }
+//    @Test
+//    void testAddCard_positionExpectedSameList2() {
+//        controller.addCard("Test1", 1);
+//        controller.addCard("Test2", 1);
+//        Card card = controller.getCardByCardId(2);
+//        assertEquals(2, card.getPosition());
+//    }
+
 
     @Test
     void testEditCardTitle_responseStatusIsOk() {

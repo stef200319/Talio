@@ -50,6 +50,18 @@ public class CardTest {
     }
 
     @Test
+    public void testGetPosition() {
+        card.setPosition(1);
+        assertEquals(1, card.getPosition());
+    }
+
+    @Test
+    public void testSetPosition() {
+        card.setPosition(2);
+        assertEquals(card.getPosition(),2);
+    }
+
+    @Test
     public void testEquals() {
         Card otherCard = new Card("Test", 1L);
         assertEquals(card, otherCard);
