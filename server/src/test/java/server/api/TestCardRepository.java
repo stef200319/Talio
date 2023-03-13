@@ -78,7 +78,7 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public List<Card> findAll(Sort sort) {
-        return null;
+        return cards;
     }
 
     /**

@@ -102,17 +102,19 @@ public class CardController {
         if (cardToDeleteOptional.isPresent()) {
             Card cardToDelete = cardToDeleteOptional.get();
             long listId = cardToDelete.getListId();
-            int position = cardToDelete.getPosition();
+            Integer position = cardToDelete.getPosition();
 
             // Delete the card
             repo.deleteById(cardId);
 
             // Decrement the positions of all cards in front of the deleted card
-            List<Card> cardsToUpdate = repo.findByListIdAndPositionGreaterThan(listId, position);
-            for (Card cardToUpdate : cardsToUpdate) {
-                int currentPosition = cardToUpdate.getPosition();
-                cardToUpdate.setPosition(currentPosition - 1);
-                repo.save(cardToUpdate);
+            if(position!=null){
+                List<Card> cardsToUpdate = repo.findByListIdAndPositionGreaterThan(listId, position);
+                for (Card cardToUpdate : cardsToUpdate) {
+                    int currentPosition = cardToUpdate.getPosition();
+                    cardToUpdate.setPosition(currentPosition - 1);
+                    repo.save(cardToUpdate);
+                }
             }
             return ResponseEntity.ok("Card deleted successfully");
         } else {
@@ -129,9 +131,11 @@ public class CardController {
         List<Card> cards = repo.findAll(Sort.by(Sort.Direction.ASC, "position"));
         List<Card> cardsOnList = new LinkedList<>();
 
-        for (Card c : cards) {
-            if (c.getListId() == listId) {
-                cardsOnList.add(c);
+        if(cards!=null){
+            for (Card c : cards) {
+                if (c.getListId() == listId) {
+                    cardsOnList.add(c);
+                }
             }
         }
         return cardsOnList;
