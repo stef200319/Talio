@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ColumnControllerTest {
 
-    private ListController sut;
+    private ColumnController sut;
     private ColumnRepository repo;
     private BoardRepository boardRepository;
 
@@ -22,7 +22,7 @@ class ColumnControllerTest {
     public void setup() {
         boardRepository = new TestBoardRepository();
         repo = new TestColumnRepository();
-        sut = new ListController(repo, boardRepository);
+        sut = new ColumnController(repo, boardRepository);
     }
 
     @Test

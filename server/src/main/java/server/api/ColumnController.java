@@ -10,7 +10,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/list")
-public class ListController {
+public class ColumnController {
 
     private final ColumnRepository columnRepository;
     private final BoardRepository boardRepository;
@@ -19,7 +19,7 @@ public class ListController {
      * @param columnRepository the data container which includes all the lists
      * @param boardRepository the repository of the board -> used for checking whether boardId exists
      */
-    public ListController(ColumnRepository columnRepository, BoardRepository boardRepository) {
+    public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository) {
         this.columnRepository = columnRepository;
         this.boardRepository = boardRepository;
     }
