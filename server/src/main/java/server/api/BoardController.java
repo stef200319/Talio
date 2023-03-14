@@ -11,7 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/board")
 public class BoardController {
-    private BoardRepository repo;
+    private final BoardRepository repo;
 
     /**
      * @param repo the repository which contains all the data in the database
@@ -36,15 +36,12 @@ public class BoardController {
     @ResponseBody public Board getBoardById(@PathVariable Long boardId) {
         Optional<Board> optionalBoard = repo.findById(boardId);
 
-        if (optionalBoard.isPresent()) {
-            return optionalBoard.get();
-        }
-        return null;
+        return optionalBoard.orElse(null);
     }
 
     /**
      * @param title of the new board
-     * @return responsebody which contains information whether and what was added to the db
+     * @return responseEntity which contains information whether and what was added to the db
      */
     @PostMapping("/addBoard/{title}")
     @ResponseBody public ResponseEntity<Board> addBoard(@PathVariable String title) {
@@ -88,7 +85,7 @@ public class BoardController {
 
         if (optionalBoard.isPresent()) {
             repo.delete(optionalBoard.get());
-            return ResponseEntity.ok("Board deleted succesfully");
+            return ResponseEntity.ok("Board deleted successfully");
         }
 
         return ResponseEntity.notFound().build();
