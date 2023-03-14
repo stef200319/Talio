@@ -4,6 +4,7 @@ import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import server.database.BoardRepository;
 import server.database.ColumnRepository;
 
 import java.util.Iterator;
@@ -15,18 +16,26 @@ class ColumnControllerTest {
 
     private ListController sut;
     private ColumnRepository repo;
+    private BoardRepository boardRepository;
 
     @BeforeEach
     public void setup() {
+        boardRepository = new TestBoardRepository();
         repo = new TestColumnRepository();
-        sut = new ListController(repo);
+        sut = new ListController(repo, boardRepository);
     }
 
     @Test
-    void addList() {
-        ResponseEntity<Column> ret = sut.addList("TODO", 53);
+    void addListWithGoodId() {
+        ResponseEntity<Column> ret = sut.addList("TODO", 2);
         assertEquals("TODO", ret.getBody().getTitle());
-        assertEquals(53, ret.getBody().getBoardId());
+        assertEquals(2, ret.getBody().getBoardId());
+    }
+
+    @Test
+    void addListIdNotInList() {
+        ResponseEntity<Column> ret = sut.addList("Todo", 5L);
+        assertEquals(ResponseEntity.notFound().build(), ret);
     }
 
     @Test

@@ -4,6 +4,7 @@ import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import server.database.BoardRepository;
 import server.database.ColumnRepository;
 import java.util.List;
 
@@ -12,12 +13,15 @@ import java.util.List;
 public class ListController {
 
     private final ColumnRepository columnRepository;
+    private final BoardRepository boardRepository;
 
     /**
      * @param columnRepository the data container which includes all the lists
+     * @param boardRepository the repository of the board -> used for checking whether boardId exists
      */
-    public ListController(ColumnRepository columnRepository) {
+    public ListController(ColumnRepository columnRepository, BoardRepository boardRepository) {
         this.columnRepository = columnRepository;
+        this.boardRepository = boardRepository;
     }
 
     /**
@@ -30,11 +34,13 @@ public class ListController {
                                                         @PathVariable long boardId) {
         Column newColumn = new Column(title, boardId);
 
-        // todo check whether boardId is in the database -> Need the Board-controller
-        // todo check max 10 entries
+        if (boardRepository.existsById(boardId)) {
+            Column saved = columnRepository.save(newColumn);
+            return ResponseEntity.ok(saved);
+        }
 
-        Column saved = columnRepository.save(newColumn);
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.notFound().build();
+
     }
 
     /**
@@ -57,7 +63,7 @@ public class ListController {
      * @param title the new title of the list
      * @return whether the list was successfully updated
      */
-    @PutMapping("/editTitle/{listId}/{title}")
+    @PutMapping("/editTitle/{id}/{title}")
     @ResponseBody public ResponseEntity<String> editList(@PathVariable long id,
                                                        @PathVariable String title) {
         if (columnRepository.existsById(id)) {
@@ -74,7 +80,7 @@ public class ListController {
      * @param id the id of the list which will be retrieved
      * @return the list according to the input id
      */
-    @GetMapping("/getByListId/{listId}")
+    @GetMapping("/getByListId/{id}")
     @ResponseBody public ResponseEntity<Column> getListByID(@PathVariable long id) {
         if (columnRepository.existsById(id)) {
             Column l = columnRepository.getById(id);
