@@ -8,6 +8,7 @@ import server.database.BoardRepository;
 import server.database.ColumnRepository;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -99,5 +100,25 @@ class ColumnControllerTest {
         ResponseEntity<List<Column>> ret = sut.getAllLists();
 
         assertEquals(ResponseEntity.notFound().build(), ret);
+    }
+
+    @Test
+    void getByBoardIdAll() {
+        List<Column> ret = sut.getColumnByBoardId(5).getBody();
+
+        assertEquals(sut.getAllLists().getBody(), ret);
+    }
+
+    @Test
+    void getByBoardIdSubset() {
+        sut.addList("Test3", 2L);
+
+        List<Column> expected = new LinkedList<>();
+
+        Column newCol = new Column("Test3", 2L);
+        newCol.setId(2);
+        expected.add(newCol);
+
+        assertArrayEquals(expected.toArray(), sut.getColumnByBoardId(2L).getBody().toArray());
     }
 }

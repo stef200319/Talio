@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import server.database.ColumnRepository;
@@ -321,5 +323,17 @@ public class TestColumnRepository implements ColumnRepository {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<Column> findColumnsByBoardId(long boardId) {
+        List<Column> returnList = new LinkedList<>();
+
+        for (Column col : columns) {
+            if (col.getBoardId() == boardId)
+                returnList.add(col);
+        }
+
+        return returnList;
     }
 }

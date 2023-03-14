@@ -103,4 +103,19 @@ public class ColumnController {
 
         return ResponseEntity.notFound().build();
     }
+
+    /**
+     * @param boardId the id of the board for which all columns need to be fetched
+     * @return a list of all the columns on the board
+     */
+    @GetMapping("/getByBoardId/{boardId}")
+    @ResponseBody public ResponseEntity<List<Column>> getColumnByBoardId(@PathVariable long boardId) {
+        List<Column> columns = columnRepository.findColumnsByBoardId(boardId);
+
+        if (columns != null) {
+            return ResponseEntity.ok(columns);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
 }
