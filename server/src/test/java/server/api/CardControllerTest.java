@@ -127,7 +127,7 @@ class CardControllerTest {
     @Test
     void testDeleteCard_ResponseBodyIsCorrect() {
         ResponseEntity<String> response = controller.deleteCard(1L);
-        assertEquals("Card list deleted successfully", response.getBody());
+        assertEquals("Card deleted successfully", response.getBody());
     }
 
 
@@ -170,8 +170,8 @@ class CardControllerTest {
 
     @Test
     void testGetCardByListId_2entries() {
-        List<Card> ret = controller.getCardByListId(1);
-
+        List<Card> ret = controller.getCardByListId(1L);
+        System.out.println(ret);
         List<Card> expected = new ArrayList<>();
         expected.add(new Card("Test1", 1));
         expected.add(new Card("Test2", 1));
