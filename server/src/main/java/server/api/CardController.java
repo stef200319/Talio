@@ -77,7 +77,8 @@ public class CardController {
      * appropriate response to the client.
      */
     @PostMapping("/editColumn/{cardId}/{columnId}")
-    public ResponseEntity<String> editCardColumn(@PathVariable("cardId") long cardId, @PathVariable("columnId") long columnId)
+    public ResponseEntity<String> editCardColumn(@PathVariable("cardId") long cardId,
+                                                 @PathVariable("columnId") long columnId)
     {
         Optional<Card> optionalCard = cardRepository.findById(cardId);
 
@@ -135,13 +136,13 @@ public class CardController {
         List<Card> cards = cardRepository.findAll(Sort.by(Sort.Direction.ASC, "position"));
         List<Card> cardsOnColumn = new LinkedList<>();
 
-        if(cards!=null){
-            for (Card c : cards) {
-                if (c.getColumnId() == columnId) {
-                    cardsOnColumn.add(c);
-                }
+
+        for (Card c : cards) {
+            if (c.getColumnId() == columnId) {
+                cardsOnColumn.add(c);
             }
         }
+
         return cardsOnColumn;
     }
 

@@ -27,48 +27,48 @@ class ColumnControllerTest {
     }
 
     @Test
-    void addListWithGoodId() {
-        ResponseEntity<Column> ret = sut.addList("TODO", 2);
+    void addColumnsWithGoodId() {
+        ResponseEntity<Column> ret = sut.addColumn("TODO", 2);
         assertEquals("TODO", ret.getBody().getTitle());
         assertEquals(2, ret.getBody().getBoardId());
     }
 
     @Test
-    void addListIdNotInList() {
-        ResponseEntity<Column> ret = sut.addList("Todo", 5L);
+    void addColumnIdNotInColumn() {
+        ResponseEntity<Column> ret = sut.addColumn("Todo", 5L);
         assertEquals(ResponseEntity.notFound().build(), ret);
     }
 
     @Test
-    void removeListFound() {
-        ResponseEntity<String> ret = sut.removeList(1);
-        assertEquals(ResponseEntity.ok("List deleted successfully"), ret);
+    void removeColumnFound() {
+        ResponseEntity<String> ret = sut.removeColumn(1);
+        assertEquals(ResponseEntity.ok("Column deleted successfully"), ret);
     }
 
     @Test
-    void removeListNotFound() {
-        ResponseEntity<String> ret = sut.removeList(1000);
+    void removeColumnNotFound() {
+        ResponseEntity<String> ret = sut.removeColumn(1000);
         assertEquals(ResponseEntity.notFound().build(), ret);
     }
 
     @Test
-    void editListFound() {
-        ResponseEntity<String> ret = sut.editList(2, "Test3");
+    void editColumnFound() {
+        ResponseEntity<String> ret = sut.editColumn(2, "Test3");
 
         assertEquals(ret, ResponseEntity.ok("Card edited successfully"));
-        assertEquals("Test3", sut.getListByID(2).getBody().getTitle());
+        assertEquals("Test3", sut.getColumnByID(2).getBody().getTitle());
     }
 
     @Test
-    void editListNotFound() {
-        ResponseEntity<String> ret = sut.editList(1000, "Test3");
+    void editColumnNotFound() {
+        ResponseEntity<String> ret = sut.editColumn(1000, "Test3");
 
         assertEquals(ResponseEntity.notFound().build(), ret);
     }
 
     @Test
-    void getListByIDFound() {
-        ResponseEntity<Column> ret = sut.getListByID(1);
+    void getColumnByIDFound() {
+        ResponseEntity<Column> ret = sut.getColumnByID(1);
 
         Column expected = new Column("Test1", 5);
         expected.setId(1);
@@ -76,16 +76,16 @@ class ColumnControllerTest {
     }
 
     @Test
-    void getListByIDNotFound() {
-        ResponseEntity<Column> ret = sut.getListByID(1000);
+    void getColumnByIDNotFound() {
+        ResponseEntity<Column> ret = sut.getColumnByID(1000);
         assertEquals(ResponseEntity.notFound().build(), ret);
     }
 
     @Test
-    void getAllLists() {
-        ResponseEntity<List<Column>> ret = sut.getAllLists();
+    void getAllColumns() {
+        ResponseEntity<List<Column>> ret = sut.getAllColumns();
 
-        Iterator<Column> it = sut.getAllLists().getBody().iterator();
+        Iterator<Column> it = sut.getAllColumns().getBody().iterator();
 
         for (Column l : ret.getBody()) {
             assertEquals(l, it.next());
@@ -93,11 +93,11 @@ class ColumnControllerTest {
     }
 
     @Test
-    void getAllListsEmpty() {
-        sut.removeList(1);
-        sut.removeList(2);
+    void getAllCollumnsEmpty() {
+        sut.removeColumn(1);
+        sut.removeColumn(2);
 
-        ResponseEntity<List<Column>> ret = sut.getAllLists();
+        ResponseEntity<List<Column>> ret = sut.getAllColumns();
 
         assertEquals(ResponseEntity.notFound().build(), ret);
     }
@@ -106,12 +106,12 @@ class ColumnControllerTest {
     void getByBoardIdAll() {
         List<Column> ret = sut.getColumnByBoardId(5).getBody();
 
-        assertEquals(sut.getAllLists().getBody(), ret);
+        assertEquals(sut.getAllColumns().getBody(), ret);
     }
 
     @Test
     void getByBoardIdSubset() {
-        sut.addList("Test3", 2L);
+        sut.addColumn("Test3", 2L);
 
         List<Column> expected = new LinkedList<>();
 

@@ -325,6 +325,10 @@ public class TestColumnRepository implements ColumnRepository {
         return false;
     }
 
+    /**
+     * @param boardId the id of the board for which we want to find all columns
+     * @return The list of columns which correspond to the input boardId
+     */
     @Override
     public List<Column> findColumnsByBoardId(long boardId) {
         List<Column> returnList = new LinkedList<>();

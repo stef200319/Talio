@@ -9,14 +9,14 @@ import server.database.ColumnRepository;
 import java.util.List;
 
 @Controller
-@RequestMapping("/list")
+@RequestMapping("/column")
 public class ColumnController {
 
     private final ColumnRepository columnRepository;
     private final BoardRepository boardRepository;
 
     /**
-     * @param columnRepository the data container which includes all the lists
+     * @param columnRepository the data container which includes all the columns
      * @param boardRepository the repository of the board -> used for checking whether boardId exists
      */
     public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository) {
@@ -26,11 +26,11 @@ public class ColumnController {
 
     /**
      * @param title The title of the board that needs to be added to the database
-     * @param boardId The board on which the list belongs
-     * @return A response entity of the saved list
+     * @param boardId The board on which the column belongs
+     * @return A response entity of the saved column
      */
-    @PostMapping("/addList/{title}/{boardId}")
-    @ResponseBody public ResponseEntity<Column> addList(@PathVariable String title,
+    @PostMapping("/addColumn/{title}/{boardId}")
+    @ResponseBody public ResponseEntity<Column> addColumn(@PathVariable String title,
                                                         @PathVariable long boardId) {
         Column newColumn = new Column(title, boardId);
 
@@ -44,27 +44,27 @@ public class ColumnController {
     }
 
     /**
-     * @param id the id of the list that needs to be removed
-     * @return a response which says that the list was removed from the database or not.
+     * @param id the id of the column that needs to be removed
+     * @return a response which says that the column was removed from the database or not.
      */
-    @DeleteMapping("/deleteList/{id}")
-    @ResponseBody public ResponseEntity<String> removeList(@PathVariable long id) {
+    @DeleteMapping("/deleteColumn/{id}")
+    @ResponseBody public ResponseEntity<String> removeColumn(@PathVariable long id) {
         if (columnRepository.existsById(id)) {
             Column l = columnRepository.getById(id);
             columnRepository.delete(l);
-            return ResponseEntity.ok("List deleted successfully");
+            return ResponseEntity.ok("Column deleted successfully");
         }
 
         return ResponseEntity.notFound().build();
     }
 
     /**
-     * @param id the id of the list which should be updated
-     * @param title the new title of the list
-     * @return whether the list was successfully updated
+     * @param id the id of the column which should be updated
+     * @param title the new title of the column
+     * @return whether the column was successfully updated
      */
     @PutMapping("/editTitle/{id}/{title}")
-    @ResponseBody public ResponseEntity<String> editList(@PathVariable long id,
+    @ResponseBody public ResponseEntity<String> editColumn(@PathVariable long id,
                                                        @PathVariable String title) {
         if (columnRepository.existsById(id)) {
             Column l = columnRepository.getById(id);
@@ -77,11 +77,11 @@ public class ColumnController {
     }
 
     /**
-     * @param id the id of the list which will be retrieved
-     * @return the list according to the input id
+     * @param id the id of the column which will be retrieved
+     * @return the column according to the input id
      */
-    @GetMapping("/getByListId/{id}")
-    @ResponseBody public ResponseEntity<Column> getListByID(@PathVariable long id) {
+    @GetMapping("/getByColumnId/{id}")
+    @ResponseBody public ResponseEntity<Column> getColumnByID(@PathVariable long id) {
         if (columnRepository.existsById(id)) {
             Column l = columnRepository.getById(id);
             return ResponseEntity.ok(l);
@@ -91,10 +91,10 @@ public class ColumnController {
     }
 
     /**
-     * @return all lists in the database
+     * @return all columns in the database
      */
-    @GetMapping("/getAllLists")
-    @ResponseBody public ResponseEntity<List<Column>> getAllLists() {
+    @GetMapping("/getAllColumns")
+    @ResponseBody public ResponseEntity<List<Column>> getAllColumns() {
         List<Column> columns = columnRepository.findAll();
 
         if (columns.size() > 0) {
@@ -106,7 +106,7 @@ public class ColumnController {
 
     /**
      * @param boardId the id of the board for which all columns need to be fetched
-     * @return a list of all the columns on the board
+     * @return a column of all the columns on the board
      */
     @GetMapping("/getByBoardId/{boardId}")
     @ResponseBody public ResponseEntity<List<Column>> getColumnByBoardId(@PathVariable long boardId) {

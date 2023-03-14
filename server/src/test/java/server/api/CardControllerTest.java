@@ -97,7 +97,7 @@ class CardControllerTest {
     @Test
     void testEditCardList_responseBodyEqualsExpected() {
         ResponseEntity<String> response = controller.editCardColumn(1, 2);
-        assertEquals("Card list updated successfully", response.getBody());
+        assertEquals("Card column updated successfully", response.getBody());
     }
 
     @Test
