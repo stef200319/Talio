@@ -18,7 +18,10 @@ public class Board {
     private String title;
 
 
-    private Board() {
+    /**
+     * constructor for object mappers
+     */
+    public Board() {
         // for object mappers
     }
 

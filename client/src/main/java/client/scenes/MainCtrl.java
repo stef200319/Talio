@@ -45,7 +45,6 @@ public class MainCtrl {
 
     /**
      * @param primaryStage
-     * @param overview
      * @param add
      * @param boardOverview
      * @param clientConnect
