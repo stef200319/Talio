@@ -23,13 +23,9 @@ import javafx.util.Pair;
 public class MainCtrl {
 
     private Stage primaryStage;
-
-    private QuoteOverviewCtrl overviewCtrl;
     private Scene overview;
     private AddListCtrl addListCtrl;
     private Scene addList;
-
-    private AddQuoteCtrl addCtrl;
     private Scene add;
     private BoardOverviewCtrl boardOverviewCtrl;
     private Scene boardOverview;
@@ -59,7 +55,7 @@ public class MainCtrl {
      * @param taskManagement
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
+    public void initialize(Stage primaryStage,
 
                            Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
                            Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
@@ -67,8 +63,6 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace) {
 
         this.primaryStage = primaryStage;
-        this.overviewCtrl = overview.getKey();
-        this.overview = new Scene(overview.getValue());
 
         this.addListCtrl = add.getKey();
         this.addList = new Scene(add.getValue());
@@ -116,14 +110,6 @@ public class MainCtrl {
     public void showTaskManagement(){
         primaryStage.setTitle("Task management");
         primaryStage.setScene(taskManagement);
-    }
-    /**
-     *
-     */
-    public void showAdd() {
-        primaryStage.setTitle("Quotes: Adding Quote");
-        primaryStage.setScene(add);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     /**
