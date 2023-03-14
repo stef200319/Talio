@@ -1,29 +1,30 @@
 package server.api;
 
-import commons.List;
+import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
-import server.database.ListRepository;
+import server.database.ColumnRepository;
 
 import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ListControllerTest {
+class ColumnControllerTest {
 
     private ListController sut;
-    private ListRepository repo;
+    private ColumnRepository repo;
 
     @BeforeEach
     public void setup() {
-        repo = new TestListRepository();
+        repo = new TestColumnRepository();
         sut = new ListController(repo);
     }
 
     @Test
     void addList() {
-        ResponseEntity<List> ret = sut.addList("TODO", 53);
+        ResponseEntity<Column> ret = sut.addList("TODO", 53);
         assertEquals("TODO", ret.getBody().getTitle());
         assertEquals(53, ret.getBody().getBoardId());
     }
@@ -57,26 +58,26 @@ class ListControllerTest {
 
     @Test
     void getListByIDFound() {
-        ResponseEntity<List> ret = sut.getListByID(1);
+        ResponseEntity<Column> ret = sut.getListByID(1);
 
-        List expected = new List("Test1", 5);
+        Column expected = new Column("Test1", 5);
         expected.setId(1);
         assertEquals(ResponseEntity.ok(expected), ret);
     }
 
     @Test
     void getListByIDNotFound() {
-        ResponseEntity<List> ret = sut.getListByID(1000);
+        ResponseEntity<Column> ret = sut.getListByID(1000);
         assertEquals(ResponseEntity.notFound().build(), ret);
     }
 
     @Test
     void getAllLists() {
-        ResponseEntity<java.util.List<List>> ret = sut.getAllLists();
+        ResponseEntity<List<Column>> ret = sut.getAllLists();
 
-        Iterator<List> it = sut.getAllLists().getBody().iterator();
+        Iterator<Column> it = sut.getAllLists().getBody().iterator();
 
-        for (List l : ret.getBody()) {
+        for (Column l : ret.getBody()) {
             assertEquals(l, it.next());
         }
     }
@@ -86,7 +87,7 @@ class ListControllerTest {
         sut.removeList(1);
         sut.removeList(2);
 
-        ResponseEntity<java.util.List<List>> ret = sut.getAllLists();
+        ResponseEntity<List<Column>> ret = sut.getAllLists();
 
         assertEquals(ResponseEntity.notFound().build(), ret);
     }

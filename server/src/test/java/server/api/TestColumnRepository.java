@@ -1,6 +1,7 @@
 
 package server.api;
 
+import commons.Column;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,11 +10,10 @@ import org.springframework.data.repository.query.FluentQuery;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Function;
-import commons.List;
-import server.database.ListRepository;
+import server.database.ColumnRepository;
 
-public class TestListRepository implements ListRepository {
-    private final java.util.List<List> lists;
+public class TestColumnRepository implements ColumnRepository {
+    private final java.util.List<Column> columns;
     private final java.util.List<String> calledMethods = new ArrayList<>();
 
     /**
@@ -26,13 +26,13 @@ public class TestListRepository implements ListRepository {
     /**
      *
      */
-    public TestListRepository() {
-        lists = new ArrayList<>();
-        lists.add(new List("Test1", 5));
-        lists.get(0).setId(1);
+    public TestColumnRepository() {
+        columns = new ArrayList<>();
+        columns.add(new Column("Test1", 5));
+        columns.get(0).setId(1);
 
-        lists.add(new List("Test2", 5));
-        lists.get(1).setId(2);
+        columns.add(new Column("Test2", 5));
+        columns.get(1).setId(2);
     }
 
     /**
@@ -41,11 +41,11 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> S save(S entity) {
+    public <S extends Column> S save(S entity) {
         call("save");
 
-        entity.setId((long) lists.size());
-        lists.add(entity);
+        entity.setId((long) columns.size());
+        columns.add(entity);
         return entity;
     }
 
@@ -54,11 +54,11 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public Optional<List> findById(Long id) {
+    public Optional<Column> findById(Long id) {
         call("findById");
 
-        if (id > 0 && id <= lists.size()) {
-            return Optional.of(lists.get(id.intValue() - 1));
+        if (id > 0 && id <= columns.size()) {
+            return Optional.of(columns.get(id.intValue() - 1));
         } else {
             return Optional.empty();
         }
@@ -68,8 +68,8 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public java.util.List<List> findAll() {
-        return lists;
+    public java.util.List<Column> findAll() {
+        return columns;
     }
 
     /**
@@ -77,7 +77,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public java.util.List<List> findAll(Sort sort) {
+    public java.util.List<Column> findAll(Sort sort) {
         return null;
     }
 
@@ -86,7 +86,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public Page<List> findAll(Pageable pageable) {
+    public Page<Column> findAll(Pageable pageable) {
         return null;
     }
 
@@ -95,7 +95,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public java.util.List<List> findAllById(Iterable<Long> longs) {
+    public java.util.List<Column> findAllById(Iterable<Long> longs) {
         return null;
     }
 
@@ -113,7 +113,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> java.util.List<S> saveAll(Iterable<S> entities) {
+    public <S extends Column> java.util.List<S> saveAll(Iterable<S> entities) {
         return null;
     }
 
@@ -131,7 +131,7 @@ public class TestListRepository implements ListRepository {
      * @return null
      */
     @Override
-    public <S extends List> S saveAndFlush(S entity) {
+    public <S extends Column> S saveAndFlush(S entity) {
         return null;
     }
 
@@ -141,7 +141,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> java.util.List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends Column> java.util.List<S> saveAllAndFlush(Iterable<S> entities) {
         return null;
     }
 
@@ -149,7 +149,7 @@ public class TestListRepository implements ListRepository {
      * @param entities entities to be deleted. Must not be {@literal null}.
      */
     @Override
-    public void deleteAllInBatch(Iterable<List> entities) {
+    public void deleteAllInBatch(Iterable<Column> entities) {
 
     }
 
@@ -174,7 +174,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public List getOne(Long aLong) {
+    public Column getOne(Long aLong) {
         return null;
     }
 
@@ -183,8 +183,8 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public List getById(Long aLong) {
-        for (List l : lists) {
+    public Column getById(Long aLong) {
+        for (Column l : columns) {
             if (l.getId() == aLong) {
                 return l;
             }
@@ -198,7 +198,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> Optional<S> findOne(Example<S> example) {
+    public <S extends Column> Optional<S> findOne(Example<S> example) {
         return Optional.empty();
     }
 
@@ -208,7 +208,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> java.util.List<S> findAll(Example<S> example) {
+    public <S extends Column> java.util.List<S> findAll(Example<S> example) {
         return null;
     }
 
@@ -219,7 +219,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> java.util.List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends Column> java.util.List<S> findAll(Example<S> example, Sort sort) {
         return null;
     }
 
@@ -230,7 +230,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends Column> Page<S> findAll(Example<S> example, Pageable pageable) {
         return null;
     }
 
@@ -240,7 +240,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> long count(Example<S> example) {
+    public <S extends Column> long count(Example<S> example) {
         return 0;
     }
 
@@ -250,7 +250,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> boolean exists(Example<S> example) {
+    public <S extends Column> boolean exists(Example<S> example) {
         return false;
     }
 
@@ -262,7 +262,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R>
+    public <S extends Column, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R>
             queryFunction) {
         return null;
     }
@@ -272,8 +272,8 @@ public class TestListRepository implements ListRepository {
      */
     @Override
     public void deleteById(Long id) {
-        if (id > 0 && id <= lists.size()) {
-            lists.remove(id.intValue() - 1);
+        if (id > 0 && id <= columns.size()) {
+            columns.remove(id.intValue() - 1);
         }
     }
 
@@ -281,8 +281,8 @@ public class TestListRepository implements ListRepository {
      * @param entity must not be {@literal null}.
      */
     @Override
-    public void delete(List entity) {
-        lists.remove(entity);
+    public void delete(Column entity) {
+        columns.remove(entity);
     }
 
     /**
@@ -297,7 +297,7 @@ public class TestListRepository implements ListRepository {
      * @param entities must not be {@literal null}. Must not contain {@literal null} elements.
      */
     @Override
-    public void deleteAll(Iterable<? extends List> entities) {
+    public void deleteAll(Iterable<? extends Column> entities) {
 
     }
 
@@ -315,7 +315,7 @@ public class TestListRepository implements ListRepository {
      */
     @Override
     public boolean existsById(Long id) {
-        for (List l : lists) {
+        for (Column l : columns) {
             if (l.getId() == id) {
                 return true;
             }

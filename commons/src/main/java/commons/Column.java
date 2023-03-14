@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class List {
+public class Column {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class List {
     /**
      * Constructor for object mappers
      */
-    public List() {
+    public Column() {
         // for object mappers
     }
 
@@ -28,7 +28,7 @@ public class List {
      * @param title Title of the list
      * @param boardId id of the board the list belongs to
      */
-    public List(String title, long boardId) {
+    public Column(String title, long boardId) {
         this.title = title;
         this.boardId = boardId;
     }

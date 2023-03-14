@@ -1,22 +1,23 @@
 package server.api;
 
-import commons.List;
+import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import server.database.ListRepository;
+import server.database.ColumnRepository;
+import java.util.List;
 
 @Controller
 @RequestMapping("/list")
 public class ListController {
 
-    private final ListRepository listRepository;
+    private final ColumnRepository columnRepository;
 
     /**
-     * @param listRepository the data container which includes all the lists
+     * @param columnRepository the data container which includes all the lists
      */
-    public ListController(ListRepository listRepository) {
-        this.listRepository = listRepository;
+    public ListController(ColumnRepository columnRepository) {
+        this.columnRepository = columnRepository;
     }
 
     /**
@@ -25,14 +26,14 @@ public class ListController {
      * @return A response entity of the saved list
      */
     @PostMapping("/addList/{title}/{boardId}")
-    @ResponseBody public ResponseEntity<List> addList(@PathVariable String title,
-                                                      @PathVariable long boardId) {
-        List newList = new List(title, boardId);
+    @ResponseBody public ResponseEntity<Column> addList(@PathVariable String title,
+                                                        @PathVariable long boardId) {
+        Column newColumn = new Column(title, boardId);
 
         // todo check whether boardId is in the database -> Need the Board-controller
         // todo check max 10 entries
 
-        List saved = listRepository.save(newList);
+        Column saved = columnRepository.save(newColumn);
         return ResponseEntity.ok(saved);
     }
 
@@ -42,9 +43,9 @@ public class ListController {
      */
     @DeleteMapping("/deleteList/{id}")
     @ResponseBody public ResponseEntity<String> removeList(@PathVariable long id) {
-        if (listRepository.existsById(id)) {
-            List l = listRepository.getById(id);
-            listRepository.delete(l);
+        if (columnRepository.existsById(id)) {
+            Column l = columnRepository.getById(id);
+            columnRepository.delete(l);
             return ResponseEntity.ok("List deleted successfully");
         }
 
@@ -59,10 +60,10 @@ public class ListController {
     @PutMapping("/editTitle/{listId}/{title}")
     @ResponseBody public ResponseEntity<String> editList(@PathVariable long id,
                                                        @PathVariable String title) {
-        if (listRepository.existsById(id)) {
-            List l = listRepository.getById(id);
+        if (columnRepository.existsById(id)) {
+            Column l = columnRepository.getById(id);
             l.setTitle(title);
-            listRepository.save(l);
+            columnRepository.save(l);
             return ResponseEntity.ok("Card edited successfully");
         }
 
@@ -74,9 +75,9 @@ public class ListController {
      * @return the list according to the input id
      */
     @GetMapping("/getByListId/{listId}")
-    @ResponseBody public ResponseEntity<List> getListByID(@PathVariable long id) {
-        if (listRepository.existsById(id)) {
-            List l = listRepository.getById(id);
+    @ResponseBody public ResponseEntity<Column> getListByID(@PathVariable long id) {
+        if (columnRepository.existsById(id)) {
+            Column l = columnRepository.getById(id);
             return ResponseEntity.ok(l);
         }
 
@@ -87,11 +88,11 @@ public class ListController {
      * @return all lists in the database
      */
     @GetMapping("/getAllLists")
-    @ResponseBody public ResponseEntity<java.util.List<List>> getAllLists() {
-        java.util.List<List> lists = listRepository.findAll();
+    @ResponseBody public ResponseEntity<List<Column>> getAllLists() {
+        List<Column> columns = columnRepository.findAll();
 
-        if (lists.size() > 0) {
-            return ResponseEntity.ok(lists);
+        if (columns.size() > 0) {
+            return ResponseEntity.ok(columns);
         }
 
         return ResponseEntity.notFound().build();
