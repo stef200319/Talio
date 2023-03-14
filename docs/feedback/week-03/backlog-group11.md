@@ -34,10 +34,10 @@ Similarly: "*that the board I created has a unique key, so that other users can 
 While I understand that your approach was to separate the perspective of one user from the rest, keep in mind that when it comes to implementing the user stories, there will not be differences between what user A can do and what all the others can. 
 
 There are no large gaps (areas where it is unsure what the application should do). However, there are a few ambiguities which can be improved:
-- "*so I can sort my tasks by status.*": maybe you meant display, or are you going to implement some kind of priority for each status by which all columns will be authomatically sorted?
-- "*to complete the task at hand as a whole*": the completeness of a task is only introduced in the Advanced Features section, when describing nested task columns (a different feature of the project). Can all tasks be marked as complete, or does that only apply to nested tasks? What happens to a completed task - is it deleted or is it just displayed differently, or in another section
+- "*so I can sort my tasks by status.*": maybe you meant display, or are you going to implement some kind of priority for each status by which all lists will be authomatically sorted?
+- "*to complete the task at hand as a whole*": the completeness of a task is only introduced in the Advanced Features section, when describing nested task lists (a different feature of the project). Can all tasks be marked as complete, or does that only apply to nested tasks? What happens to a completed task - is it deleted or is it just displayed differently, or in another section
 - "*to give a list a name, so that I know what status the list represents, of the cards it contains.*" - the structure of this sentence is unclear. Please try to rephrase it so that it's easier to understand.
-- "*to remove a list from the board, so I can clear up the board from columns that don’t represent valid status’ of any of the cards on the board anymore.*" - what happens when a list is deleted? Do all of its tasks disappear as well, or are they moved to another list?
+- "*to remove a list from the board, so I can clear up the board from lists that don’t represent valid status’ of any of the cards on the board anymore.*" - what happens when a list is deleted? Do all of its tasks disappear as well, or are they moved to another list?
 - "*to set tag(s) to any task, so I have a way to group my tasks based on the characteristics of the tasks themselves.*" - what does "group my tasks" mean here? A separate list for every tag?
 - "*to use keyboard shortcuts within the application, so I can work with the application more efficiently.*" - what keyboard shortcuts can be used? What are their effects? 
 
