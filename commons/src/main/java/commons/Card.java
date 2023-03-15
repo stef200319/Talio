@@ -27,7 +27,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String title;
-    private long listId;
+    private long columnId;
     private Integer position;
 
 
@@ -38,11 +38,11 @@ public class Card {
 
     /**
      * @param title of the Card
-     * @param listId the list on which the card is going to be present
+     * @param columnId the list on which the card is going to be present
      */
-    public Card(String title, long listId) {
+    public Card(String title, long columnId) {
         this.title = title;
-        this.listId = listId;
+        this.columnId = columnId;
     }
 
     /**
@@ -76,15 +76,15 @@ public class Card {
     /**
      * @return the id of the list the card belongs to (at the time)
      */
-    public long getListId() {
-        return listId;
+    public long getColumnId() {
+        return columnId;
     }
 
     /**
      * @param listId the id of the list that replaces the current list the card belongs to
      */
-    public void setListId(long listId) {
-        this.listId = listId;
+    public void setColumnId(long listId) {
+        this.columnId = listId;
     }
 
     /**
@@ -125,7 +125,7 @@ public class Card {
     @Override
     public String toString() {
         return "The title of this Card is: " + getTitle() +
-                ", and the ID of the List this Card belongs to is: " + getListId();
+                ", and the ID of the List this Card belongs to is: " + getColumnId();
     }
 
 }

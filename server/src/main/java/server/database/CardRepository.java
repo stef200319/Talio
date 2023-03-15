@@ -11,8 +11,8 @@ public interface CardRepository extends JpaRepository<Card, Long> {
      * @param listId id of the List from which the last position of its Cards is wanted
      * @return an Integer of the position of the last Card in the List
      */
-    @Query("SELECT MAX(c.position) FROM Card c WHERE c.listId = ?1")
-    Integer findMaxPositionByListId(Long listId);
+    @Query("SELECT MAX(c.position) FROM Card c WHERE c.columnId = ?1")
+    Integer findMaxPositionByColumnId(Long listId);
 
     /**Fetch all the Cards whose position is larger that the position of a given Card in a List
      * @param listId List of the Card in which it is located in
@@ -20,6 +20,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
      * that this postion
      * @return A list of Cards, where all the positions of the Cards are larger than the input position
      */
-    @Query("SELECT c FROM Card c WHERE c.listId = :listId AND c.position > :position")
-    List<Card> findByListIdAndPositionGreaterThan(long listId, int position);
+    @Query("SELECT c FROM Card c WHERE c.columnId = :listId AND c.position > :position")
+    List<Card> findByColumnIdAndPositionGreaterThan(long listId, int position);
 }

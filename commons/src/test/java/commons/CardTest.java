@@ -40,13 +40,13 @@ public class CardTest {
 
     @Test
     public void testGetListId() {
-        assertEquals(1L, card.getListId());
+        assertEquals(1L, card.getColumnId());
     }
 
     @Test
     public void testSetListId() {
-        card.setListId(2L);
-        assertEquals(2L, card.getListId());
+        card.setColumnId(2L);
+        assertEquals(2L, card.getColumnId());
     }
 
     @Test
