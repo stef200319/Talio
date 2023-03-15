@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
+import server.database.ColumnRepository;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -13,32 +15,36 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/card")
 public class CardController {
-    private final CardRepository repo;
+    private final CardRepository cardRepository;
+    private final ColumnRepository columnRepository;
+
 
     /**
-     * @param repo the created card
+     * @param cardRepository the container storing all the data relating to cards
+     * @param columnRepository the container storing all the data relating to columns (lists)
      */
-    public CardController(CardRepository repo) {
-        this.repo = repo;
+    public CardController(CardRepository cardRepository, ColumnRepository columnRepository) {
+        this.cardRepository = cardRepository;
+        this.columnRepository = columnRepository;
     }
     @GetMapping("/")
     @ResponseBody public String index() {return "Card here!";}
 
     /**
      * @param title Of the card
-     * @param listId the list on which the card needs to be
+     * @param columnId the columnId on which the card needs to be
      * @return if successful, the method returns an ok
      */
-    @PostMapping("/addCard/{title}/{listId}")
-    public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("listId") long listId) {
-        Integer maxPosition = repo.findMaxPositionByListId(listId);
+    @PostMapping("/addCard/{title}/{columnId}")
+    public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("columnId") long columnId) {
+        Integer maxPosition = cardRepository.findMaxPositionByColumnId(columnId);
 
         int newPosition = maxPosition == null ? 1 : maxPosition + 1;
 
-        Card newCard = new Card(title, listId);
+        Card newCard = new Card(title, columnId);
         newCard.setPosition(newPosition);
 
-        Card saved = repo.save(newCard);
+        Card saved = cardRepository.save(newCard);
         return ResponseEntity.ok(saved);
     }
 
@@ -52,34 +58,35 @@ public class CardController {
     @PostMapping("/editTitle/{cardId}/{title}")
     public ResponseEntity<String> editCardTitle(@PathVariable("cardId") long cardId,
                                                 @PathVariable("title") String title){
-        Optional<Card> optionalCard = repo.findById(cardId);
+        Optional<Card> optionalCard = cardRepository.findById(cardId);
 
         if (optionalCard.isPresent()) {
             Card card = optionalCard.get();
             card.setTitle(title);
-            repo.save(card);
+            cardRepository.save(card);
             return ResponseEntity.ok("Card title updated successfully");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    /**Change the listId of a card, if it exists. Receive a message on the success of the edit
+    /**Change the columnId of a card, if it exists. Receive a message on the success of the edit
      * @param cardId The ID of the card whose title should be changed
-     * @param listId listId which should replace the old listId of the card
-     * @return receive a message indicating the listId has change, if the card exists. If it doesn't, receive an
+     * @param columnId columnId which should replace the old columnId of the card
+     * @return receive a message indicating the columnId has change, if the card exists. If it doesn't, receive an
      * appropriate response to the client.
      */
-    @PostMapping("/editList/{cardId}/{listId}")
-    public ResponseEntity<String> editCardList(@PathVariable("cardId") long cardId, @PathVariable("listId") long listId)
+    @PostMapping("/editColumn/{cardId}/{columnId}")
+    public ResponseEntity<String> editCardColumn(@PathVariable("cardId") long cardId,
+                                                 @PathVariable("columnId") long columnId)
     {
-        Optional<Card> optionalCard = repo.findById(cardId);
+        Optional<Card> optionalCard = cardRepository.findById(cardId);
 
         if (optionalCard.isPresent()) {
             Card card = optionalCard.get();
-            card.setListId(listId);
-            repo.save(card);
-            return ResponseEntity.ok("Card list updated successfully");
+            card.setColumnId(columnId);
+            cardRepository.save(card);
+            return ResponseEntity.ok("Card column updated successfully");
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -135,23 +142,23 @@ public class CardController {
      */
     @DeleteMapping("/deleteCard/{cardId}")
     public ResponseEntity<String> deleteCard(@PathVariable("cardId") long cardId){
-        Optional<Card> cardToDeleteOptional = repo.findById(cardId);
+        Optional<Card> cardToDeleteOptional = cardRepository.findById(cardId);
 
         if (cardToDeleteOptional.isPresent()) {
             Card cardToDelete = cardToDeleteOptional.get();
-            long listId = cardToDelete.getListId();
+            long columnId = cardToDelete.getColumnId();
             Integer position = cardToDelete.getPosition();
 
             // Delete the card
-            repo.deleteById(cardId);
+            cardRepository.deleteById(cardId);
 
             // Decrement the positions of all cards in front of the deleted card
             if(position!=null){
-                List<Card> cardsToUpdate = repo.findByListIdAndPositionGreaterThan(listId, position);
+                List<Card> cardsToUpdate = cardRepository.findByColumnIdAndPositionGreaterThan(columnId, position);
                 for (Card cardToUpdate : cardsToUpdate) {
                     int currentPosition = cardToUpdate.getPosition();
                     cardToUpdate.setPosition(currentPosition - 1);
-                    repo.save(cardToUpdate);
+                    cardRepository.save(cardToUpdate);
                 }
             }
             return ResponseEntity.ok("Card deleted successfully");
@@ -161,22 +168,22 @@ public class CardController {
     }
 
     /**
-     * @param listId id of the list of which all cards should be retrieved
-     * @return a list of cards which all have the same listId corresponding to the input, ordered by position
+     * @param columnId id of the column of which all cards should be retrieved
+     * @return a list of cards which all have the same columnId corresponding to the input, ordered by position
      */
-    @GetMapping("/getByListId/{listId}")
-    @ResponseBody public List<Card> getCardByListId(@PathVariable("listId") long listId) {
-        List<Card> cards = repo.findAll(Sort.by(Sort.Direction.ASC, "position"));
-        List<Card> cardsOnList = new LinkedList<>();
+    @GetMapping("/getByColumnId/{columnId}")
+    @ResponseBody public List<Card> getCardByColumnId(@PathVariable("columnId") long columnId) {
+        List<Card> cards = cardRepository.findAll(Sort.by(Sort.Direction.ASC, "position"));
+        List<Card> cardsOnColumn = new LinkedList<>();
 
-        if(cards!=null){
-            for (Card c : cards) {
-                if (c.getListId() == listId) {
-                    cardsOnList.add(c);
-                }
+
+        for (Card c : cards) {
+            if (c.getColumnId() == columnId) {
+                cardsOnColumn.add(c);
             }
         }
-        return cardsOnList;
+
+        return cardsOnColumn;
     }
 
     /**
@@ -188,7 +195,7 @@ public class CardController {
     @GetMapping("/getByCardId/{cardId}")
     @ResponseBody
     public Card getCardByCardId(@PathVariable("cardId") long cardId) {
-        Optional<Card> optionalCard = repo.findById(cardId);
+        Optional<Card> optionalCard = cardRepository.findById(cardId);
 
         if (optionalCard.isPresent()) {
             Card card = optionalCard.get();
@@ -206,7 +213,7 @@ public class CardController {
     @GetMapping("/getAllCards")
     @ResponseBody
     public List<Card> getAllCards() {
-        return repo.findAll();
+        return cardRepository.findAll();
     }
 
 

@@ -53,7 +53,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
         var add = FXML.load(AddListCtrl.class, "client", "scenes", "AddList.fxml");
         var boardOverview = FXML.load(BoardOverviewCtrl.class, "client", "scenes", "BoardOverview.fxml");
         var clientConnect = FXML.load(ClientConnectCtrl.class, "client", "scenes", "ClientConnect.fxml");
@@ -63,7 +62,7 @@ public class Main extends Application {
         var workspace = FXML.load(WorkspaceCtrl.class, "client", "scenes", "Workspace.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        mainCtrl.initialize(primaryStage, overview, add, boardOverview, clientConnect, taskDetails,
+        mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
                 addTask, taskManagement, workspace);
     }
 }

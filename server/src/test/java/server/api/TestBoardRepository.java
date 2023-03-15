@@ -1,24 +1,26 @@
 
 package server.api;
 
+import commons.Board;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import server.database.BoardRepository;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import commons.List;
-import server.database.ListRepository;
 
-public class TestListRepository implements ListRepository {
-    private final java.util.List<List> lists;
-    private final java.util.List<String> calledMethods = new ArrayList<>();
+public class TestBoardRepository implements BoardRepository {
+    private final List<Board> boards;
+    private final List<String> calledMethods = new ArrayList<>();
 
     /**
-     * @param name of the method which was executed
+     * @param name
      */
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     private void call(String name) {
         calledMethods.add(name);
     }
@@ -26,13 +28,11 @@ public class TestListRepository implements ListRepository {
     /**
      *
      */
-    public TestListRepository() {
-        lists = new ArrayList<>();
-        lists.add(new List("Test1", 5));
-        lists.get(0).setId(1);
-
-        lists.add(new List("Test2", 5));
-        lists.get(1).setId(2);
+    @SuppressWarnings("checkstyle.*")
+    public TestBoardRepository() {
+        boards = new ArrayList<>();
+        boards.add(new Board("Test1"));
+        boards.add(new Board("Test2"));
     }
 
     /**
@@ -40,12 +40,12 @@ public class TestListRepository implements ListRepository {
      * @param <S>
      * @return
      */
+    @SuppressWarnings("checkstyle.*")
     @Override
-    public <S extends List> S save(S entity) {
+    public <S extends Board> S save(S entity) {
         call("save");
-
-        entity.setId((long) lists.size());
-        lists.add(entity);
+        entity.setId((long) boards.size());
+        boards.add(entity);
         return entity;
     }
 
@@ -53,12 +53,11 @@ public class TestListRepository implements ListRepository {
      * @param id must not be {@literal null}.
      * @return
      */
+    @SuppressWarnings("checkstyle.*")
     @Override
-    public Optional<List> findById(Long id) {
-        call("findById");
-
-        if (id > 0 && id <= lists.size()) {
-            return Optional.of(lists.get(id.intValue() - 1));
+    public Optional<Board> findById(Long id) {
+        if (id > 0 && id <= boards.size()) {
+            return Optional.of(boards.get(id.intValue() - 1));
         } else {
             return Optional.empty();
         }
@@ -67,9 +66,10 @@ public class TestListRepository implements ListRepository {
     /**
      * @return
      */
+    @SuppressWarnings("checkstyle.*")
     @Override
-    public java.util.List<List> findAll() {
-        return lists;
+    public List<Board> findAll() {
+        return boards;
     }
 
     /**
@@ -77,8 +77,8 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public java.util.List<List> findAll(Sort sort) {
-        return null;
+    public List<Board> findAll(Sort sort) {
+        return boards;
     }
 
     /**
@@ -86,7 +86,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public Page<List> findAll(Pageable pageable) {
+    public Page<Board> findAll(Pageable pageable) {
         return null;
     }
 
@@ -95,7 +95,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public java.util.List<List> findAllById(Iterable<Long> longs) {
+    public List<Board> findAllById(Iterable<Long> longs) {
         return null;
     }
 
@@ -113,7 +113,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> java.util.List<S> saveAll(Iterable<S> entities) {
+    public <S extends Board> List<S> saveAll(Iterable<S> entities) {
         return null;
     }
 
@@ -127,11 +127,11 @@ public class TestListRepository implements ListRepository {
 
     /**
      * @param entity entity to be saved. Must not be {@literal null}.
-     * @param <S> sut
-     * @return null
+     * @param <S>
+     * @return
      */
     @Override
-    public <S extends List> S saveAndFlush(S entity) {
+    public <S extends Board> S saveAndFlush(S entity) {
         return null;
     }
 
@@ -141,7 +141,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> java.util.List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends Board> List<S> saveAllAndFlush(Iterable<S> entities) {
         return null;
     }
 
@@ -149,7 +149,7 @@ public class TestListRepository implements ListRepository {
      * @param entities entities to be deleted. Must not be {@literal null}.
      */
     @Override
-    public void deleteAllInBatch(Iterable<List> entities) {
+    public void deleteAllInBatch(Iterable<Board> entities) {
 
     }
 
@@ -174,7 +174,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public List getOne(Long aLong) {
+    public Board getOne(Long aLong) {
         return null;
     }
 
@@ -183,12 +183,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public List getById(Long aLong) {
-        for (List l : lists) {
-            if (l.getId() == aLong) {
-                return l;
-            }
-        }
+    public Board getById(Long aLong) {
         return null;
     }
 
@@ -198,7 +193,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> Optional<S> findOne(Example<S> example) {
+    public <S extends Board> Optional<S> findOne(Example<S> example) {
         return Optional.empty();
     }
 
@@ -208,7 +203,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> java.util.List<S> findAll(Example<S> example) {
+    public <S extends Board> List<S> findAll(Example<S> example) {
         return null;
     }
 
@@ -219,7 +214,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> java.util.List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends Board> List<S> findAll(Example<S> example, Sort sort) {
         return null;
     }
 
@@ -230,7 +225,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends Board> Page<S> findAll(Example<S> example, Pageable pageable) {
         return null;
     }
 
@@ -240,7 +235,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> long count(Example<S> example) {
+    public <S extends Board> long count(Example<S> example) {
         return 0;
     }
 
@@ -250,7 +245,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List> boolean exists(Example<S> example) {
+    public <S extends Board> boolean exists(Example<S> example) {
         return false;
     }
 
@@ -262,7 +257,7 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
-    public <S extends List, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R>
+    public <S extends Board, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R>
             queryFunction) {
         return null;
     }
@@ -272,8 +267,8 @@ public class TestListRepository implements ListRepository {
      */
     @Override
     public void deleteById(Long id) {
-        if (id > 0 && id <= lists.size()) {
-            lists.remove(id.intValue() - 1);
+        if (id > 0 && id <= boards.size()) {
+            boards.remove(id.intValue() - 1);
         }
     }
 
@@ -281,8 +276,8 @@ public class TestListRepository implements ListRepository {
      * @param entity must not be {@literal null}.
      */
     @Override
-    public void delete(List entity) {
-        lists.remove(entity);
+    public void delete(Board entity) {
+
     }
 
     /**
@@ -297,7 +292,7 @@ public class TestListRepository implements ListRepository {
      * @param entities must not be {@literal null}. Must not contain {@literal null} elements.
      */
     @Override
-    public void deleteAll(Iterable<? extends List> entities) {
+    public void deleteAll(Iterable<? extends Board> entities) {
 
     }
 
@@ -314,12 +309,12 @@ public class TestListRepository implements ListRepository {
      * @return
      */
     @Override
+
     public boolean existsById(Long id) {
-        for (List l : lists) {
-            if (l.getId() == id) {
-                return true;
-            }
+        if (id > 0 && id <= boards.size()) {
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 }

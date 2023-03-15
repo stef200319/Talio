@@ -323,7 +323,7 @@ public class TestCardRepository implements CardRepository {
      * @return to be filled
      */
     @Override
-    public Integer findMaxPositionByListId(Long listId) {
+    public Integer findMaxPositionByColumnId(Long listId) {
         return 0;
     }
 
@@ -334,7 +334,7 @@ public class TestCardRepository implements CardRepository {
      * @return
      */
     @Override
-    public List<Card> findByListIdAndPositionGreaterThan(long listId, int position) {
+    public List<Card> findByColumnIdAndPositionGreaterThan(long listId, int position) {
         return null;
     }
 }

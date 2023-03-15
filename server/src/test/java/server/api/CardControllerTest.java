@@ -13,13 +13,15 @@ import commons.Card;
 
 class CardControllerTest {
 
-    private TestCardRepository repo;
+    private TestCardRepository cardRepository;
+    private TestColumnRepository columnRepository;
     private CardController controller;
 
     @BeforeEach
     void setUp() {
-        repo = new TestCardRepository();
-        controller = new CardController(repo);
+        this.columnRepository = new TestColumnRepository();
+        this.cardRepository = new TestCardRepository();
+        controller = new CardController(cardRepository, columnRepository);
     }
 
     @Test
@@ -43,7 +45,7 @@ class CardControllerTest {
     @Test
     void testAddCard_responseListIdEqualsExpected() {
         ResponseEntity<Card> response = controller.addCard("Test1", 1);
-        assertEquals(1, response.getBody().getListId());
+        assertEquals(1, response.getBody().getColumnId());
     }
 
 //    @Test
@@ -75,7 +77,7 @@ class CardControllerTest {
     @Test
     void testEditCardTitle_cardTitleEqualsExpected() {
         ResponseEntity<String> response = controller.editCardTitle(1, "editTitle");
-        Card card = repo.findById(1L).get();
+        Card card = cardRepository.findById(1L).get();
         assertEquals("editTitle", card.getTitle());
     }
 
@@ -88,26 +90,26 @@ class CardControllerTest {
 
     @Test
     void testEditCardList_responseStatusIsOk() {
-        ResponseEntity<String> response = controller.editCardList(1, 2);
+        ResponseEntity<String> response = controller.editCardColumn(1, 2);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void testEditCardList_responseBodyEqualsExpected() {
-        ResponseEntity<String> response = controller.editCardList(1, 2);
-        assertEquals("Card list updated successfully", response.getBody());
+        ResponseEntity<String> response = controller.editCardColumn(1, 2);
+        assertEquals("Card column updated successfully", response.getBody());
     }
 
     @Test
     void testEditCardList_cardListIdEqualsExpected() {
-        ResponseEntity<String> response = controller.editCardList(1, 2);
-        Card card = repo.findById(1L).get();
-        assertEquals(2, card.getListId());
+        ResponseEntity<String> response = controller.editCardColumn(1, 2);
+        Card card = cardRepository.findById(1L).get();
+        assertEquals(2, card.getColumnId());
     }
 
     @Test
     void testEditCardList_cardNotFound() {
-        ResponseEntity<String> response = controller.editCardList(100, 2);
+        ResponseEntity<String> response = controller.editCardColumn(100, 2);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
@@ -153,7 +155,7 @@ class CardControllerTest {
     @Test
     void testGetCardByCardId_ReturnedCardListIdIsCorrect() {
         Card card = controller.getCardByCardId(1);
-        assertEquals(1, card.getListId());
+        assertEquals(1, card.getColumnId());
     }
 
     @Test
@@ -170,7 +172,7 @@ class CardControllerTest {
 
     @Test
     void testGetCardByListId_2entries() {
-        List<Card> ret = controller.getCardByListId(1L);
+        List<Card> ret = controller.getCardByColumnId(1L);
         System.out.println(ret);
         List<Card> expected = new ArrayList<>();
         expected.add(new Card("Test1", 1));
@@ -180,7 +182,7 @@ class CardControllerTest {
 
     @Test
     void testGetCardByListId_noMatch() {
-        List<Card> ret = controller.getCardByListId(2);
+        List<Card> ret = controller.getCardByColumnId(2);
 
         List<Card> expected = new ArrayList<>();
 
@@ -192,7 +194,7 @@ class CardControllerTest {
         controller.deleteCard(1L);
         controller.deleteCard(1L);
 
-        List<Card> ret = controller.getCardByListId(1);
+        List<Card> ret = controller.getCardByColumnId(1);
         List<Card> expected = new ArrayList<>();
 
         assertEquals(expected, ret);
