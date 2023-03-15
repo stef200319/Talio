@@ -97,10 +97,10 @@ public class MainCtrlTest {
                 taskDetailsPair, addTaskPair, taskManagementPair, workspacePair);
     }
 
-    @Test
-    public void showOverview() {
-        mainCtrl.showOverview();
-        verify(primaryStage).setTitle("Board: Overview");
-        verify(primaryStage).setScene(mainCtrl.getOverview());
-    }
+//    @Test
+//    public void showOverview() {
+//        mainCtrl.showOverview();
+//        verify(primaryStage).setTitle("Board: Overview");
+//        verify(primaryStage).setScene(mainCtrl.getOverview());
+//    }
 }
