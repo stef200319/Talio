@@ -84,7 +84,47 @@ public class CardController {
             return ResponseEntity.notFound().build();
         }
     }
-    
+
+    @PostMapping("/editPosition/{cardId}/{position}")
+    public ResponseEntity<String> editCardPosition(@PathVariable("cardId") long cardId, @PathVariable("position") int position)
+    {
+        Optional<Card> optionalCard = repo.findById(cardId);
+        if (!optionalCard.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Card card = optionalCard.get();
+
+        int oldPosition = card.getPosition();
+        int newPosition = position;
+        long listId = card.getListId();
+
+        List<Card> cards;
+
+        if (oldPosition < newPosition) { // Moving the card down
+            cards = repo.findByListIdAndPositionGreaterThan(listId, oldPosition);
+            for (Card c : cards) {
+                if (c.getPosition() <= newPosition && c.getPosition()>oldPosition) {
+                    c.setPosition(c.getPosition() - 1);
+                }
+            }
+        } else { // Moving the card up
+            cards = repo.findByListIdAndPositionGreaterThan(listId, newPosition-1);
+            cards.add(card);
+            for (Card c : cards) {
+                if (c.getPosition() >= newPosition && c.getPosition()< oldPosition) {
+                    c.setPosition(c.getPosition() + 1);
+                }
+            }
+        }
+
+        card.setPosition(newPosition);
+        repo.saveAll(cards);
+
+        return ResponseEntity.ok("Card position edited successfully");
+    }
+
+
 
     /**
      * Delete a card from the database and receive a conformation using the card's id, if the card exists.
