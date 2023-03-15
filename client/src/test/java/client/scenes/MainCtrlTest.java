@@ -15,21 +15,92 @@
  */
 package client.scenes;
 
+import javafx.scene.Parent;
+import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import static org.mockito.Mockito.*;
 public class MainCtrlTest {
 
-    private MainCtrl sut;
+    @Mock
+    private QuoteOverviewCtrl overviewCtrl;
+
+    @Mock
+    private AddListCtrl addListCtrl;
+
+    @Mock
+    private BoardOverviewCtrl boardOverviewCtrl;
+
+    @Mock
+    private ClientConnectCtrl clientConnectCtrl;
+
+    @Mock
+    private TaskDetailsCtrl taskDetailsCtrl;
+
+    @Mock
+    private AddTaskCtrl addTaskCtrl;
+
+    @Mock
+    private TaskManagementCtrl taskManagementCtrl;
+
+    @Mock
+    private WorkspaceCtrl workspaceCtrl;
+
+    @Mock
+    private Parent overviewParent;
+
+    @Mock
+    private Parent addParent;
+
+    @Mock
+    private Parent boardOverviewParent;
+
+    @Mock
+    private Parent clientConnectParent;
+
+    @Mock
+    private Parent taskDetailsParent;
+
+    @Mock
+    private Parent addTaskParent;
+
+    @Mock
+    private Parent taskManagementParent;
+
+    @Mock
+    private Parent workspaceParent;
+
+    @Mock
+    private Stage primaryStage;
+
+    private MainCtrl mainCtrl;
 
     @BeforeEach
     public void setup() {
-        sut = new MainCtrl();
+        MockitoAnnotations.openMocks(this);
+
+        Pair<QuoteOverviewCtrl, Parent> overviewPair = new Pair<>(overviewCtrl, overviewParent);
+        Pair<AddListCtrl, Parent> addPair = new Pair<>(addListCtrl, addParent);
+        Pair<BoardOverviewCtrl, Parent> boardOverviewPair = new Pair<>(boardOverviewCtrl, boardOverviewParent);
+        Pair<ClientConnectCtrl, Parent> clientConnectPair = new Pair<>(clientConnectCtrl, clientConnectParent);
+        Pair<TaskDetailsCtrl, Parent> taskDetailsPair = new Pair<>(taskDetailsCtrl, taskDetailsParent);
+        Pair<AddTaskCtrl, Parent> addTaskPair = new Pair<>(addTaskCtrl, addTaskParent);
+        Pair<TaskManagementCtrl, Parent> taskManagementPair = new Pair<>(taskManagementCtrl, taskManagementParent);
+        Pair<WorkspaceCtrl, Parent> workspacePair = new Pair<>(workspaceCtrl, workspaceParent);
+
+        mainCtrl = new MainCtrl();
+        mainCtrl.initialize(primaryStage, overviewPair, addPair, boardOverviewPair, clientConnectPair,
+                taskDetailsPair, addTaskPair, taskManagementPair, workspacePair);
     }
 
     @Test
-    public void writeSomeTests() {
-        // TODO create replacement objects and write some tests
-        // sut.initialize(null, null, null);
+    public void showOverview() {
+        mainCtrl.showOverview();
+        verify(primaryStage).setTitle("Board: Overview");
+        verify(primaryStage).setScene(mainCtrl.getOverview());
     }
 }

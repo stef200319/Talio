@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WorkspaceCtrl">
    <children>
       <Label layoutX="75.0" layoutY="30.0" prefHeight="37.0" prefWidth="150.0" text="Workspace" textAlignment="CENTER">
          <font>
@@ -32,7 +31,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="Open" textAlignment="RIGHT" />
+            <Button mnemonicParsing="false" onAction="#showBoardOverview" prefHeight="26.0" prefWidth="54.0" text="Open" textAlignment="RIGHT" />
          </children>
       </VBox>
    </children>

@@ -167,4 +167,11 @@ public class MainCtrl {
         primaryStage.setScene(addTask);
     }
 
+    public Scene getOverview() {
+        return overview;
+    }
+
+    public void setOverview(Scene overview) {
+        this.overview = overview;
+    }
 }
