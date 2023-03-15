@@ -92,43 +92,64 @@ public class CardController {
         }
     }
 
+    /**
+     * Change a position of a Card in the Column it is in, and change the positions of other Cards in the Column which
+     * have been affected by the position change. Store all the position changes in the database
+     * @param cardId id of the Card whose position needs to be changed
+     * @param position
+     * @return Conformation that the positions of the Card and all other Cards have that been affected have been
+     * changed
+     */
     @PostMapping("/editPosition/{cardId}/{position}")
-    public ResponseEntity<String> editCardPosition(@PathVariable("cardId") long cardId, @PathVariable("position") int position)
+    public ResponseEntity<String> editCardPosition(@PathVariable("cardId") long cardId,
+                                                   @PathVariable("position") int position)
     {
-        Optional<Card> optionalCard = repo.findById(cardId);
+        Optional<Card> optionalCard = cardRepository.findById(cardId);
         if (!optionalCard.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
         Card card = optionalCard.get();
 
-        int oldPosition = card.getPosition();
         int newPosition = position;
-        long listId = card.getListId();
+        int oldPosition = card.getPosition();
+        long columnId = card.getColumnId();
 
+        List<Card> cards = changePositionsOfAffectedCards(newPosition, oldPosition, columnId);
+
+        card.setPosition(newPosition);
+        cards.add(card);
+        cardRepository.saveAll(cards);
+
+        return ResponseEntity.ok("Card position edited successfully");
+    }
+
+    /**
+     * Changes the positions of the Cards whose positions will be changed by the change of a position of another
+     * Card in the List
+     * @param newPosition the new position of the Card which caused the change
+     * @param oldPosition the old position of the Card which caused the change
+     * @param columnId the id of column in which changes of positions occur
+     * @return a List containing all the Cards whose positions have been changed
+     */
+    private List<Card> changePositionsOfAffectedCards(int newPosition, int oldPosition, long columnId){
         List<Card> cards;
-
         if (oldPosition < newPosition) { // Moving the card down
-            cards = repo.findByListIdAndPositionGreaterThan(listId, oldPosition);
+            cards = cardRepository.findByColumnIdAndPositionGreaterThan(columnId, oldPosition);
             for (Card c : cards) {
                 if (c.getPosition() <= newPosition && c.getPosition()>oldPosition) {
                     c.setPosition(c.getPosition() - 1);
                 }
             }
         } else { // Moving the card up
-            cards = repo.findByListIdAndPositionGreaterThan(listId, newPosition-1);
-            cards.add(card);
+            cards = cardRepository.findByColumnIdAndPositionGreaterThan(columnId, newPosition-1);
             for (Card c : cards) {
                 if (c.getPosition() >= newPosition && c.getPosition()< oldPosition) {
                     c.setPosition(c.getPosition() + 1);
                 }
             }
         }
-
-        card.setPosition(newPosition);
-        repo.saveAll(cards);
-
-        return ResponseEntity.ok("Card position edited successfully");
+        return cards;
     }
 
 
