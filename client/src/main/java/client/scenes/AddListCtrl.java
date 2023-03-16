@@ -45,6 +45,11 @@ public class AddListCtrl {
      */
     public void confirm() {
         //add list to database (needs backend)
+        String list = listName.getText();
+        if(list.equals(""))
+            mainCtrl.createList("New List");
+        else
+            mainCtrl.createList(list);
         listName.clear();
         mainCtrl.showBoardOverview();
     }

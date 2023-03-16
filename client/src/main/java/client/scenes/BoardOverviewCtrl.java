@@ -2,7 +2,13 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,6 +19,9 @@ public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
+    @FXML
+    private FlowPane flowPane;
 
 
     /**
@@ -79,5 +88,25 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void refresh() {
         // For now empty, here we must use the fetch methods for the boards which Benjamin and Ruthvik will implement
+    }
+
+    /**
+     * Method that creates a new list with the specified name
+     * @param text
+     */
+    public void createList(String text) {
+        VBox list=new VBox();
+        list.setPrefWidth(100);
+        list.setAlignment(Pos.CENTER);
+
+        Label title = new Label(text);
+        title.setFont(new Font(20));
+
+        list.getChildren().add(title);
+
+        Label s = new Label("task1");     // this is just a placeholder to see how it looks like
+        list.getChildren().add(s);            //
+
+        flowPane.getChildren().add(list);
     }
 }

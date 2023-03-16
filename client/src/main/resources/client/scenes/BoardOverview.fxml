@@ -4,11 +4,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="786.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="786.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
    <children>
       <Label alignment="CENTER" layoutX="341.0" layoutY="73.0" prefHeight="38.0" prefWidth="104.0" style="-fx-border-color: red;" text="My board">
          <font>
@@ -23,17 +23,8 @@
          </children>
       </HBox>
       <Separator layoutY="47.0" prefHeight="16.0" prefWidth="786.0" />
-      <VBox layoutX="180.0" layoutY="117.0" onMouseClicked="#showTaskDetails" prefHeight="145.0" prefWidth="59.0" rotate="90.0" style="-fx-border-style: solid;">
-         <children>
-            <Button mnemonicParsing="false" prefHeight="21.0" prefWidth="25.0" text="X">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Button>
-            <Label prefHeight="83.0" prefWidth="71.0" rotate="270.0" text="Card 1" />
-         </children>
-      </VBox>
-      <Button layoutX="119.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTask" text="Add Task" />
+      <Button layoutX="24.0" layoutY="491.0" mnemonicParsing="false" onAction="#addTask" text="Add Task" />
       <Button layoutX="595.0" layoutY="73.0" mnemonicParsing="false" onAction="#addList" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Add List" />
+      <FlowPane fx:id="flowPane" columnHalignment="CENTER" layoutX="64.0" layoutY="132.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="322.0" prefWidth="658.0" />
    </children>
 </AnchorPane>
