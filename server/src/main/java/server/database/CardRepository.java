@@ -22,4 +22,5 @@ public interface CardRepository extends JpaRepository<Card, Long> {
      */
     @Query("SELECT c FROM Card c WHERE c.columnId = :listId AND c.position > :position")
     List<Card> findByColumnIdAndPositionGreaterThan(long listId, int position);
+
 }
