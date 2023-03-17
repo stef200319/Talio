@@ -20,9 +20,9 @@ public class ClientConnectCtrl {
     }
 
     /**
-     * show the board overview
+     * Show the workspace
      */
-    public void showBoardOverview() {
-        mainCtrl.showBoardOverview();
+    public void showWorkspace() {
+        mainCtrl.showWorkspace();
     }
 }
