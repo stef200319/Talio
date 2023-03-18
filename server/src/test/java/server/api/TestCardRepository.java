@@ -279,14 +279,12 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public void deleteById(Long id) {
-//        if (id >= 0 && id < cards.size()) {
-            for (int i = 0; i < cards.size(); i++) {
-                if (cards.get(i) != null && cards.get(i).getId() == id) {
-                    cards.remove(i);
-                    break;
-                }
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i) != null && cards.get(i).getId() == id) {
+                cards.remove(i);
+                break;
             }
-//        }
+        }
     }
 
     /**
