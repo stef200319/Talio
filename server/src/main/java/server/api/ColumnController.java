@@ -2,7 +2,6 @@ package server.api;
 
 import commons.Card;
 import commons.Column;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,8 +25,11 @@ public class ColumnController {
     private final CardRepository cardRepository;
 
     /**
+     *
      * @param columnRepository the data container which includes all the columns
      * @param boardRepository the repository of the board -> used for checking whether boardId exists
+     * @param cardRepository the reopository of the cards
+     * @param cardController the controller which controls all card crud operations
      */
     public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository,
                             CardRepository cardRepository, CardController cardController) {

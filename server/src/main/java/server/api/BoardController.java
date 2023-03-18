@@ -23,6 +23,13 @@ public class BoardController {
     /**
      * @param boardRepository the repository which contains all the data in the database
      */
+
+    /**
+     *
+     * @param boardRepository the repository which contains all the data in the database of the boards
+     * @param columnRepository the repository which contains all the data in the database of the columns
+     * @param columnController the controller which handles all the logic for the columns in the db
+     */
     public BoardController(BoardRepository boardRepository, ColumnRepository columnRepository,
                            ColumnController columnController) {
         this.boardRepository = boardRepository;

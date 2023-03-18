@@ -1,14 +1,12 @@
 package server.api;
 
 import commons.Card;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
