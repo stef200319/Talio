@@ -1,6 +1,5 @@
 package server.api;
 
-import commons.Card;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,12 +32,12 @@ public class ColumnController {
      */
     @PostMapping("/addColumn/{title}/{boardId}")
     @ResponseBody public ResponseEntity<Column> addColumn(@PathVariable String title,
-                                                        @PathVariable long boardId) {
-        Column newColumn = new Column(title, boardId);
-
-        if (boardRepository.existsById(boardId)) {
+                                                        @PathVariable Long boardId) {
+        if (boardId!=null) {
             Integer maxPosition = columnRepository.findMaxPositionByBoardId(boardId);
             int newPosition = maxPosition == null ? 1 : maxPosition + 1;
+
+            Column newColumn = new Column(title, boardId);
             newColumn.setPosition(newPosition);
 
             Column saved = columnRepository.save(newColumn);
@@ -53,12 +52,12 @@ public class ColumnController {
      * @param columnId the id of the column that needs to be removed
      * @return a response which says that the column was removed from the database or not.
      */
-    @DeleteMapping("/deleteColumn/{id}")
-    @ResponseBody public ResponseEntity<String> removeColumn(@PathVariable long columnId) {
-        if (columnRepository.existsById(columnId)) {
-            Optional<Column> columnToDeleteOptional = columnRepository.findById(columnId);
-            Column columnToDelete = columnToDeleteOptional.get();
+    @DeleteMapping("/deleteColumn/{columnId}")
+    @ResponseBody public ResponseEntity<String> removeColumn(@PathVariable("columnId") long columnId) {
+        Optional<Column> columnToDeleteOptional = columnRepository.findById(columnId);
 
+        if (columnToDeleteOptional.isPresent()) {
+            Column columnToDelete = columnToDeleteOptional.get();
             long boardId = columnToDelete.getBoardId();
             Integer position = columnToDelete.getPosition();
 

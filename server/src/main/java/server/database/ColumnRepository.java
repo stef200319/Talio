@@ -1,6 +1,5 @@
 package server.database;
 
-import commons.Card;
 import commons.Column;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
