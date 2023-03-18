@@ -1,9 +1,12 @@
 package server.api;
 
 import commons.Board;
+
+import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.BoardRepository;
+import server.database.ColumnRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,13 +14,27 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/board")
 public class BoardController {
-    private final BoardRepository repo;
+    private final BoardRepository boardRepository;
+    private final ColumnRepository columnRepository;
+
+    private final ColumnController columnController;
+
 
     /**
-     * @param repo the repository which contains all the data in the database
+     * @param boardRepository the repository which contains all the data in the database
      */
-    public BoardController(BoardRepository repo) {
-        this.repo = repo;
+
+    /**
+     *
+     * @param boardRepository the repository which contains all the data in the database of the boards
+     * @param columnRepository the repository which contains all the data in the database of the columns
+     * @param columnController the controller which handles all the logic for the columns in the db
+     */
+    public BoardController(BoardRepository boardRepository, ColumnRepository columnRepository,
+                           ColumnController columnController) {
+        this.boardRepository = boardRepository;
+        this.columnRepository = columnRepository;
+        this.columnController = columnController;
     }
 
     /**
@@ -25,7 +42,7 @@ public class BoardController {
      */
     @GetMapping("/getAllBoards")
     @ResponseBody public List<Board> getAllBoards() {
-        return repo.findAll();
+        return boardRepository.findAll();
     }
 
     /**
@@ -34,7 +51,7 @@ public class BoardController {
      */
     @GetMapping("/getByBoardId/{boardId}")
     @ResponseBody public Board getBoardById(@PathVariable Long boardId) {
-        Optional<Board> optionalBoard = repo.findById(boardId);
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
 
         return optionalBoard.orElse(null);
     }
@@ -47,7 +64,7 @@ public class BoardController {
     @ResponseBody public ResponseEntity<Board> addBoard(@PathVariable String title) {
         if (title != null && !title.equals("")) {
             Board newBoard = new Board(title);
-            Board b = repo.save(newBoard);
+            Board b = boardRepository.save(newBoard);
 
             return ResponseEntity.ok(b);
         }
@@ -63,12 +80,12 @@ public class BoardController {
     @PutMapping("/putBoard/{title}/{boardId}")
     @ResponseBody public ResponseEntity<String> putBoard(@PathVariable String title,
                                                         @PathVariable long boardId) {
-        Optional<Board> optionalBoard = repo.findById(boardId);
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
 
         if (optionalBoard.isPresent()) {
             Board board = optionalBoard.get();
             board.setTitle(title);
-            repo.save(board);
+            boardRepository.save(board);
             return ResponseEntity.ok("Board title updated successfully");
         }
 
@@ -81,14 +98,31 @@ public class BoardController {
      */
     @DeleteMapping("/deleteBoard/{boardId}")
     @ResponseBody public ResponseEntity<String> deleteBoard(@PathVariable long boardId) {
-        Optional<Board> optionalBoard = repo.findById(boardId);
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
 
         if (optionalBoard.isPresent()) {
-            repo.delete(optionalBoard.get());
+            boardRepository.delete(optionalBoard.get());
+
+            List<Column> columnsToDelete = getColumnsByBoardId(boardId);
+            for (Column column : columnsToDelete) {
+                columnController.removeColumn(column.getId());
+            }
+
             return ResponseEntity.ok("Board deleted successfully");
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    /**
+     * Returns all the columns given a certain boardId
+     * @param boardId the Id of the board you want the columns from
+     * @return ResponseEntity with either
+     */
+    @GetMapping("/getColumnsByBoardId/{boardId}")
+    @ResponseBody public List<Column> getColumnsByBoardId(@PathVariable long boardId) {
+        List<Column> columns = columnRepository.findColumnsByBoardId(boardId);
+        return columns;
     }
 
 }

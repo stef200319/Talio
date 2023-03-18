@@ -86,7 +86,7 @@ public class CardTest {
 
     @Test
     public void testToString() {
-        String expectedToString = "The title of this Card is: Test, and the ID of the List this Card belongs to is: 1";
+        String expectedToString = "The title of this Card is: Test, and the ID of the Column this Card belongs to is: 1";
         assertEquals(expectedToString, card.toString());
     }
 }

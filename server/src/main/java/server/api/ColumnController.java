@@ -1,11 +1,16 @@
 package server.api;
 
+import commons.Card;
 import commons.Column;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.BoardRepository;
+import server.database.CardRepository;
 import server.database.ColumnRepository;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,16 +18,25 @@ import java.util.Optional;
 @RequestMapping("/column")
 public class ColumnController {
 
+    private final CardController cardController;
+
     private final ColumnRepository columnRepository;
     private final BoardRepository boardRepository;
+    private final CardRepository cardRepository;
 
     /**
+     *
      * @param columnRepository the data container which includes all the columns
      * @param boardRepository the repository of the board -> used for checking whether boardId exists
+     * @param cardRepository the reopository of the cards
+     * @param cardController the controller which controls all card crud operations
      */
-    public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository) {
+    public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository,
+                            CardRepository cardRepository, CardController cardController) {
         this.columnRepository = columnRepository;
         this.boardRepository = boardRepository;
+        this.cardRepository = cardRepository;
+        this.cardController = cardController;
     }
 
     /**
@@ -52,6 +66,7 @@ public class ColumnController {
      * @param columnId the id of the column that needs to be removed
      * @return a response which says that the column was removed from the database or not.
      */
+
     @DeleteMapping("/deleteColumn/{columnId}")
     @ResponseBody public ResponseEntity<String> removeColumn(@PathVariable("columnId") long columnId) {
         Optional<Column> columnToDeleteOptional = columnRepository.findById(columnId);
@@ -63,6 +78,12 @@ public class ColumnController {
 
             // Delete the Column
             columnRepository.deleteById(columnId);
+
+            // Delete corresponding cards
+            List<Card> cards = getCardsByColumnId(columnId);
+            for (Card card : cards) {
+                cardController.deleteCard(card.getId());
+            }
 
             // Decrement the positions of all Columns in front of the deleted Column
             if(position!=null){
@@ -124,18 +145,23 @@ public class ColumnController {
         return ResponseEntity.notFound().build();
     }
 
-    /**
-     * @param boardId the id of the board for which all columns need to be fetched
-     * @return a column of all the columns on the board
-     */
-    @GetMapping("/getByBoardId/{boardId}")
-    @ResponseBody public ResponseEntity<List<Column>> getColumnByBoardId(@PathVariable long boardId) {
-        List<Column> columns = columnRepository.findColumnsByBoardId(boardId);
 
-        if (columns != null) {
-            return ResponseEntity.ok(columns);
+    /**
+     * @param columnId id of the column of which all cards should be retrieved
+     * @return a list of cards which all have the same columnId corresponding to the input, ordered by position
+     */
+    @GetMapping("/getCardsByColumnId/{columnId}")
+    @ResponseBody public List<Card> getCardsByColumnId(@PathVariable("columnId") long columnId) {
+        List<Card> cards = cardRepository.findAll(Sort.by(Sort.Direction.ASC, "position"));
+        List<Card> cardsOnColumn = new LinkedList<>();
+
+
+        for (Card c : cards) {
+            if (c.getColumnId() == columnId) {
+                cardsOnColumn.add(c);
+            }
         }
 
-        return ResponseEntity.notFound().build();
+        return cardsOnColumn;
     }
 }

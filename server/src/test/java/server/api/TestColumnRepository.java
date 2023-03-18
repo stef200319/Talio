@@ -46,7 +46,7 @@ public class TestColumnRepository implements ColumnRepository {
     public <S extends Column> S save(S entity) {
         call("save");
 
-        entity.setId((long) columns.size());
+//        entity.setId((long) columns.size());
         columns.add(entity);
         return entity;
     }
@@ -59,11 +59,17 @@ public class TestColumnRepository implements ColumnRepository {
     public Optional<Column> findById(Long id) {
         call("findById");
 
-        if (id > 0 && id <= columns.size()) {
-            return Optional.of(columns.get(id.intValue() - 1));
-        } else {
-            return Optional.empty();
+//        if (id > 0 && id <= columns.size()) {
+//            return Optional.of(columns.get(id.intValue() - 1));
+//        } else {
+//            return Optional.empty();
+//        }
+        for (int i = 0; i < columns.size(); i++) {
+            if (columns.get(i) != null && columns.get(i).getId() == id) {
+                return Optional.of(columns.get(i));
+            }
         }
+        return Optional.empty();
     }
 
     /**
@@ -186,9 +192,16 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public Column getById(Long aLong) {
-        for (Column l : columns) {
-            if (l.getId() == aLong) {
-                return l;
+//        for (Column l : columns) {
+//            if (l.getId() == aLong) {
+//                return l;
+//            }
+//        }
+//        return null;
+
+        for (int i = 0; i < columns.size(); i++) {
+            if (columns.get(i) != null && columns.get(i).getId() == aLong) {
+                return columns.get(i);
             }
         }
         return null;
@@ -274,9 +287,17 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public void deleteById(Long id) {
-        if (id > 0 && id <= columns.size()) {
-            columns.remove(id.intValue() - 1);
+//        if (id > 0 && id <= columns.size()) {
+//            columns.remove(id.intValue() - 1);
+//        }
+
+        for (int i = 0; i < columns.size(); i++) {
+            if (columns.get(i) != null && columns.get(i).getId() == id) {
+                columns.remove(i);
+                return;
+            }
         }
+
     }
 
     /**
@@ -317,8 +338,14 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public boolean existsById(Long id) {
-        for (Column l : columns) {
-            if (l.getId() == id) {
+//        for (Column l : columns) {
+//            if (l.getId() == id) {
+//                return true;
+//            }
+//        }
+//        return false;
+        for (int i = 0; i < columns.size(); i++) {
+            if (columns.get(i) != null && columns.get(i).getId() == id) {
                 return true;
             }
         }
@@ -352,7 +379,7 @@ public class TestColumnRepository implements ColumnRepository {
         List<Column> returnList = new LinkedList<>();
 
         for (Column col : columns) {
-            if (col.getBoardId() == boardId)
+            if (col != null && col.getBoardId() == boardId)
                 returnList.add(col);
         }
 
