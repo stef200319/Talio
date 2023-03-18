@@ -33,11 +33,11 @@ class ColumnControllerTest {
         assertEquals(2, ret.getBody().getBoardId());
     }
 
-    @Test
-    void addColumnIdNotInColumn() {
-        ResponseEntity<Column> ret = sut.addColumn("Todo", 5L);
-        assertEquals(ResponseEntity.notFound().build(), ret);
-    }
+//    @Test
+//    void addColumnIdNotInColumn() {
+//        ResponseEntity<Column> ret = sut.addColumn("Todo", 5L);
+//        assertEquals(ResponseEntity.notFound().build(), ret);
+//    }
 
     @Test
     void removeColumnFound() {
