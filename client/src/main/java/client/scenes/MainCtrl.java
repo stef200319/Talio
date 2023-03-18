@@ -15,6 +15,8 @@
  */
 package client.scenes;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -146,6 +148,8 @@ public class MainCtrl {
 
     /**
      * Show add task page
+     *
+     * @return
      */
     public void showAddTask() {
         primaryStage.setTitle("Add Task");
