@@ -26,25 +26,25 @@ class CardControllerTest {
 
     @Test
     void testAddCard_responseStatusIsOk() {
-        ResponseEntity<Card> response = controller.addCard("Test1", 1);
+        ResponseEntity<Card> response = controller.addCard("Test1", 1L);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void testAddCard_responseBodyIsNotNull() {
-        ResponseEntity<Card> response = controller.addCard("Test1", 1);
+        ResponseEntity<Card> response = controller.addCard("Test1", 1L);
         assertNotNull(response.getBody());
     }
 
     @Test
     void testAddCard_responseTitleEqualsExpected() {
-        ResponseEntity<Card> response = controller.addCard("Test1", 1);
+        ResponseEntity<Card> response = controller.addCard("Test1", 1L);
         assertEquals("Test1", response.getBody().getTitle());
     }
 
     @Test
     void testAddCard_responseListIdEqualsExpected() {
-        ResponseEntity<Card> response = controller.addCard("Test1", 1);
+        ResponseEntity<Card> response = controller.addCard("Test1", 1L);
         assertEquals(1, response.getBody().getColumnId());
     }
 

@@ -36,16 +36,20 @@ public class CardController {
      * @return if successful, the method returns an ok
      */
     @PostMapping("/addCard/{title}/{columnId}")
-    public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("columnId") long columnId) {
-        Integer maxPosition = cardRepository.findMaxPositionByColumnId(columnId);
+    public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("columnId") Long columnId) {
+        if(columnId!=null) {
 
-        int newPosition = maxPosition == null ? 1 : maxPosition + 1;
+            Integer maxPosition = cardRepository.findMaxPositionByColumnId(columnId);
 
-        Card newCard = new Card(title, columnId);
-        newCard.setPosition(newPosition);
+            int newPosition = maxPosition == null ? 1 : maxPosition + 1;
 
-        Card saved = cardRepository.save(newCard);
-        return ResponseEntity.ok(saved);
+            Card newCard = new Card(title, columnId);
+            newCard.setPosition(newPosition);
+
+            Card saved = cardRepository.save(newCard);
+            return ResponseEntity.ok(saved);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 
@@ -196,7 +200,6 @@ public class CardController {
     @ResponseBody public List<Card> getCardByColumnId(@PathVariable("columnId") long columnId) {
         List<Card> cards = cardRepository.findAll(Sort.by(Sort.Direction.ASC, "position"));
         List<Card> cardsOnColumn = new LinkedList<>();
-
 
         for (Card c : cards) {
             if (c.getColumnId() == columnId) {
