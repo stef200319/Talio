@@ -326,11 +326,29 @@ public class TestColumnRepository implements ColumnRepository {
     }
 
     /**
+     * @param boardId must not be {@literal null}.
+     * @return
+     */
+    @Override
+    public Integer findMaxPositionByBoardId(Long boardId) {
+        return null;
+    }
+
+    /**
+     * @param boardId must not be {@literal null}.
+     * @return
+     */
+    @Override
+    public List<Column> findByBoardIdAndPositionGreaterThan(Long boardId, Integer position) {
+        return null;
+    }
+
+    /**
      * @param boardId the id of the board for which we want to find all columns
      * @return The list of columns which correspond to the input boardId
      */
     @Override
-    public List<Column> findColumnsByBoardId(long boardId) {
+    public List<Column> findColumnsByBoardId(Long boardId) {
         List<Column> returnList = new LinkedList<>();
 
         for (Column col : columns) {

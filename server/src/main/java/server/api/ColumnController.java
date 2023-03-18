@@ -1,5 +1,6 @@
 package server.api;
 
+import commons.Card;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import server.database.BoardRepository;
 import server.database.ColumnRepository;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/column")
@@ -35,6 +37,10 @@ public class ColumnController {
         Column newColumn = new Column(title, boardId);
 
         if (boardRepository.existsById(boardId)) {
+            Integer maxPosition = columnRepository.findMaxPositionByBoardId(boardId);
+            int newPosition = maxPosition == null ? 1 : maxPosition + 1;
+            newColumn.setPosition(newPosition);
+
             Column saved = columnRepository.save(newColumn);
             return ResponseEntity.ok(saved);
         }
@@ -44,17 +50,32 @@ public class ColumnController {
     }
 
     /**
-     * @param id the id of the column that needs to be removed
+     * @param columnId the id of the column that needs to be removed
      * @return a response which says that the column was removed from the database or not.
      */
     @DeleteMapping("/deleteColumn/{id}")
-    @ResponseBody public ResponseEntity<String> removeColumn(@PathVariable long id) {
-        if (columnRepository.existsById(id)) {
-            Column l = columnRepository.getById(id);
-            columnRepository.delete(l);
+    @ResponseBody public ResponseEntity<String> removeColumn(@PathVariable long columnId) {
+        if (columnRepository.existsById(columnId)) {
+            Optional<Column> columnToDeleteOptional = columnRepository.findById(columnId);
+            Column columnToDelete = columnToDeleteOptional.get();
+
+            long boardId = columnToDelete.getBoardId();
+            Integer position = columnToDelete.getPosition();
+
+            // Delete the Column
+            columnRepository.deleteById(columnId);
+
+            // Decrement the positions of all Columns in front of the deleted Column
+            if(position!=null){
+                List<Column> columnsToUpdate = columnRepository.findByBoardIdAndPositionGreaterThan(boardId, position);
+                for (Column columnToUpdate : columnsToUpdate) {
+                    int currentPosition = columnToUpdate.getPosition();
+                    columnToUpdate.setPosition(currentPosition - 1);
+                    columnRepository.save(columnToUpdate);
+                }
+            }
             return ResponseEntity.ok("Column deleted successfully");
         }
-
         return ResponseEntity.notFound().build();
     }
 

@@ -197,7 +197,6 @@ public class CardController {
         List<Card> cards = cardRepository.findAll(Sort.by(Sort.Direction.ASC, "position"));
         List<Card> cardsOnColumn = new LinkedList<>();
 
-
         for (Card c : cards) {
             if (c.getColumnId() == columnId) {
                 cardsOnColumn.add(c);

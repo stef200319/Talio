@@ -16,6 +16,8 @@ public class Column {
     private String title;
     private long boardId;
 
+    private Integer position;
+
     /**
      * Constructor for object mappers
      */
@@ -73,6 +75,21 @@ public class Column {
      */
     public void setBoardId(long boardId) {
         this.boardId = boardId;
+    }
+
+    /**
+     * @return the position of the card in the list it belongs to (at the time)
+     */
+    public Integer getPosition() {
+        return position;
+    }
+
+    /**
+     * @param position the new position of the card in the list it belongs to (at the time),
+     *                 which replaces the old position
+     */
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     /**
