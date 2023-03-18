@@ -13,7 +13,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
