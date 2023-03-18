@@ -49,6 +49,18 @@ public class ColumnTest {
     }
 
     @Test
+    public void testGetPosition() {
+        column.setPosition(1);
+        assertEquals(1, column.getPosition());
+    }
+
+    @Test
+    public void testSetPosition() {
+        column.setPosition(2);
+        assertEquals(column.getPosition(),2);
+    }
+
+    @Test
     public void testEquals() {
         Column otherColumn = new Column("Test", 1L);
         assertEquals(column, otherColumn);
