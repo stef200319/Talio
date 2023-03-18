@@ -128,25 +128,6 @@ public class CardController {
     }
 
     /**
-     * @param columnId id of the column of which all cards should be retrieved
-     * @return a list of cards which all have the same columnId corresponding to the input, ordered by position
-     */
-    @GetMapping("/getByColumnId/{columnId}")
-    @ResponseBody public List<Card> getCardByColumnId(@PathVariable("columnId") long columnId) {
-        List<Card> cards = cardRepository.findAll(Sort.by(Sort.Direction.ASC, "position"));
-        List<Card> cardsOnColumn = new LinkedList<>();
-
-
-        for (Card c : cards) {
-            if (c.getColumnId() == columnId) {
-                cardsOnColumn.add(c);
-            }
-        }
-
-        return cardsOnColumn;
-    }
-
-    /**
      * Get a single card whose id matches the input cardId, if a card with the input id exists.
      * @param cardId id of the card that is to be retrieved.
      * @return The card that is requested using its ID. Return null if a card with the given id

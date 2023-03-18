@@ -31,8 +31,13 @@ public class TestCardRepository implements CardRepository {
     @SuppressWarnings("checkstyle.*")
     public TestCardRepository() {
         cards = new ArrayList<>();
-        cards.add(new Card("Test1", 1));
-        cards.add(new Card("Test2", 1));
+        Card c1 = new Card("Test1", 1);
+        Card c2 = new Card("Test2", 1);
+        c1.setId(0);
+        c2.setId(1);
+
+        cards.add(c1);
+        cards.add(c2);
     }
 
     /**
@@ -44,7 +49,7 @@ public class TestCardRepository implements CardRepository {
     @Override
     public <S extends Card> S save(S entity) {
         call("save");
-        entity.setId((long) cards.size());
+//        entity.setId((long) cards.size());
         cards.add(entity);
         return entity;
     }
@@ -56,11 +61,18 @@ public class TestCardRepository implements CardRepository {
     @SuppressWarnings("checkstyle.*")
     @Override
     public Optional<Card> findById(Long id) {
-        if (id > 0 && id <= cards.size()) {
-            return Optional.of(cards.get(id.intValue() - 1));
-        } else {
-            return Optional.empty();
+//        if (id >= 0 && id < cards.size()) {
+//            return Optional.of(cards.get(id.intValue()));
+//        } else {
+//            return Optional.empty();
+//        }
+
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i) != null && cards.get(i).getId() == id) {
+                return Optional.of(cards.get(i));
+            }
         }
+        return Optional.empty();
     }
 
     /**
@@ -267,9 +279,14 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public void deleteById(Long id) {
-        if (id > 0 && id <= cards.size()) {
-            cards.remove(id.intValue() - 1);
-        }
+//        if (id >= 0 && id < cards.size()) {
+            for (int i = 0; i < cards.size(); i++) {
+                if (cards.get(i) != null && cards.get(i).getId() == id) {
+                    cards.remove(i);
+                    break;
+                }
+            }
+//        }
     }
 
     /**
@@ -311,11 +328,18 @@ public class TestCardRepository implements CardRepository {
     @Override
 
     public boolean existsById(Long id) {
-        if (id > 0 && id <= cards.size()) {
-            return true;
-        } else {
-            return false;
+//        if (id > 0 && id <= cards.size()) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i) != null && cards.get(i).getId() == id) {
+                return true;
+            }
         }
+        return false;
     }
 
     /**

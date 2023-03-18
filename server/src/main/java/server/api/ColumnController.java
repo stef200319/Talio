@@ -1,27 +1,39 @@
 package server.api;
 
+import commons.Card;
 import commons.Column;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.BoardRepository;
+import server.database.CardRepository;
 import server.database.ColumnRepository;
+
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/column")
 public class ColumnController {
 
+    private final CardController cardController;
+
     private final ColumnRepository columnRepository;
     private final BoardRepository boardRepository;
+    private final CardRepository cardRepository;
 
     /**
      * @param columnRepository the data container which includes all the columns
      * @param boardRepository the repository of the board -> used for checking whether boardId exists
      */
-    public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository) {
+    public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository,
+                            CardRepository cardRepository, CardController cardController) {
         this.columnRepository = columnRepository;
         this.boardRepository = boardRepository;
+        this.cardRepository = cardRepository;
+        this.cardController = cardController;
     }
 
     /**
@@ -52,6 +64,12 @@ public class ColumnController {
         if (columnRepository.existsById(id)) {
             Column l = columnRepository.getById(id);
             columnRepository.delete(l);
+
+            List<Card> cards = getCardsByColumnId(id);
+            for (Card card : cards) {
+                cardController.deleteCard(card.getId());
+            }
+
             return ResponseEntity.ok("Column deleted successfully");
         }
 
@@ -104,18 +122,23 @@ public class ColumnController {
         return ResponseEntity.notFound().build();
     }
 
-    /**
-     * @param boardId the id of the board for which all columns need to be fetched
-     * @return a column of all the columns on the board
-     */
-    @GetMapping("/getByBoardId/{boardId}")
-    @ResponseBody public ResponseEntity<List<Column>> getColumnByBoardId(@PathVariable long boardId) {
-        List<Column> columns = columnRepository.findColumnsByBoardId(boardId);
 
-        if (columns != null) {
-            return ResponseEntity.ok(columns);
+    /**
+     * @param columnId id of the column of which all cards should be retrieved
+     * @return a list of cards which all have the same columnId corresponding to the input, ordered by position
+     */
+    @GetMapping("/getCardsByColumnId/{columnId}")
+    @ResponseBody public List<Card> getCardsByColumnId(@PathVariable("columnId") long columnId) {
+        List<Card> cards = cardRepository.findAll(Sort.by(Sort.Direction.ASC, "position"));
+        List<Card> cardsOnColumn = new LinkedList<>();
+
+
+        for (Card c : cards) {
+            if (c.getColumnId() == columnId) {
+                cardsOnColumn.add(c);
+            }
         }
 
-        return ResponseEntity.notFound().build();
+        return cardsOnColumn;
     }
 }
