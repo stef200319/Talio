@@ -46,7 +46,7 @@ public class Card {
         this.title = title;
         this.columnId = columnId;
 //        this.cardDetails =
-                new CardDetails(this.id, this.title);
+        new CardDetails(this.id, this.title);
     }
 
     /**
