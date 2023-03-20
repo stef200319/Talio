@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Subtask {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
-    String description;
-    boolean done;
+    private long id;
+    private String description;
+    private boolean done;
 }

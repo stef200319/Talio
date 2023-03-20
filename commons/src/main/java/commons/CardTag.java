@@ -9,9 +9,9 @@ import javax.persistence.Id;
 public class CardTag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
-    long boardId;
-    String title;
-    String colour;
+    private long id;
+    private long boardId;
+    private String title;
+    private String colour;
 
 }
