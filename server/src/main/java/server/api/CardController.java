@@ -34,7 +34,7 @@ public class CardController {
      * @return if successful, the method returns an ok
      */
     @PostMapping("/addCard/{title}/{columnId}")
-    public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("columnId") Long columnId) {
+    @ResponseBody public ResponseEntity<Card> addCard(@PathVariable String title, @PathVariable Long columnId) {
         if(columnId!=null) {
 
             Integer maxPosition = cardRepository.findMaxPositionByColumnId(columnId);

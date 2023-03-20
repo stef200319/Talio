@@ -44,10 +44,10 @@ public class ColumnController {
      * @param boardId The board on which the column belongs
      * @return A response entity of the saved column
      */
+
     @PostMapping("/addColumn/{title}/{boardId}")
-    @ResponseBody public ResponseEntity<Column> addColumn(@PathVariable String title,
-                                                        @PathVariable Long boardId) {
-        if (boardId!=null) {
+    @ResponseBody public ResponseEntity<Column> addColumn(@PathVariable String title, @PathVariable Long boardId) {
+        if (boardId != null) {
             Integer maxPosition = columnRepository.findMaxPositionByBoardId(boardId);
             int newPosition = maxPosition == null ? 1 : maxPosition + 1;
 

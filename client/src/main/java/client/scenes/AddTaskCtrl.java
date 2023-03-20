@@ -2,6 +2,8 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Card;
+import commons.Column;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -34,16 +36,18 @@ public class AddTaskCtrl {
     /**
      * will return a new list with title listName (once database running)
      */
-    public void getList() {
+    public Card getList() {
         var c = taskName.getText();
-        //return new card (needs backend)
+        if(c.equals(""))
+            c="New List";
+        return new Card(c,1);
     }
 
     /**
      * adds list to server and returns to overview
      */
     public void confirm() {
-        //add card to database (needs backend)
+        server.addCard(getList());
         taskName.clear();
         mainCtrl.showBoardOverview();
     }
