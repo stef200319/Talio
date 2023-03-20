@@ -40,7 +40,7 @@ public class Card {
 
     /**
      * @param title of the Card
-     * @param columnId the list on which the card is going to be present
+     * @param columnId the column on which the card is going to be present
      */
     public Card(String title, long columnId) {
         this.title = title;
@@ -78,28 +78,28 @@ public class Card {
     }
 
     /**
-     * @return the id of the list the card belongs to (at the time)
+     * @return the id of the column the card belongs to (at the time)
      */
     public long getColumnId() {
         return columnId;
     }
 
     /**
-     * @param listId the id of the list that replaces the current list the card belongs to
+     * @param columnId the id of the column that replaces the current column the card belongs to
      */
-    public void setColumnId(long listId) {
-        this.columnId = listId;
+    public void setColumnId(long columnId) {
+        this.columnId = columnId;
     }
 
     /**
-     * @return the position of the card in the list it belongs to (at the time)
+     * @return the position of the card in the column it belongs to (at the time)
      */
     public Integer getPosition() {
         return position;
     }
 
     /**
-     * @param position the new position of the card in the list it belongs to (at the time),
+     * @param position the new position of the card in the column it belongs to (at the time),
      *                 which replaces the old position
      */
     public void setPosition(Integer position) {
@@ -129,7 +129,7 @@ public class Card {
     @Override
     public String toString() {
         return "The title of this Card is: " + getTitle() +
-                ", and the ID of the List this Card belongs to is: " + getColumnId();
+                ", and the ID of the Column this Card belongs to is: " + getColumnId();
     }
 
 }

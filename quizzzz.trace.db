@@ -820,3 +820,12 @@ INSERT INTO BOARD VALUES('thijs') [21002-200]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-03-16 11:31:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "QUOTES" not found; SQL statement:
+DROP TABLE QUOTES [42102-200]
+2023-03-16 11:37:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (COLUMN: ""ID"" BIGINT DEFAULT NEXT VALUE FOR ""PUBLIC"".""SYSTEM_SEQUENCE_E06B32C1_0F14_4947_8534_4B8F1907EC47"" NOT NULL NULL_TO_DEFAULT SEQUENCE ""PUBLIC"".""SYSTEM_SEQUENCE_E06B32C1_0F14_4947_8534_4B8F1907EC47"")"; SQL statement:
+INSERT INTO "PUBLIC"."COLUMN"("ID","BOARD_ID","TITLE")VALUES(?,?,?) [22018-200]
+2023-03-16 11:37:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (COLUMN: ""ID"" BIGINT DEFAULT NEXT VALUE FOR ""PUBLIC"".""SYSTEM_SEQUENCE_E06B32C1_0F14_4947_8534_4B8F1907EC47"" NOT NULL NULL_TO_DEFAULT SEQUENCE ""PUBLIC"".""SYSTEM_SEQUENCE_E06B32C1_0F14_4947_8534_4B8F1907EC47"")"; SQL statement:
+INSERT INTO "PUBLIC"."COLUMN"("ID","BOARD_ID","TITLE")VALUES(?,?,?) [22018-200]

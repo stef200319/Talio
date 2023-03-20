@@ -1,14 +1,12 @@
 package server.api;
 
 import commons.Card;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -190,24 +188,6 @@ public class CardController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    /**
-     * @param columnId id of the column of which all cards should be retrieved
-     * @return a list of cards which all have the same columnId corresponding to the input, ordered by position
-     */
-    @GetMapping("/getByColumnId/{columnId}")
-    @ResponseBody public List<Card> getCardByColumnId(@PathVariable("columnId") long columnId) {
-        List<Card> cards = cardRepository.findAll(Sort.by(Sort.Direction.ASC, "position"));
-        List<Card> cardsOnColumn = new LinkedList<>();
-
-        for (Card c : cards) {
-            if (c.getColumnId() == columnId) {
-                cardsOnColumn.add(c);
-            }
-        }
-
-        return cardsOnColumn;
     }
 
     /**

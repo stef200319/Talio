@@ -31,8 +31,15 @@ public class TestBoardRepository implements BoardRepository {
     @SuppressWarnings("checkstyle.*")
     public TestBoardRepository() {
         boards = new ArrayList<>();
-        boards.add(new Board("Test1"));
-        boards.add(new Board("Test2"));
+        Board b1 = new Board("Test1");
+        Board b2 = new Board("Test2");
+        Board b3 = new Board("Test3");
+        b1.setId(0);
+        b2.setId(1);
+        b3.setId(5);
+        boards.add(b1);
+        boards.add(b2);
+        boards.add(b3);
     }
 
     /**
@@ -44,7 +51,7 @@ public class TestBoardRepository implements BoardRepository {
     @Override
     public <S extends Board> S save(S entity) {
         call("save");
-        entity.setId((long) boards.size());
+//        entity.setId((long) boards.size());
         boards.add(entity);
         return entity;
     }
@@ -56,11 +63,18 @@ public class TestBoardRepository implements BoardRepository {
     @SuppressWarnings("checkstyle.*")
     @Override
     public Optional<Board> findById(Long id) {
-        if (id > 0 && id <= boards.size()) {
-            return Optional.of(boards.get(id.intValue() - 1));
-        } else {
-            return Optional.empty();
+//        if (id > 0 && id <= boards.size()) {
+//            return Optional.of(boards.get(id.intValue() - 1));
+//        } else {
+//            return Optional.empty();
+//        }
+
+        for (int i = 0; i < boards.size(); i++) {
+            if (boards.get(i) != null && boards.get(i).getId().equals(id)) {
+                return Optional.of(boards.get(i));
+            }
         }
+        return Optional.empty();
     }
 
     /**
@@ -267,8 +281,14 @@ public class TestBoardRepository implements BoardRepository {
      */
     @Override
     public void deleteById(Long id) {
-        if (id > 0 && id <= boards.size()) {
-            boards.remove(id.intValue() - 1);
+//        if (id > 0 && id <= boards.size()) {
+//            boards.remove(id.intValue() - 1);
+//        }
+        for (int i = 0; i < boards.size(); i++) {
+            if (boards.get(i) != null && boards.get(i).getId() == id) {
+                boards.remove(i);
+                return;
+            }
         }
     }
 
@@ -311,10 +331,17 @@ public class TestBoardRepository implements BoardRepository {
     @Override
 
     public boolean existsById(Long id) {
-        if (id > 0 && id <= boards.size()) {
-            return true;
-        } else {
-            return false;
+//        if (id > 0 && id <= boards.size()) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        for (int i = 0; i < boards.size(); i++) {
+            if (boards.get(i) != null && boards.get(i).getId() == id) {
+                return true;
+            }
         }
+        return false;
+
     }
 }
