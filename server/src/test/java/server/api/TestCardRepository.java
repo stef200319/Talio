@@ -360,4 +360,21 @@ public class TestCardRepository implements CardRepository {
         return null;
     }
 
+
+    /**
+     * This methods gives all cards given a certain columnId
+     * @param columnId the columnId you want the cards from
+     * @return a List of cards with the given columnId
+     */
+    @Override
+    public List<Card> findCardsByColumnId(Long columnId) {
+        List<Card> cardsToReturn = new ArrayList<>();
+
+        for (Card c : cards) {
+            if (c != null || c.getId() == columnId) cardsToReturn.add(c);
+        }
+
+        return cardsToReturn;
+    }
+
 }
