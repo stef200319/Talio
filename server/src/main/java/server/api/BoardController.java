@@ -9,6 +9,7 @@ import server.database.BoardRepository;
 import server.database.ColumnRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/board")
@@ -17,6 +18,11 @@ public class BoardController {
     private final ColumnRepository columnRepository;
 
     private final ColumnController columnController;
+
+
+    /**
+     * @param boardRepository the repository which contains all the data in the database
+     */
 
     /**
      *
@@ -43,14 +49,11 @@ public class BoardController {
      * @param boardId the id of the board that the user is searching for
      * @return the board which corresponds to the id which was provided.
      */
-    @GetMapping("/getBoardByBoardId/{boardId}")
-    @ResponseBody public ResponseEntity<Board> getBoardByBoardId(@PathVariable Long boardId) {
-        if (boardRepository.existsById(boardId)) {
-            Board board = boardRepository.getById(boardId);
-            return ResponseEntity.ok(board);
-        }
+    @GetMapping("/getByBoardId/{boardId}")
+    @ResponseBody public Board getBoardById(@PathVariable Long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
 
-        return ResponseEntity.notFound().build();
+        return optionalBoard.orElse(null);
     }
 
     /**
@@ -59,15 +62,14 @@ public class BoardController {
      */
     @PostMapping("/addBoard/{title}")
     @ResponseBody public ResponseEntity<Board> addBoard(@PathVariable String title) {
-        if (title == null) {
-            return ResponseEntity.badRequest().build();
+        if (title != null && !title.equals("")) {
+            Board newBoard = new Board(title);
+            Board b = boardRepository.save(newBoard);
 
+            return ResponseEntity.ok(b);
         }
 
-        Board newBoard = new Board(title);
-        Board b = boardRepository.save(newBoard);
-
-        return ResponseEntity.ok(b);
+        return ResponseEntity.badRequest().build();
     }
 
     /**
@@ -75,16 +77,19 @@ public class BoardController {
      * @param boardId the board id of the board which needs editing
      * @return whether the board was updated correctly
      */
-    @PutMapping("/editBoardTitle/{title}/{boardId}")
-    @ResponseBody public ResponseEntity<Board> editBoardTitle(@PathVariable String title, @PathVariable long boardId) {
-        if (!boardRepository.existsById(boardId)) {
-            return ResponseEntity.badRequest().build();
+    @PutMapping("/putBoard/{title}/{boardId}")
+    @ResponseBody public ResponseEntity<String> putBoard(@PathVariable String title,
+                                                        @PathVariable long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+
+        if (optionalBoard.isPresent()) {
+            Board board = optionalBoard.get();
+            board.setTitle(title);
+            boardRepository.save(board);
+            return ResponseEntity.ok("Board title updated successfully");
         }
 
-        Board board = boardRepository.getById(boardId);
-        board.setTitle(title);
-        boardRepository.save(board);
-        return ResponseEntity.ok(board);
+        return ResponseEntity.notFound().build();
     }
 
     /**
@@ -92,35 +97,32 @@ public class BoardController {
      * @return whether the deletion was successful
      */
     @DeleteMapping("/deleteBoard/{boardId}")
-    @ResponseBody public ResponseEntity<Board> deleteBoard(@PathVariable long boardId) {
-        if (!boardRepository.existsById(boardId)) {
-            return ResponseEntity.badRequest().build();
+    @ResponseBody public ResponseEntity<String> deleteBoard(@PathVariable long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+
+        if (optionalBoard.isPresent()) {
+            boardRepository.delete(optionalBoard.get());
+
+            List<Column> columnsToDelete = getColumnsByBoardId(boardId);
+            for (Column column : columnsToDelete) {
+                columnController.removeColumn(column.getId());
+            }
+
+            return ResponseEntity.ok("Board deleted successfully");
         }
 
-        Board board = boardRepository.getById(boardId);
-        boardRepository.delete(board);
-
-        // Delete corresponding columns
-        List<Column> columnsToDelete = getColumnsByBoardId(boardId).getBody();
-        for (Column column : columnsToDelete) {
-            columnController.deleteColumn(column.getId());
-        }
-
-        return ResponseEntity.ok(board);
+        return ResponseEntity.notFound().build();
     }
 
     /**
-     * Gives all the columns given a certain boardId
-     * @param boardId the boardId you want the columns from
-     * @return a List with all the corresponding columns
+     * Returns all the columns given a certain boardId
+     * @param boardId the Id of the board you want the columns from
+     * @return ResponseEntity with either
      */
     @GetMapping("/getColumnsByBoardId/{boardId}")
-    @ResponseBody public ResponseEntity<List<Column>> getColumnsByBoardId(@PathVariable long boardId) {
-        if (!boardRepository.existsById(boardId)) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok(columnRepository.findColumnsByBoardId(boardId));
+    @ResponseBody public List<Column> getColumnsByBoardId(@PathVariable long boardId) {
+        List<Column> columns = columnRepository.findColumnsByBoardId(boardId);
+        return columns;
     }
 
 }

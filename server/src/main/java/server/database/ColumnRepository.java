@@ -29,6 +29,6 @@ public interface ColumnRepository extends JpaRepository<Column, Long> {
      * @param boardId the id of the board for which we want to find all columns
      * @return a Column of all the columns on the board
      */
-    @Query("SELECT c From Column c WHERE c.boardId = :boardId SORT BY c.position ASC")
+    @Query("SELECT c From Column c WHERE c.boardId=:boardId")
     List<Column> findColumnsByBoardId(Long boardId);
 }

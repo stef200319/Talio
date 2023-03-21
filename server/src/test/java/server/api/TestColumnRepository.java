@@ -370,8 +370,6 @@ public class TestColumnRepository implements ColumnRepository {
         return null;
     }
 
-
-
     /**
      * @param boardId the id of the board for which we want to find all columns
      * @return The list of columns which correspond to the input boardId
