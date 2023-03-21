@@ -360,4 +360,9 @@ public class TestCardRepository implements CardRepository {
         return null;
     }
 
+    @Override
+    public List<Card> findCardsByColumnId(Long columnId) {
+        return null;
+    }
+
 }
