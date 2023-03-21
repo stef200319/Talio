@@ -98,13 +98,15 @@ public class BoardController {
         }
 
         Board board = boardRepository.findById(boardId).get();
-        boardRepository.delete(board);
 
         // Delete corresponding columns
         List<Column> columnsToDelete = getColumnsByBoardId(boardId).getBody();
+
         for (Column column : columnsToDelete) {
             columnController.deleteColumn(column.getId());
         }
+
+        boardRepository.delete(board);
 
         return ResponseEntity.ok(board);
     }

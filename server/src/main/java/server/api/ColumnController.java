@@ -48,7 +48,7 @@ public class ColumnController {
      * @param columnId the id of the column which will be retrieved
      * @return the column according to the input id
      */
-    @GetMapping("/getColumnByColumnId/{id}")
+    @GetMapping("/getColumnByColumnId/{columnId}")
     @ResponseBody public ResponseEntity<Column> getColumnByColumnId(@PathVariable("columnId") long columnId) {
         if (!columnRepository.existsById(columnId)) {
             return ResponseEntity.notFound().build();
@@ -90,7 +90,7 @@ public class ColumnController {
     @ResponseBody public ResponseEntity<Column> editColumnTitle(@PathVariable("columnId") long columnId,
                                                                 @PathVariable("title") String title) {
         if (!columnRepository.existsById(columnId)) {
-            ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().build();
         }
 
         Column column = columnRepository.findById(columnId).get();
@@ -106,21 +106,22 @@ public class ColumnController {
     @DeleteMapping("/deleteColumn/{columnId}")
     @ResponseBody public ResponseEntity<Column> deleteColumn(@PathVariable("columnId") long columnId) {
         if (!columnRepository.existsById(columnId)) {
-            ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().build();
         }
 
         Column columnToDelete = columnRepository.findById(columnId).get();
         long boardId = columnToDelete.getBoardId();
         Integer position = columnToDelete.getPosition();
 
-        // Delete the Column
-        columnRepository.deleteById(columnId);
-
         // Delete corresponding cards
         List<Card> cards = getCardsByColumnId(columnId).getBody();
+
         for (Card card : cards) {
             cardController.deleteCard(card.getId());
         }
+
+        // Delete the Column
+        columnRepository.deleteById(columnId);
 
         // Decrement the positions of all Columns in front of the deleted Column
         if (position != null) {

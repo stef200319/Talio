@@ -8,7 +8,6 @@ import server.database.CardRepository;
 import server.database.ColumnRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/card")
@@ -118,7 +117,7 @@ public class CardController {
      * Change a position of a Card in the Column it is in, and change the positions of other Cards in the Column which
      * have been affected by the position change. Store all the position changes in the database
      * @param cardId id of the Card whose position needs to be changed
-     * @param position
+     * @param newPosition
      * @return Conformation that the positions of the Card and all other Cards have that been affected have been
      * changed
      */
