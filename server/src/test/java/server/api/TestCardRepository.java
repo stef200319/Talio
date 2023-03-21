@@ -360,4 +360,13 @@ public class TestCardRepository implements CardRepository {
         return null;
     }
 
+    /**
+     * @param columnId the columnId you want the cards from 
+     * @return the list with the cards
+     */
+    @Override
+    public List<Card> findCardsByColumnId(Long columnId) {
+        return null;
+    }
+
 }

@@ -2,7 +2,6 @@ package server.api;
 
 import commons.Card;
 import commons.Column;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +9,7 @@ import server.database.BoardRepository;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/column")
@@ -39,129 +36,116 @@ public class ColumnController {
         this.cardController = cardController;
     }
 
+    // I think this should just return List<Column>
+    /**
+     * @return all columns in the database
+     */
+    public List<Column> getAllColumns() {
+        return columnRepository.findAll();
+    }
+
+    /**
+     * @param columnId the id of the column which will be retrieved
+     * @return the column according to the input id
+     */
+    @GetMapping("/getColumnByColumnId/{columnId}")
+    @ResponseBody public ResponseEntity<Column> getColumnByColumnId(@PathVariable("columnId") long columnId) {
+        if (!columnRepository.existsById(columnId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Column column = columnRepository.findById(columnId).get();
+        return ResponseEntity.ok(column);
+
+    }
+
     /**
      * @param title The title of the board that needs to be added to the database
      * @param boardId The board on which the column belongs
      * @return A response entity of the saved column
      */
     @PostMapping("/addColumn/{title}/{boardId}")
-    @ResponseBody public ResponseEntity<Column> addColumn(@PathVariable String title,
-                                                        @PathVariable Long boardId) {
-        if (boardId!=null) {
-            Integer maxPosition = columnRepository.findMaxPositionByBoardId(boardId);
-            int newPosition = maxPosition == null ? 1 : maxPosition + 1;
-
-            Column newColumn = new Column(title, boardId);
-            newColumn.setPosition(newPosition);
-
-            Column saved = columnRepository.save(newColumn);
-            return ResponseEntity.ok(saved);
+    @ResponseBody public ResponseEntity<Column> addColumn(@PathVariable("title") String title,
+                                                        @PathVariable("boardId") Long boardId) {
+        if (title == null || !boardRepository.existsById(boardId)) {
+            return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.notFound().build();
+        Integer maxPosition = columnRepository.findMaxPositionByBoardId(boardId);
+        int newPosition = maxPosition == null ? 1 : maxPosition + 1;
 
+        Column newColumn = new Column(title, boardId);
+        newColumn.setPosition(newPosition);
+
+        Column saved = columnRepository.save(newColumn);
+        return ResponseEntity.ok(saved);
+    }
+
+    /**
+     * @param columnId the id of the column which should be updated
+     * @param title the new title of the column
+     * @return whether the column was successfully updated
+     */
+    @PutMapping("/editColumnTitle/{columnId}/{title}")
+    @ResponseBody public ResponseEntity<Column> editColumnTitle(@PathVariable("columnId") long columnId,
+                                                                @PathVariable("title") String title) {
+        if (!columnRepository.existsById(columnId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Column column = columnRepository.findById(columnId).get();
+        column.setTitle(title);
+        columnRepository.save(column);
+        return ResponseEntity.ok(column);
     }
 
     /**
      * @param columnId the id of the column that needs to be removed
      * @return a response which says that the column was removed from the database or not.
      */
-
     @DeleteMapping("/deleteColumn/{columnId}")
-    @ResponseBody public ResponseEntity<String> removeColumn(@PathVariable("columnId") long columnId) {
-        Optional<Column> columnToDeleteOptional = columnRepository.findById(columnId);
+    @ResponseBody public ResponseEntity<Column> deleteColumn(@PathVariable("columnId") long columnId) {
+        if (!columnRepository.existsById(columnId)) {
+            return ResponseEntity.badRequest().build();
+        }
 
-        if (columnToDeleteOptional.isPresent()) {
-            Column columnToDelete = columnToDeleteOptional.get();
-            long boardId = columnToDelete.getBoardId();
-            Integer position = columnToDelete.getPosition();
+        Column columnToDelete = columnRepository.findById(columnId).get();
+        long boardId = columnToDelete.getBoardId();
+        Integer position = columnToDelete.getPosition();
 
-            // Delete the Column
-            columnRepository.deleteById(columnId);
+        // Delete corresponding cards
+        List<Card> cards = getCardsByColumnId(columnId).getBody();
 
-            // Delete corresponding cards
-            List<Card> cards = getCardsByColumnId(columnId);
-            for (Card card : cards) {
-                cardController.deleteCard(card.getId());
+        for (Card card : cards) {
+            cardController.deleteCard(card.getId());
+        }
+
+        // Delete the Column
+        columnRepository.deleteById(columnId);
+
+        // Decrement the positions of all Columns in front of the deleted Column
+        if (position != null) {
+            List<Column> columnsToUpdate = columnRepository.findByBoardIdAndPositionGreaterThan(boardId, position);
+            for (Column columnToUpdate : columnsToUpdate) {
+                int currentPosition = columnToUpdate.getPosition();
+                columnToUpdate.setPosition(currentPosition - 1);
+                columnRepository.save(columnToUpdate);
             }
-
-            // Decrement the positions of all Columns in front of the deleted Column
-            if(position!=null){
-                List<Column> columnsToUpdate = columnRepository.findByBoardIdAndPositionGreaterThan(boardId, position);
-                for (Column columnToUpdate : columnsToUpdate) {
-                    int currentPosition = columnToUpdate.getPosition();
-                    columnToUpdate.setPosition(currentPosition - 1);
-                    columnRepository.save(columnToUpdate);
-                }
-            }
-            return ResponseEntity.ok("Column deleted successfully");
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(columnToDelete);
     }
 
     /**
-     * @param id the id of the column which should be updated
-     * @param title the new title of the column
-     * @return whether the column was successfully updated
-     */
-    @PutMapping("/editTitle/{id}/{title}")
-    @ResponseBody public ResponseEntity<String> editColumn(@PathVariable long id,
-                                                       @PathVariable String title) {
-        if (columnRepository.existsById(id)) {
-            Column l = columnRepository.getById(id);
-            l.setTitle(title);
-            columnRepository.save(l);
-            return ResponseEntity.ok("Card edited successfully");
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
-    /**
-     * @param id the id of the column which will be retrieved
-     * @return the column according to the input id
-     */
-    @GetMapping("/getByColumnId/{id}")
-    @ResponseBody public ResponseEntity<Column> getColumnByID(@PathVariable long id) {
-        if (columnRepository.existsById(id)) {
-            Column l = columnRepository.getById(id);
-            return ResponseEntity.ok(l);
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
-    /**
-     * @return all columns in the database
-     */
-    @GetMapping("/getAllColumns")
-    @ResponseBody public ResponseEntity<List<Column>> getAllColumns() {
-        List<Column> columns = columnRepository.findAll();
-
-        if (columns.size() > 0) {
-            return ResponseEntity.ok(columns);
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
-
-    /**
-     * @param columnId id of the column of which all cards should be retrieved
-     * @return a list of cards which all have the same columnId corresponding to the input, ordered by position
+     * Gives all the cards given a certain columnId
+     * @param columnId the columnId you want the cards from
+     * @return a List with all the corresponding cards
      */
     @GetMapping("/getCardsByColumnId/{columnId}")
-    @ResponseBody public List<Card> getCardsByColumnId(@PathVariable("columnId") long columnId) {
-        List<Card> cards = cardRepository.findAll(Sort.by(Sort.Direction.ASC, "position"));
-        List<Card> cardsOnColumn = new LinkedList<>();
-
-
-        for (Card c : cards) {
-            if (c.getColumnId() == columnId) {
-                cardsOnColumn.add(c);
-            }
+    @ResponseBody public ResponseEntity<List<Card>> getCardsByColumnId(@PathVariable("columnId") long columnId) {
+        if (!columnRepository.existsById(columnId)) {
+            return ResponseEntity.badRequest().build();
         }
 
-        return cardsOnColumn;
+        return ResponseEntity.ok(cardRepository.findCardsByColumnId(columnId));
     }
 }
