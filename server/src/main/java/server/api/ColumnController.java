@@ -55,7 +55,7 @@ public class ColumnController {
             return ResponseEntity.notFound().build();
         }
 
-        Column column = columnRepository.getById(columnId);
+        Column column = columnRepository.findById(columnId).get();
         return ResponseEntity.ok(column);
 
     }
@@ -94,7 +94,7 @@ public class ColumnController {
             ResponseEntity.badRequest().build();
         }
 
-        Column column = columnRepository.getById(columnId);
+        Column column = columnRepository.findById(columnId).get();
         column.setTitle(title);
         columnRepository.save(column);
         return ResponseEntity.ok(column);
@@ -110,7 +110,7 @@ public class ColumnController {
             ResponseEntity.badRequest().build();
         }
 
-        Column columnToDelete = columnRepository.getById(columnId);
+        Column columnToDelete = columnRepository.findById(columnId).get();
         long boardId = columnToDelete.getBoardId();
         Integer position = columnToDelete.getPosition();
 

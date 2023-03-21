@@ -49,7 +49,7 @@ public class BoardController {
             return ResponseEntity.notFound().build();
         }
 
-        Board board = boardRepository.getById(boardId);
+        Board board = boardRepository.findById(boardId).get();
         return ResponseEntity.ok(board);
     }
 
@@ -81,7 +81,7 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardRepository.getById(boardId);
+        Board board = boardRepository.findById(boardId).get();
         board.setTitle(title);
         boardRepository.save(board);
         return ResponseEntity.ok(board);
@@ -97,7 +97,7 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardRepository.getById(boardId);
+        Board board = boardRepository.findById(boardId).get();
         boardRepository.delete(board);
 
         // Delete corresponding columns

@@ -8,6 +8,7 @@ import server.database.CardRepository;
 import server.database.ColumnRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/card")
@@ -49,7 +50,7 @@ public class CardController {
             return ResponseEntity.notFound().build();
         }
 
-        Card card = cardRepository.getById(cardId);
+        Card card = cardRepository.findById(cardId).get();
         return ResponseEntity.ok(card);
     }
 
@@ -90,7 +91,7 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.getById(cardId);
+        Card card = cardRepository.findById(cardId).get();
         card.setTitle(title);
         cardRepository.save(card);
         return ResponseEntity.ok(card);
@@ -103,13 +104,14 @@ public class CardController {
      * appropriate response to the client.
      */
     @PutMapping("/editCardColumn/{cardId}/{columnId}")
+    @ResponseBody
     public ResponseEntity<Card> editCardColumn(@PathVariable("cardId") long cardId,
                                                  @PathVariable("columnId") long columnId) {
         if (!columnRepository.existsById(columnId) || !cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.getById(cardId);
+        Card card = cardRepository.findById(cardId).get();
         card.setColumnId(columnId);
         cardRepository.save(card);
         return ResponseEntity.ok(card);
@@ -119,29 +121,30 @@ public class CardController {
      * Change a position of a Card in the Column it is in, and change the positions of other Cards in the Column which
      * have been affected by the position change. Store all the position changes in the database
      * @param cardId id of the Card whose position needs to be changed
-     * @param newPosition
+     * @param position
      * @return Conformation that the positions of the Card and all other Cards have that been affected have been
      * changed
      */
     @PutMapping("/editCardPosition/{cardId}/{position}")
+    @ResponseBody
     public ResponseEntity<Card> editCardPosition(@PathVariable("cardId") long cardId,
-                                                   @PathVariable("position") int newPosition) {
+                                                   @PathVariable("position") int position) {
         if (!cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.getById(cardId);
+        Card card = cardRepository.findById(cardId).get();
 
         int oldPosition = card.getPosition();
         long columnId = card.getColumnId();
 
-        if (newPosition > cardRepository.findMaxPositionByColumnId(columnId) || newPosition <= 0) {
+        if (position > cardRepository.findMaxPositionByColumnId(columnId) || position <= 0) {
             return ResponseEntity.badRequest().build();
         }
 
-        List<Card> cards = changePositionsOfAffectedCards(oldPosition, newPosition, columnId);
+        List<Card> cards = changePositionsOfAffectedCards(oldPosition, position, columnId);
 
-        card.setPosition(newPosition);
+        card.setPosition(position);
         cards.add(card);
         cardRepository.saveAll(cards);
 
@@ -195,7 +198,7 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Card cardToDelete = cardRepository.getById(cardId);
+        Card cardToDelete = cardRepository.findById(cardId).get();
         long columnId = cardToDelete.getColumnId();
         Integer position = cardToDelete.getPosition();
 
