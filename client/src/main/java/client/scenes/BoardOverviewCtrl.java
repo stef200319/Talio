@@ -2,9 +2,12 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -106,6 +109,15 @@ public class BoardOverviewCtrl implements Initializable {
 
         Label s = new Label("task1");     // this is just a placeholder to see how it looks like
         list.getChildren().add(s);            //
+
+        Button b = new Button("Add task");
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mainCtrl.showAddTask();
+            }
+        });
+        list.getChildren().add(b);
 
         flowPane.getChildren().add(list);
     }

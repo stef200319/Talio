@@ -146,6 +146,8 @@ public class MainCtrl {
 
     /**
      * Show add task page
+     *
+     * @return
      */
     public void showAddTask() {
         primaryStage.setTitle("Add Task");
