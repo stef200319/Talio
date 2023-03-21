@@ -17,6 +17,7 @@ public class TestBoardRepository implements BoardRepository {
     private final List<Board> boards;
     private final List<String> calledMethods = new ArrayList<>();
 
+    private long lastUsedId;
     /**
      * @param name
      */
@@ -36,10 +37,12 @@ public class TestBoardRepository implements BoardRepository {
         Board b3 = new Board("Test3");
         b1.setId(0);
         b2.setId(1);
-        b3.setId(5);
+        b3.setId(2);
         boards.add(b1);
         boards.add(b2);
         boards.add(b3);
+
+        lastUsedId = 2;
     }
 
     /**
@@ -51,7 +54,7 @@ public class TestBoardRepository implements BoardRepository {
     @Override
     public <S extends Board> S save(S entity) {
         call("save");
-//        entity.setId((long) boards.size());
+        entity.setId(++lastUsedId);
         boards.add(entity);
         return entity;
     }
@@ -63,15 +66,9 @@ public class TestBoardRepository implements BoardRepository {
     @SuppressWarnings("checkstyle.*")
     @Override
     public Optional<Board> findById(Long id) {
-//        if (id > 0 && id <= boards.size()) {
-//            return Optional.of(boards.get(id.intValue() - 1));
-//        } else {
-//            return Optional.empty();
-//        }
-
-        for (int i = 0; i < boards.size(); i++) {
-            if (boards.get(i) != null && boards.get(i).getId().equals(id)) {
-                return Optional.of(boards.get(i));
+        for (Board b : boards) {
+            if (b.getId().equals(id)) {
+                return Optional.of(b);
             }
         }
         return Optional.empty();
@@ -198,6 +195,12 @@ public class TestBoardRepository implements BoardRepository {
      */
     @Override
     public Board getById(Long aLong) {
+        for (Board b : boards) {
+            if (b.getId().equals(aLong)) {
+                return b;
+            }
+        }
+
         return null;
     }
 
