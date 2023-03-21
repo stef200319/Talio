@@ -14,15 +14,17 @@ import java.util.List;
 public class CardController {
     private final CardRepository cardRepository;
     private final ColumnRepository columnRepository;
+    private final ColumnController columnController;
 
 
     /**
      * @param cardRepository the container storing all the data relating to cards
      * @param columnRepository the container storing all the data relating to columns (lists)
      */
-    public CardController(CardRepository cardRepository, ColumnRepository columnRepository) {
+    public CardController(CardRepository cardRepository, ColumnRepository columnRepository, ColumnController columnController) {
         this.cardRepository = cardRepository;
         this.columnRepository = columnRepository;
+        this.columnController = columnController;
     }
 
     /**
@@ -119,22 +121,25 @@ public class CardController {
      * Change a position of a Card in the Column it is in, and change the positions of other Cards in the Column which
      * have been affected by the position change. Store all the position changes in the database
      * @param cardId id of the Card whose position needs to be changed
-     * @param position
+     * @param newPosition
      * @return Conformation that the positions of the Card and all other Cards have that been affected have been
      * changed
      */
     @PutMapping("/editCardPosition/{cardId}/{position}")
     public ResponseEntity<Card> editCardPosition(@PathVariable("cardId") long cardId,
-                                                   @PathVariable("position") int position) {
+                                                   @PathVariable("position") int newPosition) {
         if (!cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
 
         Card card = cardRepository.getById(cardId);
 
-        int newPosition = position;
         int oldPosition = card.getPosition();
         long columnId = card.getColumnId();
+
+        if (newPosition > columnController.getCardsByColumnId(columnId).getBody().size() || newPosition < 0) {
+            return ResponseEntity.badRequest().build();
+        }
 
         List<Card> cards = changePositionsOfAffectedCards(newPosition, oldPosition, columnId);
 
