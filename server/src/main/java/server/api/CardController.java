@@ -141,7 +141,7 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
 
-        List<Card> cards = changePositionsOfAffectedCards(newPosition, oldPosition, columnId);
+        List<Card> cards = changePositionsOfAffectedCards(oldPosition, newPosition, columnId);
 
         card.setPosition(newPosition);
         cards.add(card);
@@ -158,7 +158,7 @@ public class CardController {
      * @param columnId the id of column in which changes of positions occur
      * @return a List containing all the Cards whose positions have been changed
      */
-    private List<Card> changePositionsOfAffectedCards(int newPosition, int oldPosition, long columnId) {
+    private List<Card> changePositionsOfAffectedCards(int oldPosition, int newPosition, long columnId) {
         List<Card> cards;
 
         if (oldPosition < newPosition) { // Moving the card down
