@@ -14,17 +14,15 @@ import java.util.List;
 public class CardController {
     private final CardRepository cardRepository;
     private final ColumnRepository columnRepository;
-    private final ColumnController columnController;
 
 
     /**
      * @param cardRepository the container storing all the data relating to cards
      * @param columnRepository the container storing all the data relating to columns (lists)
      */
-    public CardController(CardRepository cardRepository, ColumnRepository columnRepository, ColumnController columnController) {
+    public CardController(CardRepository cardRepository, ColumnRepository columnRepository) {
         this.cardRepository = cardRepository;
         this.columnRepository = columnRepository;
-        this.columnController = columnController;
     }
 
     /**
@@ -137,7 +135,7 @@ public class CardController {
         int oldPosition = card.getPosition();
         long columnId = card.getColumnId();
 
-        if (newPosition > columnController.getCardsByColumnId(columnId).getBody().size() || newPosition < 0) {
+        if (newPosition > cardRepository.findMaxPositionByColumnId(columnId) || newPosition <= 0) {
             return ResponseEntity.badRequest().build();
         }
 

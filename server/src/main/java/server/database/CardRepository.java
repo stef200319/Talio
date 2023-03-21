@@ -11,7 +11,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
      * @param columnId id of the Column from which the last position of its Cards is wanted
      * @return an Integer of the position of the last Card in the Column
      */
-    @Query("SELECT MAX(c.position) FROM Card c WHERE c.columnId = ?1")
+    @Query("SELECT MAX(c.position) FROM Card c WHERE c.columnId = :columnId")
     Integer findMaxPositionByColumnId(Long columnId);
 
 
