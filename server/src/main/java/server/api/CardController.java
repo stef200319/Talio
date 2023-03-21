@@ -59,7 +59,8 @@ public class CardController {
          * @return if successful, the method returns an ok
          */
     @PostMapping("/addCard/{title}/{columnId}")
-    @ResponseBody public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("columnId") Long columnId) {
+    @ResponseBody public ResponseEntity<Card> addCard(@PathVariable("title") String title,
+                                                      @PathVariable("columnId") Long columnId) {
         if (title == null || !columnRepository.existsById(columnId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -121,9 +122,9 @@ public class CardController {
      * @return Conformation that the positions of the Card and all other Cards have that been affected have been
      * changed
      */
-    @PutMapping("/editCardPosition/{cardId}/{position}")
+    @PutMapping("/editCardPosition/{cardId}/{newPosition}")
     @ResponseBody public ResponseEntity<Card> editCardPosition(@PathVariable("cardId") long cardId,
-                                                   @PathVariable("position") int position) {
+                                                   @PathVariable("newPosition") int newPosition) {
         if (!cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -133,13 +134,13 @@ public class CardController {
         int oldPosition = card.getPosition();
         long columnId = card.getColumnId();
 
-        if (position > cardRepository.findMaxPositionByColumnId(columnId) || position <= 0) {
+        if (newPosition > cardRepository.findMaxPositionByColumnId(columnId) || newPosition <= 0) {
             return ResponseEntity.badRequest().build();
         }
 
-        List<Card> cards = changePositionsOfAffectedCards(oldPosition, position, columnId);
+        List<Card> cards = changePositionsOfAffectedCards(oldPosition, newPosition, columnId);
 
-        card.setPosition(position);
+        card.setPosition(newPosition);
         cards.add(card);
         cardRepository.saveAll(cards);
 
@@ -167,7 +168,7 @@ public class CardController {
             }
         }
         else { // Moving the card up
-            cards = cardRepository.findByColumnIdAndPositionGreaterThan(columnId, newPosition-1);
+            cards = cardRepository.findByColumnIdAndPositionGreaterThan(columnId, newPosition - 1);
             for (Card c : cards) {
                 int position = c.getPosition();
                 if (position >= newPosition && position < oldPosition) {

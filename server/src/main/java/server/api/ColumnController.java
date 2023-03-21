@@ -49,7 +49,7 @@ public class ColumnController {
      * @return the column according to the input id
      */
     @GetMapping("/getColumnByColumnId/{id}")
-    @ResponseBody public ResponseEntity<Column> getColumnByColumnId(@PathVariable long columnId) {
+    @ResponseBody public ResponseEntity<Column> getColumnByColumnId(@PathVariable("columnId") long columnId) {
         if (!columnRepository.existsById(columnId)) {
             return ResponseEntity.notFound().build();
         }
@@ -65,8 +65,8 @@ public class ColumnController {
      * @return A response entity of the saved column
      */
     @PostMapping("/addColumn/{title}/{boardId}")
-    @ResponseBody public ResponseEntity<Column> addColumn(@PathVariable String title,
-                                                        @PathVariable Long boardId) {
+    @ResponseBody public ResponseEntity<Column> addColumn(@PathVariable("title") String title,
+                                                        @PathVariable("boardId") Long boardId) {
         if (title == null || !boardRepository.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -87,8 +87,8 @@ public class ColumnController {
      * @return whether the column was successfully updated
      */
     @PutMapping("/editColumnTitle/{columnId}/{title}")
-    @ResponseBody public ResponseEntity<Column> editColumnTitle(@PathVariable long columnId,
-                                                                @PathVariable String title) {
+    @ResponseBody public ResponseEntity<Column> editColumnTitle(@PathVariable("columnId") long columnId,
+                                                                @PathVariable("title") String title) {
         if (!columnRepository.existsById(columnId)) {
             ResponseEntity.badRequest().build();
         }
@@ -140,7 +140,7 @@ public class ColumnController {
      * @return a List with all the corresponding cards
      */
     @GetMapping("/getCardsByColumnId/{columnId}")
-    @ResponseBody public ResponseEntity<List<Card>> getCardsByColumnId(@PathVariable long columnId) {
+    @ResponseBody public ResponseEntity<List<Card>> getCardsByColumnId(@PathVariable("columnId") long columnId) {
         if (!columnRepository.existsById(columnId)) {
             return ResponseEntity.badRequest().build();
         }

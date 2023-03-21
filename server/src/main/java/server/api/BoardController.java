@@ -43,7 +43,7 @@ public class BoardController {
      * @return the board which corresponds to the id which was provided.
      */
     @GetMapping("/getBoardByBoardId/{boardId}")
-    @ResponseBody public ResponseEntity<Board> getBoardByBoardId(@PathVariable Long boardId) {
+    @ResponseBody public ResponseEntity<Board> getBoardByBoardId(@PathVariable("boardId") Long boardId) {
         if (!boardRepository.existsById(boardId)) {
             return ResponseEntity.notFound().build();
         }
@@ -57,7 +57,7 @@ public class BoardController {
      * @return responseEntity which contains information whether and what was added to the db
      */
     @PostMapping("/addBoard/{title}")
-    @ResponseBody public ResponseEntity<Board> addBoard(@PathVariable String title) {
+    @ResponseBody public ResponseEntity<Board> addBoard(@PathVariable("title") String title) {
         if (title == null) {
             return ResponseEntity.badRequest().build();
 
@@ -75,7 +75,8 @@ public class BoardController {
      * @return whether the board was updated correctly
      */
     @PutMapping("/editBoardTitle/{title}/{boardId}")
-    @ResponseBody public ResponseEntity<Board> editBoardTitle(@PathVariable String title, @PathVariable long boardId) {
+    @ResponseBody public ResponseEntity<Board> editBoardTitle(@PathVariable("title") String title,
+                                                              @PathVariable("boardId") long boardId) {
         if (!boardRepository.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -91,7 +92,7 @@ public class BoardController {
      * @return whether the deletion was successful
      */
     @DeleteMapping("/deleteBoard/{boardId}")
-    @ResponseBody public ResponseEntity<Board> deleteBoard(@PathVariable long boardId) {
+    @ResponseBody public ResponseEntity<Board> deleteBoard(@PathVariable("boardId") long boardId) {
         if (!boardRepository.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -114,7 +115,7 @@ public class BoardController {
      * @return a List with all the corresponding columns
      */
     @GetMapping("/getColumnsByBoardId/{boardId}")
-    @ResponseBody public ResponseEntity<List<Column>> getColumnsByBoardId(@PathVariable long boardId) {
+    @ResponseBody public ResponseEntity<List<Column>> getColumnsByBoardId(@PathVariable("boardId") long boardId) {
         if (!boardRepository.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
