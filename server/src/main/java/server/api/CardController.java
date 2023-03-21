@@ -102,7 +102,7 @@ public class CardController {
      * @return receive a message indicating the columnId has change, if the card exists. If it doesn't, receive an
      * appropriate response to the client.
      */
-    @PostMapping("/editCardColumn/{cardId}/{columnId}")
+    @PutMapping("/editCardColumn/{cardId}/{columnId}")
     public ResponseEntity<Card> editCardColumn(@PathVariable("cardId") long cardId,
                                                  @PathVariable("columnId") long columnId) {
         if (!columnRepository.existsById(columnId) || !cardRepository.existsById(cardId)) {
