@@ -45,12 +45,12 @@ public class BoardController {
      */
     @GetMapping("/getBoardByBoardId/{boardId}")
     @ResponseBody public ResponseEntity<Board> getBoardByBoardId(@PathVariable Long boardId) {
-        if (boardRepository.existsById(boardId)) {
-            Board board = boardRepository.getById(boardId);
-            return ResponseEntity.ok(board);
+        if (!boardRepository.existsById(boardId)) {
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.notFound().build();
+        Board board = boardRepository.getById(boardId);
+        return ResponseEntity.ok(board);
     }
 
     /**
@@ -65,9 +65,9 @@ public class BoardController {
         }
 
         Board newBoard = new Board(title);
-        Board b = boardRepository.save(newBoard);
+        boardRepository.save(newBoard);
 
-        return ResponseEntity.ok(b);
+        return ResponseEntity.ok(newBoard);
     }
 
     /**

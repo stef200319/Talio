@@ -51,12 +51,13 @@ public class ColumnController {
      */
     @GetMapping("/getColumnByColumnId/{id}")
     @ResponseBody public ResponseEntity<Column> getColumnByColumnId(@PathVariable long columnId) {
-        if (columnRepository.existsById(columnId)) {
-            Column l = columnRepository.getById(columnId);
-            return ResponseEntity.ok(l);
+        if (!columnRepository.existsById(columnId)) {
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.notFound().build();
+        Column column = columnRepository.getById(columnId);
+        return ResponseEntity.ok(column);
+
     }
 
     /**

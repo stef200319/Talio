@@ -45,12 +45,12 @@ public class CardController {
     @GetMapping("/getCardByCardId/{cardId}")
     @ResponseBody
     public ResponseEntity<Card> getCardByCardId(@PathVariable("cardId") long cardId) {
-        if (cardRepository.existsById(cardId)) {
-            Card l = cardRepository.getById(cardId);
-            return ResponseEntity.ok(l);
+        if (!cardRepository.existsById(cardId)) {
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.notFound().build();
+        Card card = cardRepository.getById(cardId);
+        return ResponseEntity.ok(card);
     }
 
 
@@ -83,7 +83,7 @@ public class CardController {
      * @return receive a message indicating the title has change, if the card exists. If it doesn't, receive an
      * appropriate response to the client.
      */
-    @PostMapping("/editCardTitle/{cardId}/{title}")
+    @PutMapping("/editCardTitle/{cardId}/{title}")
     public ResponseEntity<Card> editCardTitle(@PathVariable("cardId") long cardId,
                                                 @PathVariable("title") String title){
         if (title == null || !cardRepository.existsById(cardId)) {
@@ -123,7 +123,7 @@ public class CardController {
      * @return Conformation that the positions of the Card and all other Cards have that been affected have been
      * changed
      */
-    @PostMapping("/editCardPosition/{cardId}/{position}")
+    @PutMapping("/editCardPosition/{cardId}/{position}")
     public ResponseEntity<Card> editCardPosition(@PathVariable("cardId") long cardId,
                                                    @PathVariable("position") int position) {
         if (!cardRepository.existsById(cardId)) {
