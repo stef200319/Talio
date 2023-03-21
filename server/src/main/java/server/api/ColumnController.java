@@ -40,8 +40,7 @@ public class ColumnController {
     /**
      * @return all columns in the database
      */
-    @GetMapping("/getAllColumns")
-    @ResponseBody public List<Column> getAllColumns() {
+    public List<Column> getAllColumns() {
         return columnRepository.findAll();
     }
 

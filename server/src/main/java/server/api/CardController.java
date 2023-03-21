@@ -30,8 +30,6 @@ public class CardController {
      * Return all the cards which are stored in the database
      * @return all the cards in the database
      */
-    @GetMapping("/getAllCards")
-    @ResponseBody
     public List<Card> getAllCards() {
         return cardRepository.findAll();
     }
@@ -44,8 +42,7 @@ public class CardController {
      * does not exist.
      */
     @GetMapping("/getCardByCardId/{cardId}")
-    @ResponseBody
-    public ResponseEntity<Card> getCardByCardId(@PathVariable("cardId") long cardId) {
+    @ResponseBody public ResponseEntity<Card> getCardByCardId(@PathVariable("cardId") long cardId) {
         if (!cardRepository.existsById(cardId)) {
             return ResponseEntity.notFound().build();
         }
@@ -62,7 +59,7 @@ public class CardController {
          * @return if successful, the method returns an ok
          */
     @PostMapping("/addCard/{title}/{columnId}")
-    public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("columnId") Long columnId) {
+    @ResponseBody public ResponseEntity<Card> addCard(@PathVariable("title") String title, @PathVariable("columnId") Long columnId) {
         if (title == null || !columnRepository.existsById(columnId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -85,7 +82,7 @@ public class CardController {
      * appropriate response to the client.
      */
     @PutMapping("/editCardTitle/{cardId}/{title}")
-    public ResponseEntity<Card> editCardTitle(@PathVariable("cardId") long cardId,
+    @ResponseBody public ResponseEntity<Card> editCardTitle(@PathVariable("cardId") long cardId,
                                                 @PathVariable("title") String title){
         if (title == null || !cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
@@ -104,8 +101,7 @@ public class CardController {
      * appropriate response to the client.
      */
     @PutMapping("/editCardColumn/{cardId}/{columnId}")
-    @ResponseBody
-    public ResponseEntity<Card> editCardColumn(@PathVariable("cardId") long cardId,
+    @ResponseBody public ResponseEntity<Card> editCardColumn(@PathVariable("cardId") long cardId,
                                                  @PathVariable("columnId") long columnId) {
         if (!columnRepository.existsById(columnId) || !cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
@@ -126,8 +122,7 @@ public class CardController {
      * changed
      */
     @PutMapping("/editCardPosition/{cardId}/{position}")
-    @ResponseBody
-    public ResponseEntity<Card> editCardPosition(@PathVariable("cardId") long cardId,
+    @ResponseBody public ResponseEntity<Card> editCardPosition(@PathVariable("cardId") long cardId,
                                                    @PathVariable("position") int position) {
         if (!cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
@@ -193,7 +188,7 @@ public class CardController {
      * appropriate response to the client.
      */
     @DeleteMapping("/deleteCard/{cardId}")
-    public ResponseEntity<Card> deleteCard(@PathVariable("cardId") long cardId){
+    @ResponseBody public ResponseEntity<Card> deleteCard(@PathVariable("cardId") long cardId){
         if (!cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
