@@ -5,10 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
    <top>
       <VBox spacing="10">
          <Label text="Task Manager" />
@@ -16,18 +18,34 @@
             <Label text="Task Name" />
             <TextField fx:id="taskName" GridPane.columnIndex="1" />
             <CheckBox fx:id="urgent" text="Urgent" GridPane.columnIndex="2" />
-            <Button text="Add Task" onAction="#addTask" GridPane.columnIndex="3" />
+            <Button onAction="#addTask" text="Add Task" GridPane.columnIndex="3" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
          </GridPane>
       </VBox>
    </top>
    <center>
       <VBox>
          <Label text="Task List" />
+         <Button mnemonicParsing="false" onAction="#addList" text="Add List" />
          <GridPane fx:id="taskList">
             <Label text="Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <Label text="Urgent" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
          </GridPane>
       </VBox>
    </center>
 </BorderPane>
-
