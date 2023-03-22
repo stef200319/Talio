@@ -40,9 +40,20 @@ public class ColumnController {
     /**
      * @return all columns in the database
      */
-    public List<Column> getAllColumns() {
-        return columnRepository.findAll();
+//    public List<Column> getAllColumns() {
+//        return columnRepository.findAll();
+//    }
+    @GetMapping("/getAllColumns")
+    @ResponseBody public ResponseEntity<List<Column>> getAllColumns() {
+        List<Column> columns = columnRepository.findAll();
+
+        if (columns.size() > 0) {
+            return ResponseEntity.ok(columns);
+        }
+
+        return ResponseEntity.notFound().build();
     }
+
 
     /**
      * @param columnId the id of the column which will be retrieved
