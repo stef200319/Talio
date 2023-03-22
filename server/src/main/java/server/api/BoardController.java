@@ -34,9 +34,14 @@ public class BoardController {
     /**
      * @return all boards which are currently in the database
      */
-    public List<Board> getAllBoards() {
+//    public List<Board> getAllBoards() {
+//        return boardRepository.findAll();
+//    }
+    @GetMapping("/getAllBoards")
+    @ResponseBody public List<Board> getAllBoards() {
         return boardRepository.findAll();
     }
+
 
     /**
      * @param boardId the id of the board that the user is searching for
