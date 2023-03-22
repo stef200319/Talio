@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import commons.Column;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -35,21 +36,19 @@ public class AddListCtrl {
     /**
      * will return a new list with title listName (once database running)
      */
-    public void getList() {
+    public Column getList() {
         var l = listName.getText();
-        //return new list (needs backend)
+        if(l.equals(""))
+            l="New List";
+        return new Column(l,1);
     }
 
     /**
      * adds list to server and returns to overview
      */
     public void confirm() {
-        //add list to database (needs backend)
-        String list = listName.getText();
-        if(list.equals(""))
-            mainCtrl.createList("New List");
-        else
-            mainCtrl.createList(list);
+        server.addColumn(getList());
+        //mainCtrl.createList(list);
         listName.clear();
         mainCtrl.showBoardOverview();
     }
