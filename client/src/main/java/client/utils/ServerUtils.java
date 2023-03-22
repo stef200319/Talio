@@ -50,7 +50,7 @@ public class ServerUtils {
     /**
      *
      * @param column
-     * @return
+     * @return new Column to database
      */
 
     public Column addColumn(Column column) {
@@ -67,7 +67,7 @@ public class ServerUtils {
     /**
      *
      * @param card
-     * @return
+     * @return new Card to databae
      */
 
     public Card addCard(Card card) {
@@ -84,7 +84,7 @@ public class ServerUtils {
     /**
      *
      * @param board
-     * @return
+     * @return new Board to database
      */
 
     public Board addBoard(Board board) {
