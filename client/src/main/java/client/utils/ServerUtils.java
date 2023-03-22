@@ -15,15 +15,24 @@
  */
 package client.utils;
 
+import commons.Card;
+import commons.Column;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.GenericType;
+import org.glassfish.jersey.client.ClientConfig;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.List;
+
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 
 public class ServerUtils {
 
-    private static final String SERVER = "http://localhost:8080/";
+    private static final String server = "http://localhost:8080/";
 
     /**
      * @throws IOException
@@ -36,5 +45,33 @@ public class ServerUtils {
         while ((line = br.readLine()) != null) {
             System.out.println(line);
         }
+    }
+
+    /**
+     * Fetches the columns to be displayed on a board
+     * @param boardId the id of the board
+     * @return the list of columns on the board
+     */
+    public List<Column> getColumnsByBoardId(int boardId) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(server)
+            .path("board/getColumnsByBoardId/"+boardId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<List<Column>>() {});
+    }
+
+    /**
+     * Fetches the cards to be displayed in a column
+     * @param columnID the id of the column
+     * @return the list of cards in the column
+     */
+    public List<Card> getCardsByColumnId(int columnID) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(server)
+            .path("column/getCardsByColumnId/"+columnID)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<List<Card>>() {});
     }
 }
