@@ -31,9 +31,6 @@ import java.util.List;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
-import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
-
-
 public class ServerUtils {
 
     private static final String SERVER = "http://localhost:8080/";
@@ -52,7 +49,6 @@ public class ServerUtils {
     }
 
     /**
-<<<<<<< client/src/main/java/client/utils/ServerUtils.java
      * Fetches the columns to be displayed on a board
      * @param boardId the id of the board
      * @return the list of columns on the board
@@ -81,7 +77,8 @@ public class ServerUtils {
     }
 
      /**
-     * @param column
+      * Adds a column to the database
+     * @param column the column to add to the database
      * @return new Column to database
      */
 
@@ -97,8 +94,8 @@ public class ServerUtils {
     }
 
     /**
-     *
-     * @param card
+     * Adds a card to the database
+     * @param card the card to add to the database
      * @return new Card to databae
      */
 
@@ -114,8 +111,8 @@ public class ServerUtils {
     }
 
     /**
-     *
-     * @param board
+     * Adds a board to the database
+     * @param board the board to add to the database
      * @return new Board to database
      */
 
