@@ -36,7 +36,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 
-    private static final String server = "http://localhost:8080/";
+    private static final String SERVER = "http://localhost:8080/";
 
     /**
      * @throws IOException
@@ -59,7 +59,7 @@ public class ServerUtils {
      */
     public List<Column> getColumnsByBoardId(int boardId) {
         return ClientBuilder.newClient(new ClientConfig())
-            .target(server)
+            .target(SERVER)
             .path("board/getColumnsByBoardId/"+boardId)
             .request(APPLICATION_JSON)
             .accept(APPLICATION_JSON)
@@ -73,14 +73,14 @@ public class ServerUtils {
      */
     public List<Card> getCardsByColumnId(int columnID) {
         return ClientBuilder.newClient(new ClientConfig())
-            .target(server)
+            .target(SERVER)
             .path("column/getCardsByColumnId/"+columnID)
             .request(APPLICATION_JSON)
             .accept(APPLICATION_JSON)
             .get(new GenericType<List<Card>>() {});
     }
-=======
-     *
+
+     /**
      * @param column
      * @return new Column to database
      */
@@ -129,5 +129,4 @@ public class ServerUtils {
                 .post(Entity.entity(board, APPLICATION_JSON), Board.class);
     }
 
->>>>>>> client/src/main/java/client/utils/ServerUtils.java
 }
