@@ -32,12 +32,21 @@ public class WorkspaceCtrl {
         mainCtrl.showBoardOverview();
     }
 
+    /**
+     * will return a new board with title boardTitle
+     * @return new Board to database
+     */
+
     public Board getBoard() {
         var l = boardTitle.getText();
         if(l.equals(""))
             l="New Board";
         return new Board(l);
     }
+
+    /**
+     * adds board to server
+     */
 
     public void add() {
         server.addBoard(getBoard());

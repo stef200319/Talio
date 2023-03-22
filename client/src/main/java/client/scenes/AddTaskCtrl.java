@@ -33,7 +33,8 @@ public class AddTaskCtrl {
     }
 
     /**
-     * will return a new list with title listName (once database running)
+     * will return a new card with title taskName
+     * @return new Card to database
      */
     public Card getCard() {
         var c = taskName.getText();

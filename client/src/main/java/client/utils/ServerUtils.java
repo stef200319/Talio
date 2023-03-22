@@ -47,6 +47,12 @@ public class ServerUtils {
         }
     }
 
+    /**
+     *
+     * @param column
+     * @return
+     */
+
     public Column addColumn(Column column) {
         String title = column.getTitle();
         Long boardId = column.getBoardId();
@@ -58,6 +64,12 @@ public class ServerUtils {
                 .post(Entity.entity(column, APPLICATION_JSON), Column.class);
     }
 
+    /**
+     *
+     * @param card
+     * @return
+     */
+
     public Card addCard(Card card) {
         String title = card.getTitle();
         Long columnId = card.getColumnId();
@@ -68,6 +80,12 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON)
                 .post(Entity.entity(card, APPLICATION_JSON), Card.class);
     }
+
+    /**
+     *
+     * @param board
+     * @return
+     */
 
     public Board addBoard(Board board) {
         String title = board.getTitle();

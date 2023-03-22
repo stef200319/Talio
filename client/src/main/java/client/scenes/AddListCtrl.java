@@ -34,7 +34,8 @@ public class AddListCtrl {
     }
 
     /**
-     * will return a new list with title listName (once database running)
+     * will return a new list with title listName
+     * @return new Column to database
      */
     public Column getList() {
         var l = listName.getText();
