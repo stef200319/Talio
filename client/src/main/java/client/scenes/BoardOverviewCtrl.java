@@ -2,6 +2,9 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Card;
+import commons.Column;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,6 +26,7 @@ public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private int boardID=1;
 
     @FXML
     private FlowPane flowPane;
@@ -54,7 +59,9 @@ public class BoardOverviewCtrl implements Initializable {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                refresh();
+                Platform.runLater(() -> {
+                    refresh();
+                });
             }
         }, 0, 1000);
     }
@@ -90,25 +97,31 @@ public class BoardOverviewCtrl implements Initializable {
      * Method that refreshes the board
      */
     public void refresh() {
-        // For now empty, here we must use the fetch methods for the boards which Benjamin and Ruthvik will implement
+        flowPane.getChildren().clear();
+        List<Column> columns = server.getColumnsByBoardId(boardID);
+        for(int i=0;i<columns.size();i++)
+            createList(columns.get(i));
     }
 
     /**
      * Method that creates a new list with the specified name
-     * @param text
+     * @param c
      */
-    public void createList(String text) {
+    public void createList(Column c) {
         VBox list=new VBox();
         list.setPrefWidth(100);
         list.setAlignment(Pos.CENTER);
 
-        Label title = new Label(text);
+        Label title = new Label(c.getTitle());
         title.setFont(new Font(20));
 
         list.getChildren().add(title);
 
-        Label s = new Label("task1");     // this is just a placeholder to see how it looks like
-        list.getChildren().add(s);            //
+        List<Card> cards = server.getCardsByColumnId(c.getId());
+        for(int i=0;i<cards.size();i++) {
+            Label s = new Label(cards.get(i).getTitle());
+            list.getChildren().add(s);
+        }
 
         Button b = new Button("Add task");
         b.setOnAction(new EventHandler<ActionEvent>() {

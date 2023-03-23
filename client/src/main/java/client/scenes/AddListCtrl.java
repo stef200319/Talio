@@ -49,7 +49,6 @@ public class AddListCtrl {
      */
     public void confirm() {
         server.addColumn(getList());
-        //mainCtrl.createList(list);
         listName.clear();
         mainCtrl.showBoardOverview();
     }
