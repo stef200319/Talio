@@ -94,7 +94,7 @@ public class MainCtrl {
      */
     public void showOverview() {
         primaryStage.setTitle("Board: Overview");
-        primaryStage.setScene(overview);
+        primaryStage.setScene(boardOverview);
     }
     /**
      * show workspace page
