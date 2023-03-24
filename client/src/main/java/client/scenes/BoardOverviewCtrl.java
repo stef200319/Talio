@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -104,13 +105,25 @@ public class BoardOverviewCtrl implements Initializable {
     }
 
     /**
-     * Method that creates a new list with the specified name
-     * @param c
+     * Method that showcases the column on the board
+     * @param c column to be showcased
      */
     public void createList(Column c) {
         VBox list=new VBox();
         list.setPrefWidth(100);
         list.setAlignment(Pos.CENTER);
+
+        Button delete = new Button("X");
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                server.deleteColumn(c);
+            }
+        });
+        HBox deleteBox = new HBox();
+        deleteBox.setAlignment(Pos.TOP_RIGHT);
+        deleteBox.getChildren().add(delete);
+        list.getChildren().add(deleteBox);
 
         Label title = new Label(c.getTitle());
         title.setFont(new Font(20));
