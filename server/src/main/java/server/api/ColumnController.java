@@ -3,7 +3,6 @@ package server.api;
 import commons.Card;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.BoardRepository;
 import server.database.CardRepository;
@@ -11,7 +10,7 @@ import server.database.ColumnRepository;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/column")
 public class ColumnController {
 
