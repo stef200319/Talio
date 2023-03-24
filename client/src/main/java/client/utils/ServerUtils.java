@@ -15,11 +15,21 @@
  */
 package client.utils;
 
+import commons.Board;
+import commons.Card;
+import commons.Column;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.GenericType;
+import org.glassfish.jersey.client.ClientConfig;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.List;
 
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 
@@ -37,4 +47,83 @@ public class ServerUtils {
             System.out.println(line);
         }
     }
+
+    /**
+     * Fetches the columns to be displayed on a board
+     * @param boardId the id of the board
+     * @return the list of columns on the board
+     */
+    public List<Column> getColumnsByBoardId(long boardId) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("board/getColumnsByBoardId/"+boardId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<List<Column>>() {});
+    }
+
+    /**
+     * Fetches the cards to be displayed in a column
+     * @param columnID the id of the column
+     * @return the list of cards in the column
+     */
+    public List<Card> getCardsByColumnId(long columnID) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("column/getCardsByColumnId/"+columnID)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<List<Card>>() {});
+    }
+
+     /**
+      * Adds a column to the database
+     * @param column the column to add to the database
+     * @return new Column to database
+     */
+
+    public Column addColumn(Column column) {
+        String title = column.getTitle();
+        Long boardId = column.getBoardId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/addColumn/" + title + "/" + boardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(column, APPLICATION_JSON), Column.class);
+    }
+
+    /**
+     * Adds a card to the database
+     * @param card the card to add to the database
+     * @return new Card to databae
+     */
+
+    public Card addCard(Card card) {
+        String title = card.getTitle();
+        Long columnId = card.getColumnId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/addCard/" + title + "/" + columnId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(card, APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Adds a board to the database
+     * @param board the board to add to the database
+     * @return new Board to database
+     */
+
+    public Board addBoard(Board board) {
+        String title = board.getTitle();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/addBoard/" + title)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(board, APPLICATION_JSON), Board.class);
+    }
+
 }

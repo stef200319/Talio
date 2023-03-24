@@ -2,14 +2,13 @@ package server.api;
 
 import commons.Card;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/card")
 public class CardController {
     private final CardRepository cardRepository;
@@ -29,10 +28,14 @@ public class CardController {
      * Return all the cards which are stored in the database
      * @return all the cards in the database
      */
+//    public List<Card> getAllCards() {
+//        return cardRepository.findAll();
+//    }
+    @GetMapping("/getAllCards")
+    @ResponseBody
     public List<Card> getAllCards() {
         return cardRepository.findAll();
     }
-
 
     /**
      * Get a single card whose id matches the input cardId, if a card with the input id exists.
