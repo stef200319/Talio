@@ -14,11 +14,8 @@ public class CardDetails {
     private String cardTitle;
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cardDetails", orphanRemoval = true)
-    private List<Subtask> subtasks = new ArrayList<Subtask>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "card_id")
+    @OneToOne(mappedBy = "cardDetails")
     private Card card;
 
     /**
@@ -75,35 +72,21 @@ public class CardDetails {
         this.description = description;
     }
 
-    /**
-     * Get the list of subtasks for the card
-     * @return the list of subtasks for the card
-     */
-    public List<Subtask> getSubtasks() {
-        return subtasks;
-    }
+//    /**
+//     * Get the list of subtasks for the card
+//     * @return the list of subtasks for the card
+//     */
+//    public List<Subtask> getSubtasks() {
+//        return subtasks;
+//    }
+//
+//    /**
+//     * Set the list of subtasks for the card
+//     * @param subtasks the new list of subtasks for the card
+//     */
+//    public void setSubtasks(List<Subtask> subtasks) {
+//        this.subtasks = subtasks;
+//    }
+//
 
-    /**
-     * Set the list of subtasks for the card
-     * @param subtasks the new list of subtasks for the card
-     */
-    public void setSubtasks(List<Subtask> subtasks) {
-        this.subtasks = subtasks;
-    }
-
-    /**
-     * Get the Card object this CardDetails object belongs to
-     * @return the Card object this CardDetails object belongs to
-     */
-    public Card getCard() {
-        return card;
-    }
-
-    /**
-     * Set the Card object this CardDetails object belongs to
-     * @param card the new Card object this CardDetails object belongs to
-     */
-    public void setCard(Card card) {
-        this.card = card;
-    }
 }
