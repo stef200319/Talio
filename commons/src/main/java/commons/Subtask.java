@@ -1,9 +1,6 @@
 package commons;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Subtask {
@@ -12,4 +9,8 @@ public class Subtask {
     private long id;
     private String description;
     private boolean done;
+
+    @ManyToOne
+    @JoinColumn(name = "card_details_id")
+    private CardDetails cardDetails;
 }
