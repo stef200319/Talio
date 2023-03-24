@@ -53,7 +53,7 @@ public class ServerUtils {
      * @param boardId the id of the board
      * @return the list of columns on the board
      */
-    public List<Column> getColumnsByBoardId(int boardId) {
+    public List<Column> getColumnsByBoardId(long boardId) {
         return ClientBuilder.newClient(new ClientConfig())
             .target(SERVER)
             .path("board/getColumnsByBoardId/"+boardId)
@@ -67,7 +67,7 @@ public class ServerUtils {
      * @param columnID the id of the column
      * @return the list of cards in the column
      */
-    public List<Card> getCardsByColumnId(int columnID) {
+    public List<Card> getCardsByColumnId(long columnID) {
         return ClientBuilder.newClient(new ClientConfig())
             .target(SERVER)
             .path("column/getCardsByColumnId/"+columnID)
