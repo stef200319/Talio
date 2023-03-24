@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -29,7 +30,7 @@ public class BoardOverviewCtrl implements Initializable {
     private int boardID=1;
 
     @FXML
-    private FlowPane flowPane;
+    private HBox columnContainer;
 
 
     /**
@@ -97,7 +98,7 @@ public class BoardOverviewCtrl implements Initializable {
      * Method that refreshes the board
      */
     public void refresh() {
-        flowPane.getChildren().clear();
+        columnContainer.getChildren().clear();
         List<Column> columns = server.getColumnsByBoardId(boardID);
         for(int i=0;i<columns.size();i++)
             createList(columns.get(i));
@@ -132,6 +133,6 @@ public class BoardOverviewCtrl implements Initializable {
         });
         list.getChildren().add(b);
 
-        flowPane.getChildren().add(list);
+        columnContainer.getChildren().add(list);
     }
 }

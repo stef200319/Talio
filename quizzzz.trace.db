@@ -1427,3 +1427,6 @@ DROP TABLE PERSON [90107-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
 select count(*) as col_0_0_ from column column0_ where column0_.id=? [42102-200]
 >>>>>>> getting_data_from_server
+2023-03-24 02:04:42 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TABLE =[*]COLUMN"; expected "identifier"; SQL statement:
+DROP TABLE =COLUMN [42001-200]
