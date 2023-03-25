@@ -71,19 +71,33 @@ public abstract class Tag {
         this.color = color;
     }
 
+    /**
+     * equals method that checks whether other object is equal to this
+     * @param o the other object to compare with
+     * @return boolean whether object is equal to this
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Tag)) return false;
         Tag tag = (Tag) o;
-        return Objects.equals(getId(), tag.getId()) && Objects.equals(getTitle(), tag.getTitle()) && Objects.equals(getColor(), tag.getColor());
+        return Objects.equals(getId(), tag.getId()) && Objects.equals(getTitle(), tag.getTitle())
+                && Objects.equals(getColor(), tag.getColor());
     }
 
+    /**
+     * Hash code for this object
+     * @return hash of this object
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getTitle(), getColor());
     }
 
+    /**
+     * to string method for this object
+     * @return string representation of this object
+     */
     @Override
     public String toString() {
         return "Tag{" +

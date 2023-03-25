@@ -22,10 +22,10 @@ public class Board {
             joinColumns = @JoinColumn(name = "board_id"),
             inverseJoinColumns = @JoinColumn(name = "boardtag_id")
     )
-    private Set<BoardTag> tags;
+    private Set<BoardTag> boardTags;
 
     @OneToMany(mappedBy = "board")
-    private Set<CardTag> tagsList;
+    private Set<CardTag> cardTagsList;
 
 
     /**
@@ -40,6 +40,22 @@ public class Board {
      */
     public Board(String title) {
         this.title = title;
+    }
+
+    /**
+     * getter for the boardTags
+     * @return all the boardTags
+     */
+    public Set<BoardTag> getTags() {
+        return boardTags;
+    }
+
+    /**
+     * getter for the CardTagsList
+     * @return CardTagsList
+     */
+    public Set<CardTag> getCardTagsList() {
+        return cardTagsList;
     }
 
     /**
@@ -68,6 +84,48 @@ public class Board {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
+    /**
+     * add cardTag to CardTagsList
+     * @param cardTag card to add
+     */
+    public void addCardTagToCardTagsList(CardTag cardTag) {
+        if (cardTagsList.contains(cardTag) || cardTag == null) return;
+        cardTagsList.add(cardTag);
+    }
+
+    /**
+     * delete cardTag from CardTagsList
+     * @param cardTag cardTag to delete
+     * @return cardTag that is deleted
+     */
+    public CardTag deleteCardTagFromCardTagsList(CardTag cardTag) {
+        if (!cardTagsList.contains(cardTag) || cardTag == null) return null;
+        cardTagsList.remove(cardTag);
+        return cardTag;
+    }
+
+    /**
+     * add BoardTag to board
+     * @param boardTag boardTag to add
+     */
+    public void addBoardTag(BoardTag boardTag) {
+        if (boardTags.contains(boardTag) || boardTag == null) return;
+        boardTags.add(boardTag);
+    }
+
+    /**
+     * Delete the boardTag
+     * @param boardTag boardTag to delete
+     * @return the deleted boardTag
+     */
+    public BoardTag deleteBoardTag(BoardTag boardTag) {
+        if (!boardTags.contains(boardTag) || boardTag == null) return null;
+        boardTags.remove(boardTag);
+        return boardTag;
+    }
+
     /**
      * @param obj other object that you want to compare to this
      * @return whether the objects are the same

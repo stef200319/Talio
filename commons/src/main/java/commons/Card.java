@@ -111,6 +111,26 @@ public class Card {
     }
 
     /**
+     * add cardTag to card
+     * @param cardTag cardTag to add
+     */
+    public void addCardTag(CardTag cardTag) {
+        if (tags.contains(cardTag) || cardTag == null) return;
+        tags.add(cardTag);
+    }
+
+    /**
+     * delete cardTag from card
+     * @param cardTag cardTag to delete
+     * @return the deleted cardTag
+     */
+    public CardTag deleteCardTag(CardTag cardTag) {
+        if (!tags.contains(cardTag) || cardTag == null) return null;
+        tags.remove(cardTag);
+        return cardTag;
+    }
+
+    /**
      * @param obj other object that you want to compare to this
      * @return whether the objects are the same
      */
