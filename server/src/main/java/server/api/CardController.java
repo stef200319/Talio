@@ -2,14 +2,13 @@ package server.api;
 
 import commons.Card;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/card")
 public class CardController {
     private final CardRepository cardRepository;

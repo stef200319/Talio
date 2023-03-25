@@ -13,9 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -127,8 +125,8 @@ public class BoardOverviewCtrl implements Initializable {
     }
 
     /**
-     * Method that creates a new list with the specified name
-     * @param c
+     * Method that showcases the column on the board
+     * @param c column to be showcased
      */
 
 // Old create list
@@ -166,6 +164,18 @@ public class BoardOverviewCtrl implements Initializable {
         list.setPrefHeight(600); // Set preferred height to 600 pixels
         list.setMaxWidth(800); // Set max width to 800 pixels
         list.setAlignment(Pos.CENTER);
+
+        Button delete = new Button("X");
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                server.deleteColumn(c);
+            }
+        });
+        HBox deleteBox = new HBox();
+        deleteBox.setAlignment(Pos.TOP_RIGHT);
+        deleteBox.getChildren().add(delete);
+        list.getChildren().add(deleteBox);
 
         Label title = new Label(c.getTitle());
         title.setFont(new Font(20));
