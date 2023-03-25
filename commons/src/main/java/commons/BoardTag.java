@@ -9,7 +9,7 @@ import java.util.Set;
 public class BoardTag extends Tag {
 
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "boardTags")
     private Set<Board> boards;
 
     /**
