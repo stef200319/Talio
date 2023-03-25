@@ -12,8 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -31,6 +33,15 @@ public class BoardOverviewCtrl implements Initializable {
 
     @FXML
     private HBox columnContainer;
+
+    @FXML
+    private Button createBoardButton;
+
+    @FXML
+    private Button myBoardsButton;
+
+    @FXML
+    private Button joinBoardButton;
 
 
     /**
@@ -95,6 +106,17 @@ public class BoardOverviewCtrl implements Initializable {
 
 
     /**
+     * Method that shows the workspace page containing all the boards on screen
+     */
+    public void myBoards() {mainCtrl.showWorkspace();}
+
+    /**
+     * Method that shows the workspace page containing all the boards on screen
+     */
+    public void createBoard() {mainCtrl.showCreateBoard();}
+
+
+    /**
      * Method that refreshes the board
      */
     public void refresh() {
@@ -108,9 +130,41 @@ public class BoardOverviewCtrl implements Initializable {
      * Method that creates a new list with the specified name
      * @param c
      */
+
+// Old create list
+//    public void createList(Column c) {
+//        VBox list=new VBox();
+//        list.setPrefWidth(200);
+//        list.setAlignment(Pos.CENTER);
+//
+//        Label title = new Label(c.getTitle());
+//        title.setFont(new Font(20));
+//
+//        list.getChildren().add(title);
+//
+//        List<Card> cards = server.getCardsByColumnId(c.getId());
+//        for(int i=0;i<cards.size();i++) {
+//            Label s = new Label(cards.get(i).getTitle());
+//            list.getChildren().add(s);
+//        }
+//
+//        Button b = new Button("Add task");
+//        b.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                mainCtrl.showAddTask();
+//            }
+//        });
+//        list.getChildren().add(b);
+//
+//        columnContainer.getChildren().add(list);
+//    }
+
     public void createList(Column c) {
         VBox list=new VBox();
-        list.setPrefWidth(100);
+        list.setPrefWidth(400); // Set preferred width to 400 pixels
+        list.setPrefHeight(600); // Set preferred height to 600 pixels
+        list.setMaxWidth(800); // Set max width to 800 pixels
         list.setAlignment(Pos.CENTER);
 
         Label title = new Label(c.getTitle());
@@ -119,10 +173,19 @@ public class BoardOverviewCtrl implements Initializable {
         list.getChildren().add(title);
 
         List<Card> cards = server.getCardsByColumnId(c.getId());
+        VBox cardContainer = new VBox();
+        cardContainer.setSpacing(10);
         for(int i=0;i<cards.size();i++) {
             Label s = new Label(cards.get(i).getTitle());
-            list.getChildren().add(s);
+            cardContainer.getChildren().add(s);
         }
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(cardContainer);
+        scrollPane.setPrefWidth(380); // Set preferred width to 380 pixels
+        scrollPane.setPrefHeight(500); // Set preferred height to 500 pixels
+        scrollPane.setFitToWidth(true);
+
+        list.getChildren().add(scrollPane);
 
         Button b = new Button("Add task");
         b.setOnAction(new EventHandler<ActionEvent>() {
@@ -135,4 +198,7 @@ public class BoardOverviewCtrl implements Initializable {
 
         columnContainer.getChildren().add(list);
     }
+
+
+
 }

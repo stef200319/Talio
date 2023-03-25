@@ -40,6 +40,8 @@ public class MainCtrl {
     private TaskManagementCtrl taskManagementCtrl;
     private Scene taskManagement;
 
+    private CreateBoardCtrl createBoardCtrl;
+    private Scene createBoard;
     private WorkspaceCtrl workspaceCtrl;
     private Scene workspace;
 
@@ -52,6 +54,7 @@ public class MainCtrl {
      * @param addTask
      * @param workspace
      * @param taskManagement
+     * @param createBoard
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -59,12 +62,15 @@ public class MainCtrl {
                            Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
                            Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
                            Pair<AddTaskCtrl, Parent> addTask, Pair<TaskManagementCtrl, Parent> taskManagement,
-                           Pair<WorkspaceCtrl, Parent> workspace) {
+                           Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard) {
 
         this.primaryStage = primaryStage;
 
         this.addListCtrl = add.getKey();
         this.addList = new Scene(add.getValue());
+
+        this.createBoardCtrl = createBoard.getKey();
+        this.createBoard = new Scene(createBoard.getValue());
 
         this.boardOverviewCtrl = boardOverview.getKey();
         this.boardOverview = new Scene(boardOverview.getValue());
@@ -126,6 +132,14 @@ public class MainCtrl {
     public void showBoardOverview() {
         primaryStage.setTitle("Board Overview");
         primaryStage.setScene(boardOverview);
+    }
+
+    /**
+     * Show board create
+     */
+    public void showCreateBoard() {
+        primaryStage.setTitle("Create board");
+        primaryStage.setScene(createBoard);
     }
 
     /**
