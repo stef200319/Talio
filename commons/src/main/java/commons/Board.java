@@ -2,10 +2,9 @@ package commons;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -16,6 +15,17 @@ public class Board {
     private Long id;
 
     private String title;
+
+    @ManyToMany
+    @JoinTable(
+            name = "owned_tags_board",
+            joinColumns = @JoinColumn(name = "board_id"),
+            inverseJoinColumns = @JoinColumn(name = "boardtag_id")
+    )
+    private Set<BoardTag> tags;
+
+    @OneToMany(mappedBy = "board")
+    private Set<CardTag> tagsList;
 
 
     /**

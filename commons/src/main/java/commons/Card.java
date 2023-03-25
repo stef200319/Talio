@@ -19,6 +19,8 @@ import javax.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.util.Set;
+
 
 @Entity
 public class Card {
@@ -30,7 +32,13 @@ public class Card {
     private long columnId;
     private Integer position;
 
-
+    @ManyToMany
+    @JoinTable(
+            name = "owned_tags_card",
+            joinColumns = @JoinColumn(name = "card_id"),
+            inverseJoinColumns = @JoinColumn(name = "cardtag_id")
+    )
+    private Set<CardTag> tags;
 
     private Card() {
         // for object mappers
