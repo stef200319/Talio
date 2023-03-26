@@ -35,7 +35,6 @@ public class Card {
 
 
 
-
     private Card() {
         // for object mappers
     }
@@ -47,8 +46,10 @@ public class Card {
     public Card(String title, long columnId) {
         this.title = title;
         this.columnId = columnId;
+
         CardDetails details = new CardDetails(this.title);
         this.cardDetails = details;
+
     }
 
     /**

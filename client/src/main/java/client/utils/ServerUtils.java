@@ -21,6 +21,7 @@ import commons.Column;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 
 import java.io.BufferedReader;
@@ -124,6 +125,21 @@ public class ServerUtils {
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .post(Entity.entity(board, APPLICATION_JSON), Board.class);
+    }
+
+    /**
+     * Method that deletes a column
+     * @param c column to delete
+     * @return response
+     */
+    public Response deleteColumn(Column c) {
+        long columnId = c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("column/deleteColumn/" + columnId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .delete();
     }
 
 }
