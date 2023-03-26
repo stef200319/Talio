@@ -30,13 +30,9 @@ public class Card {
     private long columnId;
     private Integer position;
 
-<<<<<<< HEAD
-=======
+
     @OneToOne(cascade = CascadeType.ALL)
     private CardDetails cardDetails;
-
-
->>>>>>> card_details
 
 
     private Card() {
@@ -50,11 +46,8 @@ public class Card {
     public Card(String title, long columnId) {
         this.title = title;
         this.columnId = columnId;
-<<<<<<< HEAD
-=======
         CardDetails details = new CardDetails(this.title);
         this.cardDetails = details;
->>>>>>> card_details
     }
 
     /**

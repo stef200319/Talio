@@ -1427,6 +1427,13 @@ DROP TABLE PERSON [90107-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
 select count(*) as col_0_0_ from column column0_ where column0_.id=? [42102-200]
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e9eb17a613d2155a96524516efa0b50007d9de0e
+2023-03-24 14:40:02 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "CARD_DETAILS" because "FKFADMR3Y5TVUASNRDNINIL4EUC" depends on it; SQL statement:
+=======
+>>>>>>> merge_cardBack_UIBoard
 >>>>>>> getting_data_from_server
 2023-03-24 02:04:42 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TABLE =[*]COLUMN"; expected "identifier"; SQL statement:
@@ -1436,11 +1443,15 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TAB
 DROP TABLE CARD_TAG CARD_DETAILS [42000-200]
 2023-03-24 19:23:00 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "CARD_DETAILS" because "FKBNLFBKU2N804F31N46I6R1B72" depends on it; SQL statement:
+<<<<<<< HEAD
 =======
 >>>>>>> e9eb17a613d2155a96524516efa0b50007d9de0e
 2023-03-24 14:40:02 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "CARD_DETAILS" because "FKFADMR3Y5TVUASNRDNINIL4EUC" depends on it; SQL statement:
 >>>>>>> card_details
+=======
+>>>>>>> UI_main_overview
+>>>>>>> merge_cardBack_UIBoard
 DROP TABLE CARD_DETAILS [90107-200]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:576)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
@@ -1493,6 +1504,7 @@ DROP TABLE CARD_DETAILS [90107-200]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+<<<<<<< HEAD
 <<<<<<< HEAD
 2023-03-24 20:52:22 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
@@ -2239,6 +2251,8 @@ select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.positi
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
 select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
 =======
+=======
+>>>>>>> merge_cardBack_UIBoard
 2023-03-24 14:40:59 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "CARD_DETAILS" because "FKFADMR3Y5TVUASNRDNINIL4EUC" depends on it; SQL statement:
 DROP TABLE CARD_DETAILS [90107-200]
@@ -3499,4 +3513,756 @@ select card0_.id as id1_1_, card0_.card_details_id as card_det5_1_, card0_.colum
 2023-03-26 23:19:10 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD" not found; SQL statement:
 select card0_.id as id1_1_, card0_.card_details_id as card_det5_1_, card0_.column_id as column_i2_1_, card0_.position as position3_1_, card0_.title as title4_1_ from card card0_ where card0_.column_id=? order by card0_.position ASC [42102-200]
+<<<<<<< HEAD
 >>>>>>> card_details
+=======
+=======
+2023-03-24 20:52:22 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:23 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:24 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:25 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:27 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:28 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:52:28 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:29 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:52:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:31 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:34 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:35 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:52:35 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:35 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:52:35 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:52:36 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:52:36 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:37 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:38 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:39 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:40 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:41 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:42 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:43 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:44 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:45 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:49 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:49 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:50 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:51 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:52 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:53 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:54 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:55 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:56 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:57 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:58 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:52:59 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:01 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:02 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:03 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:04 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:05 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:06 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:07 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:08 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:09 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:10 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:11 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:13 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:14 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:15 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:16 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:17 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:18 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:19 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:20 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:21 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:22 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:23 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:24 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:25 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:27 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:31 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:34 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:35 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:36 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:37 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:53:37 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:53:37 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:53:37 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:38 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:38 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 20:53:39 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:40 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:41 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:42 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:43 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:44 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:45 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:46 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:47 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:48 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:49 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:50 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:51 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:52 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:53 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:54 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:55 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:56 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:57 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:58 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:53:59 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:01 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:02 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:03 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:04 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:05 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:06 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:07 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:08 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:09 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:10 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:11 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:13 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:14 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:15 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:16 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:17 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:18 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:19 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:20 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:21 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:22 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:23 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:24 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:25 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:27 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:28 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:29 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:31 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:34 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:35 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:36 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:37 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:38 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:39 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:40 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:41 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:42 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:43 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:44 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:45 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:46 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:47 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:48 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:49 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:50 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:51 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:52 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:53 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:54 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:55 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:56 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:57 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:58 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:54:59 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:01 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:02 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:03 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:04 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:05 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:06 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:07 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:08 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:09 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:10 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:11 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:13 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:17 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:17 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:18 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:19 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:20 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:21 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:22 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:23 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:24 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:25 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:27 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:28 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:29 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:31 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 20:55:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:43 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 21:00:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 21:00:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:00:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:03:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:03:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:03:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:03:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:03:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:03:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:03:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:03:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:03:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select max(column0_.position) as col_0_0_ from column column0_ where column0_.board_id=? [42102-200]
+2023-03-24 21:08:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:08:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:09:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:09:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:09:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:09:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:09:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:49:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:49:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:49:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:49:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:49:43 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+2023-03-24 21:49:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COLUMN" not found; SQL statement:
+select column0_.id as id1_4_, column0_.board_id as board_id2_4_, column0_.position as position3_4_, column0_.title as title4_4_ from column column0_ where column0_.board_id=? order by column0_.position ASC [42102-200]
+>>>>>>> UI_main_overview
+>>>>>>> merge_cardBack_UIBoard
+2023-03-26 23:46:56 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM ][*]SUBTASK"; expected "identifier"; SQL statement:
+SELECT * FROM ]SUBTASK [42001-200]
