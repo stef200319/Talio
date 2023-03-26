@@ -18,6 +18,11 @@ public class CardDetails {
     @OneToOne(mappedBy = "cardDetails")
     private Card card;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Subtask> subtasks;
+
+
+
     /**
      * Default constructor
      */
@@ -30,6 +35,9 @@ public class CardDetails {
      */
     public CardDetails(String cardTitle) {
         this.cardTitle = cardTitle;
+        this.subtasks = new ArrayList<Subtask>();
+        subtasks.add(new Subtask("test1"));
+        subtasks.add(new Subtask("test2"));
     }
 
     /**
