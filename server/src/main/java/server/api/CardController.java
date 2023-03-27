@@ -90,7 +90,8 @@ public class CardController {
      *
      * @param cardId the ID of the card to which the subtask should be added
      * @param subtaskTitle the subtask to be added to the card
-     * @return a ResponseEntity containing the updated Card object if the card was found, or a 404 Not Found response if the card was not found
+     * @return a ResponseEntity containing the updated Card object if the card was found, or a 404 Not Found
+     * response if the card was not found
      */
 
     @PostMapping("/addSubtask/{cardId}/{subtaskTitle}")

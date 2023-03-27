@@ -16,10 +16,16 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class TestSubtaskRepository implements SubtaskRepository {
+    /**
+     * TODO
+     */
     @Override
     public List<Subtask> findAll() {
         return null;
     }
+    /**
+     * TODO
+     */
 
     @Override
     public List<Subtask> findAll(Sort sort) {
@@ -36,6 +42,9 @@ public class TestSubtaskRepository implements SubtaskRepository {
     public Page<Subtask> findAll(Pageable pageable) {
         return null;
     }
+    /**
+     * TODO
+     */
 
     @Override
     public List<Subtask> findAllById(Iterable<Long> longs) {
@@ -117,6 +126,9 @@ public class TestSubtaskRepository implements SubtaskRepository {
     public <S extends Subtask> S save(S entity) {
         return null;
     }
+    /**
+     * TODO
+     */
 
     @Override
     public <S extends Subtask> List<S> saveAll(Iterable<S> entities) {
@@ -179,8 +191,8 @@ public class TestSubtaskRepository implements SubtaskRepository {
     }
 
     /**
-     * Deletes the given entities in a batch which means it will create a single query. This kind of operation leaves JPAs
-     * first level cache and the database out of sync. Consider flushing the before calling this
+     * Deletes the given entities in a batch which means it will create a single query. This kind of operation leaves
+     * JPAs first level cache and the database out of sync. Consider flushing the before calling this
      * method.
      *
      * @param entities entities to be deleted. Must not be {@literal null}.
@@ -247,16 +259,23 @@ public class TestSubtaskRepository implements SubtaskRepository {
      * @return a single entity matching the given {@link Example} or {@link Optional#empty()} if none was found.
      * @throws IncorrectResultSizeDataAccessException if the Example yields more than one result.
      */
+
     @Override
     public <S extends Subtask> Optional<S> findOne(Example<S> example) {
         return Optional.empty();
     }
 
+    /**
+     * TODO
+     */
     @Override
     public <S extends Subtask> List<S> findAll(Example<S> example) {
         return null;
     }
 
+    /**
+     * TODO
+     */
     @Override
     public <S extends Subtask> List<S> findAll(Example<S> example, Sort sort) {
         return null;
@@ -307,7 +326,8 @@ public class TestSubtaskRepository implements SubtaskRepository {
      * @since 2.6
      */
     @Override
-    public <S extends Subtask, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+    public <S extends Subtask, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R>
+            queryFunction) {
         return null;
     }
 }
