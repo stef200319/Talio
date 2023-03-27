@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class TestCardRepository implements CardRepository {
     private final List<Card> cards;
     private final List<String> calledMethods = new ArrayList<>();
-
+    private long lastUsedId;
     /**
      * @param name
      */
@@ -38,6 +38,8 @@ public class TestCardRepository implements CardRepository {
 
         cards.add(c1);
         cards.add(c2);
+
+        lastUsedId = 1;
     }
 
     /**
@@ -49,7 +51,7 @@ public class TestCardRepository implements CardRepository {
     @Override
     public <S extends Card> S save(S entity) {
         call("save");
-//        entity.setId((long) cards.size());
+        entity.setId(++lastUsedId);
         cards.add(entity);
         return entity;
     }
@@ -61,15 +63,9 @@ public class TestCardRepository implements CardRepository {
     @SuppressWarnings("checkstyle.*")
     @Override
     public Optional<Card> findById(Long id) {
-//        if (id >= 0 && id < cards.size()) {
-//            return Optional.of(cards.get(id.intValue()));
-//        } else {
-//            return Optional.empty();
-//        }
-
-        for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i) != null && cards.get(i).getId() == id) {
-                return Optional.of(cards.get(i));
+        for (Card card : cards) {
+            if (card != null && card.getId() == id) {
+                return Optional.of(card);
             }
         }
         return Optional.empty();
@@ -196,6 +192,12 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public Card getById(Long aLong) {
+        for (Card c :
+                cards) {
+            if (c != null && c.getId() == aLong) {
+                return c;
+            }
+        }
         return null;
     }
 
