@@ -2,7 +2,8 @@ package server.api;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,7 +16,6 @@ import commons.Card;
 
 
 class CardControllerTest {
-
     private TestCardRepository cardRepository;
     private TestColumnRepository columnRepository;
     private CardController cardController;
@@ -34,6 +34,13 @@ class CardControllerTest {
         ResponseEntity<Card> response = cardController.addCard("Test1", 1L);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testAddCard_columnDoesntExist() {
+        ResponseEntity<Card> response = cardController.addCard("Test2", 10L);
+
+        assertEquals(ResponseEntity.badRequest().build(), response);
     }
 
     @Test
@@ -77,27 +84,30 @@ class CardControllerTest {
     @Test
     void testEditCardTitle_cardNotFound() {
         ResponseEntity<Card> response = cardController.editCardTitle(123, "editTitle");
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
 
     @Test
     void testEditCardList_responseStatusIsOk() {
-        ResponseEntity<Card> response = cardController.editCardColumn(1, 2);
+        ResponseEntity<Card> response = cardController.editCardColumn(1, 0);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void testEditCardList_responseBodyEqualsExpected() {
-        ResponseEntity<Card> response = cardController.editCardColumn(1, 2);
-        assertEquals("Card column updated successfully", response.getBody());
+        ResponseEntity<Card> response = cardController.editCardColumn(1, 0);
+        Card expected = new Card("Test2", 0);
+        expected.setPosition(2);
+        expected.setId(1);
+        assertEquals(expected, response.getBody());
     }
 
     @Test
     void testEditCardList_cardListIdEqualsExpected() {
         cardController.editCardColumn(1, 1);
         Card card = cardRepository.findById(1L).get();
-        assertEquals(2, card.getColumnId());
+        assertEquals(1, card.getColumnId());
     }
 
     @Test
@@ -165,138 +175,46 @@ class CardControllerTest {
         assertEquals(2, cards.size());
     }
 
+//    private Method changePositionsOfAffectedCards() throws NoSuchMethodException {
+//        Method method = CardController.class.getDeclaredMethod("changePositionsOfAffectedCards",
+//                Integer.class, Integer.class, Long.class);
+//        method.setAccessible(true);
+//        return method;
+//    }
 
-    //     ResponseEntity<Card> response = cardController.addCard("Test1", 1L);
+//    @Test
+//    void changePositionsOfAffectedCards_movingUp() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+//        Card c = new Card("T1", 0);
+//        c.setPosition(3);
+//        c.setId(2);
+//
+//        List<Card> cards = (List<Card>) changePositionsOfAffectedCards().invoke(cardController, 3, 1, 0);
+//
+//        assertEquals(2, cards.get(0).getPosition());
+//    }
 
-    //     assertEquals(HttpStatus.OK, response.getStatusCode());
-    // }
+    @Test
+    void editCardPosition_doesntExist() {
+        ResponseEntity<Card> ret = cardController.editCardPosition(10, 1);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
 
-    // @Test
-    // void testAddCard_responseBodyIsNotNull() {
-    //     ResponseEntity<Card> response = cardController.addCard("Test1", 1L);
-    //     assertNotNull(response.getBody());
-    // }
+    @Test
+    void editCardPosition_positionToBig() {
+        ResponseEntity<Card> ret = cardController.editCardPosition(1, 3);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
 
-    // @Test
-    // void testAddCard_responseTitleEqualsExpected() {
-    //     ResponseEntity<Card> response = cardController.addCard("Test1", 1L);
-    //     assertEquals("Test1", response.getBody().getTitle());
-    // }
+    @Test
+    void editCardPosition_successful() {
+        ResponseEntity<Card> ret = cardController.editCardPosition(1, 1);
 
-    // @Test
-    // void testAddCard_responseListIdEqualsExpected() {
-    //     ResponseEntity<Card> response = cardController.addCard("Test1", 1L);
-    //     assertEquals(1, response.getBody().getColumnId());
-    // }
-
-    // @Test
-    // void testEditCardTitle_responseStatusIsOk() {
-    //     ResponseEntity<String> response = cardController.editCardTitle(1, "editTitle");
-    //     assertEquals(HttpStatus.OK, response.getStatusCode());
-    // }
-
-    // @Test
-    // void testEditCardTitle_responseBodyEqualsExpected() {
-    //     ResponseEntity<String> response = cardController.editCardTitle(1, "editTitle");
-    //     assertEquals("Card title updated successfully", response.getBody());
-    // }
-
-    // @Test
-    // void testEditCardTitle_cardTitleEqualsExpected() {
-    //     ResponseEntity<String> response = cardController.editCardTitle(1, "editTitle");
-    //     Card card = cardRepository.findById(1L).get();
-    //     assertEquals("editTitle", card.getTitle());
-    // }
-
-    // @Test
-    // void testEditCardTitle_cardNotFound() {
-    //     ResponseEntity<String> response = cardController.editCardTitle(123, "editTitle");
-    //     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    // }
-
-
-    // @Test
-    // void testEditCardList_responseStatusIsOk() {
-    //     ResponseEntity<String> response = cardController.editCardColumn(1, 2);
-    //     assertEquals(HttpStatus.OK, response.getStatusCode());
-    // }
-
-    // @Test
-    // void testEditCardList_responseBodyEqualsExpected() {
-    //     ResponseEntity<String> response = cardController.editCardColumn(1, 2);
-    //     assertEquals("Card column updated successfully", response.getBody());
-    // }
-
-    // @Test
-    // void testEditCardList_cardListIdEqualsExpected() {
-    //     List<Card> cards = cardRepository.findAll();
-    //     ResponseEntity<String> response = cardController.editCardColumn(1, 2);
-    //     List<Card> cardss = cardRepository.findAll();
-    //     Card card = cardRepository.findById(1L).get();
-    //     assertEquals(2, card.getColumnId());
-    // }
-
-    // @Test
-    // void testEditCardList_cardNotFound() {
-    //     ResponseEntity<String> response = cardController.editCardColumn(100, 2);
-    //     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    // }
-
-
-    // @Test
-    // void testDeleteCard_CardDoesNotExist() {
-    //     ResponseEntity<String> response = cardController.deleteCard(0L);
-    //     assertEquals(cardController.getCardByCardId(1L).getTitle(), "Test2");
-    // }
-
-    // @Test
-    // void testDeleteCard_HTTPStatusIsOk() {
-    //     ResponseEntity<String> response = cardController.deleteCard(1L);
-    //     assertEquals(HttpStatus.OK, response.getStatusCode());
-    // }
-
-    // @Test
-    // void testDeleteCard_ResponseBodyIsCorrect() {
-    //     ResponseEntity<String> response = cardController.deleteCard(1L);
-    //     assertEquals("Card deleted successfully", response.getBody());
-    // }
-
-
-    // @Test
-    // void testDeleteCardNotFound() {
-    //     ResponseEntity<String> response = cardController.deleteCard(99);
-    //     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    // }
-
-
-    // @Test
-    // void testGetCardByCardId_ReturnedCardIsNotNull() {
-    //     Card card = cardController.getCardByCardId(1);
-    //     assertNotNull(card);
-    // }
-
-    // @Test
-    // void testGetCardByCardId_ReturnedCardTitleIsCorrect() {
-    //     Card card = cardController.getCardByCardId(0);
-    //     assertEquals("Test1", card.getTitle());
-    // }
-
-    // @Test
-    // void testGetCardByCardId_ReturnedCardListIdIsCorrect() {
-    //     Card card = cardController.getCardByCardId(1);
-    //     assertEquals(1, card.getColumnId());
-    // }
-
-    // @Test
-    // void testGetCardByCardId_NotFound() {
-    //     Card card = cardController.getCardByCardId(100);
-    //     assertNull(card);
-    // }
-
-    // @Test
-    // void testGetAllCards() {
-    //     List<Card> cards = cardController.getAllCards();
-    //     assertEquals(2, cards.size());
-    // }
+        Card expected = new Card("Test2", 1);
+        expected.setId(1);
+        expected.setPosition(1);
+        assertEquals(expected, ret.getBody());
+//        assertEquals(2, cardController.getAllCards().get(0).getPosition());
+//        assertEquals(1, cardController.getAllCards().get(1).getPosition());
+    }
 
 }

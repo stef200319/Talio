@@ -54,6 +54,16 @@ public class TestBoardRepository implements BoardRepository {
     @Override
     public <S extends Board> S save(S entity) {
         call("save");
+
+        for (Board b :
+                boards) {
+            if (b.getId() == entity.getId()) {
+                boards.remove(b);
+                boards.add(entity);
+                return entity;
+            }
+        }
+
         entity.setId(++lastUsedId);
         boards.add(entity);
         return entity;
@@ -300,7 +310,7 @@ public class TestBoardRepository implements BoardRepository {
      */
     @Override
     public void delete(Board entity) {
-
+        boards.remove(entity);
     }
 
     /**

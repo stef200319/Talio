@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import server.database.ColumnRepository;
 
 public class TestColumnRepository implements ColumnRepository {
@@ -32,9 +34,11 @@ public class TestColumnRepository implements ColumnRepository {
         columns = new ArrayList<>();
         columns.add(new Column("Test1", 0));
         columns.get(0).setId(0);
+        columns.get(0).setPosition(0);
 
         columns.add(new Column("Test2", 0));
         columns.get(1).setId(1);
+        columns.get(1).setPosition(1);
 
         lastUsedId = 1;
     }
@@ -47,6 +51,16 @@ public class TestColumnRepository implements ColumnRepository {
     @Override
     public <S extends Column> S save(S entity) {
         call("save");
+
+        for (Column c :
+                columns) {
+            if (c.getId() == entity.getId()) {
+                columns.remove(c);
+                columns.add(entity);
+                return entity;
+            }
+        }
+
         entity.setId(++lastUsedId);
         columns.add(entity);
         return entity;
@@ -341,7 +355,7 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public Integer findMaxPositionByBoardId(Long boardId) {
-        return null;
+        return (int) columns.stream().mapToLong(Column::getBoardId).max().getAsLong();
     }
 
     /**
@@ -350,7 +364,8 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public List<Column> findByBoardIdAndPositionGreaterThan(Long boardId, Integer position) {
-        return null;
+        return columns.stream().filter((o1) -> o1.getBoardId()==boardId && o1.getPosition() > position).
+                collect(Collectors.toList());
     }
 
     /**

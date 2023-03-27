@@ -36,6 +36,8 @@ public class TestCardRepository implements CardRepository {
         c1.setId(0);
         c2.setId(1);
 
+        c1.setPosition(1);
+        c2.setPosition(2);
         cards.add(c1);
         cards.add(c2);
 
@@ -51,6 +53,16 @@ public class TestCardRepository implements CardRepository {
     @Override
     public <S extends Card> S save(S entity) {
         call("save");
+
+        for (Card c :
+                cards) {
+            if (c.getId() == entity.getId()) {
+                cards.remove(c);
+                cards.add(entity);
+                return entity;
+            }
+        }
+
         entity.setId(++lastUsedId);
         cards.add(entity);
         return entity;
@@ -348,7 +360,7 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public Integer findMaxPositionByColumnId(Long listId) {
-        return 0;
+        return cards.stream().mapToInt(Card::getPosition).max().getAsInt();
     }
 
     /**
@@ -359,7 +371,7 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public List<Card> findByColumnIdAndPositionGreaterThan(Long columnId, Integer position) {
-        return null;
+        return new ArrayList<>();
     }
 
     /**
@@ -368,7 +380,15 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public List<Card> findCardsByColumnId(Long columnId) {
-        return null;
+        List<Card> cardList = new ArrayList<>();
+        for (Card c :
+                cards) {
+            if (c.getColumnId() == columnId) {
+                cardList.add(c);
+            }
+        }
+
+        return cardList;
     }
 
 }
