@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import server.database.BoardRepository;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
+import server.database.SubtaskRepository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ class ColumnControllerTest {
     private ColumnController columnController;
     private ColumnRepository columnRepository;
     private BoardRepository boardRepository;
+    private SubtaskRepository subtaskRepository;
     private CardRepository cardRepository;
     private CardController cardController;
 
@@ -35,7 +37,8 @@ class ColumnControllerTest {
         boardRepository = new TestBoardRepository();
         columnRepository = new TestColumnRepository();
         cardRepository = new TestCardRepository();
-        cardController = new CardController(cardRepository, columnRepository);
+        subtaskRepository = new TestSubtaskRepository();
+        cardController = new CardController(cardRepository, columnRepository,subtaskRepository);
         columnController = new ColumnController(columnRepository, boardRepository, cardRepository, cardController);
     }
 

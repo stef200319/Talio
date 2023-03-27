@@ -7,39 +7,47 @@ public class Subtask {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String description;
+    private String title;
     private boolean done;
 
     /**
      * Constructor to create a subTask object
-     * @param description of the subtask of the main task
+     * @param title Title of the subtask of the main task
      */
-    public Subtask(String description) {
-        this.description = description;
+    public Subtask(String title) {
+        this.title = title;
         this.done = false;
     }
 
     /**
-     * Get the description of the subtask
-     * @return the description of the subtask as a String
+     * Get the id of the subtask
+     * @return the id of the subtask as a long
      */
-    public String getDescription() {
-        return description;
+    public long getId(){
+        return id;
     }
 
     /**
-     * Set the description of the subtask
-     * @param description of the subtask which belongs to the main task.
+     * Get the title of the subtask
+     * @return the title of the subtask as a String
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Set the title of the subtask
+     * @param title of the subtask which belongs to the main task.
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
      * Get the status of the subtask
      * @return the status of the subtask as a boolean. returns true iff the subtask is completed.
      */
-    public boolean isDone() {
+    public boolean getDone() {
         return done;
     }
 
@@ -50,4 +58,6 @@ public class Subtask {
     public void setDone(boolean done) {
         this.done = done;
     }
+
+
 }
