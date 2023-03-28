@@ -19,6 +19,9 @@ import javax.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 public class Card {
@@ -30,10 +33,11 @@ public class Card {
     private long columnId;
     private Integer position;
 
+    private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private CardDetails cardDetails;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Subtask> subtasks;
 
     private Card() {
         // for object mappers
@@ -46,8 +50,10 @@ public class Card {
     public Card(String title, long columnId) {
         this.title = title;
         this.columnId = columnId;
-        CardDetails details = new CardDetails(this.title);
-        this.cardDetails = details;
+
+        this.subtasks = new ArrayList<Subtask>();
+        subtasks.add(new Subtask("refarctored1"));
+        subtasks.add(new Subtask("refarctored2"));
     }
 
     /**
@@ -132,5 +138,38 @@ public class Card {
         return "The title of this Card is: " + getTitle() +
                 ", and the ID of the Column this Card belongs to is: " + getColumnId();
     }
+
+        /**
+     * Get the list of subtasks for the card
+     * @return the list of subtasks for the card
+     */
+    public List<Subtask> getSubtasks() {
+        return subtasks;
+    }
+
+    /**
+     * Set the list of subtasks for the card
+     * @param subtasks the new list of subtasks for the card
+     */
+    public void setSubtasks(List<Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
+
+    /**
+     * Get the description of the card
+     * @return the description of the card
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Set the description of the card
+     * @param description the new description of the card
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
 }

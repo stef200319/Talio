@@ -1,10 +1,12 @@
 package server.api;
 
 import commons.Card;
+import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
+import server.database.SubtaskRepository;
 
 import java.util.List;
 
@@ -13,15 +15,19 @@ import java.util.List;
 public class CardController {
     private final CardRepository cardRepository;
     private final ColumnRepository columnRepository;
+    private final SubtaskRepository subtaskRepository;
 
 
     /**
      * @param cardRepository the container storing all the data relating to cards
      * @param columnRepository the container storing all the data relating to columns (lists)
+     * @param subtaskRepository the container storing all the subtasks
      */
-    public CardController(CardRepository cardRepository, ColumnRepository columnRepository) {
+    public CardController(CardRepository cardRepository, ColumnRepository columnRepository,
+                                                    SubtaskRepository subtaskRepository) {
         this.cardRepository = cardRepository;
         this.columnRepository = columnRepository;
+        this.subtaskRepository = subtaskRepository;
     }
 
     /**
@@ -78,6 +84,37 @@ public class CardController {
         return ResponseEntity.ok(saved);
     }
 
+
+    /**
+     * Creates a new subtask and associates it with the specified card.
+     *
+     * @param cardId the ID of the card to which the subtask should be added
+     * @param subtaskTitle the subtask to be added to the card
+     * @return a ResponseEntity containing the updated Card object if the card was found, or a 404 Not Found
+     * response if the card was not found
+     */
+
+    @PostMapping("/addSubtask/{cardId}/{subtaskTitle}")
+    public ResponseEntity<Card> createSubtask(@PathVariable(value = "cardId") long cardId,
+                                              @PathVariable(value = "subtaskTitle") String subtaskTitle) {
+
+        if (subtaskTitle == null || !cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+        Card card = cardRepository.findById(cardId).get();
+
+        // Create a new subtask
+        Subtask newSubtask = new Subtask(subtaskTitle);
+        subtaskRepository.save(newSubtask);
+
+        // Update card in the database
+        card.getSubtasks().add(newSubtask);
+        cardRepository.save(card);
+
+        return ResponseEntity.ok(card);
+    }
+
+
     /**Change the title of a card, if it exists. Receive a message on the success of the edit
      * @param cardId The ID of the card whose title should be changed
      * @param title Title which should replace the old title of the card
@@ -97,10 +134,29 @@ public class CardController {
         return ResponseEntity.ok(card);
     }
 
+    /**Change the description of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param description Description which should replace the old title of the card
+     * @return receive a message indicating the description has change, if the card exists. If it doesn't, receive an
+     * appropriate response to the client.
+     */
+    @PutMapping("/editCardDescription/{cardId}/{description}")
+    @ResponseBody public ResponseEntity<Card> editCardDescription(@PathVariable("cardId") long cardId,
+                                                            @PathVariable("description") String description){
+        if (description == null || !cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setTitle(description);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
     /**Change the columnId of a card, if it exists. Receive a message on the success of the edit
      * @param cardId The ID of the card whose title should be changed
      * @param columnId columnId which should replace the old columnId of the card
-     * @return receive a message indicating the columnId has change, if the card exists. If it doesn't, receive an
+     * @return receive a message indicating the columnId has changed, if the card exists. If it doesn't, receive an
      * appropriate response to the client.
      */
     @PutMapping("/editCardColumn/{cardId}/{columnId}")
@@ -185,7 +241,6 @@ public class CardController {
 
     /**
      * Delete a card from the database and receive a conformation using the card's id, if the card exists.
-     * Else, receive a message stating the card couldn't be found.
      * @param cardId id of the card that is to be deleted
      * @return Returns a conformation message if the card is found and deleted. Else, receive an
      * appropriate response to the client.

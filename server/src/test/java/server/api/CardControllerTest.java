@@ -15,13 +15,15 @@ class CardControllerTest {
 
     private TestCardRepository cardRepository;
     private TestColumnRepository columnRepository;
+    private TestSubtaskRepository subtaskRepository;
     private CardController cardController;
 
     @BeforeEach
     void setUp() {
         this.columnRepository = new TestColumnRepository();
         this.cardRepository = new TestCardRepository();
-        cardController = new CardController(cardRepository, columnRepository);
+        this.subtaskRepository = new TestSubtaskRepository();
+        cardController = new CardController(cardRepository, columnRepository,subtaskRepository);
     }
 
     // @Test

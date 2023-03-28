@@ -18,16 +18,21 @@ class BoardControllerTest {
     private TestBoardRepository boardRepository;
     private TestColumnRepository columnRepository;
     private TestCardRepository cardRepository;
+    private TestSubtaskRepository subtaskRepository;
+
+
     private BoardController boardController;
     private ColumnController columnController;
     private CardController cardController;
+
 
     @BeforeEach
     void setUp() {
         boardRepository = new TestBoardRepository();
         columnRepository = new TestColumnRepository();
+        subtaskRepository = new TestSubtaskRepository();
         cardRepository = new TestCardRepository();
-        cardController = new CardController(cardRepository, columnRepository);
+        cardController = new CardController(cardRepository, columnRepository, subtaskRepository);
         columnController = new ColumnController(columnRepository, boardRepository, cardRepository, cardController);
         boardController = new BoardController(boardRepository, columnRepository, columnController);
     }
