@@ -51,6 +51,10 @@ public class AddTaskCtrl {
         taskName.clear();
         mainCtrl.showBoardOverview();
     }
+
+    /**
+     * @param taskName updates the task name
+     */
     public void setTaskName(TextField taskName){
         this.taskName = taskName;
     }

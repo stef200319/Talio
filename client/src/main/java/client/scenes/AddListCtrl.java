@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
-import org.w3c.dom.Text;
 
 public class AddListCtrl {
     private final ServerUtils server;
@@ -34,6 +33,9 @@ public class AddListCtrl {
         mainCtrl.showBoardOverview();
     }
 
+    /**
+     * @param listName the name of the list
+     */
     public void setListName(TextField listName){
         this.listName = listName;
     }
