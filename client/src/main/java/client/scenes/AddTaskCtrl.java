@@ -51,7 +51,9 @@ public class AddTaskCtrl {
         taskName.clear();
         mainCtrl.showBoardOverview();
     }
-
+    public void setTaskName(TextField taskName){
+        this.taskName = taskName;
+    }
     /**
      * Show Task Details scene
      */
