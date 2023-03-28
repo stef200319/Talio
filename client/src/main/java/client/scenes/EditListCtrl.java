@@ -27,6 +27,10 @@ public class EditListCtrl {
         this.mainCtrl=mainCtrl;
     }
 
+    /**
+     * Sets the column which will be edited
+     * @param c new column to edit
+     */
     public void setColumnToEdit(Column c) {
         this.columnToEdit = c;
     }

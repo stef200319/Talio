@@ -59,6 +59,7 @@ public class MainCtrl {
      * @param workspace
      * @param taskManagement
      * @param createBoard
+     * @param editList
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
