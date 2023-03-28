@@ -142,4 +142,35 @@ public class ServerUtils {
             .delete();
     }
 
+    /**
+     * Method that edits the title of a column
+     * @param c column to edit
+     * @param title new title
+     * @return new column entity
+     */
+    public Column editColumnTitle(Column c, String title) {
+        long columnId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("column/editColumnTitle/"+columnId+"/"+title)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .put(Entity.entity(c, APPLICATION_JSON), Column.class);
+    }
+
+    /**
+     * Method that edits the title of a card
+     * @param c card to edit
+     * @param title new title
+     * @return new card entity
+     */
+    public Card editCardTitle(Card c, String title) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("card/editCardTitle/"+cardId+"/"+title)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
 }
