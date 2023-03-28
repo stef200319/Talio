@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import commons.Column;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -45,6 +46,9 @@ public class MainCtrl {
     private WorkspaceCtrl workspaceCtrl;
     private Scene workspace;
 
+    private EditListCtrl editListCtrl;
+    private Scene editList;
+
     /**
      * @param primaryStage
      * @param add
@@ -62,7 +66,8 @@ public class MainCtrl {
                            Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
                            Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
                            Pair<AddTaskCtrl, Parent> addTask, Pair<TaskManagementCtrl, Parent> taskManagement,
-                           Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard) {
+                           Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
+                           Pair<EditListCtrl, Parent> editList) {
 
         this.primaryStage = primaryStage;
 
@@ -89,6 +94,9 @@ public class MainCtrl {
 
         this.workspaceCtrl = workspace.getKey();
         this.workspace = new Scene(workspace.getValue());
+
+        this.editListCtrl = editList.getKey();
+        this.editList = new Scene(editList.getValue());
 
         showClientConnect();
         primaryStage.show();
@@ -160,12 +168,20 @@ public class MainCtrl {
 
     /**
      * Show add task page
-     *
-     * @return
      */
     public void showAddTask() {
         primaryStage.setTitle("Add Task");
         primaryStage.setScene(addTask);
+    }
+
+    /**
+     * Show edit list page
+     * @param c the list which will be changed
+     */
+    public void showEditList(Column c) {
+        editListCtrl.setColumnToEdit(c);
+        primaryStage.setTitle("Edit Column");
+        primaryStage.setScene(editList);
     }
 
 }

@@ -61,9 +61,10 @@ public class Main extends Application {
         var taskManagement = FXML.load(TaskManagementCtrl.class, "client", "scenes", "TagManagement.fxml");
         var workspace = FXML.load(WorkspaceCtrl.class, "client", "scenes", "Workspace.fxml");
         var createBoard = FXML.load(CreateBoardCtrl.class, "client", "scenes", "CreateBoard.fxml");;
+        var editList = FXML.load(EditListCtrl.class, "client", "scenes", "EditList.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
-                addTask, taskManagement, workspace,createBoard);
+                addTask, taskManagement, workspace, createBoard, editList);
     }
 }
