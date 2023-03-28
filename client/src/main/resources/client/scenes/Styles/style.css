@@ -1,0 +1,23 @@
+/* STYLE THE FOOTER */
+.footer {
+  -fx-background-color: #b5b1b1;
+  -fx-border-color: black
+}
+
+.side_bars {
+  -fx-background-color:wheat;
+  -fx-border-color: black 
+}
+
+.menu {
+  -fx-background-color: #372C2E;
+  -fx-border-color: black 
+}
+
+.middle{
+  /* -fx-border-left-color: white; 
+  -fx-border-right-color: white; 
+  -fx-border-top-color: black; 
+  -fx-border-bottom-color: black;  */
+  -fx-border-bottom-color: black;
+}

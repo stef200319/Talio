@@ -31,6 +31,9 @@ public class Card {
     private Integer position;
 
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private CardDetails cardDetails;
+
 
     private Card() {
         // for object mappers
@@ -43,6 +46,8 @@ public class Card {
     public Card(String title, long columnId) {
         this.title = title;
         this.columnId = columnId;
+        CardDetails details = new CardDetails(this.title);
+        this.cardDetails = details;
     }
 
     /**
