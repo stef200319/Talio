@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class TestCardRepository implements CardRepository {
     private final List<Card> cards;
@@ -371,7 +372,9 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public List<Card> findByColumnIdAndPositionGreaterThan(Long columnId, Integer position) {
-        return new ArrayList<>();
+        return cards.stream().
+                filter(o1 -> o1.getColumnId() == columnId && o1.getPosition() > position).
+                collect(Collectors.toList());
     }
 
     /**

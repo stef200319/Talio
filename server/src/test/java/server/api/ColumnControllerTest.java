@@ -9,9 +9,8 @@ import server.database.BoardRepository;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import javax.swing.*;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,11 +39,11 @@ class ColumnControllerTest {
         assertEquals(1, ret.getBody().getBoardId());
     }
 
-//    @Test
-//    void addColumnIdNotInColumn() {
-//        ResponseEntity<Column> ret = sut.addColumn("Todo", 348622698L);
-//        assertEquals(ResponseEntity.notFound().build(), ret);
-//    }
+    @Test
+    void addColumnIdNotInColumn() {
+        ResponseEntity<Column> ret = columnController.addColumn("Todo", 348622698L);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
 
     @Test
     void removeColumnFound() {
@@ -53,6 +52,17 @@ class ColumnControllerTest {
         Column expected = new Column("Test2", 0);
         expected.setId(1);
         expected.setPosition(1);
+
+        assertEquals(expected, ret.getBody());
+    }
+
+    @Test
+    void removeColumnFound2() {
+        ResponseEntity<Column> ret = columnController.deleteColumn(0L);
+
+        Column expected = new Column("Test1", 0);
+        expected.setId(0);
+        expected.setPosition(0);
 
         assertEquals(expected, ret.getBody());
     }
@@ -116,6 +126,18 @@ class ColumnControllerTest {
     }
 
     @Test
+    void getAllColumns_empty() {
+        List<Column> cols = new ArrayList<>(columnController.getAllColumns().getBody());
+
+        for (Column c: cols) {
+            columnRepository.delete(c);
+        }
+
+        assertEquals(ResponseEntity.notFound().build(), columnController.getAllColumns());
+
+    }
+
+    @Test
     void testGetCardByListId_2entries() {
         ResponseEntity<List<Card>> ret = columnController.getCardsByColumnId(1L);
         List<Card> expected = new ArrayList<>();
@@ -128,7 +150,8 @@ class ColumnControllerTest {
 
         expected.add(c1);
         expected.add(c2);
-        assertEquals(expected, ret.getBody());
+        assertEquals(c1.toString(), Objects.requireNonNull(ret.getBody()).get(0).toString());
+        assertEquals(c2.toString(), ret.getBody().get(1).toString());
     }
 
 

@@ -323,7 +323,7 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public void deleteAll(Iterable<? extends Column> entities) {
-
+        columns.remove(entities);
     }
 
     /**

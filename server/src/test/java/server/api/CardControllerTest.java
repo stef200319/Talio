@@ -100,7 +100,7 @@ class CardControllerTest {
         Card expected = new Card("Test2", 0);
         expected.setPosition(2);
         expected.setId(1);
-        assertEquals(expected, response.getBody());
+        assertEquals(expected.toString(), response.getBody().toString());
     }
 
     @Test
@@ -175,23 +175,36 @@ class CardControllerTest {
         assertEquals(2, cards.size());
     }
 
-//    private Method changePositionsOfAffectedCards() throws NoSuchMethodException {
-//        Method method = CardController.class.getDeclaredMethod("changePositionsOfAffectedCards",
-//                Integer.class, Integer.class, Long.class);
-//        method.setAccessible(true);
-//        return method;
-//    }
+    private Method changePositionsOfAffectedCards() throws NoSuchMethodException {
+        Method method = CardController.class.getDeclaredMethod("changePositionsOfAffectedCards",
+                Integer.class, Integer.class, Long.class);
+        method.setAccessible(true);
+        return method;
+    }
 
-//    @Test
-//    void changePositionsOfAffectedCards_movingUp() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-//        Card c = new Card("T1", 0);
-//        c.setPosition(3);
-//        c.setId(2);
-//
-//        List<Card> cards = (List<Card>) changePositionsOfAffectedCards().invoke(cardController, 3, 1, 0);
-//
-//        assertEquals(2, cards.get(0).getPosition());
-//    }
+    @Test
+    void changePositionsOfAffectedCards_movingUp() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
+        Method method = CardController.class.getDeclaredMethod("changePositionsOfAffectedCards",
+                int.class, int.class, long.class);
+        method.setAccessible(true);
+
+        List<Card> ret = (List<Card>) method.invoke(cardController, 1, 2, 1L);
+
+        assertEquals(1, ret.get(0).getPosition());
+    }
+
+    @Test
+    void changePositionOfAffectedCards_movingDown() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = CardController.class.getDeclaredMethod("changePositionsOfAffectedCards",
+                int.class, int.class, long.class);
+        method.setAccessible(true);
+
+        List<Card> ret = (List<Card>) method.invoke(cardController, 2, 1, 1L);
+
+        assertEquals(2, ret.get(0).getPosition());
+
+    }
 
     @Test
     void editCardPosition_doesntExist() {
@@ -212,7 +225,7 @@ class CardControllerTest {
         Card expected = new Card("Test2", 1);
         expected.setId(1);
         expected.setPosition(1);
-        assertEquals(expected, ret.getBody());
+        assertEquals(expected.toString(), ret.getBody().toString());
 //        assertEquals(2, cardController.getAllCards().get(0).getPosition());
 //        assertEquals(1, cardController.getAllCards().get(1).getPosition());
     }
