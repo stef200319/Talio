@@ -21,8 +21,8 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <Button fx:id="createBoard" layoutX="433.0" layoutY="393.0" mnemonicParsing="false" onAction="#confirm" prefHeight="43.0" prefWidth="110.0" text="Confirm" />
-                <Button fx:id="cancelCreation" layoutX="216.0" layoutY="393.0" mnemonicParsing="false" onAction="#cancel" prefHeight="43.0" prefWidth="110.0" text="Cancel" />
+                <Button fx:id="createBoard" layoutX="433.0" layoutY="393.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="Confirm" />
+                <Button fx:id="cancelCreation" layoutX="216.0" layoutY="393.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="Cancel" />
                 <Label layoutX="27.0" layoutY="236.0" prefHeight="31.0" prefWidth="244.0" text="New Card Description:">
                     <font>
                         <Font name="System Bold" size="21.0" />

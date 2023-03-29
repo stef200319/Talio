@@ -98,12 +98,6 @@ public class BoardOverviewCtrl implements Initializable {
     }
 
     /**
-     * Method that shows the add Task page on screen
-     */
-    public void addTask() {mainCtrl.showAddTask();}
-
-
-    /**
      * Method that shows the workspace page containing all the boards on screen
      */
     public void myBoards() {mainCtrl.showWorkspace();}
@@ -243,7 +237,7 @@ public class BoardOverviewCtrl implements Initializable {
         b.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                mainCtrl.showAddTask();
+                mainCtrl.showAddTask(c.getId());
             }
         });
         list.getChildren().add(b);
