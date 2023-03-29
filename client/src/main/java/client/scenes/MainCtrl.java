@@ -159,9 +159,8 @@ public class MainCtrl {
     }
 
     /**
-     * Show add task page
-     *
-     * @return
+     * Show add task page specific to a column
+     * @param columnID columnId of the column to show add task
      */
     public void showAddTask(Long columnID) {
         addTaskCtrl.setColumnToAddId(columnID);

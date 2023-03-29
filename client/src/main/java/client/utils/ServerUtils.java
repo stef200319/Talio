@@ -97,8 +97,10 @@ public class ServerUtils {
     /**
      * Adds a card to the database
      * @param card the card to add to the database
+     * @param columnID columnId of column that card will be added to
      * @return new Card to databae
      */
+
 
     public Card addCard(Card card, Long columnID) {
         String title = card.getTitle();
