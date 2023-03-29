@@ -44,6 +44,10 @@ public class MainCtrl {
     private Scene createBoard;
     private WorkspaceCtrl workspaceCtrl;
     private Scene workspace;
+    private EditCardTitleCtrl editCardTitleCtrl;
+    private Scene editCardTitle;
+    private EditCardDescriptionCtrl editCardDescriptionCtrl;
+    private Scene editCardDescription;
 
     /**
      * @param primaryStage
@@ -55,6 +59,9 @@ public class MainCtrl {
      * @param workspace
      * @param taskManagement
      * @param createBoard
+     * @param editCardTitle
+     * @param editCardDescription
+     *
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -62,7 +69,9 @@ public class MainCtrl {
                            Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
                            Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
                            Pair<AddTaskCtrl, Parent> addTask, Pair<TaskManagementCtrl, Parent> taskManagement,
-                           Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard) {
+                           Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
+                           Pair<EditCardTitleCtrl, Parent> editCardTitle,
+                           Pair<EditCardDescriptionCtrl, Parent> editCardDescription) {
 
         this.primaryStage = primaryStage;
 
@@ -89,6 +98,12 @@ public class MainCtrl {
 
         this.workspaceCtrl = workspace.getKey();
         this.workspace = new Scene(workspace.getValue());
+
+        this.editCardTitleCtrl = editCardTitle.getKey();
+        this.editCardTitle = new Scene(editCardTitle.getValue());
+
+        this.editCardDescriptionCtrl = editCardDescription.getKey();
+        this.editCardDescription = new Scene(editCardDescription.getValue());
 
         showClientConnect();
         primaryStage.show();

@@ -40,7 +40,7 @@ public class CreateBoardCtrl {
     public Board getBoard() {
         var name = boardName.getText();
         if(name.equals(""))
-            name="New List";
+            name="New Board";
         return new Board(name);
     }
 
