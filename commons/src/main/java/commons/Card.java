@@ -39,7 +39,7 @@ public class Card {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Subtask> subtasks;
 
-    private Card() {
+    public Card() {
         // for object mappers
     }
 
