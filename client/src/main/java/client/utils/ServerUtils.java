@@ -145,17 +145,16 @@ public class ServerUtils {
     /**
      * Method that deletes a card
      * @param c card to delete
-     * @return response to database
+     * @return response
      */
-
     public Response deleteCard(Card c) {
         long cardId = c.getId();
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER)
-                .path("card/deleteCard/" + cardId)
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .delete();
+            .target(SERVER)
+            .path("card/deleteCard/" + cardId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .delete();
     }
 
     /**
@@ -189,4 +188,5 @@ public class ServerUtils {
             .accept(APPLICATION_JSON)
             .put(Entity.entity(c, APPLICATION_JSON), Card.class);
     }
+
 }

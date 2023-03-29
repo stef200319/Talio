@@ -9,10 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -154,9 +154,12 @@ public class BoardOverviewCtrl implements Initializable {
 
     public void createList(Column c) {
         VBox list=new VBox();
+        list.setStyle("-fx-border-color: black");
+        list.setPadding(new Insets(5));
         list.setPrefWidth(400); // Set preferred width to 400 pixels
         list.setPrefHeight(600); // Set preferred height to 600 pixels
         list.setMaxWidth(800); // Set max width to 800 pixels
+        list.setMinWidth(200); //Set min width to 200
         list.setAlignment(Pos.CENTER);
 
         Button delete = new Button("X");
@@ -173,7 +176,7 @@ public class BoardOverviewCtrl implements Initializable {
                 mainCtrl.showEditList(c);
             }
         });
-        HBox deleteBox = new HBox();
+        HBox deleteBox = new HBox(5);
         deleteBox.setAlignment(Pos.TOP_RIGHT);
         deleteBox.getChildren().add(editTitle);
         deleteBox.getChildren().add(delete);
@@ -188,17 +191,47 @@ public class BoardOverviewCtrl implements Initializable {
         VBox cardContainer = new VBox();
         cardContainer.setSpacing(10);
         for(int i=0;i<cards.size();i++) {
-            Label s = new Label(cards.get(i).getTitle());
-            cardContainer.getChildren().add(s);
+            HBox card = new HBox(80);                   //card box
+            card.setAlignment(Pos.CENTER_RIGHT);
+            card.setStyle("-fx-background-color:#FEF9D9");
+            card.setStyle("-fx-border-style: solid");
+            card.setStyle("-fx-border-radius: 50px");
+            card.setStyle("-fx-border-color: grey");
+
+            Label s = new Label(cards.get(i).getTitle());       //title of the card
+            card.getChildren().add(s);
+
+            VBox cardButtons = new VBox(5);             //box for details and delet buttons
+            cardButtons.setAlignment(Pos.CENTER);
+
+            Button details = new Button("Details");
+            details.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    mainCtrl.showTaskDetails();
+                }
+            });
+
+            Button deleteCard = new Button("X");
+            int finalI = i;
+            deleteCard.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    server.deleteCard(cards.get(finalI));
+                }
+            });
+
+            cardButtons.getChildren().add(deleteCard);
+            cardButtons.getChildren().add(details);
+
+            card.getChildren().add(cardButtons);
+
+            cardContainer.getChildren().add(card);
         }
 
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(cardContainer);
-        scrollPane.setPrefWidth(380); // Set preferred width to 380 pixels
-        scrollPane.setPrefHeight(500); // Set preferred height to 500 pixels
-        scrollPane.setFitToWidth(true);
-
-        list.getChildren().add(scrollPane);
+        cardContainer.setPrefWidth(380); // Set preferred width to 380 pixels
+        cardContainer.setPrefHeight(500); // Set preferred height to 500 pixels
+        list.getChildren().add(cardContainer);
 
         Button b = new Button("Add task");
         b.setOnAction(new EventHandler<ActionEvent>() {
