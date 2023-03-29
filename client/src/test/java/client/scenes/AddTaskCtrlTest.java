@@ -1,5 +1,7 @@
-/*package client.scenes;
+package client.scenes;
 
+import javafx.application.Platform;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +27,10 @@ class AddTaskCtrlTest {
     @Mock
     private TextField taskName;
 
+    @BeforeAll
+    static void initJfxRuntime() {
+        Platform.startup(() -> {});
+    }
     @BeforeEach
     void setUp() {
         server = mock(ServerUtils.class);
@@ -71,4 +77,4 @@ class AddTaskCtrlTest {
     }
 
 
-}*/
+}

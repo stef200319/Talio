@@ -1,12 +1,13 @@
-/*package client.scenes;
+package client.scenes;
 
 import commons.Column;
 import client.utils.ServerUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import javafx.scene.control.TextField;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import javafx.application.Platform;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +25,10 @@ class AddListCtrlTest {
     @Mock
     private TextField listName;
 
+    @BeforeAll
+    static void initJfxRuntime() {
+        Platform.startup(() -> {});
+    }
     @BeforeEach
     void setUp() {
         server = mock(ServerUtils.class);
@@ -60,4 +65,4 @@ class AddListCtrlTest {
         verify(listName, times(1)).clear();
         verify(mainCtrl, times(1)).showBoardOverview();
     }
-}*/
+}

@@ -36,6 +36,14 @@ public class EditListCtrl {
     }
 
     /**
+     * Getter for testing
+     * @return column to edit
+     */
+    public Column getColumnToEdit() {
+        return columnToEdit;
+    }
+
+    /**
      * cancel edit and return to overview
      */
     public void cancel() {
@@ -63,6 +71,14 @@ public class EditListCtrl {
             listName.clear();
             mainCtrl.showBoardOverview();
         }
+    }
+
+    /**
+     * Setter for testing
+     * @param listName the textfield
+     */
+    public void setListName(TextField listName) {
+        this.listName = listName;
     }
 
 }
