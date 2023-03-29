@@ -168,6 +168,12 @@ public class CardController {
 
         Card card = cardRepository.findById(cardId).get();
 
+        List<Card> cards = cardRepository.findByColumnIdAndPositionGreaterThan(card.getColumnId(),card.getPosition());
+        for(Card c : cards) {
+            int pos = c.getPosition();
+            c.setPosition(pos - 1);
+        }
+
         Integer maxPosition = cardRepository.findMaxPositionByColumnId(columnId);
         card.setPosition(maxPosition+1);
 
