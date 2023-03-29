@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -24,9 +26,6 @@ public class Board {
     )
     private Set<BoardTag> boardTags;
 
-    @OneToMany(mappedBy = "board")
-    private Set<CardTag> cardTagsList;
-
 
     /**
      * constructor for object mappers
@@ -46,16 +45,16 @@ public class Board {
      * getter for the boardTags
      * @return all the boardTags
      */
-    public Set<BoardTag> getTags() {
-        return boardTags;
+    public List<BoardTag> getBoardTags() {
+        return new ArrayList<>(boardTags);
     }
 
     /**
-     * getter for the CardTagsList
-     * @return CardTagsList
+     * setter fot the boardTags
+     * @param boardTags
      */
-    public Set<CardTag> getCardTagsList() {
-        return cardTagsList;
+    public void setBoardTags(Set<BoardTag> boardTags) {
+        this.boardTags = boardTags;
     }
 
     /**
@@ -85,26 +84,6 @@ public class Board {
         this.title = title;
     }
 
-
-    /**
-     * add cardTag to CardTagsList
-     * @param cardTag card to add
-     */
-    public void addCardTagToCardTagsList(CardTag cardTag) {
-        if (cardTagsList.contains(cardTag) || cardTag == null) return;
-        cardTagsList.add(cardTag);
-    }
-
-    /**
-     * delete cardTag from CardTagsList
-     * @param cardTag cardTag to delete
-     * @return cardTag that is deleted
-     */
-    public CardTag deleteCardTagFromCardTagsList(CardTag cardTag) {
-        if (!cardTagsList.contains(cardTag) || cardTag == null) return null;
-        cardTagsList.remove(cardTag);
-        return cardTag;
-    }
 
     /**
      * add BoardTag to board

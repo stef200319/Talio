@@ -15,10 +15,12 @@
  */
 package commons;
 
-import javax.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -128,6 +130,22 @@ public class Card {
         if (!tags.contains(cardTag) || cardTag == null) return null;
         tags.remove(cardTag);
         return cardTag;
+    }
+
+    /**
+     * getter for the cardTags
+     * @return a list of the CardTags
+     */
+    public List<CardTag> getCardTags() {
+        return new ArrayList<>(tags);
+    }
+
+    /**
+     * Settter for the card tags
+     * @param cardTags
+     */
+    public void setCardTags(Set<CardTag> cardTags) {
+        this.tags = cardTags;
     }
 
     /**

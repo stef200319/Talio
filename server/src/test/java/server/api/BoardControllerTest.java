@@ -1,17 +1,7 @@
 package server.api;
 
-import commons.Board;
-import commons.Card;
-import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.ResponseEntity;
-import server.database.BoardRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import server.database.CardTagRepository;
 
 class BoardControllerTest {
 
@@ -21,15 +11,21 @@ class BoardControllerTest {
     private BoardController boardController;
     private ColumnController columnController;
     private CardController cardController;
+    private CardTagController cardTagController;
+    private CardTagRepository cardTagRepository;
 
     @BeforeEach
     void setUp() {
         boardRepository = new TestBoardRepository();
         columnRepository = new TestColumnRepository();
         cardRepository = new TestCardRepository();
+        cardTagRepository = new TestCardTagRepository();
+
         cardController = new CardController(cardRepository, columnRepository);
         columnController = new ColumnController(columnRepository, boardRepository, cardRepository, cardController);
-        boardController = new BoardController(boardRepository, columnRepository, columnController);
+        cardTagController = new CardTagController(cardTagRepository, boardRepository, cardRepository);
+        boardController = new BoardController(boardRepository, columnRepository, columnController, cardTagController,
+                cardTagRepository);
     }
 
     // @Test

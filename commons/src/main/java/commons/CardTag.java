@@ -1,7 +1,9 @@
 package commons;
 
-import javax.persistence.*;
-import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class CardTag extends Tag {
@@ -9,9 +11,6 @@ public class CardTag extends Tag {
     @ManyToOne
     @JoinColumn(name="board_id", nullable=false)
     private Board board;
-
-    @ManyToMany(mappedBy = "tags")
-    private Set<Card> cards;
 
     /**
      * Constructor for object mappers
@@ -37,11 +36,5 @@ public class CardTag extends Tag {
         return board;
     }
 
-    /**
-     * getter for all the cards a tag belongs to
-     * @return set of cards the this belongs to
-     */
-    public Set<Card> getCards() {
-        return cards;
-    }
+
 }

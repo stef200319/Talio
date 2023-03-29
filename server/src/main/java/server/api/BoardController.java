@@ -1,13 +1,15 @@
 package server.api;
 
 import commons.Board;
-
+import commons.CardTag;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.BoardRepository;
+import server.database.CardTagRepository;
 import server.database.ColumnRepository;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -17,18 +19,25 @@ public class BoardController {
     private final ColumnRepository columnRepository;
 
     private final ColumnController columnController;
+    private final CardTagController cardTagController;
+    private final CardTagRepository cardTagRepository;
 
     /**
      *
      * @param boardRepository the repository which contains all the data in the database of the boards
      * @param columnRepository the repository which contains all the data in the database of the columns
      * @param columnController the controller which handles all the logic for the columns in the db
+     * @param cardTagController the controller for the cardTags
+     * @param cardTagRepository the cardTagRepo
      */
     public BoardController(BoardRepository boardRepository, ColumnRepository columnRepository,
-                           ColumnController columnController) {
+                           ColumnController columnController, CardTagController cardTagController,
+                           CardTagRepository cardTagRepository) {
         this.boardRepository = boardRepository;
         this.columnRepository = columnRepository;
         this.columnController = columnController;
+        this.cardTagController = cardTagController;
+        this.cardTagRepository = cardTagRepository;
     }
 
     /**
@@ -103,6 +112,13 @@ public class BoardController {
         }
 
         Board board = boardRepository.findById(boardId).get();
+
+        // Delete the corresponding boardTags and cardTags
+        board.setBoardTags(new HashSet<>());
+
+        for (CardTag cardTag : cardTagRepository.findCardTagsByBoard(board)) {
+            cardTagController.deleteCardTagFromBoard(cardTag.getId());
+        }
 
         // Delete corresponding columns
         List<Column> columnsToDelete = getColumnsByBoardId(boardId).getBody();

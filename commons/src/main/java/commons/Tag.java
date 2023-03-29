@@ -38,6 +38,14 @@ public abstract class Tag {
         return id;
     }
 
+
+    /**
+     * setter for the id
+     * @param id
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
     /**
      * getter for the title
      * @return title

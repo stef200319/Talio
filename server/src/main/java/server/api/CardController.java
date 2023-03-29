@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -199,6 +200,9 @@ public class CardController {
         Card cardToDelete = cardRepository.findById(cardId).get();
         long columnId = cardToDelete.getColumnId();
         Integer position = cardToDelete.getPosition();
+
+        // Delete all the cardTags
+        cardToDelete.setCardTags(new HashSet<>());
 
         // Delete the card
         cardRepository.deleteById(cardId);
