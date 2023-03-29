@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -162,11 +163,31 @@ public class BoardOverviewCtrl implements Initializable {
         list.setMinWidth(200); //Set min width to 200
         list.setAlignment(Pos.CENTER);
 
+        list.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                if(event.getDragboard().hasString())
+                    event.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+        list.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                long oldId = Long.parseLong(db.getString());
+                Card oldCard = server.getCardById(oldId);
+                if(oldCard.getColumnId()!=c.getId()) {
+                    server.editCardColumn(oldId,c.getId());
+                }
+            }
+        });
+
         Button delete = new Button("X");
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 server.deleteColumn(c);
+                refresh();
             }
         });
         Button editTitle = new Button("Edit");
@@ -201,7 +222,7 @@ public class BoardOverviewCtrl implements Initializable {
             Label s = new Label(cards.get(i).getTitle());       //title of the card
             card.getChildren().add(s);
 
-            VBox cardButtons = new VBox(5);             //box for details and delet buttons
+            VBox cardButtons = new VBox(5);             //box for details and delete buttons
             cardButtons.setAlignment(Pos.CENTER);
 
             Button details = new Button("Details");
@@ -218,6 +239,7 @@ public class BoardOverviewCtrl implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     server.deleteCard(cards.get(finalI));
+                    refresh();
                 }
             });
 
@@ -225,6 +247,53 @@ public class BoardOverviewCtrl implements Initializable {
             cardButtons.getChildren().add(details);
 
             card.getChildren().add(cardButtons);
+
+
+            int finalI1 = i;
+            card.setOnDragDetected(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Dragboard db = card.startDragAndDrop(TransferMode.MOVE);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString(Long.toString(cards.get(finalI1).getId()));
+                    db.setContent(content);
+
+                    event.consume();
+                }
+            });
+
+            card.setOnDragOver(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent event) {
+                    if(event.getGestureSource() != card && event.getDragboard().hasString())
+                        event.acceptTransferModes(TransferMode.MOVE);
+                }
+            });
+
+            int finalI2 = i;
+            card.setOnDragDropped(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent event) {
+                    Dragboard db = event.getDragboard();
+                    long oldId = Long.parseLong(db.getString());
+                    Card oldCard = server.getCardById(oldId);
+                    if(oldCard.getColumnId()==c.getId()) {
+                        int newPos = cards.get(finalI2).getPosition();
+                        server.editCardPosition(oldId, newPos);
+                        event.setDropCompleted(true);
+                    }
+                    else {
+                        int newPos = cards.get(finalI2).getPosition();
+                        server.editCardColumn(oldId,c.getId());
+                        server.editCardPosition(oldId, newPos);
+                        event.setDropCompleted(true);
+                    }
+                    refresh();
+                    event.consume();
+                }
+            });
+
+
 
             cardContainer.getChildren().add(card);
         }

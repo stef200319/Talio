@@ -167,6 +167,10 @@ public class CardController {
         }
 
         Card card = cardRepository.findById(cardId).get();
+
+        Integer maxPosition = cardRepository.findMaxPositionByColumnId(columnId);
+        card.setPosition(maxPosition+1);
+
         card.setColumnId(columnId);
         cardRepository.save(card);
         return ResponseEntity.ok(card);
