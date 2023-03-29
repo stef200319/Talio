@@ -11,6 +11,11 @@ public class Subtask {
     private boolean done;
 
     /**
+     * Default constructor for object mappers
+     */
+    public Subtask() {}
+
+    /**
      * Constructor to create a subTask object
      * @param title Title of the subtask of the main task
      */

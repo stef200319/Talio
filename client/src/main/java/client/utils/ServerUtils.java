@@ -143,6 +143,21 @@ public class ServerUtils {
     }
 
     /**
+     * Method that deletes a card
+     * @param c card to delete
+     * @return response
+     */
+    public Response deleteCard(Card c) {
+        long cardId = c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("card/deleteCard/" + cardId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .delete();
+    }
+
+    /**
      * Method that edits the title of a column
      * @param c column to edit
      * @param title new title
@@ -173,4 +188,5 @@ public class ServerUtils {
             .accept(APPLICATION_JSON)
             .put(Entity.entity(c, APPLICATION_JSON), Card.class);
     }
+
 }
