@@ -185,9 +185,11 @@ public class MainCtrl {
     }
 
     /**
-     * Show add task page
+     * Show add task page specific to a column
+     * @param columnID columnId of the column to show add task
      */
-    public void showAddTask() {
+    public void showAddTask(Long columnID) {
+        addTaskCtrl.setColumnToAddId(columnID);
         primaryStage.setTitle("Add Task");
         primaryStage.setScene(addTask);
     }

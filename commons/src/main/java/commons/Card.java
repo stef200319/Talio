@@ -52,8 +52,6 @@ public class Card {
         this.columnId = columnId;
 
         this.subtasks = new ArrayList<Subtask>();
-        subtasks.add(new Subtask("refarctored1"));
-        subtasks.add(new Subtask("refarctored2"));
     }
 
     /**

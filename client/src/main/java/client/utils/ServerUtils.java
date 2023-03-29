@@ -97,15 +97,15 @@ public class ServerUtils {
     /**
      * Adds a card to the database
      * @param card the card to add to the database
+     * @param columnID columnId of column that card will be added to
      * @return new Card to databae
      */
 
-    public Card addCard(Card card) {
+    public Card addCard(Card card, Long columnID) {
         String title = card.getTitle();
-        Long columnId = card.getColumnId();
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)
-                .path("card/addCard/" + title + "/" + columnId)
+                .path("card/addCard/" + title + "/" + columnID)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .post(Entity.entity(card, APPLICATION_JSON), Card.class);
@@ -140,6 +140,22 @@ public class ServerUtils {
             .request(APPLICATION_JSON)
             .accept(APPLICATION_JSON)
             .delete();
+    }
+
+    /**
+     * Method that deletes a card
+     * @param c card to delete
+     * @return response to database
+     */
+
+    public Response deleteCard(Card c) {
+        long cardId = c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/deleteCard/" + cardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .delete();
     }
 
     /**

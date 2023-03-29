@@ -10,6 +10,8 @@ public class AddTaskCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
+    private long columnToAddId;
+
     @FXML
     private TextField taskName;
 
@@ -47,7 +49,7 @@ public class AddTaskCtrl {
      * adds list to server and returns to overview
      */
     public void confirm() {
-        server.addCard(getCard());
+        server.addCard(getCard(), columnToAddId);
         taskName.clear();
         mainCtrl.showBoardOverview();
     }
@@ -64,4 +66,14 @@ public class AddTaskCtrl {
     public void showTaskDetails() {
         mainCtrl.showTaskDetails();
     }
+
+    /**
+     * Set the columnId of a column
+     * @param columnToAddId the columnID of the column that card will be deleted from
+     */
+
+    public void setColumnToAddId(long columnToAddId) {
+        this.columnToAddId = columnToAddId;
+    }
+
 }
