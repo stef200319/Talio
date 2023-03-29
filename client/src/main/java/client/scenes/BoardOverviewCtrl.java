@@ -153,6 +153,7 @@ public class BoardOverviewCtrl implements Initializable {
 //        columnContainer.getChildren().add(list);
 //    }
 
+    @SuppressWarnings("checkstyle:MethodLength")
     public void createList(Column c) {
         VBox list=new VBox();
         list.setStyle("-fx-border-color: black");
@@ -163,6 +164,8 @@ public class BoardOverviewCtrl implements Initializable {
         list.setMinWidth(200); //Set min width to 200
         list.setAlignment(Pos.CENTER);
 
+
+        //Dropping a card directly on a column
         list.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
@@ -181,7 +184,10 @@ public class BoardOverviewCtrl implements Initializable {
                 }
             }
         });
+        // End of dropping card on column
 
+
+        // Delete and edit buttons
         Button delete = new Button("X");
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -202,6 +208,8 @@ public class BoardOverviewCtrl implements Initializable {
         deleteBox.getChildren().add(editTitle);
         deleteBox.getChildren().add(delete);
         list.getChildren().add(deleteBox);
+        //End of delete and edit buttons
+
 
         Label title = new Label(c.getTitle());
         title.setFont(new Font(20));
@@ -249,8 +257,9 @@ public class BoardOverviewCtrl implements Initializable {
             card.getChildren().add(cardButtons);
 
 
+            //Methods for dragging and dropping the card
             int finalI1 = i;
-            card.setOnDragDetected(new EventHandler<MouseEvent>() {
+            card.setOnDragDetected(new EventHandler<MouseEvent>() {      //When starting to drag remember the cardId
                 @Override
                 public void handle(MouseEvent event) {
                     Dragboard db = card.startDragAndDrop(TransferMode.MOVE);
@@ -262,7 +271,7 @@ public class BoardOverviewCtrl implements Initializable {
                 }
             });
 
-            card.setOnDragOver(new EventHandler<DragEvent>() {
+            card.setOnDragOver(new EventHandler<DragEvent>() {          //Can only move on other objects
                 @Override
                 public void handle(DragEvent event) {
                     if(event.getGestureSource() != card && event.getDragboard().hasString())
@@ -271,18 +280,18 @@ public class BoardOverviewCtrl implements Initializable {
             });
 
             int finalI2 = i;
-            card.setOnDragDropped(new EventHandler<DragEvent>() {
+            card.setOnDragDropped(new EventHandler<DragEvent>() {       //When dropped update positions
                 @Override
                 public void handle(DragEvent event) {
                     Dragboard db = event.getDragboard();
                     long oldId = Long.parseLong(db.getString());
                     Card oldCard = server.getCardById(oldId);
-                    if(oldCard.getColumnId()==c.getId()) {
+                    if(oldCard.getColumnId()==c.getId()) {              //Same column
                         int newPos = cards.get(finalI2).getPosition();
                         server.editCardPosition(oldId, newPos);
                         event.setDropCompleted(true);
                     }
-                    else {
+                    else {                                              //Changhing columns
                         int newPos = cards.get(finalI2).getPosition();
                         server.editCardColumn(oldId,c.getId());
                         server.editCardPosition(oldId, newPos);
@@ -292,7 +301,7 @@ public class BoardOverviewCtrl implements Initializable {
                     event.consume();
                 }
             });
-
+            //End of drag and drop methods
 
 
             cardContainer.getChildren().add(card);
@@ -302,6 +311,7 @@ public class BoardOverviewCtrl implements Initializable {
         cardContainer.setPrefHeight(500); // Set preferred height to 500 pixels
         list.getChildren().add(cardContainer);
 
+        //Button for adding a task
         Button b = new Button("Add task");
         b.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -310,6 +320,7 @@ public class BoardOverviewCtrl implements Initializable {
             }
         });
         list.getChildren().add(b);
+        //End of button for adding a task
 
         columnContainer.getChildren().add(list);
     }

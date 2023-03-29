@@ -15,13 +15,11 @@
  */
 package client.utils;
 
-import com.sun.prism.shader.AlphaOne_ImagePattern_Loader;
 import commons.Board;
 import commons.Card;
 import commons.Column;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
