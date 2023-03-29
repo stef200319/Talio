@@ -75,7 +75,8 @@ public class MainCtrl {
                            Pair<AddTaskCtrl, Parent> addTask, Pair<TaskManagementCtrl, Parent> taskManagement,
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
-                           Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl, Parent> editList) {
+                           Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
+                           Parent> editList) {
 
 
         this.primaryStage = primaryStage;

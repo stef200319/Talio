@@ -62,7 +62,8 @@ public class Main extends Application {
         var workspace = FXML.load(WorkspaceCtrl.class, "client", "scenes", "Workspace.fxml");
         var createBoard = FXML.load(CreateBoardCtrl.class, "client", "scenes", "CreateBoard.fxml");
         var editCardTitle = FXML.load(EditCardTitleCtrl.class, "client", "scenes", "EditCardTitle.fxml");
-        var editCardDescription = FXML.load(EditCardDescriptionCtrl.class, "client", "scenes", "EditCardDescription.fxml");
+        var editCardDescription = FXML.load(EditCardDescriptionCtrl.class, "client", "scenes",
+                "EditCardDescription.fxml");
         var editList = FXML.load(EditListCtrl.class, "client", "scenes", "EditList.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
