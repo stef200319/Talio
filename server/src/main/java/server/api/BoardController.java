@@ -63,7 +63,7 @@ public class BoardController {
      */
     @PostMapping("/addBoard/{title}")
     @ResponseBody public ResponseEntity<Board> addBoard(@PathVariable("title") String title) {
-        if (title == null) {
+        if (title == null || title.equals("")) {
             return ResponseEntity.badRequest().build();
 
         }

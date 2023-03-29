@@ -12,12 +12,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import server.database.ColumnRepository;
 
 public class TestColumnRepository implements ColumnRepository {
     private final java.util.List<Column> columns;
     private final java.util.List<String> calledMethods = new ArrayList<>();
-
+    private long lastUsedId;
     /**
      * @param name of the method which was executed
      */
@@ -30,11 +32,15 @@ public class TestColumnRepository implements ColumnRepository {
      */
     public TestColumnRepository() {
         columns = new ArrayList<>();
-        columns.add(new Column("Test1", 5));
-        columns.get(0).setId(1);
+        columns.add(new Column("Test1", 0));
+        columns.get(0).setId(0);
+        columns.get(0).setPosition(0);
 
-        columns.add(new Column("Test2", 5));
-        columns.get(1).setId(2);
+        columns.add(new Column("Test2", 0));
+        columns.get(1).setId(1);
+        columns.get(1).setPosition(1);
+
+        lastUsedId = 1;
     }
 
     /**
@@ -46,7 +52,16 @@ public class TestColumnRepository implements ColumnRepository {
     public <S extends Column> S save(S entity) {
         call("save");
 
-//        entity.setId((long) columns.size());
+        for (Column c :
+                columns) {
+            if (c.getId() == entity.getId()) {
+                columns.remove(c);
+                columns.add(entity);
+                return entity;
+            }
+        }
+
+        entity.setId(++lastUsedId);
         columns.add(entity);
         return entity;
     }
@@ -59,14 +74,10 @@ public class TestColumnRepository implements ColumnRepository {
     public Optional<Column> findById(Long id) {
         call("findById");
 
-//        if (id > 0 && id <= columns.size()) {
-//            return Optional.of(columns.get(id.intValue() - 1));
-//        } else {
-//            return Optional.empty();
-//        }
-        for (int i = 0; i < columns.size(); i++) {
-            if (columns.get(i) != null && columns.get(i).getId() == id) {
-                return Optional.of(columns.get(i));
+
+        for (Column column : columns) {
+            if (column != null && column.getId() == id) {
+                return Optional.of(column);
             }
         }
         return Optional.empty();
@@ -76,7 +87,7 @@ public class TestColumnRepository implements ColumnRepository {
      * @return
      */
     @Override
-    public java.util.List<Column> findAll() {
+    public List<Column> findAll() {
         return columns;
     }
 
@@ -85,7 +96,7 @@ public class TestColumnRepository implements ColumnRepository {
      * @return
      */
     @Override
-    public java.util.List<Column> findAll(Sort sort) {
+    public List<Column> findAll(Sort sort) {
         return null;
     }
 
@@ -103,7 +114,7 @@ public class TestColumnRepository implements ColumnRepository {
      * @return
      */
     @Override
-    public java.util.List<Column> findAllById(Iterable<Long> longs) {
+    public List<Column> findAllById(Iterable<Long> longs) {
         return null;
     }
 
@@ -121,7 +132,7 @@ public class TestColumnRepository implements ColumnRepository {
      * @return
      */
     @Override
-    public <S extends Column> java.util.List<S> saveAll(Iterable<S> entities) {
+    public <S extends Column> List<S> saveAll(Iterable<S> entities) {
         return null;
     }
 
@@ -192,16 +203,10 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public Column getById(Long aLong) {
-//        for (Column l : columns) {
-//            if (l.getId() == aLong) {
-//                return l;
-//            }
-//        }
-//        return null;
 
-        for (int i = 0; i < columns.size(); i++) {
-            if (columns.get(i) != null && columns.get(i).getId() == aLong) {
-                return columns.get(i);
+        for (Column column : columns) {
+            if (column != null && column.getId() == aLong) {
+                return column;
             }
         }
         return null;
@@ -287,9 +292,6 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public void deleteById(Long id) {
-//        if (id > 0 && id <= columns.size()) {
-//            columns.remove(id.intValue() - 1);
-//        }
 
         for (int i = 0; i < columns.size(); i++) {
             if (columns.get(i) != null && columns.get(i).getId() == id) {
@@ -321,7 +323,7 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public void deleteAll(Iterable<? extends Column> entities) {
-
+        columns.remove(entities);
     }
 
     /**
@@ -338,14 +340,9 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public boolean existsById(Long id) {
-//        for (Column l : columns) {
-//            if (l.getId() == id) {
-//                return true;
-//            }
-//        }
-//        return false;
-        for (int i = 0; i < columns.size(); i++) {
-            if (columns.get(i) != null && columns.get(i).getId() == id) {
+
+        for (Column column : columns) {
+            if (column != null && column.getId() == id) {
                 return true;
             }
         }
@@ -358,7 +355,7 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public Integer findMaxPositionByBoardId(Long boardId) {
-        return null;
+        return (int) columns.stream().mapToLong(Column::getBoardId).max().getAsLong();
     }
 
     /**
@@ -367,7 +364,8 @@ public class TestColumnRepository implements ColumnRepository {
      */
     @Override
     public List<Column> findByBoardIdAndPositionGreaterThan(Long boardId, Integer position) {
-        return null;
+        return columns.stream().filter((o1) -> o1.getBoardId()==boardId && o1.getPosition() > position).
+                collect(Collectors.toList());
     }
 
     /**

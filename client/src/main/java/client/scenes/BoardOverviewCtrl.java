@@ -172,8 +172,16 @@ public class BoardOverviewCtrl implements Initializable {
                 server.deleteColumn(c);
             }
         });
+        Button editTitle = new Button("Edit");
+        editTitle.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mainCtrl.showEditList(c);
+            }
+        });
         HBox deleteBox = new HBox();
         deleteBox.setAlignment(Pos.TOP_RIGHT);
+        deleteBox.getChildren().add(editTitle);
         deleteBox.getChildren().add(delete);
         list.getChildren().add(deleteBox);
 
@@ -189,6 +197,7 @@ public class BoardOverviewCtrl implements Initializable {
             Label s = new Label(cards.get(i).getTitle());
             cardContainer.getChildren().add(s);
         }
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(cardContainer);
         scrollPane.setPrefWidth(380); // Set preferred width to 380 pixels

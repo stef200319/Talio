@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import commons.Column;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -49,6 +50,9 @@ public class MainCtrl {
     private EditCardDescriptionCtrl editCardDescriptionCtrl;
     private Scene editCardDescription;
 
+    private EditListCtrl editListCtrl;
+    private Scene editList;
+
     /**
      * @param primaryStage
      * @param add
@@ -56,12 +60,12 @@ public class MainCtrl {
      * @param clientConnect
      * @param taskDetails
      * @param addTask
-     * @param workspace
      * @param taskManagement
+     * @param workspace
      * @param createBoard
      * @param editCardTitle
      * @param editCardDescription
-     *
+     * @param editList
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -71,7 +75,8 @@ public class MainCtrl {
                            Pair<AddTaskCtrl, Parent> addTask, Pair<TaskManagementCtrl, Parent> taskManagement,
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
-                           Pair<EditCardDescriptionCtrl, Parent> editCardDescription) {
+                           Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl, Parent> editList) {
+
 
         this.primaryStage = primaryStage;
 
@@ -99,11 +104,16 @@ public class MainCtrl {
         this.workspaceCtrl = workspace.getKey();
         this.workspace = new Scene(workspace.getValue());
 
+
         this.editCardTitleCtrl = editCardTitle.getKey();
         this.editCardTitle = new Scene(editCardTitle.getValue());
 
         this.editCardDescriptionCtrl = editCardDescription.getKey();
         this.editCardDescription = new Scene(editCardDescription.getValue());
+
+        this.editListCtrl = editList.getKey();
+        this.editList = new Scene(editList.getValue());
+
 
         showClientConnect();
         primaryStage.show();
@@ -175,12 +185,20 @@ public class MainCtrl {
 
     /**
      * Show add task page
-     *
-     * @return
      */
     public void showAddTask() {
         primaryStage.setTitle("Add Task");
         primaryStage.setScene(addTask);
+    }
+
+    /**
+     * Show edit list page
+     * @param c the list which will be changed
+     */
+    public void showEditList(Column c) {
+        editListCtrl.setColumnToEdit(c);
+        primaryStage.setTitle("Edit Column");
+        primaryStage.setScene(editList);
     }
 
 }
