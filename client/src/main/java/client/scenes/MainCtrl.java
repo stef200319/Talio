@@ -45,6 +45,10 @@ public class MainCtrl {
     private Scene createBoard;
     private WorkspaceCtrl workspaceCtrl;
     private Scene workspace;
+    private EditCardTitleCtrl editCardTitleCtrl;
+    private Scene editCardTitle;
+    private EditCardDescriptionCtrl editCardDescriptionCtrl;
+    private Scene editCardDescription;
 
     private EditListCtrl editListCtrl;
     private Scene editList;
@@ -56,9 +60,11 @@ public class MainCtrl {
      * @param clientConnect
      * @param taskDetails
      * @param addTask
-     * @param workspace
      * @param taskManagement
+     * @param workspace
      * @param createBoard
+     * @param editCardTitle
+     * @param editCardDescription
      * @param editList
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
@@ -68,7 +74,10 @@ public class MainCtrl {
                            Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
                            Pair<AddTaskCtrl, Parent> addTask, Pair<TaskManagementCtrl, Parent> taskManagement,
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
-                           Pair<EditListCtrl, Parent> editList) {
+                           Pair<EditCardTitleCtrl, Parent> editCardTitle,
+                           Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
+                           Parent> editList) {
+
 
         this.primaryStage = primaryStage;
 
@@ -96,8 +105,16 @@ public class MainCtrl {
         this.workspaceCtrl = workspace.getKey();
         this.workspace = new Scene(workspace.getValue());
 
+
+        this.editCardTitleCtrl = editCardTitle.getKey();
+        this.editCardTitle = new Scene(editCardTitle.getValue());
+
+        this.editCardDescriptionCtrl = editCardDescription.getKey();
+        this.editCardDescription = new Scene(editCardDescription.getValue());
+
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
+
 
         showClientConnect();
         primaryStage.show();
