@@ -173,7 +173,6 @@ public class BoardOverviewCtrl implements Initializable {
 
         Label title = new Label(c.getTitle());
         title.setFont(new Font(20));
-
         list.getChildren().add(title);
 
         List<Card> cards = server.getCardsByColumnId(c.getId());
