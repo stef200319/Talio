@@ -53,6 +53,12 @@ public class AddTaskCtrl {
     }
 
     /**
+     * @param taskName updates the task name
+     */
+    public void setTaskName(TextField taskName){
+        this.taskName = taskName;
+    }
+    /**
      * Show Task Details scene
      */
     public void showTaskDetails() {

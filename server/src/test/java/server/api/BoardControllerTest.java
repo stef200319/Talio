@@ -6,10 +6,11 @@ import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
-import server.database.BoardRepository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,122 +38,152 @@ class BoardControllerTest {
         boardController = new BoardController(boardRepository, columnRepository, columnController);
     }
 
-    // @Test
-    // void getAllBoards() {
-    //     List<Board> boards = new ArrayList<>();
-    //     Board b1 = new Board("Test1");
-    //     Board b2 = new Board("Test2");
-    //     Board b3 = new Board("Test3");
-    //     b1.setId(0);
-    //     b2.setId(1);
-    //     b3.setId(5);
-    //     boards.add(b1);
-    //     boards.add(b2);
-    //     boards.add(b3);
 
-    //     List<Board> ret = boardController.getAllBoards();
+    @Test
+    void getAllBoards() {
+        List<Board> boards = new ArrayList<>();
+        Board b1 = new Board("Test1");
+        Board b2 = new Board("Test2");
+        Board b3 = new Board("Test3");
+        b1.setId(0);
+        b2.setId(1);
+        b3.setId(2);
+        boards.add(b1);
+        boards.add(b2);
+        boards.add(b3);
 
-    //     assertEquals(boards, ret);
-    // }
+        List<Board> ret = boardController.getAllBoards();
 
-    // @Test
-    // void getBoardById() {
-    //     Board board = new Board("Test1");
-    //     board.setId(0);
-    //     Board ret = boardController.getBoardById(0L);
+        assertEquals(boards, ret);
+    }
 
-    //     assertEquals(board, ret);
-    // }
+    @Test
+    void getBoardById() {
+        Board board = new Board("Test1");
+        board.setId(0);
+        ResponseEntity<Board> ret = boardController.getBoardByBoardId(0L);
 
-    // @Test
-    // void addBoardSuccessful() {
-    //     ResponseEntity ret = boardController.addBoard("Test3");
+        assertEquals(board, ret.getBody());
+    }
 
-    //     Board b = (Board) ret.getBody();
-    //     assertEquals("Test3", b.getTitle());
-    // }
+    @Test
+    void getBoardByIdNotFound() {
+        // not in the database
+        ResponseEntity<Board> ret = boardController.getBoardByBoardId(10L);
 
-    // @Test
-    // void addBoardEmptyString() {
-    //     ResponseEntity ret = boardController.addBoard("");
-    //     assertEquals(ResponseEntity.badRequest().build(), ret);
-    // }
+        assertEquals(ResponseEntity.notFound().build(), ret);
+    }
 
-    // @Test
-    // void addBoardNullString() {
-    //     ResponseEntity ret = boardController.addBoard(null);
-    //     assertEquals(ResponseEntity.badRequest().build(), ret);
-    // }
+    @Test
+    void addBoardSuccessful() {
+        ResponseEntity<Board> ret = boardController.addBoard("Test3");
 
-    // @Test
-    // void putBoardSuccessfull() {
-    //     ResponseEntity ret = boardController.putBoard("Test3", 0L);
+        Board b = (Board) ret.getBody();
+        assertEquals("Test3", b.getTitle());
+    }
 
-    //     List<Board> allBoards = boardController.getAllBoards();
+    @Test
+    void addBoardEmptyString() {
+        ResponseEntity<Board> ret = boardController.addBoard("");
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
 
-    //     for (Board b : allBoards) {
-    //         assertNotEquals(b.getTitle(), "Test1");
-    //     }
+    @Test
+    void addBoardNullString() {
+        ResponseEntity<Board> ret = boardController.addBoard(null);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
 
-    //     assertEquals(ret, ResponseEntity.ok("Board title updated successfully"));
-    // }
+    @Test
+    void putBoardSuccessful() {
+        ResponseEntity<Board> ret = boardController.editBoardTitle("Test3", 0L);
 
-    // @Test
-    // void putBoardNotFound() {
-    //     ResponseEntity ret = boardController.putBoard("ThisBoardIdDoesNotExist", 23450969123L);
+        Board updated = new Board("Test3");
+        updated.setId(1L);
 
-    //     List<Board> allBoards = boardController.getAllBoards();
-    //     for (Board b : allBoards) {
-    //         assertNotEquals("ThisBoardIdDoesNotExist", b.getTitle());
-    //     }
+        List<Board> allBoards = boardController.getAllBoards();
 
-    //     assertEquals(ResponseEntity.notFound().build(), ret);
-    // }
+        for (Board b : allBoards) {
+            assertNotEquals(b.getTitle(), "Test1");
+        }
 
-    // @Test
-    // void deleteBoardNotFound() {
-    //     ResponseEntity ret = boardController.deleteBoard(3L);
+        assertEquals(Objects.requireNonNull(ret.getBody()).getTitle(), updated.getTitle());
+    }
 
-    //     assertEquals(ResponseEntity.notFound().build(), ret);
-    // }
+    @Test
+    void putBoardNotFound() {
+        ResponseEntity<Board> ret = boardController.editBoardTitle("ThisBoardIdDoesNotExist", 23450969123L);
 
-    // @Test
-    // void getColumnsByBoardIdTestSuccess() {
-    //     List<Column> ret = boardController.getColumnsByBoardId(5L);
+        List<Board> allBoards = boardController.getAllBoards();
+        for (Board b : allBoards) {
+            assertNotEquals("ThisBoardIdDoesNotExist", b.getTitle());
+        }
 
-    //     List<Column> columns = new ArrayList<>();
-    //     columns.add(new Column("Test1", 5));
-    //     columns.get(0).setId(1);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
 
-    //     columns.add(new Column("Test2", 5));
-    //     columns.get(1).setId(2);
+    @Test
+    void deleteBoardNotFound() {
+        ResponseEntity ret = boardController.deleteBoard(3L);
 
-    //     assertEquals(columns, ret);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
 
-    // }
+    @Test
+    void deleteBoardFound() {
+        ResponseEntity<Board> ret = boardController.deleteBoard(0L);
+        Board expected = new Board("Test1");
+        expected.setId(0L);
 
-    // @Test
-    // void getColumnsByBoardIdTestNotFound() {
-    //     List<Column> ret = boardController.getColumnsByBoardId(6969L);
-    //     assertEquals(ret.size(), 0);
-    // }
+        assertEquals(expected, ret.getBody());
+        assertEquals(ResponseEntity.badRequest().build(), boardController.deleteBoard(0L));
 
-    // @Test
-    // void deleteBoardAndItsColumnsTestSuccess() {
-    //     List<Column> columnsWithBoardId = boardController.getColumnsByBoardId(5L);
-    //     boardController.deleteBoard(5L);
-    //     assertEquals(boardController.getColumnsByBoardId(5L).size(), 0);
-    //     for (Column c : columnsWithBoardId) {
-    //         assertEquals(columnController.getCardsByColumnId(c.getId()).size(), 0);
-    //     }
-    // }
+        for (Column c : columnRepository.findAll()) {
+            assertNotEquals(0, c.getBoardId());
+        }
+    }
 
-    // @Test
-    // void deleteNonExistingBoardTest() {
-    //     List<Column> allColumns = columnController.getAllColumns().getBody();
-    //     List<Card> allCards = cardController.getAllCards();
-    //     boardController.deleteBoard(39485768L);
-    //     assertEquals(allCards, cardController.getAllCards());
-    //     assertEquals(allColumns, columnController.getAllColumns().getBody());
-    // }
+    @Test
+    void getColumnsByBoardIdTestSuccess() {
+        ResponseEntity<List<Column>> ret = boardController.getColumnsByBoardId(0L);
+
+        List<Column> columns = new ArrayList<>();
+        columns.add(new Column("Test1", 0L));
+        columns.get(0).setId(1);
+
+        columns.add(new Column("Test2", 0L));
+        columns.get(1).setId(2);
+
+        Iterator<Column> columnIterator = columns.listIterator();
+
+        for (Column c : ret.getBody()) {
+            Column temp = columnIterator.next();
+            assertEquals(c.toString(), temp.toString());
+        }
+
+
+    }
+
+    @Test
+    void getColumnsByBoardIdTestNotFound() {
+        ResponseEntity<List<Column>> ret = boardController.getColumnsByBoardId(6969L);
+        assertEquals(ret, ResponseEntity.badRequest().build());
+    }
+
+    @Test
+    void deleteBoardAndItsColumnsTestSuccess() {
+        ResponseEntity<List<Column>> columnsWithBoardId = boardController.getColumnsByBoardId(5L);
+        boardController.deleteBoard(5L);
+        assertEquals(ResponseEntity.badRequest().build(), boardController.getColumnsByBoardId(5L));
+    }
+
+    @Test
+    void deleteNonExistingBoardTest() {
+        ResponseEntity<List<Column>> allColumns = columnController.getAllColumns();
+        List<Card> allCards = cardController.getAllCards();
+        boardController.deleteBoard(39485768L);
+        assertEquals(allCards, cardController.getAllCards());
+        assertEquals(allColumns, columnController.getAllColumns());
+    }
 }
+

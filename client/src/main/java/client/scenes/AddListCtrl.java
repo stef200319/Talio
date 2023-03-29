@@ -34,6 +34,12 @@ public class AddListCtrl {
     }
 
     /**
+     * @param listName the name of the list
+     */
+    public void setListName(TextField listName){
+        this.listName = listName;
+    }
+    /**
      * will return a new list with title listName
      * @return new Column to database
      */
