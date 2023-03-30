@@ -77,6 +77,10 @@ public class AddTaskCtrl {
         this.columnToAddId = columnToAddId;
     }
 
+    /**
+     * Set the boardID of a board
+     * @param boardID the boardID of the board
+     */
     public void setBoardID(long boardID) {
         this.boardID = boardID;
     }

@@ -248,6 +248,11 @@ public class BoardOverviewCtrl implements Initializable {
         columnContainer.getChildren().add(list);
     }
 
+    /**
+     * Set the boardID of a board
+     * @param boardID the boardID of the board that list will be added to
+     */
+
     public void setBoardID(long boardID) {
         this.boardID = boardID;
     }
