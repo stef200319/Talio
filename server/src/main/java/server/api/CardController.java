@@ -4,7 +4,6 @@ import commons.Card;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.SubtaskRepository;
 import server.services.ColumnService;
 import server.services.CardService;
 import server.services.SubtaskService;

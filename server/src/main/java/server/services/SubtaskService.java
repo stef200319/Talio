@@ -76,6 +76,11 @@ public class SubtaskService {
         return subtask;
     }
 
+    /**
+     * Saves a subtask to the database
+     * @param subtask subtask to be saved
+     * @return the subtask that was saved
+     */
     public Subtask save(Subtask subtask) {
         return subtaskRepository.save(subtask);
     }
