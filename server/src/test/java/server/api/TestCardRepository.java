@@ -307,7 +307,7 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public void delete(Card entity) {
-
+        cards.remove(entity);
     }
 
     /**
@@ -323,7 +323,9 @@ public class TestCardRepository implements CardRepository {
      */
     @Override
     public void deleteAll(Iterable<? extends Card> entities) {
-
+        for (Card card: entities) {
+            cards.remove(card);
+        }
     }
 
     /**

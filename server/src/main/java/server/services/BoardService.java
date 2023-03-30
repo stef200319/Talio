@@ -70,7 +70,7 @@ public class BoardService {
      * @param boardId the id of the board which needs to be deleted
      * @return the deleted board.
      */
-    public Board deleteById(long boardId) {
+    public Board delete(long boardId) {
         if (!boardRepository.existsById(boardId)) {
             return null;
         }

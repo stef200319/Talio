@@ -34,9 +34,6 @@ public class CardController {
      * Return all the cards which are stored in the database
      * @return all the cards in the database
      */
-//    public List<Card> getAllCards() {
-//        return cardRepository.findAll();
-//    }
     @GetMapping("/getAllCards")
     @ResponseBody
     public List<Card> getAllCards() {

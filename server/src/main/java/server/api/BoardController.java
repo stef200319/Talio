@@ -74,7 +74,7 @@ public class BoardController {
     @DeleteMapping("/deleteBoard/{boardId}")
     @ResponseBody public ResponseEntity<Board> deleteBoard(@PathVariable("boardId") long boardId) {
 
-        Board deletedBoard = boardService.deleteById(boardId);
+        Board deletedBoard = boardService.delete(boardId);
 
         if (deletedBoard == null) {
             return ResponseEntity.badRequest().build();
