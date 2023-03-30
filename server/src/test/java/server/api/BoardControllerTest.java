@@ -45,7 +45,7 @@ class BoardControllerTest {
         cardService = new CardService(cardRepository);
 
         cardRepository = new TestCardRepository();
-        cardController = new CardController(cardRepository, columnRepository, subtaskRepository);
+        cardController = new CardController(cardService, columnService, subtaskRepository);
         columnController = new ColumnController(columnService, boardService, cardService);
         boardController = new BoardController(boardService, columnService);
 
