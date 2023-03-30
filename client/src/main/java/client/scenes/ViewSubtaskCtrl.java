@@ -4,25 +4,23 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Card;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
-public class TaskDetailsCtrl {
+public class ViewSubtaskCtrl {
+
     private Card cardToShow;
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     @FXML
-    private Label cardTitle;
-
-    @FXML
-    private Label cardDescription;
+    private VBox subtaskList;
 
     /**
      * @param server the server that you want to connect to
      * @param mainCtrl the main screen?
      */
     @Inject
-    public TaskDetailsCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public ViewSubtaskCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         this.server = server;
 
@@ -35,28 +33,14 @@ public class TaskDetailsCtrl {
 
     public void setCardToShow(Card cardToShow) {
         this.cardToShow = cardToShow;
-        cardTitle.setText(cardToShow.getTitle());
-        cardDescription.setText(cardToShow.getDescription());
+//        Implement get subtasks
     }
 
-    /**
-     * show the page to edit the Card Title
-     */
-    public void showEditCardTitle(){
-        mainCtrl.showEditCardTitle(cardToShow);
-    }
-
-    /**
-     * show the page to edit the Card Description
-     */
-    public void showEditCardDescription(){
-        mainCtrl.showEditCardDescription(cardToShow);
-    }
 
     /**
      * show the board overview
      */
-    public void showBoardOverview() {
-//        mainCtrl.showBoardOverview(1l);
+    public void showCardDetails() {
+        mainCtrl.showTaskDetails(cardToShow);
     }
 }

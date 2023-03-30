@@ -61,12 +61,7 @@ public class AddTaskCtrl {
     public void setTaskName(TextField taskName){
         this.taskName = taskName;
     }
-    /**
-     * Show Task Details scene
-     */
-    public void showTaskDetails() {
-        mainCtrl.showTaskDetails();
-    }
+
 
     /**
      * Set the columnId of a column
