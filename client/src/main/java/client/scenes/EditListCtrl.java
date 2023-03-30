@@ -40,7 +40,7 @@ public class EditListCtrl {
      */
     public void cancel() {
         listName.clear();
-        mainCtrl.showBoardOverview();
+//        mainCtrl.showBoardOverview();
     }
 
     /**
@@ -61,7 +61,7 @@ public class EditListCtrl {
         if(getTitle() != null) {
             server.editColumnTitle(columnToEdit, getTitle());
             listName.clear();
-            mainCtrl.showBoardOverview();
+//            mainCtrl.showBoardOverview(1l);
         }
     }
 

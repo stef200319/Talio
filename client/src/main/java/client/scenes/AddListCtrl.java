@@ -11,6 +11,8 @@ public class AddListCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
+    private long boardToAddId;
+
     @FXML
     private TextField listName;
 
@@ -30,7 +32,7 @@ public class AddListCtrl {
      */
     public void cancel() {
         listName.clear();
-        mainCtrl.showBoardOverview();
+        mainCtrl.showBoardOverview(boardToAddId);
     }
 
     /**
@@ -54,9 +56,16 @@ public class AddListCtrl {
      * adds list to server and returns to overview
      */
     public void confirm() {
-        server.addColumn(getList());
+        server.addColumn(getList(), boardToAddId);
         listName.clear();
-        mainCtrl.showBoardOverview();
+        mainCtrl.showBoardOverview(boardToAddId);
     }
 
+    /**
+     * Set the boardID of a board
+     * @param boardToAddId the boardID of the board that list will be added to
+     */
+    public void setBoardToAddId(long boardToAddId) {
+        this.boardToAddId = boardToAddId;
+    }
 }

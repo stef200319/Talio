@@ -70,5 +70,6 @@ public class Main extends Application {
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
                 addTask, taskManagement, workspace,createBoard, editCardTitle, editCardDescription, editList);
 
+
     }
 }

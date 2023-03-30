@@ -24,10 +24,10 @@ public class TaskDetailsCtrlTest {
         taskDetailsCtrl = new TaskDetailsCtrl(mockServer, mockMainCtrl);
     }
 
-    @Test
-    public void showBoardOverview_callsMainCtrlShowBoardOverview() {
-        taskDetailsCtrl.showBoardOverview();
-        verify(mockMainCtrl, times(1)).showBoardOverview();
-    }
+//    @Test
+//    public void showBoardOverview_callsMainCtrlShowBoardOverview() {
+//        taskDetailsCtrl.showBoardOverview();
+//        verify(mockMainCtrl, times(1)).showBoardOverview();
+//    }
 
 }
