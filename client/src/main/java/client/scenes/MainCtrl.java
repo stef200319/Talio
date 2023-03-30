@@ -50,8 +50,6 @@ public class MainCtrl {
     private EditCardDescriptionCtrl editCardDescriptionCtrl;
     private Scene editCardDescription;
 
-    private EditBoardTitleCtrl editBoardTitleCtrl;
-    private Scene editBoardTitle;
     private EditListCtrl editListCtrl;
     private Scene editList;
 
@@ -78,13 +76,10 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle) {
+                           Parent> editList) {
 
 
         this.primaryStage = primaryStage;
-
-        this.editBoardTitleCtrl = editBoardTitle.getKey();
-        this.editBoardTitle = new Scene(editBoardTitle.getValue());
 
         this.addListCtrl = add.getKey();
         this.addList = new Scene(add.getValue());
@@ -148,10 +143,6 @@ public class MainCtrl {
         primaryStage.setScene(taskManagement);
     }
 
-    public void showEditBoardTitle(){
-        primaryStage.setTitle("Edit board title");
-        primaryStage.setScene(editBoardTitle);
-    }
     /**
      * Show add list page
      */

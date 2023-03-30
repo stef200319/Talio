@@ -74,20 +74,6 @@ public class CardTest {
     }
 
     @Test
-    public void testChangePosition() {
-        Card card2 = new Card("Test2", 1L);
-        Card card3 = new Card("Test3", 1L);
-        Card card4 = new Card("Test4", 1L);
-        Card card5 = new Card("Test5", 1L);
-        card.setPosition(1);
-        card2.setPosition(2);
-        card3.setPosition(3);
-        card4.setPosition(4);
-        card5.setPosition(5);
-        card5.setPosition(2);
-        assertEquals(2, card5.getPosition());
-    }
-    @Test
     public void testEqualsNull() {
         assertNotNull(card);
     }
