@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import commons.Card;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 public class TaskDetailsCtrl {
     private Card cardToShow;
