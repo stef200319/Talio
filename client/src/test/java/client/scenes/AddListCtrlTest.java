@@ -2,6 +2,8 @@
 
 import commons.Column;
 import client.utils.ServerUtils;
+import javafx.application.Platform;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import javafx.scene.control.TextField;
@@ -23,6 +25,11 @@ class AddListCtrlTest {
 
     @Mock
     private TextField listName;
+
+    @BeforeAll
+    static void initJFXRuntime() {
+        Platform.startup(() -> {});
+    }
 
     @BeforeEach
     void setUp() {

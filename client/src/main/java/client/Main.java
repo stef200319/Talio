@@ -65,10 +65,11 @@ public class Main extends Application {
         var editCardDescription = FXML.load(EditCardDescriptionCtrl.class, "client", "scenes",
                 "EditCardDescription.fxml");
         var editList = FXML.load(EditListCtrl.class, "client", "scenes", "EditList.fxml");
-
+        var editBoardTitle = FXML.load(EditBoardTitleCtrl.class,
+                "client", "scenes", "EditBoardTitle.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
-                addTask, taskManagement, workspace,createBoard, editCardTitle, editCardDescription, editList);
+                addTask, taskManagement, workspace,createBoard, editCardTitle, editCardDescription, editList, editBoardTitle);
 
     }
 }
