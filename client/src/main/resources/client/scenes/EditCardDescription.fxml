@@ -21,15 +21,19 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <Button fx:id="createBoard" layoutX="433.0" layoutY="393.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="Confirm" />
-                <Button fx:id="cancelCreation" layoutX="216.0" layoutY="393.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="Cancel" />
+                <Button fx:id="editDescription" layoutX="433.0" layoutY="393.0" mnemonicParsing="false" onAction="#confirm" prefHeight="43.0" prefWidth="110.0" text="Confirm" />
+                <Button fx:id="cancelEdit" layoutX="216.0" layoutY="393.0" mnemonicParsing="false" onAction="#cancel" prefHeight="43.0" prefWidth="110.0" text="Cancel" />
                 <Label layoutX="27.0" layoutY="236.0" prefHeight="31.0" prefWidth="244.0" text="New Card Description:">
                     <font>
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-            <TextArea layoutX="43.0" layoutY="274.0" prefHeight="100.0" prefWidth="683.0" promptText="Enter The New Description for this Card" />
-            <TextArea layoutX="40.0" layoutY="140.0" prefHeight="86.0" prefWidth="683.0" />
+            <TextArea fx:id="newDescription" layoutX="43.0" layoutY="274.0" prefHeight="100.0" prefWidth="683.0" promptText="Enter The New Description for this Card" />
+            <Label fx:id="currentDescription" alignment="TOP_LEFT" layoutX="43.0" layoutY="143.0" prefHeight="86.0" prefWidth="683.0" style="-fx-background-color: white; -fx-border-color: grey;">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
             </children></Pane>
         <Pane prefHeight="86.0" prefWidth="744.0" style="-fx-background-color: #372C2E; -fx-border-color: black;">
             <children>

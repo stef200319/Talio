@@ -83,12 +83,6 @@ public class BoardOverviewCtrl implements Initializable {
         mainCtrl.showOverview();
     }
 
-    /**
-     * Method that shows the task details on screen
-     */
-    public void showTaskDetails() {
-        mainCtrl.showTaskDetails();
-    }
 
     /**
      * Method that shows the add list page on screen
@@ -122,35 +116,6 @@ public class BoardOverviewCtrl implements Initializable {
      * Method that showcases the column on the board
      * @param c column to be showcased
      */
-
-// Old create list
-//    public void createList(Column c) {
-//        VBox list=new VBox();
-//        list.setPrefWidth(200);
-//        list.setAlignment(Pos.CENTER);
-//
-//        Label title = new Label(c.getTitle());
-//        title.setFont(new Font(20));
-//
-//        list.getChildren().add(title);
-//
-//        List<Card> cards = server.getCardsByColumnId(c.getId());
-//        for(int i=0;i<cards.size();i++) {
-//            Label s = new Label(cards.get(i).getTitle());
-//            list.getChildren().add(s);
-//        }
-//
-//        Button b = new Button("Add task");
-//        b.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                mainCtrl.showAddTask();
-//            }
-//        });
-//        list.getChildren().add(b);
-//
-//        columnContainer.getChildren().add(list);
-//    }
 
     public void createList(Column c) {
         VBox list=new VBox();
@@ -204,16 +169,18 @@ public class BoardOverviewCtrl implements Initializable {
             VBox cardButtons = new VBox(5);             //box for details and delet buttons
             cardButtons.setAlignment(Pos.CENTER);
 
+            int finalI = i;
+
             Button details = new Button("Details");
             details.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    mainCtrl.showTaskDetails();
+                    mainCtrl.showTaskDetails(cards.get(finalI));
                 }
             });
 
             Button deleteCard = new Button("X");
-            int finalI = i;
+
             deleteCard.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {

@@ -148,7 +148,7 @@ public class CardController {
         }
 
         Card card = cardRepository.findById(cardId).get();
-        card.setTitle(description);
+        card.setDescription(description);
         cardRepository.save(card);
         return ResponseEntity.ok(card);
     }
