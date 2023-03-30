@@ -106,7 +106,10 @@ public class BoardOverviewCtrl implements Initializable {
      * Method that shows the workspace page containing all the boards on screen
      */
     public void createBoard() {mainCtrl.showCreateBoard();}
-
+    /**
+     * Method that shows the edit board title page
+     */
+    public void editBoardTitle(){mainCtrl.showEditBoardTitle();}
 
     /**
      * Method that refreshes the board

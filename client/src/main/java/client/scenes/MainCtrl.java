@@ -53,6 +53,9 @@ public class MainCtrl {
     private EditListCtrl editListCtrl;
     private Scene editList;
 
+    private EditBoardTitleCtrl editBoardTitleCtrl;
+    private Scene editBoardTitle;
+
     /**
      * @param primaryStage
      * @param add
@@ -66,6 +69,7 @@ public class MainCtrl {
      * @param editCardTitle
      * @param editCardDescription
      * @param editList
+     * @param editBoardTitle
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -76,7 +80,7 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-                           Parent> editList) {
+                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle) {
 
 
         this.primaryStage = primaryStage;
@@ -105,7 +109,6 @@ public class MainCtrl {
         this.workspaceCtrl = workspace.getKey();
         this.workspace = new Scene(workspace.getValue());
 
-
         this.editCardTitleCtrl = editCardTitle.getKey();
         this.editCardTitle = new Scene(editCardTitle.getValue());
 
@@ -115,6 +118,8 @@ public class MainCtrl {
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
 
+        this.editBoardTitleCtrl = editBoardTitle.getKey();
+        this.editBoardTitle = new Scene(editBoardTitle.getValue());
 
         showClientConnect();
         primaryStage.show();
@@ -202,6 +207,13 @@ public class MainCtrl {
         editListCtrl.setColumnToEdit(c);
         primaryStage.setTitle("Edit Column");
         primaryStage.setScene(editList);
+    }
+    /**
+     * Show the edit board title page
+     */
+    public void showEditBoardTitle(){
+        primaryStage.setTitle("Edit Board Title");
+        primaryStage.setScene(editBoardTitle);
     }
 
 }
