@@ -91,13 +91,14 @@ public class ServerUtils {
             .get(new GenericType<List<Card>>() {});
     }
 
-     /**
-      * Adds a column to the database
+    /**
+     * Adds a column to the database
      * @param column the column to add to the database
+     * @param boardID boardID of the board of column
      * @return new Column to database
      */
 
-    public Column addColumn(Column column, Long boardID) {
+    public Column addColumn(Column column, long boardID) {
         String title = column.getTitle();
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)

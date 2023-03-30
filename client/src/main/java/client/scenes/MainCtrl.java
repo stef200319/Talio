@@ -145,6 +145,7 @@ public class MainCtrl {
 
     /**
      * Show add list page
+     * @param boardID boardID of list's board
      */
     public void showListAdd(Long boardID) {
         addListCtrl.setBoardToAddId(boardID);
@@ -155,6 +156,7 @@ public class MainCtrl {
 
     /**
      * Show all the boards
+     * @param boardID boardID of current board
      */
     public void showBoardOverview(Long boardID) {
         boardOverviewCtrl.setBoardID(boardID);
@@ -189,6 +191,7 @@ public class MainCtrl {
     /**
      * Show add task page specific to a column
      * @param columnID columnId of the column to show add task
+     * @param boardID boardID of card's board
      */
     public void showAddTask(Long columnID, Long boardID) {
         addTaskCtrl.setColumnToAddId(columnID);
