@@ -41,9 +41,6 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Button joinBoardButton;
 
-    @FXML
-    private Button editBoardTitleButton;
-
 
     /**
      * @param server the server that you want to connect to
@@ -109,11 +106,6 @@ public class BoardOverviewCtrl implements Initializable {
      * Method that shows the workspace page containing all the boards on screen
      */
     public void createBoard() {mainCtrl.showCreateBoard();}
-
-    /**
-     * Method that shows the edit board title scene
-     */
-    public void editBoardTitle(){mainCtrl.showEditBoardTitle();}
 
 
     /**
