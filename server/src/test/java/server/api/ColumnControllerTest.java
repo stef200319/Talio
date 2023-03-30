@@ -12,6 +12,7 @@ import server.database.SubtaskRepository;
 import server.services.BoardService;
 import server.services.CardService;
 import server.services.ColumnService;
+import server.services.SubtaskService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,6 +28,7 @@ class ColumnControllerTest {
     private ColumnService columnService;
     private BoardService boardService;
     private CardService cardService;
+    private SubtaskService subtaskService;
     private ColumnRepository columnRepository;
     private BoardRepository boardRepository;
     private SubtaskRepository subtaskRepository;
@@ -44,8 +46,10 @@ class ColumnControllerTest {
         columnService = new ColumnService(columnRepository);
         boardService = new BoardService(boardRepository);
         cardService = new CardService(cardRepository);
+        subtaskService = new SubtaskService(subtaskRepository);
 
-        cardController = new CardController(cardService, columnService,subtaskRepository);
+
+        cardController = new CardController(cardService, columnService, subtaskService);
         columnController = new ColumnController(columnService, boardService, cardService);
     }
 

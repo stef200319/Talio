@@ -16,6 +16,7 @@ import commons.Card;
 import server.services.BoardService;
 import server.services.CardService;
 import server.services.ColumnService;
+import server.services.SubtaskService;
 
 
 class CardControllerTest {
@@ -25,6 +26,7 @@ class CardControllerTest {
 
     private CardService cardService;
     private ColumnService columnService;
+    private SubtaskService subtaskService;
     private CardController cardController;
 
     @BeforeEach
@@ -35,8 +37,9 @@ class CardControllerTest {
 
         cardService = new CardService(cardRepository);
         columnService = new ColumnService(columnRepository);
+        subtaskService = new SubtaskService(subtaskRepository);
 
-        cardController = new CardController(cardService, columnService,subtaskRepository);
+        cardController = new CardController(cardService, columnService, subtaskService);
     }
 
 

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import server.services.BoardService;
 import server.services.CardService;
 import server.services.ColumnService;
+import server.services.SubtaskService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,6 +28,7 @@ class BoardControllerTest {
     private BoardService boardService;
     private ColumnService columnService;
     private CardService cardService;
+    private SubtaskService subtaskService;
 
     private BoardController boardController;
     private ColumnController columnController;
@@ -43,9 +45,10 @@ class BoardControllerTest {
         boardService = new BoardService(boardRepository);
         columnService = new ColumnService(columnRepository);
         cardService = new CardService(cardRepository);
+        subtaskService = new SubtaskService(subtaskRepository);
 
         cardRepository = new TestCardRepository();
-        cardController = new CardController(cardService, columnService, subtaskRepository);
+        cardController = new CardController(cardService, columnService, subtaskService);
         columnController = new ColumnController(columnService, boardService, cardService);
         boardController = new BoardController(boardService, columnService);
 

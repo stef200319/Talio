@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import server.database.SubtaskRepository;
 import server.services.ColumnService;
 import server.services.CardService;
+import server.services.SubtaskService;
 
 import java.util.List;
 
@@ -15,19 +16,19 @@ import java.util.List;
 public class CardController {
     private final CardService cardService;
     private final ColumnService columnService;
-    private final SubtaskRepository subtaskRepository;
+    private final SubtaskService subtaskService;
 
 
     /**
-     * @param cardRepository the container storing all the data relating to cards
-     * @param columnRepository the container storing all the data relating to columns (lists)
-     * @param subtaskRepository the container storing all the subtasks
+     * @param cardService the service for card operations
+     * @param columnService the service for column (list) operations
+     * @param subtaskService the service for subtask operations
      */
-    public CardController(CardService cardRepository, ColumnService columnRepository,
-                                                    SubtaskRepository subtaskRepository) {
-        this.cardService = cardRepository;
-        this.columnService = columnRepository;
-        this.subtaskRepository = subtaskRepository;
+    public CardController(CardService cardService, ColumnService columnService,
+                                                    SubtaskService subtaskService) {
+        this.cardService = cardService;
+        this.columnService = columnService;
+        this.subtaskService = subtaskService;
     }
 
     /**
@@ -93,7 +94,7 @@ public class CardController {
 
         // Create a new subtask
         Subtask newSubtask = new Subtask(subtaskTitle);
-        subtaskRepository.save(newSubtask);
+        subtaskService.save(newSubtask);
 
         // Update card in the database
         card.getSubtasks().add(newSubtask);
