@@ -9,15 +9,24 @@ import server.database.BoardRepository;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 import server.database.SubtaskRepository;
+import server.services.BoardService;
+import server.services.CardService;
+import server.services.ColumnService;
 
-import javax.swing.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ColumnControllerTest {
 
     private ColumnController columnController;
+
+    private ColumnService columnService;
+    private BoardService boardService;
+    private CardService cardService;
     private ColumnRepository columnRepository;
     private BoardRepository boardRepository;
     private SubtaskRepository subtaskRepository;
@@ -31,8 +40,13 @@ class ColumnControllerTest {
         columnRepository = new TestColumnRepository();
         cardRepository = new TestCardRepository();
         subtaskRepository = new TestSubtaskRepository();
+
+        columnService = new ColumnService(columnRepository);
+        boardService = new BoardService(boardRepository);
+        cardService = new CardService(cardRepository);
+
         cardController = new CardController(cardRepository, columnRepository,subtaskRepository);
-        columnController = new ColumnController(columnRepository, boardRepository, cardRepository, cardController);
+        columnController = new ColumnController(columnService, boardService, cardService);
     }
 
     @Test
@@ -166,7 +180,7 @@ class ColumnControllerTest {
     }
 
     @Test
-    void    testGetCardByListId_empty() {
+    void testGetCardByListId_empty() {
         cardController.deleteCard(0L);
         cardController.deleteCard(1L);
 
