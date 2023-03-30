@@ -64,6 +64,20 @@ public class ServerUtils {
     }
 
     /**
+     * Fetches the boards to be displayed on a workspace
+     * @return the list of boards on the server
+     */
+    public List<Board> getAllBoardsWithoutServers() {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/getAllBoards")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<Board>>() {});
+    }
+
+
+    /**
      * Fetches the cards to be displayed in a column
      * @param columnID the id of the column
      * @return the list of cards in the column
@@ -83,12 +97,11 @@ public class ServerUtils {
      * @return new Column to database
      */
 
-    public Column addColumn(Column column) {
+    public Column addColumn(Column column, Long boardID) {
         String title = column.getTitle();
-        Long boardId = column.getBoardId();
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)
-                .path("column/addColumn/" + title + "/" + boardId)
+                .path("column/addColumn/" + title + "/" + boardID)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .post(Entity.entity(column, APPLICATION_JSON), Column.class);

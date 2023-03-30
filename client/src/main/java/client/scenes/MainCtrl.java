@@ -146,7 +146,8 @@ public class MainCtrl {
     /**
      * Show add list page
      */
-    public void showListAdd() {
+    public void showListAdd(Long boardID) {
+        addListCtrl.setBoardToAddId(boardID);
         primaryStage.setTitle("Adding List");
         primaryStage.setScene(addList);
         //add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
@@ -155,7 +156,8 @@ public class MainCtrl {
     /**
      * Show all the boards
      */
-    public void showBoardOverview() {
+    public void showBoardOverview(Long boardID) {
+        boardOverviewCtrl.setBoardID(boardID);
         primaryStage.setTitle("Board Overview");
         primaryStage.setScene(boardOverview);
     }
@@ -188,8 +190,9 @@ public class MainCtrl {
      * Show add task page specific to a column
      * @param columnID columnId of the column to show add task
      */
-    public void showAddTask(Long columnID) {
+    public void showAddTask(Long columnID, Long boardID) {
         addTaskCtrl.setColumnToAddId(columnID);
+        addTaskCtrl.setBoardID(boardID);
         primaryStage.setTitle("Add Task");
         primaryStage.setScene(addTask);
     }

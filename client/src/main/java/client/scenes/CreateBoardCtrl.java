@@ -30,7 +30,7 @@ public class CreateBoardCtrl {
      */
     public void cancel() {
         boardName.clear();
-        mainCtrl.showBoardOverview();
+//        mainCtrl.showBoardOverview(1l);
     }
 
     /**
@@ -50,7 +50,7 @@ public class CreateBoardCtrl {
     public void confirm() {
         server.addBoard(getBoard());
         boardName.clear();
-        mainCtrl.showBoardOverview();
+//        mainCtrl.showBoardOverview(1l);
     }
 
 }

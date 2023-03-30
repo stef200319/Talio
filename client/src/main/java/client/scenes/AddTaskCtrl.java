@@ -11,6 +11,7 @@ public class AddTaskCtrl {
     private final MainCtrl mainCtrl;
 
     private long columnToAddId;
+    private long boardID;
 
     @FXML
     private TextField taskName;
@@ -31,7 +32,7 @@ public class AddTaskCtrl {
      */
     public void cancel() {
         taskName.clear();
-        mainCtrl.showBoardOverview();
+        mainCtrl.showBoardOverview(boardID);
     }
 
     /**
@@ -41,7 +42,7 @@ public class AddTaskCtrl {
     public Card getCard() {
         var c = taskName.getText();
         if(c.equals(""))
-            c="New List";
+            c="New Card";
         return new Card(c,1L);
     }
 
@@ -51,7 +52,7 @@ public class AddTaskCtrl {
     public void confirm() {
         server.addCard(getCard(), columnToAddId);
         taskName.clear();
-        mainCtrl.showBoardOverview();
+        mainCtrl.showBoardOverview(boardID);
     }
 
     /**
@@ -76,4 +77,7 @@ public class AddTaskCtrl {
         this.columnToAddId = columnToAddId;
     }
 
+    public void setBoardID(long boardID) {
+        this.boardID = boardID;
+    }
 }
