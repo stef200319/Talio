@@ -86,9 +86,9 @@ public class CardService {
      * @param c card to save
      * @return newly saved card
      */
-     public Card saveCard(Card c) {
+    public Card saveCard(Card c) {
         return cardRepository.save(c);
-     }
+    }
 
     /**
      * Updates the title of the card
