@@ -13,7 +13,7 @@
          <children>
             <Button layoutX="171.0" layoutY="154.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
             <Button layoutX="367.0" layoutY="154.0" mnemonicParsing="false" onAction="#confirm" text="Confirm" />
-            <TextField layoutX="179.0" layoutY="88.0" prefHeight="25.0" prefWidth="237.0" text="NEW TITLE" />
+            <TextField fx:id="newTitle" layoutX="179.0" layoutY="88.0" prefHeight="25.0" prefWidth="237.0" text="NEW TITLE" />
          </children>
       </Pane>
    </children>

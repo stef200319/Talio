@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import commons.Board;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -12,6 +13,7 @@ public class EditBoardTitleCtrl {
 
     private final MainCtrl mainCtrl;
 
+    private Board boardToEdit;
     @FXML
     private TextField newTitle;
 
@@ -28,6 +30,10 @@ public class EditBoardTitleCtrl {
     /**
      * cancel edit and return to overview
      */
+    public void setBoardToEdit(Board board)
+    {
+        this.boardToEdit = board;
+    }
     public void cancel(){
         newTitle.clear();
         mainCtrl.showBoardOverview();
@@ -48,6 +54,8 @@ public class EditBoardTitleCtrl {
      */
     public void confirm() {
         if(getTitle() != null) {
+            //server
+
             newTitle.clear();
             mainCtrl.showBoardOverview();
         }
