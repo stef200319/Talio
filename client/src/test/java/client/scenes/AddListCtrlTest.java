@@ -1,15 +1,15 @@
-/*package client.scenes;
+package client.scenes;
 
-import commons.Column;
 import client.utils.ServerUtils;
+import commons.Column;
+import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import javafx.scene.control.TextField;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class AddListCtrlTest {
 
@@ -29,7 +29,7 @@ class AddListCtrlTest {
         server = mock(ServerUtils.class);
         listName = mock(TextField.class);
         mainCtrl = mock(MainCtrl.class);
-        //MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         addListCtrl = new AddListCtrl(server, mainCtrl);
         addListCtrl.setListName(listName);
@@ -60,4 +60,4 @@ class AddListCtrlTest {
         verify(listName, times(1)).clear();
         verify(mainCtrl, times(1)).showBoardOverview();
     }
-}*/
+}

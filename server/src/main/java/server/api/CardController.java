@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 import server.database.SubtaskRepository;
+import server.services.CardService;
+import server.services.ColumnService;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class CardController {
     private final ColumnRepository columnRepository;
     private final SubtaskRepository subtaskRepository;
 
+    private final CardService cardService;
+    private final ColumnService columnService;
 
     /**
      * @param cardRepository the container storing all the data relating to cards
@@ -24,10 +28,12 @@ public class CardController {
      * @param subtaskRepository the container storing all the subtasks
      */
     public CardController(CardRepository cardRepository, ColumnRepository columnRepository,
-                                                    SubtaskRepository subtaskRepository) {
+                                                    SubtaskRepository subtaskRepository, CardService cardService, ColumnService columnService) {
         this.cardRepository = cardRepository;
         this.columnRepository = columnRepository;
         this.subtaskRepository = subtaskRepository;
+        this.cardService = cardService;
+        this.columnService = columnService;
     }
 
     /**
@@ -37,7 +43,7 @@ public class CardController {
     @GetMapping("/getAllCards")
     @ResponseBody
     public List<Card> getAllCards() {
-        return cardRepository.findAll();
+        return cardService.getAll();
     }
 
     /**
@@ -48,15 +54,9 @@ public class CardController {
      */
     @GetMapping("/getCardByCardId/{cardId}")
     @ResponseBody public ResponseEntity<Card> getCardByCardId(@PathVariable("cardId") long cardId) {
-        if (!cardRepository.existsById(cardId)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Card card = cardRepository.findById(cardId).get();
-        return ResponseEntity.ok(card);
+        Card card = cardService.getByCardId(cardId);
+        return card != null? ResponseEntity.ok(card) : ResponseEntity.notFound().build();
     }
-
-
 
         /**
          * @param title Of the card
@@ -66,7 +66,7 @@ public class CardController {
     @PostMapping("/addCard/{title}/{columnId}")
     @ResponseBody public ResponseEntity<Card> addCard(@PathVariable("title") String title,
                                                       @PathVariable("columnId") Long columnId) {
-        if (title == null || !columnRepository.existsById(columnId)) {
+        if (title == null || !columnService.existsById(columnId)) {
             return ResponseEntity.badRequest().build();
         }
 

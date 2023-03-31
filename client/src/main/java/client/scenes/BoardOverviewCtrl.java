@@ -4,7 +4,6 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Card;
 import commons.Column;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,18 +15,27 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandler;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
+import org.springframework.web.socket.sockjs.client.SockJsClient;
+import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private int boardID=1;
+    private WebSocketStompClient stompClient;
 
     @FXML
     private HBox columnContainer;
@@ -51,6 +59,9 @@ public class BoardOverviewCtrl implements Initializable {
         this.mainCtrl = mainCtrl;
         this.server = server;
 
+        stompClient = new WebSocketStompClient(new SockJsClient(
+                Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))
+        ));
     }
 
     /**
@@ -66,14 +77,27 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+        StompSessionHandler sessionHandler = new StompSessionHandlerAdapter() {
+
             @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
+            public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
+                session.subscribe("/app/subscribe", this);
+                session.subscribe("/topic/periodic", this);
             }
-        }, 0, 1000);
+
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return String.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("payload received");
+                System.out.println(payload);
+            }
+        };
+        stompClient.connect("http://localhost:8080/websocket-stomp", sessionHandler);
+        System.out.println("connected!");
     }
 
     /**

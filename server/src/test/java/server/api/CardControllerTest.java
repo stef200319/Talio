@@ -1,6 +1,12 @@
 package server.api;
 
-import static org.junit.jupiter.api.Assertions.*;
+import commons.Card;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import server.services.CardService;
+import server.services.ColumnService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,11 +14,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import commons.Card;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 class CardControllerTest {
@@ -20,13 +23,19 @@ class CardControllerTest {
     private TestColumnRepository columnRepository;
     private TestSubtaskRepository subtaskRepository;
     private CardController cardController;
+    private CardService cardService;
+    private ColumnService columnService;
+    private
 
     @BeforeEach
     void setUp() {
         this.columnRepository = new TestColumnRepository();
         this.cardRepository = new TestCardRepository();
         this.subtaskRepository = new TestSubtaskRepository();
-        cardController = new CardController(cardRepository, columnRepository,subtaskRepository);
+        this.cardService = new CardService(cardRepository);
+        this.columnService = new ColumnService(columnRepository);
+
+        cardController = new CardController(cardRepository, columnRepository,subtaskRepository, cardService, columnService);
     }
 
 

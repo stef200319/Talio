@@ -1,7 +1,11 @@
 package server.services;
 
 import commons.Column;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import server.component.RESTEvent;
 import server.database.ColumnRepository;
 
 import java.util.List;
@@ -11,8 +15,15 @@ import java.util.Optional;
 public class ColumnService {
     private ColumnRepository columnRepository;
 
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
     /**
      * @param columnRepository The data access model of the columns
+     * @param message
      */
     public ColumnService(ColumnRepository columnRepository) {
         this.columnRepository = columnRepository;
@@ -23,6 +34,8 @@ public class ColumnService {
      * @return all columns in the table
      */
     public List<Column> getAll() {
+        RESTEvent event = new RESTEvent(columnRepository.findAll(), "everything was found");
+        applicationEventPublisher.publishEvent(event);
         return columnRepository.findAll();
     }
 
@@ -66,6 +79,8 @@ public class ColumnService {
      * @return the new column which was created in the database
      */
     public Column add(String title, Long boardId) {
+
+
         Integer maxPosition = columnRepository.findMaxPositionByBoardId(boardId);
         int newPosition = maxPosition == null ? 1 : maxPosition + 1;
 

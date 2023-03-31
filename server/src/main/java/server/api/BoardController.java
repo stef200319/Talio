@@ -40,6 +40,8 @@ public class BoardController {
      */
     @GetMapping("/getBoardByBoardId/{boardId}")
     @ResponseBody public ResponseEntity<Board> getBoardByBoardId(@PathVariable("boardId") Long boardId) {
+
+
         Board board = boardService.getByBoardId(boardId);
         return board == null? ResponseEntity.notFound().build() : ResponseEntity.ok(board);
     }
