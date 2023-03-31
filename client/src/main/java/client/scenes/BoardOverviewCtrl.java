@@ -41,6 +41,9 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Button joinBoardButton;
 
+    @FXML
+    private Button editBoardTitleButton;
+
 
     /**
      * @param server the server that you want to connect to
