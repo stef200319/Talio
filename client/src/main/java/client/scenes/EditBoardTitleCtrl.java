@@ -59,15 +59,9 @@ public class EditBoardTitleCtrl {
      */
     public void confirm() {
         if(getTitle() != null) {
-            //server
-
+            server.editBoardTitle(boardToEdit, getTitle());
             newTitle.clear();
             mainCtrl.showBoardOverview();
         }
     }
-
-
-
-
-
 }
