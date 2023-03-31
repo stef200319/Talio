@@ -36,7 +36,7 @@ public class EditBoardTitleCtrl {
     }
 
     /**
-     * the board to be edited
+     * board to be edited
      * @param board
      */
     public void setBoardToEdit(Board board)
