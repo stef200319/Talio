@@ -4,9 +4,14 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Card;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
-public class AddTaskCtrl {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AddTaskCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
@@ -25,6 +30,18 @@ public class AddTaskCtrl {
     AddTaskCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server=server;
         this.mainCtrl=mainCtrl;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        taskName.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                confirm();
+            }
+            else if (event.getCode() == KeyCode.ESCAPE) {
+                cancel();
+            }
+        });
     }
 
     /**

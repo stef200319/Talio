@@ -167,7 +167,8 @@ public class MainCtrl {
     /**
      * Show board create
      */
-    public void showCreateBoard() {
+    public void showCreateBoard(long boardID) {
+        createBoardCtrl.setBoardID(boardID);
         primaryStage.setTitle("Create board");
         primaryStage.setScene(createBoard);
     }
@@ -204,7 +205,8 @@ public class MainCtrl {
      * Show edit list page
      * @param c the list which will be changed
      */
-    public void showEditList(Column c) {
+    public void showEditList(Column c, long boardID) {
+        editListCtrl.setBoardID(boardID);
         editListCtrl.setColumnToEdit(c);
         primaryStage.setTitle("Edit Column");
         primaryStage.setScene(editList);

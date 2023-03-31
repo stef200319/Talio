@@ -2,6 +2,7 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Board;
 import commons.Card;
 import commons.Column;
 import javafx.application.Platform;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 public class BoardOverviewCtrl implements Initializable {
 
@@ -40,6 +42,9 @@ public class BoardOverviewCtrl implements Initializable {
 
     @FXML
     private Button joinBoardButton;
+
+    @FXML
+    private Label boardName;
 
 
     /**
@@ -105,7 +110,7 @@ public class BoardOverviewCtrl implements Initializable {
     /**
      * Method that shows the workspace page containing all the boards on screen
      */
-    public void createBoard() {mainCtrl.showCreateBoard();}
+    public void createBoard() {mainCtrl.showCreateBoard(boardID);}
 
 
     /**
@@ -113,9 +118,12 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void refresh() {
         columnContainer.getChildren().clear();
-        if(boardID == Long.MIN_VALUE){
+        if(boardID == Long.MIN_VALUE ||
+            !server.getAllBoardsWithoutServers().stream().map(Board::getId).collect(Collectors.toList()).contains(boardID)){
             return;
         }
+        Board currentBoard = server.getBoardByID(boardID);
+        boardName.setText(currentBoard.getTitle());
         List<Column> columns = server.getColumnsByBoardId(boardID);
         for(int i=0;i<columns.size();i++)
             createList(columns.get(i));
@@ -176,7 +184,7 @@ public class BoardOverviewCtrl implements Initializable {
         editTitle.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                mainCtrl.showEditList(c);
+                mainCtrl.showEditList(c, boardID);
             }
         });
         HBox deleteBox = new HBox(5);

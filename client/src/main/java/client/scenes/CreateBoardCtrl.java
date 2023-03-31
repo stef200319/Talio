@@ -4,12 +4,18 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Board;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
-public class CreateBoardCtrl {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class CreateBoardCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private long boardID;
 
     @FXML
     private TextField boardName;
@@ -25,12 +31,24 @@ public class CreateBoardCtrl {
         this.server = server;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        boardName.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                confirm();
+            }
+            else if (event.getCode() == KeyCode.ESCAPE) {
+                cancel();
+            }
+        });
+    }
+
     /**
      * cancel board creation and return to overview
      */
     public void cancel() {
         boardName.clear();
-//        mainCtrl.showBoardOverview(1l);
+        mainCtrl.showBoardOverview(boardID);
     }
 
     /**
@@ -50,7 +68,10 @@ public class CreateBoardCtrl {
     public void confirm() {
         server.addBoard(getBoard());
         boardName.clear();
-//        mainCtrl.showBoardOverview(1l);
+        mainCtrl.showBoardOverview(server.getAllBoardsWithoutServers().get(server.getAllBoardsWithoutServers().size() -1).getId());
     }
 
+    public void setBoardID(long boardID) {
+        this.boardID = boardID;
+    }
 }
