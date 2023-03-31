@@ -3,11 +3,16 @@ package client.scenes;
 import client.utils.ServerUtils;
 import commons.Column;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
+import javafx.scene.input.KeyCode;
 
-public class AddListCtrl {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AddListCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
@@ -28,6 +33,30 @@ public class AddListCtrl {
     }
 
     /**
+     * Method that is once executed when the application starts that includes event listener
+     *
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        listName.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                confirm();
+            }
+            else if (event.getCode() == KeyCode.ESCAPE) {
+                cancel();
+            }
+        });
+    }
+
+    /**
      * cancel adding and return to overview
      */
     public void cancel() {
@@ -35,12 +64,6 @@ public class AddListCtrl {
         mainCtrl.showBoardOverview(boardToAddId);
     }
 
-    /**
-     * @param listName the name of the list
-     */
-    public void setListName(TextField listName){
-        this.listName = listName;
-    }
     /**
      * will return a new list with title listName
      * @return new Column to database

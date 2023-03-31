@@ -18,7 +18,7 @@
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="290.0" layoutY="121.0" style="-fx-border-color: black;">
+      <TextField fx:id="serverAddress" layoutX="290.0" layoutY="121.0" style="-fx-border-color: black;">
          <font>
             <Font name="Arial" size="14.0" />
          </font>

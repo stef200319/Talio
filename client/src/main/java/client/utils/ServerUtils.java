@@ -93,6 +93,20 @@ public class ServerUtils {
     }
 
     /**
+     * Fetch a board from database from its id
+     * @param boardID the id of the board
+     * @return a board
+     */
+    public Board getBoardByID(long boardID) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("board/getBoardByBoardId/"+boardID)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<Board>() {});
+    }
+
+    /**
      * Adds a column to the database
      * @param column the column to add to the database
      * @param boardID boardID of the board of column
@@ -167,6 +181,22 @@ public class ServerUtils {
         return ClientBuilder.newClient(new ClientConfig())
             .target(SERVER)
             .path("card/deleteCard/" + cardId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .delete();
+    }
+
+    /**
+     * Method that deletes a board
+     * @param b board to delete
+     * @return response
+     */
+
+    public Response deleteBoard(Board b) {
+        long boardID = b.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("board/deleteBoard/" + boardID)
             .request(APPLICATION_JSON)
             .accept(APPLICATION_JSON)
             .delete();
