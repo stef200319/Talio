@@ -34,9 +34,11 @@ public class WebSocketEventListener {
         System.out.println(event.getMessage());
         for (String id : ids) {
             System.out.println("send to: " + id);
-            messagingTemplate.convertAndSendToUser(id, "/topic/periodic", event.getSource());
+            messagingTemplate.convertAndSendToUser(id, "/topic/periodic", "sent to user " + id);
 
         }
+
+        messagingTemplate.convertAndSend("/topic/periodic", "all checked");
 
     }
 }

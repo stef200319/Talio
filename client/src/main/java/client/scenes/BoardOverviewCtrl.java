@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.StringMessageHandler;
 import com.google.inject.Inject;
 import commons.Card;
 import commons.Column;
@@ -15,16 +16,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import org.springframework.messaging.simp.stomp.StompHeaders;
-import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.converter.StringMessageConverter;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
-import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -77,26 +75,10 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        StompSessionHandler sessionHandler = new StompSessionHandlerAdapter() {
-
-            @Override
-            public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
-                session.subscribe("/app/subscribe", this);
-                session.subscribe("/topic/periodic", this);
-            }
-
-            @Override
-            public Type getPayloadType(StompHeaders headers) {
-                return String.class;
-            }
-
-            @Override
-            public void handleFrame(StompHeaders headers, Object payload) {
-                System.out.println("payload received");
-                System.out.println(payload);
-            }
-        };
+        StompSessionHandler sessionHandler = new StringMessageHandler();
+        stompClient.setMessageConverter(new StringMessageConverter());
         stompClient.connect("http://localhost:8080/websocket-stomp", sessionHandler);
+
         System.out.println("connected!");
     }
 
