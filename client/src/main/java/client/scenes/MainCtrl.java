@@ -15,7 +15,7 @@
  */
 package client.scenes;
 
-import commons.Board;
+//import commons.Board;
 import commons.Column;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

@@ -30,13 +30,18 @@ public class EditBoardTitleCtrl {
     /**
      * cancel edit and return to overview
      */
-    public void setBoardToEdit(Board board)
-    {
-        this.boardToEdit = board;
-    }
     public void cancel(){
         newTitle.clear();
         mainCtrl.showBoardOverview();
+    }
+
+    /**
+     * the board to be edited
+     * @param board
+     */
+    public void setBoardToEdit(Board board)
+    {
+        this.boardToEdit = board;
     }
     /**
      * will return a string with the new title
