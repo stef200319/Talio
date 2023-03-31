@@ -91,6 +91,11 @@ public class ServerUtils {
             .get(new GenericType<List<Card>>() {});
     }
 
+    /**
+     * Fetch a board from database from its id
+     * @param boardID the id of the board
+     * @return a board
+     */
     public Board getBoardByID(long boardID) {
         return ClientBuilder.newClient(new ClientConfig())
             .target(SERVER)

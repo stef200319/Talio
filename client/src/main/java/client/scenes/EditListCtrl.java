@@ -33,6 +33,17 @@ public class EditListCtrl implements Initializable {
         this.mainCtrl=mainCtrl;
     }
 
+    /**
+     * Method that is once executed when the application starts that includes event listener
+     *
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listName.setOnKeyPressed(event -> {
@@ -83,6 +94,10 @@ public class EditListCtrl implements Initializable {
         }
     }
 
+    /**
+     * Set the boardID of a board
+     * @param boardID the boardID of the board that list will be added to
+     */
     public void setBoardID(long boardID) {
         this.boardID = boardID;
     }

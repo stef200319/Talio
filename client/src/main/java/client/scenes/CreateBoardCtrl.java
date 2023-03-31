@@ -31,6 +31,18 @@ public class CreateBoardCtrl implements Initializable {
         this.server = server;
     }
 
+    /**
+     * Method that is once executed when the application starts that includes event listener
+     *
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         boardName.setOnKeyPressed(event -> {
@@ -68,8 +80,14 @@ public class CreateBoardCtrl implements Initializable {
     public void confirm() {
         server.addBoard(getBoard());
         boardName.clear();
-        mainCtrl.showBoardOverview(server.getAllBoardsWithoutServers().get(server.getAllBoardsWithoutServers().size() -1).getId());
+        mainCtrl.showBoardOverview(server.getAllBoardsWithoutServers()
+            .get(server.getAllBoardsWithoutServers().size() -1).getId());
     }
+
+    /**
+     * Set the boardID of a board
+     * @param boardID the boardID of the board that list will be added to
+     */
 
     public void setBoardID(long boardID) {
         this.boardID = boardID;

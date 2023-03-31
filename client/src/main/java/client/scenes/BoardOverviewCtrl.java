@@ -119,7 +119,8 @@ public class BoardOverviewCtrl implements Initializable {
     public void refresh() {
         columnContainer.getChildren().clear();
         if(boardID == Long.MIN_VALUE ||
-            !server.getAllBoardsWithoutServers().stream().map(Board::getId).collect(Collectors.toList()).contains(boardID)){
+            !server.getAllBoardsWithoutServers().stream().map(Board::getId)
+                .collect(Collectors.toList()).contains(boardID)){
             return;
         }
         Board currentBoard = server.getBoardByID(boardID);

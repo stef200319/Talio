@@ -166,6 +166,7 @@ public class MainCtrl {
 
     /**
      * Show board create
+     * @param boardID boardID of the board to be in
      */
     public void showCreateBoard(long boardID) {
         createBoardCtrl.setBoardID(boardID);
@@ -204,6 +205,7 @@ public class MainCtrl {
     /**
      * Show edit list page
      * @param c the list which will be changed
+     * @param boardID boardID of the board to be in
      */
     public void showEditList(Column c, long boardID) {
         editListCtrl.setBoardID(boardID);

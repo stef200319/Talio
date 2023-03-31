@@ -28,6 +28,17 @@ public class ClientConnectCtrl implements Initializable {
         this.server = server;
     }
 
+    /**
+     * Method that is once executed when the application starts that includes event listener
+     *
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         serverAddress.setOnKeyPressed(event -> {
