@@ -48,8 +48,6 @@ public class EditBoardTitleCtrl {
      */
     public void confirm() {
         if(getTitle() != null) {
-            //server.editColumnTitle(columnToEdit, getTitle());
-
             newTitle.clear();
             mainCtrl.showBoardOverview();
         }
