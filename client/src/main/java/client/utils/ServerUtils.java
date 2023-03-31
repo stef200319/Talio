@@ -189,6 +189,12 @@ public class ServerUtils {
             .put(Entity.entity(c, APPLICATION_JSON), Card.class);
     }
 
+    /**
+     * Method that edits the title of a board
+     * @param b board to edit
+     * @param title is the new title
+     * @return new board entity
+     */
     public Board editBoardTitle(Board b, String title)
     {
         long boardId = b.getId();
