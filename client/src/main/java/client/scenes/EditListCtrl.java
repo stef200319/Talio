@@ -3,15 +3,21 @@ package client.scenes;
 import client.utils.ServerUtils;
 import commons.Column;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
+import javafx.scene.input.KeyCode;
 
-public class EditListCtrl {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditListCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     private Column columnToEdit;
+    private long boardID;
 
     @FXML
     private TextField listName;
@@ -28,6 +34,29 @@ public class EditListCtrl {
     }
 
     /**
+     * Method that is once executed when the application starts that includes event listener
+     *
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        listName.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                confirm();
+            }
+            else if (event.getCode() == KeyCode.ESCAPE) {
+                cancel();
+            }
+        });
+    }
+
+    /**
      * Sets the column which will be edited
      * @param c new column to edit
      */
@@ -40,7 +69,7 @@ public class EditListCtrl {
      */
     public void cancel() {
         listName.clear();
-//        mainCtrl.showBoardOverview();
+        mainCtrl.showBoardOverview(boardID);
     }
 
     /**
@@ -61,8 +90,15 @@ public class EditListCtrl {
         if(getTitle() != null) {
             server.editColumnTitle(columnToEdit, getTitle());
             listName.clear();
-//            mainCtrl.showBoardOverview(1l);
+            mainCtrl.showBoardOverview(boardID);
         }
     }
 
+    /**
+     * Set the boardID of a board
+     * @param boardID the boardID of the board that list will be added to
+     */
+    public void setBoardID(long boardID) {
+        this.boardID = boardID;
+    }
 }

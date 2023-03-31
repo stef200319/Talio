@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.fxml.Initializable;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -64,6 +65,11 @@ public class WorkspaceCtrl implements Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        boardTitle.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                add();
+            }
+        });
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -102,6 +108,8 @@ public class WorkspaceCtrl implements Initializable{
         boardTitle.clear();
     }
 
+
+
     /**
      * Method that refreshes the workspace
      */
@@ -134,9 +142,18 @@ public class WorkspaceCtrl implements Initializable{
             }
         });
 
+        Button delete = new Button("X");
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                server.deleteBoard(b);
+            }
+        });
+
         HBox box = new HBox(5);
         box.setAlignment(Pos.TOP_RIGHT);
         box.getChildren().add(open);
+        box.getChildren().add(delete);
         board.getChildren().add(box);
 
         Label title = new Label(b.getTitle());
