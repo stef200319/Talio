@@ -16,6 +16,7 @@
 package client.scenes;
 
 //import commons.Board;
+import commons.Board;
 import commons.Column;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -213,7 +214,6 @@ public class MainCtrl {
      * Show the edit board title page
      */
     public void showEditBoardTitle(){
-        //editBoardTitleCtrl.setBoardToEdit(board);
         primaryStage.setTitle("Edit Board Title");
         primaryStage.setScene(editBoardTitle);
     }
