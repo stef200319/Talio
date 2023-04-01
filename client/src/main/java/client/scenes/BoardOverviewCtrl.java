@@ -256,53 +256,7 @@ public class BoardOverviewCtrl implements Initializable {
 
             card.getChildren().add(cardButtons);
 
-
-            //Methods for dragging and dropping the card
-            int finalI1 = i;
-            card.setOnDragDetected(new EventHandler<MouseEvent>() {      //When starting to drag remember the cardId
-                @Override
-                public void handle(MouseEvent event) {
-                    Dragboard db = card.startDragAndDrop(TransferMode.MOVE);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString(Long.toString(cards.get(finalI1).getId()));
-                    db.setContent(content);
-
-                    event.consume();
-                }
-            });
-
-            card.setOnDragOver(new EventHandler<DragEvent>() {          //Can only move on other objects
-                @Override
-                public void handle(DragEvent event) {
-                    if(event.getGestureSource() != card && event.getDragboard().hasString())
-                        event.acceptTransferModes(TransferMode.MOVE);
-                }
-            });
-
-            int finalI2 = i;
-            card.setOnDragDropped(new EventHandler<DragEvent>() {       //When dropped update positions
-                @Override
-                public void handle(DragEvent event) {
-                    Dragboard db = event.getDragboard();
-                    long oldId = Long.parseLong(db.getString());
-                    Card oldCard = server.getCardById(oldId);
-                    if(oldCard.getColumnId()==c.getId()) {              //Same column
-                        int newPos = cards.get(finalI2).getPosition();
-                        server.editCardPosition(oldId, newPos);
-                        event.setDropCompleted(true);
-                    }
-                    else {                                              //Changhing columns
-                        int newPos = cards.get(finalI2).getPosition();
-                        server.editCardColumn(oldId,c.getId());
-                        server.editCardPosition(oldId, newPos);
-                        event.setDropCompleted(true);
-                    }
-                    refresh();
-                    event.consume();
-                }
-            });
-            //End of drag and drop methods
-
+            card = enableDragAndDrop(card, c, cards, i);
 
             cardContainer.getChildren().add(card);
         }
@@ -323,6 +277,63 @@ public class BoardOverviewCtrl implements Initializable {
         //End of button for adding a task
 
         columnContainer.getChildren().add(list);
+    }
+
+    /**
+     * Method that enables drag and drop for a card
+     * @param card Card to be changed
+     * @param c Column in which the card is placed
+     * @param cards List of all card objects
+     * @param i Position of card in that list
+     * @return The new card which has drag and drop enabled
+     */
+    public HBox enableDragAndDrop(HBox card, Column c, List<Card> cards, int i) {
+        //Methods for dragging and dropping the card
+        int finalI1 = i;
+        card.setOnDragDetected(new EventHandler<MouseEvent>() {      //When starting to drag remember the cardId
+            @Override
+            public void handle(MouseEvent event) {
+                Dragboard db = card.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(Long.toString(cards.get(finalI1).getId()));
+                db.setContent(content);
+
+                event.consume();
+            }
+        });
+
+        card.setOnDragOver(new EventHandler<DragEvent>() {          //Can only move on other objects
+            @Override
+            public void handle(DragEvent event) {
+                if(event.getGestureSource() != card && event.getDragboard().hasString())
+                    event.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+
+        int finalI2 = i;
+        card.setOnDragDropped(new EventHandler<DragEvent>() {       //When dropped update positions
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                long oldId = Long.parseLong(db.getString());
+                Card oldCard = server.getCardById(oldId);
+                if(oldCard.getColumnId()==c.getId()) {              //Same column
+                    int newPos = cards.get(finalI2).getPosition();
+                    server.editCardPosition(oldId, newPos);
+                    event.setDropCompleted(true);
+                }
+                else {                                              //Changhing columns
+                    int newPos = cards.get(finalI2).getPosition();
+                    server.editCardColumn(oldId,c.getId());
+                    server.editCardPosition(oldId, newPos);
+                    event.setDropCompleted(true);
+                }
+                refresh();
+                event.consume();
+            }
+        });
+        //End of drag and drop methods
+        return card;
     }
 
 
