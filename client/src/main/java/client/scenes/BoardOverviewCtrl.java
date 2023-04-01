@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 
 import java.net.URL;
 import java.util.List;
@@ -168,20 +170,26 @@ public class BoardOverviewCtrl implements Initializable {
         VBox cardContainer = new VBox();
         cardContainer.setSpacing(10);
         for(int i=0;i<cards.size();i++) {
+            int finalI = i;
             HBox card = new HBox(80);                   //card box
             card.setAlignment(Pos.CENTER_RIGHT);
-            card.setStyle("-fx-background-color:#FEF9D9");
-            card.setStyle("-fx-border-style: solid");
-            card.setStyle("-fx-border-radius: 50px");
-            card.setStyle("-fx-border-color: grey");
+            card.setStyle("-fx-background-color: "+cards.get(finalI).getBgColour()+"; -fx-border-style: " +
+                    "solid; -fx-background-radius: 5px; -fx-border-radius: 5px;" +
+                    "-fx-border-color: "+cards.get(finalI).getBorderColour());
 
-            Label s = new Label(cards.get(i).getTitle());       //title of the card
+
+            Label s = new Label(cards.get(i).getTitle());
+            s.setMaxWidth(80);
+            Font font = Font.font(cards.get(i).getFontType(),
+                    cards.get(i).isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
+                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                    12);
+            s.setFont(font);
+
             card.getChildren().add(s);
 
-            VBox cardButtons = new VBox(5);             //box for details and delet buttons
+            VBox cardButtons = new VBox(5);
             cardButtons.setAlignment(Pos.CENTER);
-
-            int finalI = i;
 
             Button details = new Button("Details");
             details.setOnAction(new EventHandler<ActionEvent>() {

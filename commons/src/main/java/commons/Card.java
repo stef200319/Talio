@@ -35,6 +35,16 @@ public class Card {
 
     private String description;
 
+    private String bgColour;
+
+    private String borderColour;
+
+
+    private String fontType;
+    private Boolean fontStyleBold;
+    private Boolean fontStyleItalic;
+    private String fontColour;
+
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Subtask> subtasks;
@@ -47,6 +57,7 @@ public class Card {
         // for object mappers
     }
 
+
     /**
      * @param title of the Card
      * @param columnId the column on which the card is going to be present
@@ -54,6 +65,11 @@ public class Card {
     public Card(String title, long columnId) {
         this.title = title;
         this.columnId = columnId;
+        this.bgColour = "#F2F3F4";
+        this.borderColour = "#000000";
+        this.fontType = "Segoe UI";
+        this.fontStyleBold=false;
+        this.fontStyleItalic=false;
 
         this.subtasks = new ArrayList<Subtask>();
     }
@@ -173,5 +189,51 @@ public class Card {
         this.description = description;
     }
 
+    public String getBgColour() {
+        return bgColour;
+    }
 
+    public void setBgColour(String colour) {
+        this.bgColour = colour;
+    }
+
+    public String getBorderColour() {
+        return borderColour;
+    }
+
+    public void setBorderColour(String borderColour) {
+        this.borderColour = borderColour;
+    }
+
+    public String getFontType() {
+        return fontType;
+    }
+
+    public void setFontType(String fontType) {
+        this.fontType = fontType;
+    }
+
+    public boolean isFontStyleBold() {
+        return fontStyleBold;
+    }
+
+    public void setFontStyleBold(boolean fontStyleBold) {
+        this.fontStyleBold = fontStyleBold;
+    }
+
+    public boolean isFontStyleItalic() {
+        return fontStyleItalic;
+    }
+
+    public void setFontStyleItalic(boolean fontStyleItalic) {
+        this.fontStyleItalic = fontStyleItalic;
+    }
+
+    public String getFontColour() {
+        return fontColour;
+    }
+
+    public void setFontColour(String fontColour) {
+        this.fontColour = fontColour;
+    }
 }

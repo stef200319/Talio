@@ -59,7 +59,8 @@ public class EditCardDescriptionCtrl {
             return l;
         }
         else{
-            return "";
+            l = "";
+            return l;
         }
     }
 
@@ -67,10 +68,10 @@ public class EditCardDescriptionCtrl {
      * Edits the title of the Card and returns to the Card's details
      */
     public void confirm() {
-        if(getDescription() != null) {
+        if (getDescription() != "") {
             server.editCardDescription(cardToShow, getDescription());
+        }
             newDescription.clear();
             mainCtrl.showTaskDetails(cardToShow);
-        }
     }
 }
