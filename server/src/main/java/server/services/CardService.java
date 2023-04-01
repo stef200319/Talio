@@ -1,28 +1,33 @@
 package server.services;
 
 import commons.Card;
+import commons.Subtask;
 import org.springframework.stereotype.Service;
 import server.database.CardRepository;
+import server.database.SubtaskRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CardService {
     private CardRepository cardRepository;
+    private SubtaskRepository subtaskRepository;
 
     /**
      * @param cardRepository the table which contains all the cards
      */
-    public CardService(CardRepository cardRepository) {
+    public CardService(CardRepository cardRepository, SubtaskRepository subtaskRepository) {
         this.cardRepository = cardRepository;
+        this.subtaskRepository = subtaskRepository;
     }
 
     /**
-     * @param columnId The id of the column we're checking the existence of
+     * @param cardId The id of the card we're checking the existence of
      * @return true if it exists, false otherwise
      */
-    public boolean existsById(long columnId) {
-        return cardRepository.existsById(columnId);
+    public boolean existsById(long cardId) {
+        return cardRepository.existsById(cardId);
     }
 
     /**
@@ -97,6 +102,8 @@ public class CardService {
      * @return the new card in the database
      */
     public Card update(String title, long cardId) {
+        if(!existsById(cardId))
+            return null;
         Card card = getById(cardId);
         card.setTitle(title);
         return cardRepository.save(card);
@@ -217,6 +224,38 @@ public class CardService {
             }
         }
         return card;
+    }
+
+    /**
+     * Method that creates and adds a subtask to a card
+     * @param cardId The card the subtask will be added to
+     * @param subtaskTitle Title of the new subtask
+     * @return New card with updated subtasks
+     */
+    public Card createSubtask(long cardId, String subtaskTitle) {
+        if(!existsById(cardId))
+            return null;
+        Card card = getById(cardId);
+
+        Subtask newSubtask = new Subtask(subtaskTitle);
+        subtaskRepository.save(newSubtask);
+
+        card.getSubtasks().add(newSubtask);
+        return cardRepository.save(card);
+    }
+
+    /**
+     * Method that return all the subtasks of a card
+     * @param cardId id of the card
+     * @return List with all of its subtasks
+     */
+    public List<Subtask> getAllSubtasksByCardId(long cardId) {
+        if(!existsById(cardId))
+            return null;
+        List<Subtask> subtasks = cardRepository.findSubtasksByCardId(cardId);
+        if(subtasks == null)
+            return new ArrayList<Subtask>();
+        return subtasks;
     }
 
 }

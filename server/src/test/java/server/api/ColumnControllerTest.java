@@ -45,7 +45,7 @@ class ColumnControllerTest {
 
         columnService = new ColumnService(columnRepository);
         boardService = new BoardService(boardRepository);
-        cardService = new CardService(cardRepository);
+        cardService = new CardService(cardRepository, subtaskRepository);
         subtaskService = new SubtaskService(subtaskRepository);
 
 

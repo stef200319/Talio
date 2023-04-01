@@ -86,19 +86,13 @@ public class CardController {
     public ResponseEntity<Card> createSubtask(@PathVariable(value = "cardId") long cardId,
                                               @PathVariable(value = "subtaskTitle") String subtaskTitle) {
 
-        if (subtaskTitle == null || !cardService.existsById(cardId)) {
+        if (subtaskTitle == null) {
             return ResponseEntity.badRequest().build();
         }
-        Card card = cardService.getById(cardId);
 
-        // Create a new subtask
-        Subtask newSubtask = new Subtask(subtaskTitle);
-        subtaskService.save(newSubtask);
-
-        // Update card in the database
-        card.getSubtasks().add(newSubtask);
-        cardService.saveCard(card);
-
+        Card card = cardService.createSubtask(cardId, subtaskTitle);
+        if(card==null)
+            return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(card);
     }
 
@@ -112,11 +106,13 @@ public class CardController {
     @PutMapping("/editCardTitle/{cardId}/{title}")
     @ResponseBody public ResponseEntity<Card> editCardTitle(@PathVariable("cardId") long cardId,
                                                 @PathVariable("title") String title){
-        if (title == null || !cardService.existsById(cardId)) {
+        if (title == null) {
             return ResponseEntity.badRequest().build();
         }
 
         Card card = cardService.update(title, cardId);
+        if(card == null)
+            return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(card);
     }
 
@@ -202,6 +198,19 @@ public class CardController {
         if(cardToDelete==null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(cardToDelete);
+    }
+
+    /**
+     * Get all the subtasks from a card
+     * @param cardId id of the card to get the subtasks from
+     * @return a list with all the corresponding subtasks
+     */
+    @GetMapping("/getSubtasks/{cardId}")
+    @ResponseBody public ResponseEntity<List<Subtask>> getSubtasksByCardId(@PathVariable("cardId") long cardId) {
+        List<Subtask> subtasks = cardService.getAllSubtasksByCardId(cardId);
+        if(subtasks == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(subtasks);
     }
 
 }
