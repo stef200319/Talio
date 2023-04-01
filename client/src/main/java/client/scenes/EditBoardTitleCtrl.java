@@ -32,7 +32,7 @@ public class EditBoardTitleCtrl {
      */
     public void cancel(){
         newTitle.clear();
-        mainCtrl.showBoardOverview();
+        mainCtrl.showOverview();
     }
 
     /**
@@ -61,7 +61,7 @@ public class EditBoardTitleCtrl {
         if(getTitle() != null) {
             server.editBoardTitle(boardToEdit, getTitle());
             newTitle.clear();
-            mainCtrl.showBoardOverview();
+            mainCtrl.showOverview();
         }
     }
 }

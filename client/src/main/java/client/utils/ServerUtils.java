@@ -241,16 +241,16 @@ public class ServerUtils {
      * @param title is the new title
      * @return new board entity
      */
-    public Board editBoardTitle(Board b, String title)
-    {
+    public Board editBoardTitle(Board b, String title) {
         long boardId = b.getId();
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)
-                .path("board/editBoardTitle/"+boardId+"/"+title)
+                .path("board/editBoardTitle/" + boardId + "/" + title)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .put(Entity.entity(b, APPLICATION_JSON), Board.class);
-=======
+    }
+        /**
      * Method that edits the description of a card
      * @param c card to edit
      * @param description new description

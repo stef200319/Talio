@@ -89,8 +89,8 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle) {
-                           Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
+                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle
+                           , Pair<ViewSubtaskCtrl, Parent> viewSubtask,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle) {
 
 
