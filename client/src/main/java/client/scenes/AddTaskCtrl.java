@@ -3,10 +3,12 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Card;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -83,6 +85,19 @@ public class AddTaskCtrl implements Initializable {
         mainCtrl.showBoardOverview(boardID);
     }
 
+    private EventHandler<KeyEvent> openTaskDetails = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            if(event.isControlDown() && event.getCode() == KeyCode.E)
+            {
+                showTaskDetails();
+            }
+        }
+    };
+
+    public EventHandler<KeyEvent> getOpenTaskDetails(){
+        return openTaskDetails;
+    }
     /**
      * @param taskName updates the task name
      */
