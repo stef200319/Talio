@@ -24,6 +24,6 @@ public class TaskManagementCtrl {
      * show the board overview
      */
     public void showBoardOverview() {
-        mainCtrl.showBoardOverview();
+//        mainCtrl.showBoardOverview(1l);
     }
 }

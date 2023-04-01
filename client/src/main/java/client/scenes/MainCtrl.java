@@ -145,8 +145,10 @@ public class MainCtrl {
 
     /**
      * Show add list page
+     * @param boardID boardID of list's board
      */
-    public void showListAdd() {
+    public void showListAdd(Long boardID) {
+        addListCtrl.setBoardToAddId(boardID);
         primaryStage.setTitle("Adding List");
         primaryStage.setScene(addList);
         //add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
@@ -154,8 +156,10 @@ public class MainCtrl {
 
     /**
      * Show all the boards
+     * @param boardID boardID of current board
      */
-    public void showBoardOverview() {
+    public void showBoardOverview(Long boardID) {
+        boardOverviewCtrl.setBoardID(boardID);
         primaryStage.setTitle("Board Overview");
         boardOverviewCtrl.refresh();
         primaryStage.setScene(boardOverview);
@@ -163,8 +167,10 @@ public class MainCtrl {
 
     /**
      * Show board create
+     * @param boardID boardID of the board to be in
      */
-    public void showCreateBoard() {
+    public void showCreateBoard(long boardID) {
+        createBoardCtrl.setBoardID(boardID);
         primaryStage.setTitle("Create board");
         primaryStage.setScene(createBoard);
     }
@@ -188,9 +194,11 @@ public class MainCtrl {
     /**
      * Show add task page specific to a column
      * @param columnID columnId of the column to show add task
+     * @param boardID boardID of card's board
      */
-    public void showAddTask(Long columnID) {
+    public void showAddTask(Long columnID, Long boardID) {
         addTaskCtrl.setColumnToAddId(columnID);
+        addTaskCtrl.setBoardID(boardID);
         primaryStage.setTitle("Add Task");
         primaryStage.setScene(addTask);
     }
@@ -198,8 +206,10 @@ public class MainCtrl {
     /**
      * Show edit list page
      * @param c the list which will be changed
+     * @param boardID boardID of the board to be in
      */
-    public void showEditList(Column c) {
+    public void showEditList(Column c, long boardID) {
+        editListCtrl.setBoardID(boardID);
         editListCtrl.setColumnToEdit(c);
         primaryStage.setTitle("Edit Column");
         primaryStage.setScene(editList);

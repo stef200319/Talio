@@ -2,6 +2,7 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Board;
 import commons.Card;
 import commons.Column;
 import javafx.application.Platform;
@@ -23,12 +24,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
-    private int boardID=1;
+    private long boardID = Long.MIN_VALUE;
 
     @FXML
     private HBox columnContainer;
@@ -41,6 +43,9 @@ public class BoardOverviewCtrl implements Initializable {
 
     @FXML
     private Button joinBoardButton;
+
+    @FXML
+    private Label boardName;
 
 
     /**
@@ -95,7 +100,7 @@ public class BoardOverviewCtrl implements Initializable {
      * Method that shows the add list page on screen
      */
     public void addList() {
-        mainCtrl.showListAdd();
+        mainCtrl.showListAdd((long) boardID);
     }
 
     /**
@@ -106,7 +111,7 @@ public class BoardOverviewCtrl implements Initializable {
     /**
      * Method that shows the workspace page containing all the boards on screen
      */
-    public void createBoard() {mainCtrl.showCreateBoard();}
+    public void createBoard() {mainCtrl.showCreateBoard(boardID);}
 
 
     /**
@@ -114,6 +119,13 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void refresh() {
         columnContainer.getChildren().clear();
+        if(boardID == Long.MIN_VALUE ||
+            !server.getAllBoardsWithoutServers().stream().map(Board::getId)
+                .collect(Collectors.toList()).contains(boardID)){
+            return;
+        }
+        Board currentBoard = server.getBoardByID(boardID);
+        boardName.setText(currentBoard.getTitle());
         List<Column> columns = server.getColumnsByBoardId(boardID);
         for(int i=0;i<columns.size();i++)
             createList(columns.get(i));
@@ -200,7 +212,7 @@ public class BoardOverviewCtrl implements Initializable {
         editTitle.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                mainCtrl.showEditList(c);
+                mainCtrl.showEditList(c, boardID);
             }
         });
         HBox deleteBox = new HBox(5);
@@ -270,7 +282,7 @@ public class BoardOverviewCtrl implements Initializable {
         b.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                mainCtrl.showAddTask(c.getId());
+                mainCtrl.showAddTask(c.getId(),boardID );
             }
         });
         list.getChildren().add(b);
@@ -336,6 +348,11 @@ public class BoardOverviewCtrl implements Initializable {
         return card;
     }
 
-
-
+    /**
+     * Set the boardID of a board
+     * @param boardID the boardID of the board that list will be added to
+     */
+    public void setBoardID(long boardID) {
+        this.boardID = boardID;
+    }
 }
