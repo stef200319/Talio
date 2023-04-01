@@ -25,9 +25,12 @@ public class TaskDetailsCtrl {
     }
 
     /**
-     *
+     * private event handler for a key event that listens
+     *       for the "Esc" key to be pressed
+     * when the "Esc" key is pressed, the method showBoardOverview()
+     *       is called to switch to the Board Overview scene
      */
-    private EventHandler<KeyEvent> switchScene = new EventHandler<KeyEvent>() {
+    private EventHandler<KeyEvent> backToOverview = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
             if(event.getCode() == KeyCode.ESCAPE)
@@ -38,11 +41,10 @@ public class TaskDetailsCtrl {
     };
 
     /**
-     *
-     * @return
+     * @return the backToOverview event handler
      */
-    public EventHandler<KeyEvent> getSwitchScene() {
-        return switchScene;
+    public EventHandler<KeyEvent> getBackToOverview() {
+        return backToOverview;
     }
 
     /**
