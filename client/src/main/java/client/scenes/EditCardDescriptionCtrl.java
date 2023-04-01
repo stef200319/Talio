@@ -55,12 +55,7 @@ public class EditCardDescriptionCtrl {
      */
     public String getDescription() {
         String l = newDescription.getText();
-        if(!l.equals("")){
-            return l;
-        }
-        else{
-            return "";
-        }
+        return l;
     }
 
     /**
