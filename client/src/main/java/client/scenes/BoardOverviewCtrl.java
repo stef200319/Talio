@@ -113,6 +113,19 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void createBoard() {mainCtrl.showCreateBoard(boardID);}
 
+    private EventHandler<KeyEvent> openTaskDetails = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            if(event.getCode() == KeyCode.E)
+            {
+                showTaskDetails();
+            }
+        }
+    };
+
+    public EventHandler<KeyEvent> getOpenTaskDetails(){
+        return openTaskDetails;
+    }
 
     /**
      * Method that refreshes the board
