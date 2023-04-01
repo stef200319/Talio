@@ -85,6 +85,12 @@ public class AddTaskCtrl implements Initializable {
         mainCtrl.showBoardOverview(boardID);
     }
 
+    /**
+     * private event handler for a key event that listens
+     *       for the "Ctrl+E" keys to be pressed
+     * when the "Ctrl+E" keys are pressed, the method showTaskDetails()
+     *       is called to switch to the Task Details scene
+     */
     private EventHandler<KeyEvent> openTaskDetails = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
@@ -95,6 +101,9 @@ public class AddTaskCtrl implements Initializable {
         }
     };
 
+    /**
+     * @return the openTaskDetails event handler
+     */
     public EventHandler<KeyEvent> getOpenTaskDetails(){
         return openTaskDetails;
     }
