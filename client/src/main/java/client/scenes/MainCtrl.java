@@ -213,6 +213,13 @@ public class MainCtrl {
     }
 
     /**
+     * Show the task details
+     */
+    public void showDetailOfTask(){
+        primaryStage.setTitle("Task Details");
+        primaryStage.setScene(taskDetails);
+    }
+    /**
      * Show add task page specific to a column
      * @param columnID columnId of the column to show add task
      * @param boardID boardID of card's board

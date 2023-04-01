@@ -114,6 +114,12 @@ public class AddTaskCtrl implements Initializable {
         this.taskName = taskName;
     }
 
+    /**
+     * method to show task details
+     */
+    public void showTaskDetails(){
+        mainCtrl.showDetailOfTask();
+    }
 
     /**
      * Set the columnId of a column
