@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-=======
 import commons.Card;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -60,7 +59,8 @@ public class TaskDetailsCtrl {
      */
     public EventHandler<KeyEvent> getBackToOverview() {
         return backToOverview;
-
+    }
+    /**
      * Set the Card whose details have to be displayed
      * @param cardToShow the Card whose details have to be displayed
      */
