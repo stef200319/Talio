@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
 import server.database.SubtaskRepository;
-import server.services.CardService;
-import server.services.ColumnService;
 
 import java.util.List;
 
@@ -19,8 +17,6 @@ public class CardController {
     private final ColumnRepository columnRepository;
     private final SubtaskRepository subtaskRepository;
 
-    private final CardService cardService;
-    private final ColumnService columnService;
 
     /**
      * @param cardRepository the container storing all the data relating to cards
@@ -28,22 +24,23 @@ public class CardController {
      * @param subtaskRepository the container storing all the subtasks
      */
     public CardController(CardRepository cardRepository, ColumnRepository columnRepository,
-                                                    SubtaskRepository subtaskRepository, CardService cardService, ColumnService columnService) {
+                          SubtaskRepository subtaskRepository) {
         this.cardRepository = cardRepository;
         this.columnRepository = columnRepository;
         this.subtaskRepository = subtaskRepository;
-        this.cardService = cardService;
-        this.columnService = columnService;
     }
 
     /**
      * Return all the cards which are stored in the database
      * @return all the cards in the database
      */
+//    public List<Card> getAllCards() {
+//        return cardRepository.findAll();
+//    }
     @GetMapping("/getAllCards")
     @ResponseBody
     public List<Card> getAllCards() {
-        return cardService.getAll();
+        return cardRepository.findAll();
     }
 
     /**
@@ -54,19 +51,25 @@ public class CardController {
      */
     @GetMapping("/getCardByCardId/{cardId}")
     @ResponseBody public ResponseEntity<Card> getCardByCardId(@PathVariable("cardId") long cardId) {
-        Card card = cardService.getByCardId(cardId);
-        return card != null? ResponseEntity.ok(card) : ResponseEntity.notFound().build();
+        if (!cardRepository.existsById(cardId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        return ResponseEntity.ok(card);
     }
 
-        /**
-         * @param title Of the card
-         * @param columnId the columnId on which the card needs to be
-         * @return if successful, the method returns an ok
-         */
+
+
+    /**
+     * @param title Of the card
+     * @param columnId the columnId on which the card needs to be
+     * @return if successful, the method returns an ok
+     */
     @PostMapping("/addCard/{title}/{columnId}")
     @ResponseBody public ResponseEntity<Card> addCard(@PathVariable("title") String title,
                                                       @PathVariable("columnId") Long columnId) {
-        if (title == null || !columnService.existsById(columnId)) {
+        if (title == null || !columnRepository.existsById(columnId)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -120,7 +123,7 @@ public class CardController {
      */
     @PutMapping("/editCardTitle/{cardId}/{title}")
     @ResponseBody public ResponseEntity<Card> editCardTitle(@PathVariable("cardId") long cardId,
-                                                @PathVariable("title") String title){
+                                                            @PathVariable("title") String title){
         if (title == null || !cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -139,7 +142,7 @@ public class CardController {
      */
     @PutMapping("/editCardDescription/{cardId}/{description}")
     @ResponseBody public ResponseEntity<Card> editCardDescription(@PathVariable("cardId") long cardId,
-                                                            @PathVariable("description") String description){
+                                                                  @PathVariable("description") String description){
         if (description == null || !cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -158,7 +161,7 @@ public class CardController {
      */
     @PutMapping("/editCardColumn/{cardId}/{columnId}")
     @ResponseBody public ResponseEntity<Card> editCardColumn(@PathVariable("cardId") long cardId,
-                                                 @PathVariable("columnId") long columnId) {
+                                                             @PathVariable("columnId") long columnId) {
         if (!columnRepository.existsById(columnId) || !cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -179,7 +182,7 @@ public class CardController {
      */
     @PutMapping("/editCardPosition/{cardId}/{newPosition}")
     @ResponseBody public ResponseEntity<Card> editCardPosition(@PathVariable("cardId") long cardId,
-                                                   @PathVariable("newPosition") int newPosition) {
+                                                               @PathVariable("newPosition") int newPosition) {
         if (!cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }

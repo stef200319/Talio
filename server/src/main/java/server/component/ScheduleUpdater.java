@@ -8,6 +8,10 @@ public class ScheduleUpdater {
     private final MessageSendingOperations<String> message;
     private ColumnService columnService;
 
+    /**
+     * @param message of the payload
+     * @param columnService connection to the column service
+     */
     public ScheduleUpdater(MessageSendingOperations<String> message, ColumnService columnService) {
         this.message = message;
         this.columnService = columnService;

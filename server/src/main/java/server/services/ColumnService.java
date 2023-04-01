@@ -23,7 +23,6 @@ public class ColumnService {
 
     /**
      * @param columnRepository The data access model of the columns
-     * @param message
      */
     public ColumnService(ColumnRepository columnRepository) {
         this.columnRepository = columnRepository;
@@ -79,8 +78,6 @@ public class ColumnService {
      * @return the new column which was created in the database
      */
     public Column add(String title, Long boardId) {
-
-
         Integer maxPosition = columnRepository.findMaxPositionByBoardId(boardId);
         int newPosition = maxPosition == null ? 1 : maxPosition + 1;
 

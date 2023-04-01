@@ -35,7 +35,7 @@ class CardControllerTest {
         this.cardService = new CardService(cardRepository);
         this.columnService = new ColumnService(columnRepository);
 
-        cardController = new CardController(cardRepository, columnRepository,subtaskRepository, cardService, columnService);
+        cardController = new CardController(cardRepository, columnRepository,subtaskRepository);
     }
 
 

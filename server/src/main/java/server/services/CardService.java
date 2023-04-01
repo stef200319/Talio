@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import server.database.CardRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CardService {
@@ -17,8 +16,6 @@ public class CardService {
     public CardService(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }
-
-    public List<Card> getAll() {return cardRepository.findAll();}
 
     /**
      * @param columnId the id of the column for which we want to match all the cards
@@ -38,15 +35,4 @@ public class CardService {
 
         return cards;
     }
-
-    public boolean existsById(long cardId) {
-        return cardRepository.existsById(cardId);
-    }
-
-    public Card getByCardId(long cardId) {
-        Optional<Card> card = cardRepository.findById(cardId);
-        return card.orElse(null);
-    }
-
-
 }

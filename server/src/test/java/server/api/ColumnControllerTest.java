@@ -45,7 +45,7 @@ class ColumnControllerTest {
         boardService = new BoardService(boardRepository);
         cardService = new CardService(cardRepository);
 
-        cardController = new CardController(cardRepository, columnRepository,subtaskRepository, cardService, columnService);
+        cardController = new CardController(cardRepository, columnRepository,subtaskRepository);
         columnController = new ColumnController(columnService, boardService, cardService);
     }
 
@@ -210,7 +210,7 @@ class ColumnControllerTest {
 // //    }
 }
 
-    //Todo: we have change this TestColumnRepo
+//Todo: we have change this TestColumnRepo
 //    @Test
 //    void getByBoardIdSubset() {
 //        sut.addColumn("Test3", 2L);

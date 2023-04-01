@@ -21,12 +21,18 @@ public class WebSocketEventListener {
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
 
+    /**
+     * @param event the event listener listens to
+     */
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         ids.add(SimpAttributesContextHolder.currentAttributes().getSessionId());
         logger.info("Received a new web socket connection");
     }
 
+    /**
+     * @param event the event listener listens to
+     */
     @EventListener
     public void sendAllColumns(RESTEvent event) {
 

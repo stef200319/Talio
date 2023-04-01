@@ -6,6 +6,10 @@ import org.springframework.web.util.HtmlUtils;
 
 public class MessageMappingController {
 
+    /**
+     * @param message of the exception
+     * @return response
+     */
     @MessageMapping("/request")
     @SendTo("/queue/responses")
     public String handleMessageWithExplicitResponse(String message) {
