@@ -3,8 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -18,29 +16,27 @@
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
-            <TextField fx:id="cardTitle" layoutX="346.0" layoutY="54.0" prefHeight="43.0" prefWidth="512.0" />
             <Label layoutX="91.0" layoutY="126.0" prefHeight="40.0" prefWidth="255.0" text="Card Description:">
                <font>
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
-            <TextArea fx:id="cardDescription" layoutX="28.0" layoutY="183.0" prefHeight="119.0" prefWidth="833.0" />
-            <Label layoutX="91.0" layoutY="321.0" prefHeight="40.0" prefWidth="255.0" text="Subtasks:">
+            <Label layoutX="101.0" layoutY="321.0" prefHeight="40.0" prefWidth="255.0" text="Subtasks:">
                <font>
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
-            <Button layoutX="23.0" layoutY="121.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="57.0" text="Edit">
+            <Button fx:id="editCardDescription" layoutX="23.0" layoutY="121.0" mnemonicParsing="false" onAction="#showEditCardDescription" prefHeight="50.0" prefWidth="57.0" text="Edit">
                <font>
                   <Font size="19.0" />
                </font>
             </Button>
-            <Button layoutX="23.0" layoutY="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="57.0" text="Edit">
+            <Button fx:id="editCardTitle" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#showEditCardTitle" prefHeight="50.0" prefWidth="57.0" text="Edit">
                <font>
                   <Font size="19.0" />
                </font>
             </Button>
-            <Button layoutX="23.0" layoutY="316.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="57.0" text="Edit">
+            <Button layoutX="23.0" layoutY="316.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="66.0" text="View">
                <font>
                   <Font size="19.0" />
                </font>
@@ -75,6 +71,16 @@
                   <Font size="19.0" />
                </font>
             </Button>
+            <Label fx:id="cardTitle" layoutX="344.0" layoutY="55.0" prefHeight="40.0" prefWidth="518.0" style="-fx-background-color: white; -fx-border-color: grey;">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Label fx:id="cardDescription" alignment="TOP_LEFT" layoutX="29.0" layoutY="187.0" prefHeight="118.0" prefWidth="832.0" style="-fx-background-color: white; -fx-border-color: grey;" text="Label">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
          </children></Pane>
       <Pane prefHeight="98.0" prefWidth="894.0" style="-fx-background-color: #372C2E; -fx-border-color: black;">
          <children>

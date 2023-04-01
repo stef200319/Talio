@@ -2,15 +2,29 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+=======
+import commons.Card;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+
 
 public class TaskDetailsCtrl {
-
+    private Card cardToShow;
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
+
+
+    @FXML
+    private Label cardTitle;
+
+    @FXML
+    private Label cardDescription;
 
 
     /**
@@ -25,6 +39,7 @@ public class TaskDetailsCtrl {
     }
 
     /**
+
      * private event handler for a key event that listens
      *       for the "Esc" key to be pressed
      * when the "Esc" key is pressed, the method showBoardOverview()
@@ -45,6 +60,30 @@ public class TaskDetailsCtrl {
      */
     public EventHandler<KeyEvent> getBackToOverview() {
         return backToOverview;
+
+     * Set the Card whose details have to be displayed
+     * @param cardToShow the Card whose details have to be displayed
+     */
+
+    public void setCardToShow(Card cardToShow) {
+        this.cardToShow = cardToShow;
+        cardTitle.setText(cardToShow.getTitle());
+        cardDescription.setText(cardToShow.getDescription());
+    }
+
+    /**
+     * show the page to edit the Card Title
+     */
+    public void showEditCardTitle(){
+        mainCtrl.showEditCardTitle(cardToShow);
+    }
+
+    /**
+     * show the page to edit the Card Description
+     */
+    public void showEditCardDescription(){
+        mainCtrl.showEditCardDescription(cardToShow);
+
     }
 
     /**

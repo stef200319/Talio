@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import commons.Card;
 import commons.Column;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -53,6 +54,11 @@ public class MainCtrl {
     private EditListCtrl editListCtrl;
     private Scene editList;
 
+    private ViewSubtaskCtrl viewSubtaskCtrl;
+    private Scene viewSubtask;
+    private EditSubtaskTitleCtrl editSubtaskTitleCtrl;
+    private Scene editSubtaskTitle;
+
     /**
      * @param primaryStage
      * @param add
@@ -66,6 +72,8 @@ public class MainCtrl {
      * @param editCardTitle
      * @param editCardDescription
      * @param editList
+     * @param viewSubtask
+     * @param editSubtaskTitle
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -76,7 +84,8 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-                           Parent> editList) {
+                           Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
+                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle) {
 
 
         this.primaryStage = primaryStage;
@@ -115,7 +124,16 @@ public class MainCtrl {
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
 
+
         this.taskDetails.setOnKeyPressed(taskDetailsCtrl.getBackToOverview());
+
+        this.viewSubtaskCtrl = viewSubtask.getKey();
+        this.viewSubtask = new Scene(viewSubtask.getValue());
+
+        this.editSubtaskTitleCtrl = editSubtaskTitle.getKey();
+        this.editSubtaskTitle = new Scene(editSubtaskTitle.getValue());
+
+
 
         showClientConnect();
         primaryStage.show();
@@ -162,6 +180,7 @@ public class MainCtrl {
     public void showBoardOverview(Long boardID) {
         boardOverviewCtrl.setBoardID(boardID);
         primaryStage.setTitle("Board Overview");
+        boardOverviewCtrl.refresh();
         primaryStage.setScene(boardOverview);
     }
 
@@ -185,8 +204,10 @@ public class MainCtrl {
 
     /**
      * Show the task details
+     * @param card Card whose details have to be shown
      */
-    public void showTaskDetails() {
+    public void showTaskDetails(Card card) {
+        taskDetailsCtrl.setCardToShow(card);
         primaryStage.setTitle("Task Details");
         primaryStage.setScene(taskDetails);
     }
@@ -213,6 +234,27 @@ public class MainCtrl {
         editListCtrl.setColumnToEdit(c);
         primaryStage.setTitle("Edit Column");
         primaryStage.setScene(editList);
+    }
+
+
+    /**
+     * Show edit Card Title Page
+     * @param cardToShow Card whose Title needs to be edited
+     */
+    public void showEditCardTitle(Card cardToShow) {
+        editCardTitleCtrl.setCardToShow(cardToShow);
+        primaryStage.setTitle("Edit Card Title");
+        primaryStage.setScene(editCardTitle);
+    }
+
+    /**
+     * Show edit Card Description Page
+     * @param cardToShow Card whose Description needs to be edited
+     */
+    public void showEditCardDescription(Card cardToShow) {
+        editCardDescriptionCtrl.setCardToShow(cardToShow);
+        primaryStage.setTitle("Edit Card Description");
+        primaryStage.setScene(editCardDescription);
     }
 
 }

@@ -148,7 +148,7 @@ public class CardController {
         }
 
         Card card = cardRepository.findById(cardId).get();
-        card.setTitle(description);
+        card.setDescription(description);
         cardRepository.save(card);
         return ResponseEntity.ok(card);
     }
@@ -167,6 +167,16 @@ public class CardController {
         }
 
         Card card = cardRepository.findById(cardId).get();
+
+        List<Card> cards = cardRepository.findByColumnIdAndPositionGreaterThan(card.getColumnId(),card.getPosition());
+        for(Card c : cards) {
+            int pos = c.getPosition();
+            c.setPosition(pos - 1);
+        }
+
+        Integer maxPosition = cardRepository.findMaxPositionByColumnId(columnId);
+        card.setPosition(maxPosition+1);
+
         card.setColumnId(columnId);
         cardRepository.save(card);
         return ResponseEntity.ok(card);
