@@ -33,7 +33,7 @@ public class ViewSubtaskCtrl {
 
     public void setCardToShow(Card cardToShow) {
         this.cardToShow = cardToShow;
-//        Implement get subtasks
+//       TODO Implement get subtasks
     }
 
 
