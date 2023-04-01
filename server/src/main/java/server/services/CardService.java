@@ -16,6 +16,7 @@ public class CardService {
 
     /**
      * @param cardRepository the table which contains all the cards
+     * @param subtaskRepository the table which contains all subtasks
      */
     public CardService(CardRepository cardRepository, SubtaskRepository subtaskRepository) {
         this.cardRepository = cardRepository;
