@@ -116,7 +116,7 @@ public class MainCtrl {
         this.editList = new Scene(editList.getValue());
 
         this.boardOverview.setOnKeyPressed(boardOverviewCtrl.getOpenTaskDetails());
-        
+
         showClientConnect();
         primaryStage.show();
     }

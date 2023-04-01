@@ -116,7 +116,7 @@ public class BoardOverviewCtrl implements Initializable {
     private EventHandler<KeyEvent> openTaskDetails = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            if(event.getCode() == KeyCode.E)
+            if(event.isControlDown() && event.getCode() == KeyCode.E)
             {
                 showTaskDetails();
             }
