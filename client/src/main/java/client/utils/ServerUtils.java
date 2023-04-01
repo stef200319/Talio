@@ -18,6 +18,7 @@ package client.utils;
 import commons.Board;
 import commons.Card;
 import commons.Column;
+import commons.Subtask;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.GenericType;
@@ -234,6 +235,37 @@ public class ServerUtils {
     }
 
     /**
+     * Method that edits the description of a card
+     * @param c card to edit
+     * @param description new description
+     * @return new card entity
+     */
+    public Card editCardDescription(Card c, String description) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/editCardDescription/"+cardId+"/"+description)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Method that edits the title of a Subtask
+     * @param s Subtask to edit
+     * @param title new title
+     * @return new Subtask entity
+     */
+    public Subtask editSubtaskTitle(Subtask s, String title) {
+        long subtaskID = s.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("subtask/editSubtaskTitle/" + subtaskID + "/" + title)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(s, APPLICATION_JSON), Subtask.class);
+    }
+     /**
      * Method that returns a card by its id
      * @param id id of the card
      * @return the card object corresponding to that id
