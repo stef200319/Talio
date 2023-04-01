@@ -115,7 +115,7 @@ public class MainCtrl {
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
 
-        this.taskDetails.setOnKeyPressed(taskDetailsCtrl.switchScene);
+        this.taskDetails.setOnKeyPressed(taskDetailsCtrl.getSwitchScene());
 
         showClientConnect();
         primaryStage.show();

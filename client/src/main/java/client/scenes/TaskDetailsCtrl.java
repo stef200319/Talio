@@ -6,8 +6,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class TaskDetailsCtrl {
 
@@ -26,17 +24,10 @@ public class TaskDetailsCtrl {
 
     }
 
-    /*public void initialize(URL url, ResourceBundle resourceBundle) {
-        listName.setOnKeyPressed(event -> {
-
-            if (event.getCode() == KeyCode.ESCAPE) {
-                showBoardOverview();
-            }
-
-        });
-    }*/
-
-    EventHandler<KeyEvent> switchScene = new EventHandler<KeyEvent>() {
+    /**
+     *
+     */
+    private EventHandler<KeyEvent> switchScene = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
             if(event.getCode() == KeyCode.ESCAPE)
@@ -46,6 +37,13 @@ public class TaskDetailsCtrl {
         }
     };
 
+    /**
+     *
+     * @return
+     */
+    public EventHandler<KeyEvent> getSwitchScene() {
+        return switchScene;
+    }
 
     /**
      * show the board overview
