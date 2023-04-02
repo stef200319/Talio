@@ -108,7 +108,7 @@ public class BoardOverviewCtrl implements Initializable {
     /**
      * Method that shows the edit board title page
      */
-    public void editBoardTitle(){mainCtrl.showEditBoardTitle();}
+    public void editBoardTitle(){mainCtrl.showEditBoardTitle(boardID);}
 
     /**
      * Method that shows the create board page
