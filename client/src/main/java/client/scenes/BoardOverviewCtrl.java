@@ -30,6 +30,7 @@ public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
     private long boardID = Long.MIN_VALUE;
 
     @FXML
@@ -149,6 +150,11 @@ public class BoardOverviewCtrl implements Initializable {
     }
     public void showHelpScreen()
     {
+        //Scene scene = mainCtrl
+        System.out.println(mainCtrl.getPreviousSceneTitle()); //THIS IS BOARD OVERVIEW //
+        //send to MainCtrl(done) and from MainCtrl to HelpCtrl
+        mainCtrl.setPreviousScene(mainCtrl.getPreviousScene());
+        mainCtrl.setPreviousSceneTitle(mainCtrl.getPreviousSceneTitle());
         mainCtrl.getPreviousScene();
         mainCtrl.getPreviousSceneTitle();
         mainCtrl.showHelpScreen();

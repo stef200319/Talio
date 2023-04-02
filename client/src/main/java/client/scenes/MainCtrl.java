@@ -69,6 +69,8 @@ public class MainCtrl {
 
     private Scene previousScene;
 
+    private String title;
+
 
     /**
      * @param primaryStage
@@ -160,6 +162,7 @@ public class MainCtrl {
 
         showClientConnect();
         primaryStage.show();
+        this.previousScene = primaryStage.getScene();
     }
 
 
@@ -302,12 +305,15 @@ public class MainCtrl {
 
     public void showPreviousScreen()
     {
-
-        primaryStage.setTitle(getPreviousSceneTitle());
-        primaryStage.setScene(getPreviousScene());
+        //System.out.println(getPreviousSceneTitle());
+        primaryStage.setTitle(getPrevPrevSceneTitle());
+        primaryStage.setScene(getPrevPrevScene());
 
     }
 
+    public void setPreviousScene(Scene scene){this.previousScene = scene;
+        System.out.println(primaryStage.getTitle());}
+    public void setPreviousSceneTitle(String title){this.title = title;}
     public Scene getPreviousScene()
     {
         return primaryStage.getScene();
@@ -317,5 +323,11 @@ public class MainCtrl {
     {
         return primaryStage.getTitle();
     }
+
+    public Scene getPrevPrevScene(){return this.previousScene;}
+
+    public String getPrevPrevSceneTitle(){return this.title;}
+
+
 
 }

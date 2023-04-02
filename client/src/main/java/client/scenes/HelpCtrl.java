@@ -44,7 +44,13 @@ public class HelpCtrl {
         }
 
     };
-
+    public Scene getPreviousScene()
+    {
+        return null;
+    }
+    public void setPreviousScene(Scene scene){
+        this.previousScene = getPreviousScene();
+    }
     public EventHandler<KeyEvent> getBackToPreviousScene()
     {
         return backToPreviousScene;
