@@ -68,11 +68,12 @@ public class Main extends Application {
         var viewSubtasks = FXML.load(ViewSubtaskCtrl.class, "client", "scenes", "ViewCardSubtasks.fxml");
         var editSubtaskTitle = FXML.load(EditSubtaskTitleCtrl.class, "client", "scenes",
                 "EditSubtaskTitle.fxml");
+        var customizeCard = FXML.load(CustomizeCardCtrl.class, "client", "scenes", "CustomizeCard.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
                 addTask, taskManagement, workspace,createBoard, editCardTitle, editCardDescription, editList,
-                viewSubtasks, editSubtaskTitle);
+                viewSubtasks, customizeCard, editSubtaskTitle);
 
 
     }

@@ -251,6 +251,107 @@ public class ServerUtils {
     }
 
     /**
+     * Method that edits the Background Colour of a card
+     * @param c card to edit
+     * @param bgColour new Background Colour
+     * @return new card entity
+     */
+    public Card editCardBackgroundColour(Card c, String bgColour) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/editCardBackgroundColour/"+cardId+"/"+bgColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Method that edits the Border Colour of a card
+     * @param c card to edit
+     * @param borderColour new Border Colour
+     * @return new card entity
+     */
+    public Card editCardBorderColour(Card c, String borderColour) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/editCardBorderColour/"+cardId+"/"+borderColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
+
+    /**
+     * Method that edits the Font-type of a card
+     * @param c card to edit
+     * @param fontType new Font-type
+     * @return new card entity
+     */
+    public Card editCardFontType(Card c, String fontType) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/editCardFontType/"+cardId+"/"+fontType)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Method that edits the Font Boldness of a card
+     * @param c card to edit
+     * @param fontStyleBold new Font Boldness
+     * @return new card entity
+     */
+    public Card editCardFontStyleBold(Card c, boolean fontStyleBold) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/editCardFontStyleBold/"+cardId+"/"+fontStyleBold)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
+
+    /**
+     * Method that edits the Font Italicness of a card
+     * @param c card to edit
+     * @param fontStyleItalic new Font Italicness
+     * @return new card entity
+     */
+    public Card editCardFontStyleItalic(Card c, boolean fontStyleItalic) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/editCardFontStyleItalic/"+cardId+"/"+fontStyleItalic)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Method that edits the Font Colour of a card
+     * @param c card to edit
+     * @param fontColour new Font Font Colour
+     * @return new card entity
+     */
+    public Card editCardFontColour(Card c, String fontColour) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/editCardFontColour/"+cardId+"/"+fontColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
+
+
+
+    /**
      * Method that edits the title of a Subtask
      * @param s Subtask to edit
      * @param title new title

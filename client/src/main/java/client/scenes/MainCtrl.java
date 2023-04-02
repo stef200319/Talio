@@ -59,6 +59,9 @@ public class MainCtrl {
     private EditSubtaskTitleCtrl editSubtaskTitleCtrl;
     private Scene editSubtaskTitle;
 
+    private CustomizeCardCtrl customizeCardCtrl;
+    private Scene customizeCard;
+
     /**
      * @param primaryStage
      * @param add
@@ -73,6 +76,7 @@ public class MainCtrl {
      * @param editCardDescription
      * @param editList
      * @param viewSubtask
+     * @param customizeCard
      * @param editSubtaskTitle
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
@@ -85,6 +89,7 @@ public class MainCtrl {
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
                            Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
+                           Pair<CustomizeCardCtrl, Parent> customizeCard,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle) {
 
 
@@ -129,6 +134,9 @@ public class MainCtrl {
 
         this.editSubtaskTitleCtrl = editSubtaskTitle.getKey();
         this.editSubtaskTitle = new Scene(editSubtaskTitle.getValue());
+
+        this.customizeCardCtrl = customizeCard.getKey();
+        this.customizeCard = new Scene(customizeCard.getValue());
 
 
         showClientConnect();
@@ -251,6 +259,17 @@ public class MainCtrl {
         editCardDescriptionCtrl.setCardToShow(cardToShow);
         primaryStage.setTitle("Edit Card Description");
         primaryStage.setScene(editCardDescription);
+    }
+
+
+    /**
+     * Show edit Card Customization Page
+     * @param cardToShow Card whose Customization needs to be edited
+     */
+    public void showCustomizeCard(Card cardToShow) {
+        customizeCardCtrl.setCardToShow(cardToShow);
+        primaryStage.setTitle("Customize Card");
+        primaryStage.setScene(customizeCard);
     }
 
 }
