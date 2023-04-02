@@ -130,10 +130,14 @@ public class MainCtrl {
         this.editList = new Scene(editList.getValue());
 
 
+
+        this.taskDetails.setOnKeyPressed(taskDetailsCtrl.getBackToOverview());
+
         this.addTask.setOnKeyPressed(addTaskCtrl.getOpenTaskDetails());
 
         this.editBoardTitleCtrl = editBoardTitle.getKey();
         this.editBoardTitle = new Scene(editBoardTitle.getValue());
+
 
 
         this.viewSubtaskCtrl = viewSubtask.getKey();
