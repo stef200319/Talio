@@ -3,16 +3,19 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Card;
+import commons.Subtask;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class EditCardTitleCtrl {
+public class EditSubtaskTitleCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     private Card cardToShow;
+
+    private Subtask subtaskToShow;
 
     @FXML
     private Label currentTitle;
@@ -28,7 +31,7 @@ public class EditCardTitleCtrl {
      * @param mainCtrl the main controller
      */
     @Inject
-    public EditCardTitleCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public EditSubtaskTitleCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server=server;
         this.mainCtrl=mainCtrl;
     }
@@ -39,7 +42,15 @@ public class EditCardTitleCtrl {
      */
     public void setCardToShow(Card cardToShow) {
         this.cardToShow = cardToShow;
-        this.currentTitle.setText(cardToShow.getTitle());
+    }
+
+    /**
+     * Sets the Title of the current Subtask which will be displayed
+     * @param subtaskToShow the Subtask whose current Title needs to be shown
+     */
+    public void setSubtaskToShow(Subtask subtaskToShow) {
+        this.subtaskToShow = subtaskToShow;
+        this.currentTitle.setText(subtaskToShow.getTitle());
     }
 
     /**
@@ -59,7 +70,7 @@ public class EditCardTitleCtrl {
             return l;
         }
         else{
-            return "---";
+            return "Unnamed Subtask";
         }
     }
 
@@ -68,7 +79,7 @@ public class EditCardTitleCtrl {
      */
     public void confirm() {
         if(getTitle() != null) {
-            server.editCardTitle(cardToShow, getTitle());
+            server.editSubtaskTitle(subtaskToShow, getTitle());
             newTitle.clear();
             mainCtrl.showTaskDetails(cardToShow);
         }

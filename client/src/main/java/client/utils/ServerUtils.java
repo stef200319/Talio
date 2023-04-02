@@ -18,6 +18,7 @@ package client.utils;
 import commons.Board;
 import commons.Card;
 import commons.Column;
+import commons.Subtask;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.GenericType;
@@ -64,6 +65,20 @@ public class ServerUtils {
     }
 
     /**
+     * Fetches the boards to be displayed on a workspace
+     * @return the list of boards on the server
+     */
+    public List<Board> getAllBoardsWithoutServers() {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/getAllBoards")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<Board>>() {});
+    }
+
+
+    /**
      * Fetches the cards to be displayed in a column
      * @param columnID the id of the column
      * @return the list of cards in the column
@@ -77,18 +92,32 @@ public class ServerUtils {
             .get(new GenericType<List<Card>>() {});
     }
 
-     /**
-      * Adds a column to the database
+    /**
+     * Fetch a board from database from its id
+     * @param boardID the id of the board
+     * @return a board
+     */
+    public Board getBoardByID(long boardID) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("board/getBoardByBoardId/"+boardID)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<Board>() {});
+    }
+
+    /**
+     * Adds a column to the database
      * @param column the column to add to the database
+     * @param boardID boardID of the board of column
      * @return new Column to database
      */
 
-    public Column addColumn(Column column) {
+    public Column addColumn(Column column, long boardID) {
         String title = column.getTitle();
-        Long boardId = column.getBoardId();
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)
-                .path("column/addColumn/" + title + "/" + boardId)
+                .path("column/addColumn/" + title + "/" + boardID)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .post(Entity.entity(column, APPLICATION_JSON), Column.class);
@@ -158,6 +187,22 @@ public class ServerUtils {
     }
 
     /**
+     * Method that deletes a board
+     * @param b board to delete
+     * @return response
+     */
+
+    public Response deleteBoard(Board b) {
+        long boardID = b.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("board/deleteBoard/" + boardID)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .delete();
+    }
+
+    /**
      * Method that edits the title of a column
      * @param c column to edit
      * @param title new title
@@ -187,6 +232,81 @@ public class ServerUtils {
             .request(APPLICATION_JSON)
             .accept(APPLICATION_JSON)
             .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Method that edits the description of a card
+     * @param c card to edit
+     * @param description new description
+     * @return new card entity
+     */
+    public Card editCardDescription(Card c, String description) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/editCardDescription/"+cardId+"/"+description)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Method that edits the title of a Subtask
+     * @param s Subtask to edit
+     * @param title new title
+     * @return new Subtask entity
+     */
+    public Subtask editSubtaskTitle(Subtask s, String title) {
+        long subtaskID = s.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("subtask/editSubtaskTitle/" + subtaskID + "/" + title)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(s, APPLICATION_JSON), Subtask.class);
+    }
+     /**
+     * Method that returns a card by its id
+     * @param id id of the card
+     * @return the card object corresponding to that id
+     */
+    public Card getCardById(Long id) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("card/getCardByCardId/" + id)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<Card>()  {});
+    }
+
+    /**
+     * Method that changes the positionj of a card in a column
+     * @param id the id of the card to be changed
+     * @param pos new position of the card
+     * @return the new card with updated position
+     */
+    public Card editCardPosition(long id, int pos) {
+        return  ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("card/editCardPosition/" + id + "/" + pos)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .put(Entity.entity(getCardById(id), APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Method that changes the column a card is attached to
+     * @param cardId id of the card to be changed
+     * @param columnId id of the column the card will be moved to
+     * @return the new card with an updated column
+     */
+    public Card editCardColumn(long cardId, long columnId) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("card/editCardColumn/" + cardId + "/" + columnId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .put(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
     }
 
 }

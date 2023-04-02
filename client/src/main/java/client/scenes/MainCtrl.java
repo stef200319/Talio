@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import commons.Card;
 import commons.Column;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -53,6 +54,11 @@ public class MainCtrl {
     private EditListCtrl editListCtrl;
     private Scene editList;
 
+    private ViewSubtaskCtrl viewSubtaskCtrl;
+    private Scene viewSubtask;
+    private EditSubtaskTitleCtrl editSubtaskTitleCtrl;
+    private Scene editSubtaskTitle;
+
     /**
      * @param primaryStage
      * @param add
@@ -66,6 +72,8 @@ public class MainCtrl {
      * @param editCardTitle
      * @param editCardDescription
      * @param editList
+     * @param viewSubtask
+     * @param editSubtaskTitle
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -76,7 +84,8 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-                           Parent> editList) {
+                           Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
+                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle) {
 
 
         this.primaryStage = primaryStage;
@@ -115,6 +124,12 @@ public class MainCtrl {
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
 
+        this.viewSubtaskCtrl = viewSubtask.getKey();
+        this.viewSubtask = new Scene(viewSubtask.getValue());
+
+        this.editSubtaskTitleCtrl = editSubtaskTitle.getKey();
+        this.editSubtaskTitle = new Scene(editSubtaskTitle.getValue());
+
 
         showClientConnect();
         primaryStage.show();
@@ -145,8 +160,10 @@ public class MainCtrl {
 
     /**
      * Show add list page
+     * @param boardID boardID of list's board
      */
-    public void showListAdd() {
+    public void showListAdd(Long boardID) {
+        addListCtrl.setBoardToAddId(boardID);
         primaryStage.setTitle("Adding List");
         primaryStage.setScene(addList);
         //add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
@@ -154,16 +171,21 @@ public class MainCtrl {
 
     /**
      * Show all the boards
+     * @param boardID boardID of current board
      */
-    public void showBoardOverview() {
+    public void showBoardOverview(Long boardID) {
+        boardOverviewCtrl.setBoardID(boardID);
         primaryStage.setTitle("Board Overview");
+        boardOverviewCtrl.refresh();
         primaryStage.setScene(boardOverview);
     }
 
     /**
      * Show board create
+     * @param boardID boardID of the board to be in
      */
-    public void showCreateBoard() {
+    public void showCreateBoard(long boardID) {
+        createBoardCtrl.setBoardID(boardID);
         primaryStage.setTitle("Create board");
         primaryStage.setScene(createBoard);
     }
@@ -178,8 +200,10 @@ public class MainCtrl {
 
     /**
      * Show the task details
+     * @param card Card whose details have to be shown
      */
-    public void showTaskDetails() {
+    public void showTaskDetails(Card card) {
+        taskDetailsCtrl.setCardToShow(card);
         primaryStage.setTitle("Task Details");
         primaryStage.setScene(taskDetails);
     }
@@ -187,9 +211,11 @@ public class MainCtrl {
     /**
      * Show add task page specific to a column
      * @param columnID columnId of the column to show add task
+     * @param boardID boardID of card's board
      */
-    public void showAddTask(Long columnID) {
+    public void showAddTask(Long columnID, Long boardID) {
         addTaskCtrl.setColumnToAddId(columnID);
+        addTaskCtrl.setBoardID(boardID);
         primaryStage.setTitle("Add Task");
         primaryStage.setScene(addTask);
     }
@@ -197,11 +223,34 @@ public class MainCtrl {
     /**
      * Show edit list page
      * @param c the list which will be changed
+     * @param boardID boardID of the board to be in
      */
-    public void showEditList(Column c) {
+    public void showEditList(Column c, long boardID) {
+        editListCtrl.setBoardID(boardID);
         editListCtrl.setColumnToEdit(c);
         primaryStage.setTitle("Edit Column");
         primaryStage.setScene(editList);
+    }
+
+
+    /**
+     * Show edit Card Title Page
+     * @param cardToShow Card whose Title needs to be edited
+     */
+    public void showEditCardTitle(Card cardToShow) {
+        editCardTitleCtrl.setCardToShow(cardToShow);
+        primaryStage.setTitle("Edit Card Title");
+        primaryStage.setScene(editCardTitle);
+    }
+
+    /**
+     * Show edit Card Description Page
+     * @param cardToShow Card whose Description needs to be edited
+     */
+    public void showEditCardDescription(Card cardToShow) {
+        editCardDescriptionCtrl.setCardToShow(cardToShow);
+        primaryStage.setTitle("Edit Card Description");
+        primaryStage.setScene(editCardDescription);
     }
 
 }
