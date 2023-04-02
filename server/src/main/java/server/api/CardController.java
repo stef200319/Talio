@@ -4,9 +4,9 @@ import commons.Card;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.SubtaskRepository;
 import server.services.ColumnService;
 import server.services.CardService;
+import server.services.SubtaskService;
 
 import java.util.List;
 
@@ -15,19 +15,19 @@ import java.util.List;
 public class CardController {
     private final CardService cardService;
     private final ColumnService columnService;
-    private final SubtaskRepository subtaskRepository;
+    private final SubtaskService subtaskService;
 
 
     /**
-     * @param cardRepository the container storing all the data relating to cards
-     * @param columnRepository the container storing all the data relating to columns (lists)
-     * @param subtaskRepository the container storing all the subtasks
+     * @param cardService the service for card operations
+     * @param columnService the service for column (list) operations
+     * @param subtaskService the service for subtask operations
      */
-    public CardController(CardService cardRepository, ColumnService columnRepository,
-                                                    SubtaskRepository subtaskRepository) {
-        this.cardService = cardRepository;
-        this.columnService = columnRepository;
-        this.subtaskRepository = subtaskRepository;
+    public CardController(CardService cardService, ColumnService columnService,
+                                                    SubtaskService subtaskService) {
+        this.cardService = cardService;
+        this.columnService = columnService;
+        this.subtaskService = subtaskService;
     }
 
     /**
@@ -86,19 +86,13 @@ public class CardController {
     public ResponseEntity<Card> createSubtask(@PathVariable(value = "cardId") long cardId,
                                               @PathVariable(value = "subtaskTitle") String subtaskTitle) {
 
-        if (subtaskTitle == null || !cardService.existsById(cardId)) {
+        if (subtaskTitle == null) {
             return ResponseEntity.badRequest().build();
         }
-        Card card = cardService.getById(cardId);
 
-        // Create a new subtask
-        Subtask newSubtask = new Subtask(subtaskTitle);
-        subtaskRepository.save(newSubtask);
-
-        // Update card in the database
-        card.getSubtasks().add(newSubtask);
-        cardService.saveCard(card);
-
+        Card card = cardService.createSubtask(cardId, subtaskTitle);
+        if(card==null)
+            return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(card);
     }
 
@@ -112,11 +106,13 @@ public class CardController {
     @PutMapping("/editCardTitle/{cardId}/{title}")
     @ResponseBody public ResponseEntity<Card> editCardTitle(@PathVariable("cardId") long cardId,
                                                 @PathVariable("title") String title){
-        if (title == null || !cardService.existsById(cardId)) {
+        if (title == null) {
             return ResponseEntity.badRequest().build();
         }
 
         Card card = cardService.update(title, cardId);
+        if(card == null)
+            return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(card);
     }
 
@@ -202,6 +198,19 @@ public class CardController {
         if(cardToDelete==null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(cardToDelete);
+    }
+
+    /**
+     * Get all the subtasks from a card
+     * @param cardId id of the card to get the subtasks from
+     * @return a list with all the corresponding subtasks
+     */
+    @GetMapping("/getSubtasks/{cardId}")
+    @ResponseBody public ResponseEntity<List<Subtask>> getSubtasksByCardId(@PathVariable("cardId") long cardId) {
+        List<Subtask> subtasks = cardService.getAllSubtasksByCardId(cardId);
+        if(subtasks == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(subtasks);
     }
 
 }

@@ -1,6 +1,7 @@
 
 package server.api;
 
+import commons.Subtask;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -394,6 +395,19 @@ public class TestCardRepository implements CardRepository {
         }
 
         return cardList;
+    }
+
+    /**
+     * @param cardId id of the card to get the subtasks from
+     * @return list of subtasks
+     */
+    @Override
+    public List<Subtask> findSubtasksByCardId(Long cardId) {
+        for(int i=0;i<cards.size();i++) {
+            if(cards.get(i)!=null && cards.get(i).getId()==cardId)
+                return cards.get(i).getSubtasks();
+        }
+        return null;
     }
 
 }
