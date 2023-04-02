@@ -255,10 +255,13 @@ public class MainCtrl {
         primaryStage.setTitle("Edit Column");
         primaryStage.setScene(editList);
     }
+
     /**
      * Show the edit board title page
+     * @param boardID boardID of the board
      */
-    public void showEditBoardTitle(){
+    public void showEditBoardTitle(long boardID){
+        editBoardTitleCtrl.setBoardToEditID(boardID);
         primaryStage.setTitle("Edit Board Title");
         primaryStage.setScene(editBoardTitle);
     }

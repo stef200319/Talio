@@ -1,19 +1,23 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
-import commons.Board;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
+import javafx.scene.input.KeyCode;
 
-public class EditBoardTitleCtrl {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditBoardTitleCtrl implements Initializable {
 
     private final ServerUtils server;
 
     private final MainCtrl mainCtrl;
 
-    private Board boardToEdit;
+    private long boardToEditID;
     @FXML
     private TextField newTitle;
 
@@ -27,22 +31,47 @@ public class EditBoardTitleCtrl {
         this.server=server;
         this.mainCtrl=mainCtrl;
     }
+
+    /**
+     * Method that is once executed when the application starts that includes event listener
+     *
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        newTitle.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                confirm();
+            }
+            else if (event.getCode() == KeyCode.ESCAPE) {
+                cancel();
+            }
+        });
+    }
+
     /**
      * cancel edit and return to overview
      */
     public void cancel(){
         newTitle.clear();
-        mainCtrl.showOverview();
+        mainCtrl.showBoardOverview(boardToEditID);
     }
 
     /**
-     * board to be edited
-     * @param board
+     * Set the boardID of the board
+     * @param boardToEditID boardID
      */
-    public void setBoardToEdit(Board board)
-    {
-        this.boardToEdit = board;
+
+    public void setBoardToEditID(long boardToEditID) {
+        this.boardToEditID = boardToEditID;
     }
+
     /**
      * will return a string with the new title
      * @return new title
@@ -59,9 +88,9 @@ public class EditBoardTitleCtrl {
      */
     public void confirm() {
         if(getTitle() != null) {
-            server.editBoardTitle(boardToEdit, getTitle());
+            server.editBoardTitle(server.getBoardByID(boardToEditID), getTitle());
             newTitle.clear();
-            mainCtrl.showOverview();
+            mainCtrl.showBoardOverview(boardToEditID);
         }
     }
 }

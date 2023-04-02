@@ -245,7 +245,7 @@ public class ServerUtils {
         long boardId = b.getId();
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)
-                .path("board/editBoardTitle/" + boardId + "/" + title)
+                .path("board/editBoardTitle/" + title + "/" + boardId)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .put(Entity.entity(b, APPLICATION_JSON), Board.class);
