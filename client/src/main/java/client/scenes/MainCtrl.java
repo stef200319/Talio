@@ -63,6 +63,13 @@ public class MainCtrl {
     private EditSubtaskTitleCtrl editSubtaskTitleCtrl;
     private Scene editSubtaskTitle;
 
+    private HelpCtrl helpCtrl;
+
+    private Scene help;
+
+    private Scene previousScene;
+
+
     /**
      * @param primaryStage
      * @param add
@@ -91,7 +98,7 @@ public class MainCtrl {
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
                            Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle
                            , Pair<ViewSubtaskCtrl, Parent> viewSubtask,
-                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle) {
+                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle, Pair<HelpCtrl, Parent> help) {
 
 
         this.primaryStage = primaryStage;
@@ -129,8 +136,6 @@ public class MainCtrl {
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
 
-
-
         this.taskDetails.setOnKeyPressed(taskDetailsCtrl.getBackToOverview());
 
         this.addTask.setOnKeyPressed(addTaskCtrl.getOpenTaskDetails());
@@ -146,7 +151,12 @@ public class MainCtrl {
         this.editSubtaskTitleCtrl = editSubtaskTitle.getKey();
         this.editSubtaskTitle = new Scene(editSubtaskTitle.getValue());
 
+        this.helpCtrl = help.getKey();
+        this.help = new Scene(help.getValue());
 
+        this.boardOverview.setOnKeyPressed(boardOverviewCtrl.getOpenHelp());
+
+        this.help.setOnKeyPressed(helpCtrl.getBackToPreviousScene());
 
         showClientConnect();
         primaryStage.show();
@@ -282,6 +292,30 @@ public class MainCtrl {
         editCardDescriptionCtrl.setCardToShow(cardToShow);
         primaryStage.setTitle("Edit Card Description");
         primaryStage.setScene(editCardDescription);
+    }
+
+    public void showHelpScreen()
+    {
+        primaryStage.setTitle("Help");
+        primaryStage.setScene(help);
+    }
+
+    public void showPreviousScreen(Scene prev, String title)
+    {
+
+        primaryStage.setTitle(title);
+        primaryStage.setScene(prev);
+
+    }
+
+    public Scene getPreviousScene()
+    {
+        return primaryStage.getScene();
+    }
+
+    public String getPreviousSceneTitle()
+    {
+        return primaryStage.getTitle();
     }
 
 }

@@ -131,12 +131,33 @@ public class BoardOverviewCtrl implements Initializable {
             createList(columns.get(i));
     }
 
+    private EventHandler<KeyEvent> openHelp = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            if(event.isControlDown() && event.getCode()==KeyCode.SLASH)
+            {
+                showHelpScreen();
+
+            }
+        }
+    };
+
+    public EventHandler<KeyEvent> getOpenHelp()
+    {
+        return openHelp;
+    }
+    public void showHelpScreen()
+    {
+        mainCtrl.getPreviousScene();
+        mainCtrl.getPreviousSceneTitle();
+        mainCtrl.showHelpScreen();
+    }
+
+
     /**
      * Method that showcases the column on the board
      * @param c column to be showcased
      */
-
-
 
 
     @SuppressWarnings("checkstyle:MethodLength")
