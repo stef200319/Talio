@@ -129,14 +129,19 @@ public class MainCtrl {
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
 
+
+        this.addTask.setOnKeyPressed(addTaskCtrl.getOpenTaskDetails());
+
         this.editBoardTitleCtrl = editBoardTitle.getKey();
         this.editBoardTitle = new Scene(editBoardTitle.getValue());
+
 
         this.viewSubtaskCtrl = viewSubtask.getKey();
         this.viewSubtask = new Scene(viewSubtask.getValue());
 
         this.editSubtaskTitleCtrl = editSubtaskTitle.getKey();
         this.editSubtaskTitle = new Scene(editSubtaskTitle.getValue());
+
 
 
         showClientConnect();
@@ -216,6 +221,13 @@ public class MainCtrl {
         primaryStage.setScene(taskDetails);
     }
 
+    /**
+     * Show the task details
+     */
+    public void showDetailOfTask(){
+        primaryStage.setTitle("Task Details");
+        primaryStage.setScene(taskDetails);
+    }
     /**
      * Show add task page specific to a column
      * @param columnID columnId of the column to show add task

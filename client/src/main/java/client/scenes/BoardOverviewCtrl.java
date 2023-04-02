@@ -114,7 +114,6 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void createBoard() {mainCtrl.showCreateBoard(boardID);}
 
-
     /**
      * Method that refreshes the board
      */
