@@ -179,8 +179,7 @@ public class BoardOverviewCtrl implements Initializable {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                server.deleteColumn(c);
-                refresh();
+                mainCtrl.showConfirmDeleteColumn(c);
             }
         });
         Button editTitle = new Button("Edit");

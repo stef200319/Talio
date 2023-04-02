@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import commons.Board;
 import commons.Card;
 
 import commons.Column;
@@ -62,8 +63,13 @@ public class MainCtrl {
     private Scene viewSubtask;
     private EditSubtaskTitleCtrl editSubtaskTitleCtrl;
     private Scene editSubtaskTitle;
+    private ConfirmDeleteColumnCtrl confirmDeleteColumnCtrl;
+    private Scene confirmDeleteColumn;
+    private ConfirmDeleteBoardCtrl confirmDeleteBoardCtrl;
+    private Scene confirmDeleteBoard;
 
     /**
+     *
      * @param primaryStage
      * @param add
      * @param boardOverview
@@ -79,6 +85,8 @@ public class MainCtrl {
      * @param editBoardTitle
      * @param viewSubtask
      * @param editSubtaskTitle
+     * @param confirmDeleteColumn
+     * @param confirmDeleteBoard
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -89,10 +97,11 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle
-                           , Pair<ViewSubtaskCtrl, Parent> viewSubtask,
-                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle) {
-
+                           Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
+                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
+                           Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
+                           Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
+                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard) {
 
         this.primaryStage = primaryStage;
 
@@ -146,6 +155,12 @@ public class MainCtrl {
         this.editSubtaskTitleCtrl = editSubtaskTitle.getKey();
         this.editSubtaskTitle = new Scene(editSubtaskTitle.getValue());
 
+        this.confirmDeleteColumnCtrl = confirmDeleteColumn.getKey();
+        this.confirmDeleteColumn = new Scene(confirmDeleteColumn.getValue());
+
+        this.confirmDeleteBoardCtrl = confirmDeleteBoard.getKey();
+        this.confirmDeleteBoard = new Scene(confirmDeleteBoard.getValue());
+
 
 
         showClientConnect();
@@ -165,6 +180,7 @@ public class MainCtrl {
      */
     public void showWorkspace(){
         primaryStage.setTitle("Workspace");
+        workspaceCtrl.refresh();
         primaryStage.setScene(workspace);
     }
     /**
@@ -285,6 +301,26 @@ public class MainCtrl {
         editCardDescriptionCtrl.setCardToShow(cardToShow);
         primaryStage.setTitle("Edit Card Description");
         primaryStage.setScene(editCardDescription);
+    }
+
+    /**
+     * Shows confirm delete column page
+     * @param c Column which would be deleted
+     */
+    public void showConfirmDeleteColumn(Column c) {
+        confirmDeleteColumnCtrl.setColumnToDelete(c);
+        primaryStage.setTitle("Confirm Delete");
+        primaryStage.setScene(confirmDeleteColumn);
+    }
+
+    /**
+     * Shows confirm delete board page
+     * @param b Board which would be deleted
+     */
+    public void showConfirmDeleteBoard(Board b) {
+        confirmDeleteBoardCtrl.setBoardToDelete(b);
+        primaryStage.setTitle("Confirm Delete");
+        primaryStage.setScene(confirmDeleteBoard);
     }
 
 }
