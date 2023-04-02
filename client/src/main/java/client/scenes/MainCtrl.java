@@ -300,11 +300,11 @@ public class MainCtrl {
         primaryStage.setScene(help);
     }
 
-    public void showPreviousScreen(Scene prev, String title)
+    public void showPreviousScreen()
     {
 
-        primaryStage.setTitle(title);
-        primaryStage.setScene(prev);
+        primaryStage.setTitle(getPreviousSceneTitle());
+        primaryStage.setScene(getPreviousScene());
 
     }
 

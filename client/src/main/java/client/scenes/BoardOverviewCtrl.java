@@ -134,7 +134,7 @@ public class BoardOverviewCtrl implements Initializable {
     private EventHandler<KeyEvent> openHelp = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            if(event.isControlDown() && event.getCode()==KeyCode.SLASH)
+            if(event.isShiftDown() && event.getCode()==KeyCode.SLASH)
             {
                 showHelpScreen();
 
