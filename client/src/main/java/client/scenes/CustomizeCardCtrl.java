@@ -36,6 +36,9 @@ public class CustomizeCardCtrl implements Initializable {
     @FXML
     private CheckBox cardFontStyleItalic;
 
+    @FXML
+    private ColorPicker cardFontColourPicker;
+
 
 
 
@@ -71,6 +74,12 @@ public class CustomizeCardCtrl implements Initializable {
         }
         this.cardBorderColourPicker.setValue(Color.web(bordercolourString));
 
+        String fontColourString = cardToShow.getFontColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.cardFontColourPicker.setValue(Color.web(fontColourString));
+
         cardFontType.setValue(cardToShow.getFontType());
         cardFontStyleBold.setSelected(cardToShow.isFontStyleBold());
         cardFontStyleItalic.setSelected(cardToShow.isFontStyleItalic());
@@ -83,25 +92,50 @@ public class CustomizeCardCtrl implements Initializable {
         mainCtrl.showTaskDetails(cardToShow);
     }
 
+
+    /**
+     * @return Get a string representation of the Cards New Background colour in Hexcode
+     */
     public String getNewCardBgColour(){
         return colourToHexCode(this.cardBgColourPicker.getValue());
     }
-
+    /**
+     * @return Get a string representation of the Cards New Border colour in Hexcode
+     */
     public String getNewCardBorderColour(){
         return colourToHexCode(this.cardBorderColourPicker.getValue());
     }
-
+    /**
+     * @return Get a string representation of the Cards New Font colour in Hexcode
+     */
+    public String getNewCardFontColour(){
+        return colourToHexCode(this.cardFontColourPicker.getValue());
+    }
+    /**
+     * @return Get a Boolean representation of whether the Card has been edited to be Bold
+     */
     public boolean getCardFontStyleBold(){
         return cardFontStyleBold.isSelected();
     }
+    /**
+     * @return Get a Boolean representation of whether the Card has been edited to be Italic
+     */
     public boolean getCardFontStyleItalic(){
         return cardFontStyleItalic.isSelected();
     }
-
+    /**
+     * @return Get a string representation of the Cards New Font Type
+     */
     public String getCardFontType(){
         return cardFontType.getValue();
     }
 
+
+    /**
+     * Convert a colour to a Hexcode String representation
+     * @param colour Colour to be converted to Hexcode
+     * @return Hexcode value of the colour as a String
+     */
     public static String colourToHexCode(Color colour) {
         return String.format("#%02X%02X%02X",
                 (int) (colour.getRed() * 255),
@@ -118,6 +152,7 @@ public class CustomizeCardCtrl implements Initializable {
         server.editCardFontType(cardToShow, getCardFontType());
         server.editCardFontStyleBold(cardToShow, getCardFontStyleBold());
         server.editCardFontStyleItalic(cardToShow, getCardFontStyleItalic());
+        server.editCardFontColour(cardToShow, getNewCardFontColour());
 
         mainCtrl.showTaskDetails(cardToShow);
     }

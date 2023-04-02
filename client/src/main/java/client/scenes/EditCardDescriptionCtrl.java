@@ -71,7 +71,7 @@ public class EditCardDescriptionCtrl {
         if (getDescription() != "") {
             server.editCardDescription(cardToShow, getDescription());
         }
-            newDescription.clear();
-            mainCtrl.showTaskDetails(cardToShow);
+        newDescription.clear();
+        mainCtrl.showTaskDetails(cardToShow);
     }
 }

@@ -1794,3 +1794,54 @@ select card0_.id as id1_1_, card0_.bg_colour as bg_colou2_1_, card0_.border_colo
 2023-04-01 12:05:23 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD" not found; SQL statement:
 select card0_.id as id1_1_, card0_.bg_colour as bg_colou2_1_, card0_.border_colour as border_c3_1_, card0_.column_id as column_i4_1_, card0_.description as descript5_1_, card0_.position as position6_1_, card0_.title as title7_1_ from card card0_ where card0_.column_id=? order by card0_.position ASC [42102-200]
+2023-04-01 22:16:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:43 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD_SUBTASKS" not found; SQL statement:
+select subtasks0_.card_id as card_id1_2_0_, subtasks0_.subtasks_id as subtasks2_2_0_, subtask1_.id as id1_4_1_, subtask1_.done as done2_4_1_, subtask1_.title as title3_4_1_ from card_subtasks subtasks0_ inner join subtask subtask1_ on subtasks0_.subtasks_id=subtask1_.id where subtasks0_.card_id=? [42102-200]
+2023-04-01 22:16:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD" not found; SQL statement:
+select card0_.id as id1_1_, card0_.bg_colour as bg_colou2_1_, card0_.border_colour as border_c3_1_, card0_.column_id as column_i4_1_, card0_.description as descript5_1_, card0_.font_colour as font_col6_1_, card0_.font_style_bold as font_sty7_1_, card0_.font_style_italic as font_sty8_1_, card0_.font_type as font_typ9_1_, card0_.position as positio10_1_, card0_.title as title11_1_ from card card0_ where card0_.column_id=? order by card0_.position ASC [42102-200]
+2023-04-01 22:16:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD" not found; SQL statement:
+select card0_.id as id1_1_, card0_.bg_colour as bg_colou2_1_, card0_.border_colour as border_c3_1_, card0_.column_id as column_i4_1_, card0_.description as descript5_1_, card0_.font_colour as font_col6_1_, card0_.font_style_bold as font_sty7_1_, card0_.font_style_italic as font_sty8_1_, card0_.font_type as font_typ9_1_, card0_.position as positio10_1_, card0_.title as title11_1_ from card card0_ where card0_.column_id=? order by card0_.position ASC [42102-200]
+2023-04-01 22:16:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD" not found; SQL statement:
+select card0_.id as id1_1_, card0_.bg_colour as bg_colou2_1_, card0_.border_colour as border_c3_1_, card0_.column_id as column_i4_1_, card0_.description as descript5_1_, card0_.font_colour as font_col6_1_, card0_.font_style_bold as font_sty7_1_, card0_.font_style_italic as font_sty8_1_, card0_.font_type as font_typ9_1_, card0_.position as positio10_1_, card0_.title as title11_1_ from card card0_ where card0_.column_id=? order by card0_.position ASC [42102-200]
+2023-04-01 22:16:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD" not found; SQL statement:
+select card0_.id as id1_1_, card0_.bg_colour as bg_colou2_1_, card0_.border_colour as border_c3_1_, card0_.column_id as column_i4_1_, card0_.description as descript5_1_, card0_.font_colour as font_col6_1_, card0_.font_style_bold as font_sty7_1_, card0_.font_style_italic as font_sty8_1_, card0_.font_type as font_typ9_1_, card0_.position as positio10_1_, card0_.title as title11_1_ from card card0_ where card0_.column_id=? order by card0_.position ASC [42102-200]
+2023-04-01 22:16:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD" not found; SQL statement:
+select card0_.id as id1_1_, card0_.bg_colour as bg_colou2_1_, card0_.border_colour as border_c3_1_, card0_.column_id as column_i4_1_, card0_.description as descript5_1_, card0_.font_colour as font_col6_1_, card0_.font_style_bold as font_sty7_1_, card0_.font_style_italic as font_sty8_1_, card0_.font_type as font_typ9_1_, card0_.position as positio10_1_, card0_.title as title11_1_ from card card0_ where card0_.column_id=? order by card0_.position ASC [42102-200]
+2023-04-01 22:16:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARD" not found; SQL statement:
+select card0_.id as id1_1_, card0_.bg_colour as bg_colou2_1_, card0_.border_colour as border_c3_1_, card0_.column_id as column_i4_1_, card0_.description as descript5_1_, card0_.font_colour as font_col6_1_, card0_.font_style_bold as font_sty7_1_, card0_.font_style_italic as font_sty8_1_, card0_.font_type as font_typ9_1_, card0_.position as positio10_1_, card0_.title as title11_1_ from card card0_ where card0_.column_id=? order by card0_.position ASC [42102-200]

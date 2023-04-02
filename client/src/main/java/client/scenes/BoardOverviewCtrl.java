@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -185,6 +186,7 @@ public class BoardOverviewCtrl implements Initializable {
                     cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
                     12);
             s.setFont(font);
+            s.setTextFill(Color.web(cards.get(i).getFontColour()));
 
             card.getChildren().add(s);
 
@@ -215,7 +217,6 @@ public class BoardOverviewCtrl implements Initializable {
 
             cardContainer.getChildren().add(card);
         }
-
         cardContainer.setPrefWidth(380); // Set preferred width to 380 pixels
         cardContainer.setPrefHeight(500); // Set preferred height to 500 pixels
         list.getChildren().add(cardContainer);

@@ -332,6 +332,22 @@ public class ServerUtils {
                 .put(Entity.entity(c, APPLICATION_JSON), Card.class);
     }
 
+    /**
+     * Method that edits the Font Colour of a card
+     * @param c card to edit
+     * @param fontColour new Font Font Colour
+     * @return new card entity
+     */
+    public Card editCardFontColour(Card c, String fontColour) {
+        long cardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/editCardFontColour/"+cardId+"/"+fontColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Card.class);
+    }
+
 
 
 

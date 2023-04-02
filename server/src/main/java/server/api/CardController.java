@@ -181,7 +181,7 @@ public class CardController {
      */
     @PutMapping("/editCardBorderColour/{cardId}/{borderColour}")
     @ResponseBody public ResponseEntity<Card> editCardBorderColour
-                    (@PathVariable("cardId") long cardId, @PathVariable("borderColour") String borderColour){
+    (@PathVariable("cardId") long cardId, @PathVariable("borderColour") String borderColour){
         if (borderColour == null || !cardRepository.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
@@ -250,6 +250,27 @@ public class CardController {
         cardRepository.save(card);
         return ResponseEntity.ok(card);
     }
+
+
+    /**Change the Font Colour of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param fontColour Font Colour which should replace the old Font Colour of the card
+     * @return receive a message indicating the Font Colour has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardFontColour/{cardId}/{fontColour}")
+    @ResponseBody public ResponseEntity<Card> editCardFontColour
+    (@PathVariable("cardId") long cardId, @PathVariable("fontColour") String fontColour){
+        if (!cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setFontColour(fontColour);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
 
 
 
