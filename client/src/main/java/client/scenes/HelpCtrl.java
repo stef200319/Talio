@@ -51,8 +51,8 @@ public class HelpCtrl {
     }
 
     public void showPreviousScene(){
-       // mainCtrl.showPreviousScreen();
-        mainCtrl.showOverview();
+        mainCtrl.showPreviousScreen();
+        //mainCtrl.showOverview();
     }
 
 }

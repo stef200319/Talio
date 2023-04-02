@@ -149,8 +149,8 @@ public class BoardOverviewCtrl implements Initializable {
     }
     public void showHelpScreen()
     {
-        //mainCtrl.getPreviousScene();
-        //mainCtrl.getPreviousSceneTitle();
+        mainCtrl.getPreviousScene();
+        mainCtrl.getPreviousSceneTitle();
         mainCtrl.showHelpScreen();
     }
 
