@@ -13,12 +13,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import commons.Card;
+import server.services.BoardService;
+import server.services.CardService;
+import server.services.ColumnService;
+import server.services.SubtaskService;
 
 
 class CardControllerTest {
     private TestCardRepository cardRepository;
     private TestColumnRepository columnRepository;
     private TestSubtaskRepository subtaskRepository;
+
+    private CardService cardService;
+    private ColumnService columnService;
+    private SubtaskService subtaskService;
     private CardController cardController;
 
     @BeforeEach
@@ -26,7 +34,12 @@ class CardControllerTest {
         this.columnRepository = new TestColumnRepository();
         this.cardRepository = new TestCardRepository();
         this.subtaskRepository = new TestSubtaskRepository();
-        cardController = new CardController(cardRepository, columnRepository,subtaskRepository);
+
+        cardService = new CardService(cardRepository, subtaskRepository);
+        columnService = new ColumnService(columnRepository);
+        subtaskService = new SubtaskService(subtaskRepository);
+
+        cardController = new CardController(cardService, columnService, subtaskService);
     }
 
 

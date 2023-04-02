@@ -4,9 +4,9 @@ import commons.Card;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.BoardRepository;
-import server.database.CardRepository;
-import server.database.ColumnRepository;
+import server.services.BoardService;
+import server.services.CardService;
+import server.services.ColumnService;
 
 import java.util.List;
 
@@ -14,43 +14,30 @@ import java.util.List;
 @RequestMapping("/column")
 public class ColumnController {
 
-    private final CardController cardController;
+    private final ColumnService columnService;
+    private final BoardService boardService;
+    private final CardService cardService;
 
-    private final ColumnRepository columnRepository;
-    private final BoardRepository boardRepository;
-    private final CardRepository cardRepository;
 
     /**
-     *
-     * @param columnRepository the data container which includes all the columns
-     * @param boardRepository the repository of the board -> used for checking whether boardId exists
-     * @param cardRepository the reopository of the cards
-     * @param cardController the controller which controls all card crud operations
+     * @param columnService the service used for the operations which use the column data access object
+     * @param boardService the service used for the operations which use the board data access object
+     * @param cardService the service used for the operations which use the card data access object
      */
-    public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository,
-                            CardRepository cardRepository, CardController cardController) {
-        this.columnRepository = columnRepository;
-        this.boardRepository = boardRepository;
-        this.cardRepository = cardRepository;
-        this.cardController = cardController;
+    public ColumnController(ColumnService columnService, BoardService boardService, CardService cardService) {
+        this.columnService = columnService;
+        this.boardService = boardService;
+        this.cardService = cardService;
     }
 
-    // I think this should just return List<Column>
+
     /**
      * @return all columns in the database
      */
-//    public List<Column> getAllColumns() {
-//        return columnRepository.findAll();
-//    }
     @GetMapping("/getAllColumns")
     @ResponseBody public ResponseEntity<List<Column>> getAllColumns() {
-        List<Column> columns = columnRepository.findAll();
-
-        if (columns.size() > 0) {
-            return ResponseEntity.ok(columns);
-        }
-
-        return ResponseEntity.notFound().build();
+        List<Column> columns = columnService.getAll();
+        return columns.size() > 0? ResponseEntity.ok(columns) : ResponseEntity.notFound().build();
     }
 
 
@@ -60,13 +47,8 @@ public class ColumnController {
      */
     @GetMapping("/getColumnByColumnId/{columnId}")
     @ResponseBody public ResponseEntity<Column> getColumnByColumnId(@PathVariable("columnId") long columnId) {
-        if (!columnRepository.existsById(columnId)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Column column = columnRepository.findById(columnId).get();
-        return ResponseEntity.ok(column);
-
+        Column column = columnService.getById(columnId);
+        return column != null?ResponseEntity.ok(column) : ResponseEntity.notFound().build();
     }
 
     /**
@@ -77,18 +59,12 @@ public class ColumnController {
     @PostMapping("/addColumn/{title}/{boardId}")
     @ResponseBody public ResponseEntity<Column> addColumn(@PathVariable("title") String title,
                                                         @PathVariable("boardId") Long boardId) {
-        if (title == null || !boardRepository.existsById(boardId)) {
+        if (title == null || !boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Integer maxPosition = columnRepository.findMaxPositionByBoardId(boardId);
-        int newPosition = maxPosition == null ? 1 : maxPosition + 1;
-
-        Column newColumn = new Column(title, boardId);
-        newColumn.setPosition(newPosition);
-
-        Column saved = columnRepository.save(newColumn);
-        return ResponseEntity.ok(saved);
+        Column column = columnService.add(title, boardId);
+        return ResponseEntity.ok(column);
     }
 
     /**
@@ -99,13 +75,11 @@ public class ColumnController {
     @PutMapping("/editColumnTitle/{columnId}/{title}")
     @ResponseBody public ResponseEntity<Column> editColumnTitle(@PathVariable("columnId") long columnId,
                                                                 @PathVariable("title") String title) {
-        if (!columnRepository.existsById(columnId)) {
+        if (!columnService.existsById(columnId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Column column = columnRepository.findById(columnId).get();
-        column.setTitle(title);
-        columnRepository.save(column);
+        Column column = columnService.update(title, columnId);
         return ResponseEntity.ok(column);
     }
 
@@ -115,34 +89,17 @@ public class ColumnController {
      */
     @DeleteMapping("/deleteColumn/{columnId}")
     @ResponseBody public ResponseEntity<Column> deleteColumn(@PathVariable("columnId") long columnId) {
-        if (!columnRepository.existsById(columnId)) {
+
+        Column deletedColumn = columnService.deleteByColumnId(columnId);
+
+        if (deletedColumn == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        Column columnToDelete = columnRepository.findById(columnId).get();
-        long boardId = columnToDelete.getBoardId();
-        Integer position = columnToDelete.getPosition();
-
         // Delete corresponding cards
-        List<Card> cards = getCardsByColumnId(columnId).getBody();
+        cardService.deleteByColumnId(columnId);
 
-        for (Card card : cards) {
-            cardController.deleteCard(card.getId());
-        }
-
-        // Delete the Column
-        columnRepository.deleteById(columnId);
-
-        // Decrement the positions of all Columns in front of the deleted Column
-        if (position != null) {
-            List<Column> columnsToUpdate = columnRepository.findByBoardIdAndPositionGreaterThan(boardId, position);
-            for (Column columnToUpdate : columnsToUpdate) {
-                int currentPosition = columnToUpdate.getPosition();
-                columnToUpdate.setPosition(currentPosition - 1);
-                columnRepository.save(columnToUpdate);
-            }
-        }
-        return ResponseEntity.ok(columnToDelete);
+        return ResponseEntity.ok(deletedColumn);
     }
 
     /**
@@ -152,10 +109,11 @@ public class ColumnController {
      */
     @GetMapping("/getCardsByColumnId/{columnId}")
     @ResponseBody public ResponseEntity<List<Card>> getCardsByColumnId(@PathVariable("columnId") long columnId) {
-        if (!columnRepository.existsById(columnId)) {
+        if (!columnService.existsById(columnId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(cardRepository.findCardsByColumnId(columnId));
+        List<Card> cards = cardService.getByColumnId(columnId);
+        return ResponseEntity.ok(cards);
     }
 }
