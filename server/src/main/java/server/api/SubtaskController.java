@@ -3,20 +3,20 @@ package server.api;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.SubtaskRepository;
+import server.services.SubtaskService;
 
 
 @RestController
 @RequestMapping("/subtask")
 public class SubtaskController {
 
-    private final SubtaskRepository subtaskRepository;
+    private final SubtaskService subtaskService;
 
     /**
-     * @param subtaskRepository the container storing all the subtasks
+     * @param subtaskService the service for subtask operations
      */
-    public SubtaskController(SubtaskRepository subtaskRepository) {
-        this.subtaskRepository = subtaskRepository;
+    public SubtaskController(SubtaskService subtaskService) {
+        this.subtaskService = subtaskService;
     }
 
     /**Change the status of a subtask, if it exists. Receive a message on the success of the edit. The status is true
@@ -31,13 +31,10 @@ public class SubtaskController {
     @ResponseBody
     public ResponseEntity<Subtask> editSubtaskStatus(@PathVariable("subtaskId") long subtaskId,
                                               @PathVariable("status") boolean status){
-        if (!subtaskRepository.existsById(subtaskId)) {
-            return ResponseEntity.badRequest().build();
-        }
 
-        Subtask subtask = subtaskRepository.findById(subtaskId).get();
-        subtask.setDone(status);
-        subtaskRepository.save(subtask);
+        Subtask subtask = subtaskService.editStatus(subtaskId, status);
+        if(subtask==null)
+            return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(subtask);
     }
 
@@ -51,13 +48,13 @@ public class SubtaskController {
     @ResponseBody
     public ResponseEntity<Subtask> editSubtaskTitle(@PathVariable("subtaskId") long subtaskId,
                                                   @PathVariable("title") String title){
-        if (title == null ||!subtaskRepository.existsById(subtaskId)) {
+        if (title == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        Subtask subtask = subtaskRepository.findById(subtaskId).get();
-        subtask.setTitle(title);
-        subtaskRepository.save(subtask);
+        Subtask subtask = subtaskService.editTitle(subtaskId, title);
+        if(subtask == null)
+            return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(subtask);
     }
 
@@ -70,13 +67,10 @@ public class SubtaskController {
      */
     @DeleteMapping("/deleteSubtask/{subtaskId}")
     @ResponseBody public ResponseEntity<Subtask> deleteSubtask(@PathVariable("subtaskId") long subtaskId){
-        if (!subtaskRepository.existsById(subtaskId)) {
+
+        Subtask subtaskDeleted = subtaskService.delete(subtaskId);
+        if(subtaskDeleted == null)
             return ResponseEntity.badRequest().build();
-        }
-
-        Subtask subtaskToDelete = subtaskRepository.findById(subtaskId).get();
-        subtaskRepository.deleteById(subtaskId);
-
-        return ResponseEntity.ok(subtaskToDelete);
+        return ResponseEntity.ok(subtaskDeleted);
     }
 }

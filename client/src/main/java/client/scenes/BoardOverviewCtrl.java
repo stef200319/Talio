@@ -45,6 +45,8 @@ public class BoardOverviewCtrl implements Initializable {
     private Button joinBoardButton;
 
     @FXML
+    private Button editBoardTitleButton;
+
     private Label boardName;
 
 
@@ -103,7 +105,12 @@ public class BoardOverviewCtrl implements Initializable {
     public void myBoards() {mainCtrl.showWorkspace();}
 
     /**
-     * Method that shows the workspace page containing all the boards on screen
+     * Method that shows the edit board title page
+     */
+    public void editBoardTitle(){mainCtrl.showEditBoardTitle();}
+
+    /**
+     * Method that shows the create board page
      */
     public void createBoard() {mainCtrl.showCreateBoard(boardID);}
 

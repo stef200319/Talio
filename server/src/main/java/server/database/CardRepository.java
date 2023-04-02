@@ -1,6 +1,7 @@
 package server.database;
 
 import commons.Card;
+import commons.Subtask;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -31,4 +32,12 @@ public interface CardRepository extends JpaRepository<Card, Long> {
      */
     @Query("SELECT c FROM Card c WHERE c.columnId = :columnId ORDER BY c.position ASC")
     List<Card> findCardsByColumnId(Long columnId);
+
+    /**
+     * Returns all subtasks of a card
+     * @param cardId id of the card to get the subtasks from
+     * @return the list of subtasks
+     */
+    @Query("SELECT c.subtasks FROM Card c WHERE c.id = :cardId")
+    List<Subtask> findSubtasksByCardId(Long cardId);
 }
