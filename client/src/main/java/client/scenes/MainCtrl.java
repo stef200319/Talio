@@ -17,6 +17,7 @@ package client.scenes;
 
 import commons.Board;
 import commons.Card;
+
 import commons.Column;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -55,6 +56,9 @@ public class MainCtrl {
     private EditListCtrl editListCtrl;
     private Scene editList;
 
+    private EditBoardTitleCtrl editBoardTitleCtrl;
+    private Scene editBoardTitle;
+
     private ViewSubtaskCtrl viewSubtaskCtrl;
     private Scene viewSubtask;
     private EditSubtaskTitleCtrl editSubtaskTitleCtrl;
@@ -78,6 +82,7 @@ public class MainCtrl {
      * @param editCardTitle
      * @param editCardDescription
      * @param editList
+     * @param editBoardTitle
      * @param viewSubtask
      * @param editSubtaskTitle
      * @param confirmDeleteColumn
@@ -94,9 +99,9 @@ public class MainCtrl {
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
                            Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
+                           Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
                            Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard) {
-
 
         this.primaryStage = primaryStage;
 
@@ -124,7 +129,6 @@ public class MainCtrl {
         this.workspaceCtrl = workspace.getKey();
         this.workspace = new Scene(workspace.getValue());
 
-
         this.editCardTitleCtrl = editCardTitle.getKey();
         this.editCardTitle = new Scene(editCardTitle.getValue());
 
@@ -133,6 +137,17 @@ public class MainCtrl {
 
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
+
+
+
+        this.taskDetails.setOnKeyPressed(taskDetailsCtrl.getBackToOverview());
+
+        this.addTask.setOnKeyPressed(addTaskCtrl.getOpenTaskDetails());
+
+        this.editBoardTitleCtrl = editBoardTitle.getKey();
+        this.editBoardTitle = new Scene(editBoardTitle.getValue());
+
+
 
         this.viewSubtaskCtrl = viewSubtask.getKey();
         this.viewSubtask = new Scene(viewSubtask.getValue());
@@ -145,6 +160,7 @@ public class MainCtrl {
 
         this.confirmDeleteBoardCtrl = confirmDeleteBoard.getKey();
         this.confirmDeleteBoard = new Scene(confirmDeleteBoard.getValue());
+
 
 
         showClientConnect();
@@ -226,6 +242,13 @@ public class MainCtrl {
     }
 
     /**
+     * Show the task details
+     */
+    public void showDetailOfTask(){
+        primaryStage.setTitle("Task Details");
+        primaryStage.setScene(taskDetails);
+    }
+    /**
      * Show add task page specific to a column
      * @param columnID columnId of the column to show add task
      * @param boardID boardID of card's board
@@ -247,6 +270,13 @@ public class MainCtrl {
         editListCtrl.setColumnToEdit(c);
         primaryStage.setTitle("Edit Column");
         primaryStage.setScene(editList);
+    }
+    /**
+     * Show the edit board title page
+     */
+    public void showEditBoardTitle(){
+        primaryStage.setTitle("Edit Board Title");
+        primaryStage.setScene(editBoardTitle);
     }
 
 
