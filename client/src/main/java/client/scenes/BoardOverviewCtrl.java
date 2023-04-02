@@ -47,6 +47,7 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Button editBoardTitleButton;
 
+    @FXML
     private Label boardName;
 
 
