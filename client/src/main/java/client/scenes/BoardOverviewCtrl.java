@@ -47,6 +47,7 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Button editBoardTitleButton;
 
+    @FXML
     private Label boardName;
 
 
@@ -148,8 +149,8 @@ public class BoardOverviewCtrl implements Initializable {
     }
     public void showHelpScreen()
     {
-        mainCtrl.getPreviousScene();
-        mainCtrl.getPreviousSceneTitle();
+        //mainCtrl.getPreviousScene();
+        //mainCtrl.getPreviousSceneTitle();
         mainCtrl.showHelpScreen();
     }
 

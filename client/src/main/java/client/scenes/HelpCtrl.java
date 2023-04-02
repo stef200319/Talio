@@ -9,10 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import commons.Card;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-
 
 public class HelpCtrl {
 
@@ -55,7 +51,8 @@ public class HelpCtrl {
     }
 
     public void showPreviousScene(){
-        mainCtrl.showPreviousScreen();
+       // mainCtrl.showPreviousScreen();
+        mainCtrl.showOverview();
     }
 
 }
