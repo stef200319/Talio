@@ -26,4 +26,8 @@ public class User {
     public void setBoardIds(List<Integer> boardIds) {
         this.boardIds = boardIds;
     }
+
+    public boolean containsBoardId(int id) {
+        return boardIds.contains(id);
+    }
 }
