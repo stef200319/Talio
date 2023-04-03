@@ -52,10 +52,8 @@ public class WebSocketEventListener {
      * @param event the event listener listens to
      */
     @EventListener
-    public void sendAllColumns(RESTEvent event) throws JsonProcessingException {
-
-
-        String json = objectMapper.writeValueAsString(event.getSource());
+    public void sendAllColumns(RESTEvent event) {
+        String json = writeToJSON(event.getSource());
 
         Map<String, Object> headers = new HashMap<>();
         headers.put("method", "getAllColumns");
@@ -65,6 +63,24 @@ public class WebSocketEventListener {
         for (User user : users) {
             System.out.println("send to: " + user.getName());
             messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+        }
+    }
+
+    @EventListener
+    public void deleteBoard(RESTEvent event) {
+
+    }
+
+    /**
+     * @param o object that needs to be serialized
+     * @return json string
+     */
+    private String writeToJSON(Object o) {
+        try {
+            return objectMapper.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            logger.error("JSON serialization failed");
+            throw new RuntimeException(e);
         }
     }
 }
