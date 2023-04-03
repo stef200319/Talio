@@ -157,21 +157,21 @@ public class CustomizeBoardCtrl implements Initializable {
      * Set the Side Colour of this Board to the Default Board Side Colour
      */
     public void setDefaultBoardSideColour(){
-        server.editBoardCenterColour(boardToShow, boardToShow.getDefaultSideColour());
+        server.editBoardSideColour(boardToShow, boardToShow.getDefaultSideColour());
     }
 
     /**
      * Set the Font-Type of this Board to the Default Board Font-Type
      */
     public void setDefaultBoardFontType(){
-        server.editBoardCenterColour(boardToShow, boardToShow.getDefaultFontType());
+        server.editBoardFontType(boardToShow, boardToShow.getDefaultFontType());
     }
 
     /**
      * Set the Font Colour of this Board to the Default Board Font Colour
      */
     public void setDefaultBoardFontColour(){
-        server.editBoardCenterColour(boardToShow, boardToShow.getDefaultFontColour());
+        server.editBoardFontColour(boardToShow, boardToShow.getDefaultFontColour());
     }
 
     /**
