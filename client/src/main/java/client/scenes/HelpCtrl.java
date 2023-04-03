@@ -3,7 +3,6 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
