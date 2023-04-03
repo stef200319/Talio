@@ -330,6 +330,9 @@ public class BoardOverviewCtrl implements Initializable {
         this.boardID = boardID;
     }
 
+    /**
+     * Delete the board
+     */
     public void deleteBoard() {
         mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
     }
