@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <!--<?xml version="1.0" encoding="UTF-8"?>-->
 <!--<?import javafx.scene.control.Button?>-->
@@ -30,7 +31,6 @@
 <!--        </ScrollPane>-->
 <!--    </children>-->
 <!--</AnchorPane>-->
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="928.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
     <children>
@@ -41,6 +41,7 @@
             <Button fx:id="createBoardButton" layoutX="409.0" layoutY="13.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="43.0" prefWidth="110.0" text="CREATE BOARD" />
             <Button fx:id="joinBoardButton" layoutX="684.0" layoutY="13.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="JOIN BOARD" />
             <Button fx:id="editBoardTitleButton" layoutX="545.0" layoutY="22.0" mnemonicParsing="false" onAction="#editBoardTitle" text="Edit title" />
+            <Button fx:id="copyCodeButton" layoutX="327.0" layoutY="22.0" mnemonicParsing="false" onAction="#copyCode" prefHeight="25.0" prefWidth="60.0" text="Copy" />
          </children></Pane>
         <Pane layoutX="803.0" layoutY="68.0" prefHeight="510.0" prefWidth="124.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;" />
         <Pane layoutY="577.0" prefHeight="35.0" prefWidth="928.0" style="-fx-background-color: #b5b1b1; -fx-border-color: black;" />

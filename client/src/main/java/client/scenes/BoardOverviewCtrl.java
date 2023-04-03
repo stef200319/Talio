@@ -52,6 +52,8 @@ public class BoardOverviewCtrl implements Initializable {
     private Button editBoardTitleButton;
 
     @FXML
+    private Button copyCodeButton;
+    @FXML
     private Label boardName;
 
 
@@ -97,6 +99,10 @@ public class BoardOverviewCtrl implements Initializable {
     }
 
 
+    public void copyCode()
+    {
+        mainCtrl.copyCode(boardID);
+    }
     /**
      * Method that shows the add list page on screen
      */

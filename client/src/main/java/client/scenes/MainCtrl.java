@@ -22,6 +22,8 @@ import commons.Column;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -545,5 +547,14 @@ public class MainCtrl {
         primaryStage.setScene(confirmDeleteBoard);
     }
 
+    public long copyCode(long boardID){
+        System.out.println(boardID);
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(String.valueOf(boardID));
+        content.putHtml("<b>"+String.valueOf(boardID));
+        clipboard.setContent(content);
+        return boardID;
+    }
 
 }
