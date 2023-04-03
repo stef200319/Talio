@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 public class TestCardTagRepository implements CardTagRepository {
 
-    List<CardTag> cardTags = new ArrayList<>();
+    private List<CardTag> cardTags = new ArrayList<>();
 
 
     /**
@@ -33,11 +33,20 @@ public class TestCardTagRepository implements CardTagRepository {
         return null;
     }
 
+    /**
+     * finds all cardTags
+     * @return list of all cardTags
+     */
     @Override
     public List<CardTag> findAll() {
-        return null;
+        return cardTags;
     }
 
+    /**
+     * finds all card tags
+     * @param sort
+     * @return list of all cardTags
+     */
     @Override
     public List<CardTag> findAll(Sort sort) {
         return null;
@@ -45,7 +54,6 @@ public class TestCardTagRepository implements CardTagRepository {
 
     /**
      * Returns a {@link Page} of entities meeting the paging restriction provided in the {@code Pageable} object.
-     *
      * @param pageable
      * @return a page of entities
      */
@@ -54,6 +62,11 @@ public class TestCardTagRepository implements CardTagRepository {
         return null;
     }
 
+    /**
+     * finds all
+     * @param longs must not be {@literal null} nor contain any {@literal null} values.
+     * @return list of cardTags
+     */
     @Override
     public List<CardTag> findAllById(Iterable<Long> longs) {
         return null;
@@ -115,7 +128,8 @@ public class TestCardTagRepository implements CardTagRepository {
      * Deletes the given entities.
      *
      * @param entities must not be {@literal null}. Must not contain {@literal null} elements.
-     * @throws IllegalArgumentException in case the given {@literal entities} or one of its entities is {@literal null}.
+     * @throws IllegalArgumentException in case the given {@literal entities} or one of its entities is
+     * {@literal null}.
      */
     @Override
     public void deleteAll(Iterable<? extends CardTag> entities) {
@@ -131,7 +145,8 @@ public class TestCardTagRepository implements CardTagRepository {
     }
 
     /**
-     * Saves a given entity. Use the returned instance for further operations as the save operation might have changed the
+     * Saves a given entity. Use the returned instance for further operations as the save operation might have
+     * changed the
      * entity instance completely.
      *
      * @param entity must not be {@literal null}.
@@ -156,6 +171,12 @@ public class TestCardTagRepository implements CardTagRepository {
         return entity;
     }
 
+    /**
+     *
+     * @param entities must not be {@literal null} nor must it contain {@literal null}.
+     * @return
+     * @param <S>
+     */
     @Override
     public <S extends CardTag> List<S> saveAll(Iterable<S> entities) {
         return null;
@@ -215,7 +236,6 @@ public class TestCardTagRepository implements CardTagRepository {
 
     /**
      * Saves all entities and flushes changes instantly.
-     *
      * @param entities entities to be saved. Must not be {@literal null}.
      * @return the saved entities
      * @since 2.5
@@ -226,7 +246,8 @@ public class TestCardTagRepository implements CardTagRepository {
     }
 
     /**
-     * Deletes the given entities in a batch which means it will create a single query. This kind of operation leaves JPAs
+     * Deletes the given entities in a batch which means it will create a single query. This kind of operation leaves
+     * JPAs
      * first level cache and the database out of sync. Consider flushing the {@link EntityManager} before calling this
      * method.
      *
@@ -240,7 +261,8 @@ public class TestCardTagRepository implements CardTagRepository {
 
     /**
      * Deletes the entities identified by the given ids using a single query. This kind of operation leaves JPAs first
-     * level cache and the database out of sync. Consider flushing the {@link EntityManager} before calling this method.
+     * level cache and the database out of sync. Consider flushing the {@link EntityManager} before calling this
+     * method.
      *
      * @param longs the ids of the entities to be deleted. Must not be {@literal null}.
      * @since 2.5
@@ -292,7 +314,6 @@ public class TestCardTagRepository implements CardTagRepository {
 
     /**
      * Returns a single entity matching the given {@link Example} or {@link Optional#empty()} if none was found.
-     *
      * @param example must not be {@literal null}.
      * @return a single entity matching the given {@link Example} or {@link Optional#empty()} if none was found.
      * @throws IncorrectResultSizeDataAccessException if the Example yields more than one result.
@@ -302,18 +323,32 @@ public class TestCardTagRepository implements CardTagRepository {
         return Optional.empty();
     }
 
+    /**
+     *
+     * @param example must not be {@literal null}.
+     * @return
+     * @param <S>
+     */
     @Override
     public <S extends CardTag> List<S> findAll(Example<S> example) {
         return (List<S>) cardTags;
     }
 
+    /**
+     *
+     * @param example must not be {@literal null}.
+     * @param sort the {@link Sort} specification to sort the results by, must not be {@literal null}.
+     * @return
+     * @param <S>
+     */
     @Override
     public <S extends CardTag> List<S> findAll(Example<S> example, Sort sort) {
         return null;
     }
 
     /**
-     * Returns a {@link Page} of entities matching the given {@link Example}. In case no match could be found, an empty
+     * Returns a {@link Page} of entities matching the given {@link Example}. In case no match could be found, an
+     * empty
      * {@link Page} is returned.
      *
      * @param example  must not be {@literal null}.
@@ -348,7 +383,8 @@ public class TestCardTagRepository implements CardTagRepository {
     }
 
     /**
-     * Returns entities matching the given {@link Example} applying the {@link Function queryFunction} that defines the
+     * Returns entities matching the given {@link Example} applying the {@link Function queryFunction} that
+     * defines the
      * query and its result type.
      *
      * @param example       must not be {@literal null}.
@@ -357,7 +393,8 @@ public class TestCardTagRepository implements CardTagRepository {
      * @since 2.6
      */
     @Override
-    public <S extends CardTag, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+    public <S extends CardTag, R> R findBy(Example<S> example,
+                                           Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
     }
 }
