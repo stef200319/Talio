@@ -97,9 +97,9 @@ public class MainCtrl {
      * @param editBoardTitle
      * @param viewSubtask
      * @param editSubtaskTitle
-     * @param help
      * @param confirmDeleteColumn
      * @param confirmDeleteBoard
+     * @param help
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -110,17 +110,12 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-<<<<<<< client/src/main/java/client/scenes/MainCtrl.java
                            Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle
                            , Pair<ViewSubtaskCtrl, Parent> viewSubtask,
-                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle, Pair<HelpCtrl, Parent> help) {
-
-
-                           Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
-                           Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
-                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard) {
+                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard, Pair<HelpCtrl, Parent> help) {
+
 
 
         this.primaryStage = primaryStage;
