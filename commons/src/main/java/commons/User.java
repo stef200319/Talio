@@ -30,4 +30,8 @@ public class User {
     public boolean containsBoardId(long id) {
         return boardIds.contains(id);
     }
+
+    public boolean removeBoardId(long id) {
+        return boardIds.remove(id);
+    }
 }
