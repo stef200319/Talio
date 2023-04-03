@@ -15,7 +15,7 @@ public class User {
         return name;
     }
 
-    public List<Integer> getBoardIds() {
+    public List<Long> getBoardIds() {
         return boardIds;
     }
 
@@ -23,7 +23,7 @@ public class User {
         this.name = name;
     }
 
-    public void setBoardIds(List<Integer> boardIds) {
+    public void setBoardIds(List<Long> boardIds) {
         this.boardIds = boardIds;
     }
 
