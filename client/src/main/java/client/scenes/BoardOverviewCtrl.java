@@ -41,8 +41,6 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Button myBoardsButton;
 
-    @FXML
-    private Button joinBoardButton;
 
     @FXML
     private Button editBoardTitleButton;
@@ -330,5 +328,9 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void setBoardID(long boardID) {
         this.boardID = boardID;
+    }
+
+    public void deleteBoard() {
+        mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
     }
 }

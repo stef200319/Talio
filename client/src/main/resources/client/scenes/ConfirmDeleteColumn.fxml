@@ -6,18 +6,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="928.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ConfirmDeleteColumnCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ConfirmDeleteColumnCtrl">
     <children>
-        <Pane layoutY="-3.0" prefHeight="581.0" prefWidth="928.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;">
+        <Pane prefHeight="375.0" prefWidth="575.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;">
          <children>
-            <Label layoutX="325.0" layoutY="159.0" prefHeight="53.0" prefWidth="278.0" text="Are your sure you want to delete this list?">
+            <Label layoutX="143.0" layoutY="78.0" prefHeight="53.0" prefWidth="289.0" text="Are you sure you want to delete this list?">
                <font>
-                  <Font size="15.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button layoutX="275.0" layoutY="278.0" mnemonicParsing="false" onAction="#cancel" prefHeight="75.0" prefWidth="100.0" style="-fx-background-color: #372C2E;" text="Cancel" textFill="WHITE" />
-            <Button layoutX="553.0" layoutY="278.0" mnemonicParsing="false" onAction="#confirm" prefHeight="75.0" prefWidth="100.0" style="-fx-background-color: #372C2E;" text="Confirm" textFill="WHITE" />
+            <Button layoutX="143.0" layoutY="169.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="62.0" style="-fx-background-color: #6e0518;" text="Cancel" textFill="WHITE" />
+            <Button layoutX="370.0" layoutY="169.0" mnemonicParsing="false" onAction="#confirm" prefHeight="37.0" prefWidth="62.0" style="-fx-background-color: #104a03;" text="Confirm" textFill="WHITE" />
          </children></Pane>
-        <Pane layoutY="577.0" prefHeight="35.0" prefWidth="928.0" style="-fx-background-color: #b5b1b1; -fx-border-color: black;" />
     </children>
 </AnchorPane>
