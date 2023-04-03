@@ -5,3 +5,4 @@ commons
 server
 server.api
 server.database
+server.services

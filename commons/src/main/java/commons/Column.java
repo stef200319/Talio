@@ -18,6 +18,19 @@ public class Column {
 
     private Integer position;
 
+
+
+    private String bgColour;
+
+    private String borderColour;
+
+    private String fontType;
+    private Boolean fontStyleBold;
+    private Boolean fontStyleItalic;
+    private String fontColour;
+
+
+
     /**
      * Constructor for object mappers
      */
@@ -33,6 +46,13 @@ public class Column {
     public Column(String title, long boardId) {
         this.title = title;
         this.boardId = boardId;
+
+        this.bgColour = "#F2F3F4";
+        this.borderColour = "#000000";
+        this.fontType = "Segoe UI";
+        this.fontStyleBold=false;
+        this.fontStyleItalic=false;
+        this.fontColour = "#000000";
     }
 
     /**
@@ -78,14 +98,14 @@ public class Column {
     }
 
     /**
-     * @return the position of the card in the list it belongs to (at the time)
+     * @return the position of the Column in the list it belongs to (at the time)
      */
     public Integer getPosition() {
         return position;
     }
 
     /**
-     * @param position the new position of the card in the list it belongs to (at the time),
+     * @param position the new position of the Column in the list it belongs to (at the time),
      *                 which replaces the old position
      */
     public void setPosition(Integer position) {
@@ -117,5 +137,90 @@ public class Column {
     public String toString() {
         return "The title of this List is: " + getTitle() +
                 ", and the ID of the Board this List belongs to is: " + getBoardId();
+    }
+
+
+
+    /**
+     * @return the String of the Background Colour of a Column
+     */
+    public String getBgColour() {
+        return bgColour;
+    }
+    /**
+     * Set the background colour of a Column
+     * @param colour new background colour to replace the Column's old one
+     */
+    public void setBgColour(String colour) {
+        this.bgColour = colour;
+    }
+    /**
+     * @return the String of the Border Colour of a Column
+     */
+    public String getBorderColour() {
+        return borderColour;
+    }
+    /**
+     * Set the borderColour of a Column
+     * @param borderColour new borderColour to replace the Column's old one
+     */
+    public void setBorderColour(String borderColour) {
+        this.borderColour = borderColour;
+    }
+    /**
+     * @return the String of the Font-type of a Column
+     */
+    public String getFontType() {
+        return fontType;
+    }
+    /**
+     * Set the font-type of a Column
+     * @param fontType new font type to replace the Column's old one
+     */
+    public void setFontType(String fontType) {
+        this.fontType = fontType;
+    }
+    /**
+     * @return whether the Column is Bold
+     */
+    public boolean isFontStyleBold() {
+        return fontStyleBold;
+    }
+
+    /**
+     * Set the Column to be Bold or not
+     * @param fontStyleBold value of the Boldness of the Column
+     */
+    public void setFontStyleBold(boolean fontStyleBold) {
+        this.fontStyleBold = fontStyleBold;
+    }
+    /**
+     * @return whether the Column is Italic
+     */
+    public boolean isFontStyleItalic() {
+        return fontStyleItalic;
+    }
+
+
+    /**
+     * Set the Column to be Italic or not
+     * @param fontStyleItalic value of the Italicness of the Column
+     */
+    public void setFontStyleItalic(boolean fontStyleItalic) {
+        this.fontStyleItalic = fontStyleItalic;
+    }
+    /**
+     * @return the String of the Font Colour of a Column
+     */
+    public String getFontColour() {
+        return fontColour;
+    }
+
+    /**
+     * Set the font colour of a Column
+     * @param fontColour new font colour to replace the Column's old one
+     */
+    public void setFontColour(String fontColour) {
+        this.fontColour = fontColour;
     }
 }
