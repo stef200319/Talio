@@ -96,10 +96,10 @@ public class EditCardDescriptionCtrl implements Initializable {
      * Edits the title of the Card and returns to the Card's details
      */
     public void confirm() {
-        if(getDescription() != null) {
-            cardToShow = server.editCardDescription(cardToShow, getDescription());
-            newDescription.clear();
-            mainCtrl.showTaskDetails(cardToShow);
+        if (getDescription() != "") {
+            server.editCardDescription(cardToShow, getDescription());
         }
+        newDescription.clear();
+        mainCtrl.showTaskDetails(cardToShow);
     }
 }
