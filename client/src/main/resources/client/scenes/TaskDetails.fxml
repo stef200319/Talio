@@ -51,17 +51,17 @@
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
-            <Button layoutX="748.0" layoutY="381.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="119.0" text="Edit">
+            <Button fx:id="cardCustomize" layoutX="729.0" layoutY="381.0" mnemonicParsing="false" onAction="#showCardCustomization" prefHeight="133.0" prefWidth="143.0" text="Edit">
                <font>
                   <Font size="19.0" />
                </font>
             </Button>
-            <ScrollPane layoutX="492.0" layoutY="381.0" prefHeight="133.0" prefWidth="228.0">
+            <ScrollPane layoutX="492.0" layoutY="381.0" prefHeight="133.0" prefWidth="206.0">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </ScrollPane>
-            <Label layoutX="752.0" layoutY="321.0" prefHeight="40.0" prefWidth="110.0" text="Colours:">
+            <Label layoutX="724.0" layoutY="321.0" prefHeight="40.0" prefWidth="153.0" text="Customize:">
                <font>
                   <Font name="System Bold" size="28.0" />
                </font>

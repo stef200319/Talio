@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="455.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.CustomizeListCtrl">
+    <children>
+        <Pane layoutX="-12.0" layoutY="70.0" prefHeight="449.0" prefWidth="756.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;">
+            <children>
+                <Label layoutX="96.0" layoutY="30.0" prefHeight="43.0" prefWidth="564.0" text="Customize your List's Appearance to your Desire" underline="true">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <Label layoutX="76.0" layoutY="103.0" prefHeight="31.0" prefWidth="264.0" text="List Background Colour:">
+                    <font>
+                        <Font name="System Bold" size="21.0" />
+                    </font>
+                </Label>
+                <Button fx:id="editCustomization" layoutX="433.0" layoutY="393.0" mnemonicParsing="false" onAction="#confirm" prefHeight="43.0" prefWidth="110.0" text="Confirm" />
+                <Button fx:id="cancelEdit" layoutX="216.0" layoutY="393.0" mnemonicParsing="false" onAction="#cancel" prefHeight="43.0" prefWidth="110.0" text="Cancel" />
+                <Label layoutX="80.0" layoutY="225.0" prefHeight="31.0" prefWidth="178.0" text="Font Type:">
+                    <font>
+                        <Font name="System Bold" size="21.0" />
+                    </font>
+                </Label>
+                <ColorPicker fx:id="listBgColourPicker" editable="true" layoutX="76.0" layoutY="146.0" prefHeight="43.0" prefWidth="252.0" promptText="Select Bg-colour" style="-fx-background-color: linear-gradient(to bottom, #e9eaed 0%, #f4f5f8 100%); -fx-border-color: #a2a2a2; -fx-border-width: 1; -fx-border-radius: 4px; -fx-background-radius: 4; -fx-padding: 1px;" />
+                <Label layoutX="452.0" layoutY="103.0" prefHeight="31.0" prefWidth="208.0" text="List Border Colour:">
+                    <font>
+                        <Font name="System Bold" size="21.0" />
+                    </font>
+                </Label>
+                <Button fx:id="resetListBgColour" layoutX="33.0" layoutY="103.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+                <Button fx:id="resetListBorderColour" layoutX="409.0" layoutY="103.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+                <ColorPicker fx:id="listBorderColourPicker" editable="true" layoutX="452.0" layoutY="146.0" prefHeight="43.0" prefWidth="252.0" promptText="Select Bg-colour" style="-fx-background-color: linear-gradient(to bottom, #e9eaed 0%, #f4f5f8 100%); -fx-border-color: #a2a2a2; -fx-border-width: 1; -fx-border-radius: 4px; -fx-background-radius: 4; -fx-padding: 1px;" />
+                <Button fx:id="resetListFontType" layoutX="33.0" layoutY="225.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+                <ChoiceBox fx:id="listFontType" layoutX="76.0" layoutY="263.0" prefHeight="43.0" prefWidth="178.0" />
+                <Label layoutX="320.0" layoutY="225.0" prefHeight="31.0" prefWidth="116.0" text="Font Style:">
+                    <font>
+                        <Font name="System Bold" size="21.0" />
+                    </font>
+                </Label>
+                <CheckBox fx:id="listFontStyleBold" layoutX="304.0" layoutY="269.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="Bold">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </CheckBox>
+                <CheckBox fx:id="listFontStyleItalic" layoutX="397.0" layoutY="269.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="Italic">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </CheckBox>
+                <Label layoutX="533.0" layoutY="225.0" prefHeight="31.0" prefWidth="171.0" text="Font Colour Fill:">
+                    <font>
+                        <Font name="System Bold" size="21.0" />
+                    </font>
+                </Label>
+                <Button fx:id="resetListFontColourFill" layoutX="488.0" layoutY="225.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+                <ColorPicker fx:id="listFontColourPicker" editable="true" layoutX="533.0" layoutY="263.0" prefHeight="43.0" prefWidth="178.0" promptText="Select Bg-colour" style="-fx-background-color: linear-gradient(to bottom, #e9eaed 0%, #f4f5f8 100%); -fx-border-color: #a2a2a2; -fx-border-width: 1; -fx-border-radius: 4px; -fx-background-radius: 4; -fx-padding: 1px;" />
+            </children></Pane>
+        <Pane prefHeight="86.0" prefWidth="744.0" style="-fx-background-color: #372C2E; -fx-border-color: black;">
+            <children>
+                <Label layoutX="125.0" layoutY="8.0" prefHeight="71.0" prefWidth="524.0" text="List Customization" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Black" size="48.0" />
+                    </font>
+                </Label>
+            </children></Pane>
+        <Pane layoutY="519.0" prefHeight="26.0" prefWidth="744.0" style="-fx-background-color: #b5b1b1; -fx-border-color: black;" />
+    </children>
+</AnchorPane>

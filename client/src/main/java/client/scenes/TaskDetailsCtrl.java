@@ -87,9 +87,18 @@ public class TaskDetailsCtrl {
     }
 
     /**
+     * show the page to Customize the Card
+     */
+    public void showCardCustomization(){
+        mainCtrl.showCustomizeCard(cardToShow);
+    }
+
+    /**
      * show the board overview
      */
+//    TODO THE BOARD ID IS STILL HARDCODED
     public void showBoardOverview() {
         mainCtrl.showOverview();
+
     }
 }

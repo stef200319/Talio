@@ -4,6 +4,7 @@ import commons.Card;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.database.CardRepository;
 import server.services.ColumnService;
 import server.services.CardService;
 import server.services.SubtaskService;
@@ -17,24 +18,28 @@ public class CardController {
     private final CardService cardService;
     private final ColumnService columnService;
     private final SubtaskService subtaskService;
+    private final CardRepository cardRepository;
 
 
     /**
      * @param cardService the service for card operations
      * @param columnService the service for column (list) operations
      * @param subtaskService the service for subtask operations
+     * @param cardRepository
      */
     public CardController(CardService cardService, ColumnService columnService,
-                                                    SubtaskService subtaskService) {
+                                                    SubtaskService subtaskService, CardRepository cardRepository) {
         this.cardService = cardService;
         this.columnService = columnService;
         this.subtaskService = subtaskService;
+        this.cardRepository = cardRepository;
     }
 
     /**
      * Return all the cards which are stored in the database
      * @return all the cards in the database
      */
+
     @GetMapping("/getAllCards")
     @ResponseBody
     public List<Card> getAllCards() {
@@ -133,6 +138,128 @@ public class CardController {
         Card card = cardService.editDescription(cardId, description);
         return ResponseEntity.ok(card);
     }
+
+    /**Change the Background colour of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param bgColour Background colour which should replace the old Background colour of the card
+     * @return receive a message indicating the Background colour has change, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardBackgroundColour/{cardId}/{bgColour}")
+    @ResponseBody public ResponseEntity<Card> editCardBackgroundColour(@PathVariable("cardId") long cardId,
+                                                                  @PathVariable("bgColour") String bgColour){
+        if (bgColour == null || !cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setBgColour(bgColour);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+    /**Change the Border colour of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param borderColour Border colour which should replace the old Border colour of the card
+     * @return receive a message indicating the Border colour has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardBorderColour/{cardId}/{borderColour}")
+    @ResponseBody public ResponseEntity<Card> editCardBorderColour
+    (@PathVariable("cardId") long cardId, @PathVariable("borderColour") String borderColour){
+        if (borderColour == null || !cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setBorderColour(borderColour);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+    /**Change the Font-type of a Card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param fontType Font Type which should replace the old Font Type of the card
+     * @return receive a message indicating the Font Type has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardFontType/{cardId}/{fontType}")
+    @ResponseBody public ResponseEntity<Card> editCardFontType
+    (@PathVariable("cardId") long cardId, @PathVariable("fontType") String fontType){
+        if (fontType == null || !cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setFontType(fontType);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+    /**Change the Boldness of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param bold Boldness which should replace the old Boldness of the card
+     * @return receive a message indicating the Boldness has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardFontStyleBold/{cardId}/{bold}")
+    @ResponseBody public ResponseEntity<Card> editCardFontStyleBold
+    (@PathVariable("cardId") long cardId, @PathVariable("bold") boolean bold){
+        if (!cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setFontStyleBold(bold);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+    /**Change the Italicness of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param italic Italicness which should replace the old Boldness of the card
+     * @return receive a message indicating the Italicness has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardFontStyleItalic/{cardId}/{italic}")
+    @ResponseBody public ResponseEntity<Card> editCardFontStyleItalic
+    (@PathVariable("cardId") long cardId, @PathVariable("italic") boolean italic){
+        if (!cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setFontStyleItalic(italic);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+    /**Change the Font Colour of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param fontColour Font Colour which should replace the old Font Colour of the card
+     * @return receive a message indicating the Font Colour has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardFontColour/{cardId}/{fontColour}")
+    @ResponseBody public ResponseEntity<Card> editCardFontColour
+    (@PathVariable("cardId") long cardId, @PathVariable("fontColour") String fontColour){
+        if (!cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setFontColour(fontColour);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+
+
 
     /**Change the columnId of a card, if it exists. Receive a message on the success of the edit
      * @param cardId The ID of the card whose title should be changed

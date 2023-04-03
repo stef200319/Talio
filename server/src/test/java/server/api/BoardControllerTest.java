@@ -40,6 +40,8 @@ class BoardControllerTest {
 
 
 
+
+
     @BeforeEach
     void setUp() {
         boardRepository = new TestBoardRepository();
@@ -54,13 +56,12 @@ class BoardControllerTest {
         cardService = new CardService(cardRepository, subtaskRepository);
         subtaskService = new SubtaskService(subtaskRepository);
 
-        cardController = new CardController(cardService, columnService, subtaskService);
-        columnController = new ColumnController(columnService, boardService, cardService);
+        cardController = new CardController(cardService, columnService, subtaskService, cardRepository);
+        columnController = new ColumnController(columnRepository, boardRepository, cardRepository, cardController,
+                columnService, boardService, cardService);
         cardTagController = new CardTagController(cardTagRepository, boardRepository, cardRepository);
-        boardController = new BoardController(boardService, columnService, cardTagRepository, cardTagController);
-
-
-
+        boardController = new BoardController(boardService, columnService, cardTagRepository, cardTagController,
+                boardRepository);
 
     }
 
