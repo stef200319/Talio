@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpAttributesContextHolder;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 
@@ -26,7 +27,9 @@ public class WebSocketEventListener {
      */
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-        ids.add(SimpAttributesContextHolder.currentAttributes().getSessionId());
+        StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
+
+        ids.add(sha.getUser().getName());
         logger.info("Received a new web socket connection");
     }
 
@@ -40,8 +43,7 @@ public class WebSocketEventListener {
         System.out.println(event.getMessage());
         for (String id : ids) {
             System.out.println("send to: " + id);
-            messagingTemplate.convertAndSendToUser(id, "/topic/periodic", "sent to user " + id);
-
+            messagingTemplate.convertAndSendToUser(id, "/queue/private", "sent to user " + id);
         }
 
         messagingTemplate.convertAndSend("/topic/periodic", "all checked");
