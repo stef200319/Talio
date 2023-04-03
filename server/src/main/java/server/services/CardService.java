@@ -118,7 +118,7 @@ public class CardService {
      */
     public Card editDescription(long cardId, String description) {
         Card card = getById(cardId);
-        card.setTitle(description);
+        card.setDescription(description);
         return cardRepository.save(card);
     }
 
@@ -257,6 +257,59 @@ public class CardService {
         if(subtasks == null)
             return new ArrayList<Subtask>();
         return subtasks;
+    }
+
+    /**
+     * Changes the position of a subtask and shifts all affected subtasks to the left
+     * @param cardId id of the card the subtask is in
+     * @param oldPos position of the subtask
+     * @param newPos new position of the subtask
+     * @return the updated card
+     */
+    public Card changeSubtaskPosition(long cardId, int oldPos, int newPos) {
+        List<Subtask> subtasks = getAllSubtasksByCardId(cardId);
+        if(subtasks==null || oldPos>subtasks.size() || newPos>subtasks.size())
+            return null;
+        if(oldPos<newPos) {
+            Subtask aux = subtasks.get(oldPos);
+            for (int i = oldPos; i < newPos; i++) {
+                Subtask s = subtasks.get(i + 1);
+                subtasks.set(i, s);
+            }
+            subtasks.set(newPos, aux);
+            Card card = getById(cardId);
+            card.setSubtasks(subtasks);
+            return cardRepository.save(card);
+        }
+        else {
+            Subtask aux = subtasks.get(oldPos);
+            for(int i = oldPos;i>newPos;i--) {
+                Subtask s = subtasks.get(i-1);
+                subtasks.set(i, s);
+            }
+            subtasks.set(newPos, aux);
+            Card card = getById(cardId);
+            card.setSubtasks(subtasks);
+            return cardRepository.save(card);
+        }
+    }
+
+    /**
+     * Deletes a subtask from the card
+     * @param cardId id of the card the subtask is in
+     * @param subtaskId id of the subtask to be deleted
+     * @return the updated card without that subtask
+     */
+    public Card deleteSubtask(long cardId, long subtaskId) {
+        if(!existsById(cardId))
+            return null;
+        List<Subtask> subtasks = getAllSubtasksByCardId(cardId);
+        for(int i=0;i<subtasks.size();i++)
+            if(subtasks.get(i).getId()==subtaskId)
+                subtasks.remove(i);
+        Card card = getById(cardId);
+        card.setSubtasks(subtasks);
+        return cardRepository.save(card);
     }
 
 }

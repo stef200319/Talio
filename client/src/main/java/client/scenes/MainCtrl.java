@@ -19,6 +19,7 @@ import commons.Board;
 import commons.Card;
 
 import commons.Column;
+import commons.Subtask;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -61,12 +62,18 @@ public class MainCtrl {
 
     private ViewSubtaskCtrl viewSubtaskCtrl;
     private Scene viewSubtask;
+
     private EditSubtaskTitleCtrl editSubtaskTitleCtrl;
     private Scene editSubtaskTitle;
+
     private ConfirmDeleteColumnCtrl confirmDeleteColumnCtrl;
     private Scene confirmDeleteColumn;
+
     private ConfirmDeleteBoardCtrl confirmDeleteBoardCtrl;
     private Scene confirmDeleteBoard;
+
+    private AddSubtaskCtrl addSubtaskCtrl;
+    private Scene addSubtask;
 
     /**
      *
@@ -101,7 +108,8 @@ public class MainCtrl {
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
                            Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
-                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard) {
+                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard,
+                           Pair<AddSubtaskCtrl, Parent> addSubtask) {
 
         this.primaryStage = primaryStage;
 
@@ -161,7 +169,8 @@ public class MainCtrl {
         this.confirmDeleteBoardCtrl = confirmDeleteBoard.getKey();
         this.confirmDeleteBoard = new Scene(confirmDeleteBoard.getValue());
 
-
+        this.addSubtaskCtrl = addSubtask.getKey();
+        this.addSubtask = new Scene(addSubtask.getValue());
 
         showClientConnect();
         primaryStage.show();
@@ -237,6 +246,7 @@ public class MainCtrl {
      */
     public void showTaskDetails(Card card) {
         taskDetailsCtrl.setCardToShow(card);
+        taskDetailsCtrl.refresh();
         primaryStage.setTitle("Task Details");
         primaryStage.setScene(taskDetails);
     }
@@ -321,6 +331,38 @@ public class MainCtrl {
         confirmDeleteBoardCtrl.setBoardToDelete(b);
         primaryStage.setTitle("Confirm Delete");
         primaryStage.setScene(confirmDeleteBoard);
+    }
+
+    /**
+     * Shows the view subtask page
+     * @param c Card where to get the subtasks from
+     */
+    public void showViewSubtask(Card c) {
+        viewSubtaskCtrl.setCardToShow(c);
+        primaryStage.setTitle("Edit Subtasks");
+        primaryStage.setScene(viewSubtask);
+    }
+
+    /**
+     * Shows the add subtask page
+     * @param c Card where to add the new subtask
+     */
+    public void showAddSubtask(Card c) {
+        addSubtaskCtrl.setCard(c);
+        primaryStage.setTitle("Add Subtask");
+        primaryStage.setScene(addSubtask);
+    }
+
+    /**
+     * Shows the edit subtask page
+     * @param c Card where the subtask is
+     * @param s Subtask which will be edited
+     */
+    public void showEditSubtaskTitle(Card c, Subtask s) {
+        editSubtaskTitleCtrl.setCardToShow(c);
+        editSubtaskTitleCtrl.setSubtaskToShow(s);
+        primaryStage.setTitle("Edit Subtask");
+        primaryStage.setScene(editSubtaskTitle);
     }
 
 }
