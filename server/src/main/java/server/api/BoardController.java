@@ -1,18 +1,13 @@
 package server.api;
 
 import commons.Board;
-import commons.Column;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import server.services.BoardService;
-import server.services.ColumnService;
 import commons.CardTag;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.BoardRepository;
 import server.database.CardTagRepository;
-import server.database.ColumnRepository;
+import server.services.BoardService;
+import server.services.ColumnService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +25,8 @@ public class BoardController {
     /**
      * @param boardService the service used for the operations which use the board data access object
      * @param columnService the service used for the operations which use the column data access object
+     * @param cardTagRepository cardTagRepo
+     * @param cardTagController cardTagController
      */
     public BoardController(BoardService boardService, ColumnService columnService, CardTagRepository cardTagRepository,
                            CardTagController cardTagController) {
@@ -96,10 +93,14 @@ public class BoardController {
 
         // Delete the corresponding boardTags and cardTags
         board.setBoardTags(new HashSet<>());
-
-        for (CardTag cardTag : cardTagRepository.findCardTagsByBoard(board)) {
-            cardTagController.deleteCardTagFromBoard(cardTag.getId());
+        List<CardTag> tags = cardTagRepository.findCardTagsByBoard(board);
+        if (tags != null) {
+            for (CardTag cardTag : tags) {
+                cardTagController.deleteCardTagFromBoard(cardTag.getId());
+            }
         }
+
+
 
 
         // Delete corresponding columns

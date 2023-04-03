@@ -73,7 +73,7 @@ class CardTagControllerTest {
     @Test
     void addCardTagToBoardSuccessTest() {
         ResponseEntity<CardTag> response = cardTagController
-                .addCardTagToBoard("cardTag", "ffaaff", 69L);
+                .addCardTagToBoard("cardTag", "ffaaff", board1.getId());
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(board1, response.getBody().getBoard());
@@ -89,7 +89,7 @@ class CardTagControllerTest {
     @Test
     void deleteCardTagFromBoardSuccessTest() {
         ResponseEntity<CardTag> addResponse = cardTagController
-                .addCardTagToBoard("cardTag", "ffaaff", 69L);
+                .addCardTagToBoard("cardTag", "ffaaff", board1.getId());
         CardTag c = addResponse.getBody();
         long id = c.getId();
         ResponseEntity<CardTag> response = cardTagController.deleteCardTagFromBoard(id);
