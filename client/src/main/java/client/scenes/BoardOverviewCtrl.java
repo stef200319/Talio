@@ -17,7 +17,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 
 import java.net.URL;
 import java.util.List;
@@ -144,7 +147,13 @@ public class BoardOverviewCtrl implements Initializable {
     @SuppressWarnings("checkstyle:MethodLength")
     public void createList(Column c) {
         VBox list=new VBox();
-        list.setStyle("-fx-border-color: black");
+
+        list.setStyle("-fx-background-color: "+c.getBgColour()+"; -fx-border-style: " +
+                "solid; -fx-background-radius: 5px; -fx-border-radius: 5px;" +
+                "-fx-border-color: "+c.getBorderColour());
+
+
+
         list.setPadding(new Insets(5));
         list.setPrefWidth(400); // Set preferred width to 400 pixels
         list.setPrefHeight(600); // Set preferred height to 600 pixels
@@ -199,7 +208,16 @@ public class BoardOverviewCtrl implements Initializable {
 
 
         Label title = new Label(c.getTitle());
-        title.setFont(new Font(20));
+
+        Font font = Font.font(c.getFontType(),
+                c.isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
+                c.isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                20);
+        title.setFont(font);
+        title.setTextFill(Color.web(c.getFontColour()));
+
+
+
 
         list.getChildren().add(title);
 
@@ -207,20 +225,29 @@ public class BoardOverviewCtrl implements Initializable {
         VBox cardContainer = new VBox();
         cardContainer.setSpacing(10);
         for(int i=0;i<cards.size();i++) {
+            int finalI = i;
             HBox card = new HBox(80);                   //card box
             card.setAlignment(Pos.CENTER_RIGHT);
-            card.setStyle("-fx-background-color:#FEF9D9");
-            card.setStyle("-fx-border-style: solid");
-            card.setStyle("-fx-border-radius: 50px");
-            card.setStyle("-fx-border-color: grey");
+            card.setStyle("-fx-background-color: "+cards.get(finalI).getBgColour()+"; -fx-border-style: " +
+                    "solid; -fx-background-radius: 5px; -fx-border-radius: 5px;" +
+                    "-fx-border-color: "+cards.get(finalI).getBorderColour());
 
-            Label s = new Label(cards.get(i).getTitle());       //title of the card
+
+            Label s = new Label(cards.get(i).getTitle());
+            s.setMaxWidth(80);
+            Font fontList = Font.font(cards.get(i).getFontType(),
+                    cards.get(i).isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
+                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                    12);
+            s.setFont(fontList);
+            s.setTextFill(Color.web(cards.get(i).getFontColour()));
+
             card.getChildren().add(s);
 
-            VBox cardButtons = new VBox(5);             //box for details and delete buttons
-            cardButtons.setAlignment(Pos.CENTER);
 
-            int finalI = i;
+            VBox cardButtons = new VBox(5);             //box for details and delete buttons
+
+            cardButtons.setAlignment(Pos.CENTER);
 
             Button details = new Button("Details");
             details.setOnAction(new EventHandler<ActionEvent>() {
@@ -249,7 +276,6 @@ public class BoardOverviewCtrl implements Initializable {
 
             cardContainer.getChildren().add(card);
         }
-
         cardContainer.setPrefWidth(380); // Set preferred width to 380 pixels
         cardContainer.setPrefHeight(500); // Set preferred height to 500 pixels
         list.getChildren().add(cardContainer);

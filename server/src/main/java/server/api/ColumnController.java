@@ -4,6 +4,9 @@ import commons.Card;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.database.BoardRepository;
+import server.database.CardRepository;
+import server.database.ColumnRepository;
 import server.services.BoardService;
 import server.services.CardService;
 import server.services.ColumnService;
@@ -19,12 +22,30 @@ public class ColumnController {
     private final CardService cardService;
 
 
+    private final ColumnRepository columnRepository;
+    private final BoardRepository boardRepository;
+    private final CardRepository cardRepository;
+    private final CardController cardController;
+
+
     /**
+     *
+     * @param columnRepository the data container which includes all the columns
+     * @param boardRepository the repository of the board -> used for checking whether boardId exists
+     * @param cardRepository the repository of the cards
+     * @param cardController the controller which controls all card crud operations
      * @param columnService the service used for the operations which use the column data access object
      * @param boardService the service used for the operations which use the board data access object
      * @param cardService the service used for the operations which use the card data access object
+
      */
-    public ColumnController(ColumnService columnService, BoardService boardService, CardService cardService) {
+    public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository,
+                            CardRepository cardRepository, CardController cardController,
+                            ColumnService columnService, BoardService boardService, CardService cardService) {
+        this.columnRepository = columnRepository;
+        this.boardRepository=boardRepository;
+        this.cardRepository=cardRepository;
+        this.cardController=cardController;
         this.columnService = columnService;
         this.boardService = boardService;
         this.cardService = cardService;
@@ -82,6 +103,136 @@ public class ColumnController {
         Column column = columnService.update(title, columnId);
         return ResponseEntity.ok(column);
     }
+
+
+
+    /**Change the Background colour of a Column, if it exists. Receive a message on the success of the edit
+     * @param columnId The ID of the Column whose title should be changed
+     * @param bgColour Background colour which should replace the old Background colour of the Column
+     * @return receive a message indicating the Background colour has change, if the Column exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editColumnBackgroundColour/{columnId}/{bgColour}")
+    @ResponseBody public ResponseEntity<Column> editColumnBackgroundColour(@PathVariable("columnId") long columnId,
+                                                                       @PathVariable("bgColour") String bgColour){
+        if (bgColour == null || !columnRepository.existsById(columnId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Column column = columnRepository.findById(columnId).get();
+        column.setBgColour(bgColour);
+        columnRepository.save(column);
+        return ResponseEntity.ok(column);
+    }
+
+
+    /**Change the Border colour of a Column, if it exists. Receive a message on the success of the edit
+     * @param columnId The ID of the Column whose title should be changed
+     * @param borderColour Border colour which should replace the old Border colour of the Column
+     * @return receive a message indicating the Border colour has changed, if the Column exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editColumnBorderColour/{columnId}/{borderColour}")
+    @ResponseBody public ResponseEntity<Column> editColumnBorderColour
+    (@PathVariable("columnId") long columnId, @PathVariable("borderColour") String borderColour){
+        if (borderColour == null || !columnRepository.existsById(columnId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Column column = columnRepository.findById(columnId).get();
+        column.setBorderColour(borderColour);
+        columnRepository.save(column);
+        return ResponseEntity.ok(column);
+    }
+
+
+    /**Change the Font-type of a Column, if it exists. Receive a message on the success of the edit
+     * @param columnId The ID of the Column whose title should be changed
+     * @param fontType Font Type which should replace the old Font Type of the Column
+     * @return receive a message indicating the Font Type has changed, if the Column exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editColumnFontType/{columnId}/{fontType}")
+    @ResponseBody public ResponseEntity<Column> editColumnFontType
+    (@PathVariable("columnId") long columnId, @PathVariable("fontType") String fontType){
+        if (fontType == null || !columnRepository.existsById(columnId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Column column = columnRepository.findById(columnId).get();
+        column.setFontType(fontType);
+        columnRepository.save(column);
+        return ResponseEntity.ok(column);
+    }
+
+    /**Change the Boldness of a Column, if it exists. Receive a message on the success of the edit
+     * @param columnId The ID of the Column whose title should be changed
+     * @param bold Boldness which should replace the old Boldness of the Column
+     * @return receive a message indicating the Boldness has changed, if the Column exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editColumnFontStyleBold/{columnId}/{bold}")
+    @ResponseBody public ResponseEntity<Column> editColumnFontStyleBold
+    (@PathVariable("columnId") long columnId, @PathVariable("bold") boolean bold){
+        if (!columnRepository.existsById(columnId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Column column = columnRepository.findById(columnId).get();
+        column.setFontStyleBold(bold);
+        columnRepository.save(column);
+        return ResponseEntity.ok(column);
+    }
+
+
+    /**Change the Italicness of a Column, if it exists. Receive a message on the success of the edit
+     * @param columnId The ID of the Column whose title should be changed
+     * @param italic Italicness which should replace the old Boldness of the Column
+     * @return receive a message indicating the Italicness has changed, if the Column exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editColumnFontStyleItalic/{columnId}/{italic}")
+    @ResponseBody public ResponseEntity<Column> editColumnFontStyleItalic
+    (@PathVariable("columnId") long columnId, @PathVariable("italic") boolean italic){
+        if (!columnRepository.existsById(columnId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Column column = columnRepository.findById(columnId).get();
+        column.setFontStyleItalic(italic);
+        columnRepository.save(column);
+        return ResponseEntity.ok(column);
+    }
+
+
+    /**Change the Font Colour of a Column, if it exists. Receive a message on the success of the edit
+     * @param columnId The ID of the Column whose title should be changed
+     * @param fontColour Font Colour which should replace the old Font Colour of the Column
+     * @return receive a message indicating the Font Colour has changed, if the Column exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editColumnFontColour/{columnId}/{fontColour}")
+    @ResponseBody public ResponseEntity<Column> editColumnFontColour
+    (@PathVariable("columnId") long columnId, @PathVariable("fontColour") String fontColour){
+        if (!columnRepository.existsById(columnId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Column column = columnRepository.findById(columnId).get();
+        column.setFontColour(fontColour);
+        columnRepository.save(column);
+        return ResponseEntity.ok(column);
+    }
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @param columnId the id of the column that needs to be removed
