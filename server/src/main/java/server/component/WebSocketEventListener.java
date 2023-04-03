@@ -2,6 +2,7 @@ package server.component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import commons.Board;
 import commons.Column;
 import commons.User;
 import org.slf4j.Logger;
@@ -68,7 +69,19 @@ public class WebSocketEventListener {
 
     @EventListener
     public void deleteBoard(RESTEvent event) {
+        String json = writeToJSON(event.getSource());
 
+        Board b = (Board) event.getSource();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Service", "board");
+        headers.put("Method", "delete");
+
+        for (User user : users) {
+            if (user.containsBoardId(b.getId())) {
+                messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+                user.removeBoardId(b.getId());
+            }
+        }
     }
 
     /**

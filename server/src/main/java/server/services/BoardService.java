@@ -1,7 +1,10 @@
 package server.services;
 
 import commons.Board;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import server.component.RESTEvent;
 import server.database.BoardRepository;
 
 import java.util.List;
@@ -10,6 +13,9 @@ import java.util.Optional;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * @param boardRepository the data access model of the board
@@ -77,6 +83,10 @@ public class BoardService {
 
         Board board = boardRepository.findById(boardId).get();
         boardRepository.delete(board);
+
+        RESTEvent event = new RESTEvent(board, "board was deleted");
+        applicationEventPublisher.publishEvent(event);
+
         return board;
     }
 }
