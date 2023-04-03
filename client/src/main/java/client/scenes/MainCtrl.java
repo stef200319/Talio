@@ -74,6 +74,9 @@ public class MainCtrl {
     private CustomizeListCtrl customizeListCtrl;
     private Scene customizeList;
 
+    private CustomizeBoardCtrl customizeBoardCtrl;
+    private Scene customizeBoard;
+
     /**
      * @param primaryStage
      * @param add
@@ -91,6 +94,7 @@ public class MainCtrl {
      * @param viewSubtask
      * @param customizeCard
      * @param customizeList
+     * @param customizeBoard
      * @param editSubtaskTitle
      * @param confirmDeleteColumn
      * @param confirmDeleteBoard
@@ -108,6 +112,7 @@ public class MainCtrl {
 
                            Pair<CustomizeCardCtrl, Parent> customizeCard,
                            Pair<CustomizeListCtrl, Parent> customizeList,
+                           Pair<CustomizeBoardCtrl, Parent> customizeBoard,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
                            Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
@@ -170,6 +175,9 @@ public class MainCtrl {
 
         this.customizeListCtrl = customizeList.getKey();
         this.customizeList = new Scene(customizeList.getValue());
+
+        this.customizeBoardCtrl = customizeBoard.getKey();
+        this.customizeBoard= new Scene(customizeBoard.getValue());
 
         this.confirmDeleteColumnCtrl = confirmDeleteColumn.getKey();
         this.confirmDeleteColumn = new Scene(confirmDeleteColumn.getValue());
@@ -242,6 +250,11 @@ public class MainCtrl {
         primaryStage.setTitle("Create board");
         primaryStage.setScene(createBoard);
     }
+
+
+
+
+
 
     /**
      * Connect to client
@@ -318,6 +331,17 @@ public class MainCtrl {
         editBoardTitleCtrl.setBoardToEditID(boardID);
         primaryStage.setTitle("Edit Board Title");
         primaryStage.setScene(editBoardTitle);
+    }
+
+    /**
+     * Show customize board page
+     *
+     * @param boardID the board which will be changed
+     */
+    public void showCustomizeBoard(long boardID) {
+        customizeBoardCtrl.setBoardToShow(boardID);
+        primaryStage.setTitle("Edit Board");
+        primaryStage.setScene(customizeBoard);
     }
 
 

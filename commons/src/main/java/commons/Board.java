@@ -20,13 +20,19 @@ public class Board {
 
 
     private String centerColour;
+    private String defaultCenterColour = "#FFFFFF";
 
     private String sideColour;
+    private String defaultSideColour = "#F5DEB3";
 
     private String fontType;
+    private String defaultFontType = "Segoe UI";
+
     private Boolean fontStyleBold;
     private Boolean fontStyleItalic;
+
     private String fontColour;
+    private String defaultFontColour = "#000000";
 
 
     /**
@@ -42,12 +48,12 @@ public class Board {
     public Board(String title) {
         this.title = title;
 
-        this.centerColour = "#FFFFFF";
-        this.sideColour = "#F5DEB3";
-        this.fontType = "Segoe UI";
+        this.centerColour = defaultCenterColour;
+        this.sideColour = defaultSideColour;
+        this.fontType = defaultFontType;
         this.fontStyleBold=false;
         this.fontStyleItalic=false;
-        this.fontColour = "#000000";
+        this.fontColour = defaultFontColour;
     }
 
     /**
@@ -184,5 +190,34 @@ public class Board {
      */
     public void setFontColour(String fontColour) {
         this.fontColour = fontColour;
+    }
+
+
+    /**
+     * @return The default Center Colour of a Board
+     */
+    public String getDefaultCenterColour() {
+        return defaultCenterColour;
+    }
+
+    /**
+     * @return The default Side Colour of a Board
+     */
+    public String getDefaultSideColour() {
+        return defaultSideColour;
+    }
+
+    /**
+     * @return The default Font-Type of a Board
+     */
+    public String getDefaultFontType() {
+        return defaultFontType;
+    }
+
+    /**
+     * @return The default Font Colour of a Board
+     */
+    public String getDefaultFontColour() {
+        return defaultFontColour;
     }
 }

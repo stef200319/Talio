@@ -143,6 +143,35 @@ public class CustomizeCardCtrl implements Initializable {
                 (int) (colour.getBlue() * 255));
     }
 
+
+    /**
+     * Set the Background Colour of this Card to the Default Card Background Colour
+     */
+    public void setDefaultCardBgColour(){
+        server.editCardBackgroundColour(cardToShow, cardToShow.getDefaultBgColour());
+    }
+
+    /**
+     * Set the Border Colour of this Card to the Default Card Border Colour
+     */
+    public void setDefaultCardBorderColour(){
+        server.editCardBorderColour(cardToShow, cardToShow.getDefaultBorderColour());
+    }
+
+    /**
+     * Set the Font-Type of this Card to the Default Card Font-Type
+     */
+    public void setDefaultCardFontType(){
+        server.editCardFontType(cardToShow, cardToShow.getDefaultFontType());
+    }
+
+    /**
+     * Set the Font Colour of this Card to the Default Card Font Colour
+     */
+    public void setDefaultCardFontColour(){
+        server.editCardFontColour(cardToShow, cardToShow.getDefaultFontColour());
+    }
+
     /**
      * Edits the title of the Card and returns to the Card's details
      */

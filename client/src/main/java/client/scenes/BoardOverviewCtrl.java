@@ -15,7 +15,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -52,6 +54,15 @@ public class BoardOverviewCtrl implements Initializable {
 
     @FXML
     private Label boardName;
+
+    @FXML
+    private Pane rightPane;
+
+    @FXML
+    private Pane leftPane;
+
+    @FXML
+    private AnchorPane centerPane;
 
 
     /**
@@ -129,7 +140,20 @@ public class BoardOverviewCtrl implements Initializable {
             return;
         }
         Board currentBoard = server.getBoardByID(boardID);
+
+        Font fontBoard = Font.font(currentBoard.getFontType(),
+                currentBoard.isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
+                currentBoard.isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                20);
+        boardName.setFont(fontBoard);
+        boardName.setTextFill(Color.web(currentBoard.getFontColour()));
+
         boardName.setText(currentBoard.getTitle());
+
+        leftPane.setStyle("-fx-background-color: "+currentBoard.getSideColour());
+        rightPane.setStyle("-fx-background-color: "+currentBoard.getSideColour());
+        centerPane.setStyle("-fx-background-color: "+currentBoard.getCenterColour());
+
         List<Column> columns = server.getColumnsByBoardId(boardID);
         for(int i=0;i<columns.size();i++)
             createList(columns.get(i));
