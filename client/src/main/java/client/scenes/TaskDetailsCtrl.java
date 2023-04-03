@@ -134,6 +134,9 @@ public class TaskDetailsCtrl implements Initializable {
         mainCtrl.showViewSubtask(cardToShow);
     }
 
+    /**
+     * Refreshes the page
+     */
     public void refresh() {
         subtasksScroll.getChildren().clear();
 

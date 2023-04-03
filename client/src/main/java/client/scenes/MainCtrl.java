@@ -89,11 +89,12 @@ public class MainCtrl {
      * @param editCardTitle
      * @param editCardDescription
      * @param editList
-     * @param editBoardTitle
      * @param viewSubtask
      * @param editSubtaskTitle
+     * @param editBoardTitle
      * @param confirmDeleteColumn
      * @param confirmDeleteBoard
+     * @param addSubtask
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
