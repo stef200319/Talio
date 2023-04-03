@@ -138,7 +138,8 @@ public class BoardOverviewCtrl implements Initializable {
         public void handle(KeyEvent event) {
             if(event.isShiftDown() && event.getCode()==KeyCode.SLASH)
             {
-                showHelpScreen();
+                //showHelpScreen();
+                mainCtrl.showHelperScreen();
 
             }
         }
@@ -148,7 +149,7 @@ public class BoardOverviewCtrl implements Initializable {
     {
         return openHelp;
     }
-    public void showHelpScreen()
+    /*public void showHelpScreen()
     {
         //Scene scene = mainCtrl
         System.out.println(mainCtrl.getPreviousSceneTitle()); //THIS IS BOARD OVERVIEW //
@@ -158,7 +159,7 @@ public class BoardOverviewCtrl implements Initializable {
         mainCtrl.getPreviousScene();
         mainCtrl.getPreviousSceneTitle();
         mainCtrl.showHelpScreen();
-    }
+    }*/
 
 
     /**

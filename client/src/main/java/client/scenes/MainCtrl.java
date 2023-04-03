@@ -305,14 +305,27 @@ public class MainCtrl {
 
     public void showPreviousScreen()
     {
-        //System.out.println(getPreviousSceneTitle());
+
         primaryStage.setTitle(getPrevPrevSceneTitle());
         primaryStage.setScene(getPrevPrevScene());
 
     }
 
-    public void setPreviousScene(Scene scene){this.previousScene = scene;
-        System.out.println(primaryStage.getTitle());}
+    public void showHelpScreenAndGetPrev()
+    {
+
+        setPreviousScene(getPreviousScene());
+        setPreviousSceneTitle(getPreviousSceneTitle());
+        getPreviousScene();
+        getPreviousSceneTitle();
+        showHelpScreen();
+
+    }
+
+    public void setPreviousScene(Scene scene)
+    {
+        this.previousScene = scene;
+    }
     public void setPreviousSceneTitle(String title){this.title = title;}
     public Scene getPreviousScene()
     {
