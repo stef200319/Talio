@@ -5,7 +5,7 @@ import java.util.List;
 public class User {
 
     private String name;
-    private List<Integer> boardIds;
+    private List<Long> boardIds;
 
     public User(String name) {
         this.name = name;
@@ -27,7 +27,7 @@ public class User {
         this.boardIds = boardIds;
     }
 
-    public boolean containsBoardId(int id) {
+    public boolean containsBoardId(long id) {
         return boardIds.contains(id);
     }
 }
