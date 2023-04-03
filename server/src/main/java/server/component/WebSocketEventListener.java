@@ -1,5 +1,6 @@
 package server.component;
 
+import commons.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class WebSocketEventListener {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
-    private List<String> ids = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
 
@@ -29,7 +30,9 @@ public class WebSocketEventListener {
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
 
-        ids.add(sha.getUser().getName());
+        User user = new User(sha.getUser().getName());
+
+        users.add(user);
         logger.info("Received a new web socket connection");
     }
 
@@ -41,9 +44,9 @@ public class WebSocketEventListener {
 
         System.out.println("message sent");
         System.out.println(event.getMessage());
-        for (String id : ids) {
-            System.out.println("send to: " + id);
-            messagingTemplate.convertAndSendToUser(id, "/queue/private", "sent to user " + id);
+        for (User user : users) {
+            System.out.println("send to: " + user.getName());
+            messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", "sent to user " + user.getName());
         }
 
         messagingTemplate.convertAndSend("/topic/periodic", "all checked");
