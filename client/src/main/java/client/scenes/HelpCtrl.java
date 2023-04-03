@@ -15,7 +15,6 @@ public class HelpCtrl {
 
     private final MainCtrl mainCtrl;
 
-    private Scene previousScene;
 
 
     /**

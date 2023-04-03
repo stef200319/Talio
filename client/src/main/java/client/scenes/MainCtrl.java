@@ -319,7 +319,8 @@ public class MainCtrl {
     /**
      * private event handler for a key event that listens
      *       for the "CTRL+?" keys to be pressed
-     * when the "CTRL+?" keys are pressed, the method setPrevAndShowHelp()
+     * when the "CTRL+?" keys are pressed, the method setPreviousSceneAndTitle()
+     * to save the previous scene and scene title values and then showHelpScreen() method
      *       is called to show the help screen
      */
     private EventHandler<KeyEvent> openHelp = new EventHandler<KeyEvent>() {
@@ -328,7 +329,8 @@ public class MainCtrl {
             if(event.isControlDown() && event.getCode()== KeyCode.SLASH)
             {
 
-                setPrevAndShowHelp();
+                setPreviousSceneAndTitle();
+                showHelpScreen();
 
             }
         }
@@ -368,14 +370,12 @@ public class MainCtrl {
      * method that
      * sets the previous scene value by calling the methods that
      * set the previous scene
-     * and then calls the showHelpScreen() method that shows the help screen
      */
-    public void setPrevAndShowHelp()
+    public void setPreviousSceneAndTitle()
     {
 
         setPreviousScene(getCurrentScene());
         setPreviousSceneTitle(getCurrentSceneTitle());
-        showHelpScreen();
 
     }
 
@@ -433,7 +433,6 @@ public class MainCtrl {
 
     public String getPreviousSceneTitle()
     {
-        System.out.println(this.title);
         return this.title;
     }
 
