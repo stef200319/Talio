@@ -2,10 +2,12 @@ package commons;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -16,6 +18,14 @@ public class Board {
     private Long id;
 
     private String title;
+
+    @ManyToMany
+    @JoinTable(
+            name = "owned_tags_board",
+            joinColumns = @JoinColumn(name = "board_id"),
+            inverseJoinColumns = @JoinColumn(name = "boardtag_id")
+    )
+    private Set<BoardTag> boardTags;
 
 
     /**
@@ -30,6 +40,23 @@ public class Board {
      */
     public Board(String title) {
         this.title = title;
+        this.boardTags = new HashSet<>();
+    }
+
+    /**
+     * getter for the boardTags
+     * @return all the boardTags
+     */
+    public List<BoardTag> getBoardTags() {
+        return new ArrayList<>(boardTags);
+    }
+
+    /**
+     * setter fot the boardTags
+     * @param boardTags
+     */
+    public void setBoardTags(Set<BoardTag> boardTags) {
+        this.boardTags = boardTags;
     }
 
     /**
@@ -58,6 +85,28 @@ public class Board {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
+    /**
+     * add BoardTag to board
+     * @param boardTag boardTag to add
+     */
+    public void addBoardTag(BoardTag boardTag) {
+        if (boardTags.contains(boardTag) || boardTag == null) return;
+        boardTags.add(boardTag);
+    }
+
+    /**
+     * Delete the boardTag
+     * @param boardTag boardTag to delete
+     * @return the deleted boardTag
+     */
+    public BoardTag deleteBoardTag(BoardTag boardTag) {
+        if (!boardTags.contains(boardTag) || boardTag == null) return null;
+        boardTags.remove(boardTag);
+        return boardTag;
+    }
+
     /**
      * @param obj other object that you want to compare to this
      * @return whether the objects are the same

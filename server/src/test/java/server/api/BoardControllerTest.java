@@ -6,6 +6,7 @@ import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import server.database.CardTagRepository;
 import server.services.BoardService;
 import server.services.CardService;
 import server.services.ColumnService;
@@ -16,7 +17,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class BoardControllerTest {
 
@@ -33,6 +35,8 @@ class BoardControllerTest {
     private BoardController boardController;
     private ColumnController columnController;
     private CardController cardController;
+    private CardTagController cardTagController;
+    private CardTagRepository cardTagRepository;
 
 
 
@@ -41,16 +45,22 @@ class BoardControllerTest {
         boardRepository = new TestBoardRepository();
         columnRepository = new TestColumnRepository();
         subtaskRepository = new TestSubtaskRepository();
+        cardTagRepository = new TestCardTagRepository();
+        cardRepository = new TestCardRepository();
+
 
         boardService = new BoardService(boardRepository);
         columnService = new ColumnService(columnRepository);
         cardService = new CardService(cardRepository, subtaskRepository);
         subtaskService = new SubtaskService(subtaskRepository);
 
-        cardRepository = new TestCardRepository();
         cardController = new CardController(cardService, columnService, subtaskService);
         columnController = new ColumnController(columnService, boardService, cardService);
-        boardController = new BoardController(boardService, columnService);
+        cardTagController = new CardTagController(cardTagRepository, boardRepository, cardRepository);
+        boardController = new BoardController(boardService, columnService, cardTagRepository, cardTagController);
+
+
+
 
     }
 

@@ -15,12 +15,17 @@
  */
 package commons;
 
-import javax.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
 
 
 @Entity
@@ -35,6 +40,14 @@ public class Card {
 
     private String description;
 
+
+    @ManyToMany
+    @JoinTable(
+            name = "owned_tags_card",
+            joinColumns = @JoinColumn(name = "card_id"),
+            inverseJoinColumns = @JoinColumn(name = "cardtag_id")
+    )
+    private Set<CardTag> tags;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Subtask> subtasks;
@@ -54,8 +67,9 @@ public class Card {
     public Card(String title, long columnId) {
         this.title = title;
         this.columnId = columnId;
-
         this.subtasks = new ArrayList<Subtask>();
+        this.tags = new HashSet<>();
+
     }
 
     /**
@@ -113,6 +127,43 @@ public class Card {
      */
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    /**
+     * add cardTag to card
+     * @param cardTag cardTag to add
+     */
+    public void addCardTag(CardTag cardTag) {
+        if (tags.contains(cardTag) || cardTag == null) return;
+        tags.add(cardTag);
+    }
+
+    /**
+     * delete cardTag from card
+     * @param cardTag cardTag to delete
+     * @return the deleted cardTag
+     */
+    public CardTag deleteCardTag(CardTag cardTag) {
+        if (!tags.contains(cardTag) || cardTag == null) return null;
+        tags.remove(cardTag);
+        return cardTag;
+    }
+
+    /**
+     * getter for the cardTags
+     * @return a list of the CardTags
+     */
+    public List<CardTag> getCardTags() {
+        if (tags == null) return new ArrayList<>();
+        return new ArrayList<>(tags);
+    }
+
+    /**
+     * Settter for the card tags
+     * @param cardTags
+     */
+    public void setCardTags(Set<CardTag> cardTags) {
+        this.tags = cardTags;
     }
 
     /**

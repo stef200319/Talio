@@ -8,6 +8,7 @@ import server.services.ColumnService;
 import server.services.CardService;
 import server.services.SubtaskService;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -194,9 +195,19 @@ public class CardController {
      */
     @DeleteMapping("/deleteCard/{cardId}")
     @ResponseBody public ResponseEntity<Card> deleteCard(@PathVariable("cardId") long cardId){
-        Card cardToDelete = cardService.deleteCard(cardId);
-        if(cardToDelete==null)
+        if(!cardService.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
+        }
+
+        Card cardToDelete = cardService.getById(cardId);
+
+
+        // Delete all the cardTags
+        cardToDelete.setCardTags(new HashSet<>());
+
+        // Delete the card
+        cardService.deleteCard(cardId);
+
         return ResponseEntity.ok(cardToDelete);
     }
 
