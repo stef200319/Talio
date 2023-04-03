@@ -139,7 +139,13 @@ public class BoardOverviewCtrl implements Initializable {
     @SuppressWarnings("checkstyle:MethodLength")
     public void createList(Column c) {
         VBox list=new VBox();
-        list.setStyle("-fx-border-color: black");
+
+        list.setStyle("-fx-background-color: "+c.getBgColour()+"; -fx-border-style: " +
+                "solid; -fx-background-radius: 5px; -fx-border-radius: 5px;" +
+                "-fx-border-color: "+c.getBorderColour());
+
+
+
         list.setPadding(new Insets(5));
         list.setPrefWidth(400); // Set preferred width to 400 pixels
         list.setPrefHeight(600); // Set preferred height to 600 pixels
@@ -195,7 +201,16 @@ public class BoardOverviewCtrl implements Initializable {
 
 
         Label title = new Label(c.getTitle());
-        title.setFont(new Font(20));
+
+        Font font = Font.font(c.getFontType(),
+                c.isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
+                c.isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                20);
+        title.setFont(font);
+        title.setTextFill(Color.web(c.getFontColour()));
+
+
+
 
         list.getChildren().add(title);
 
@@ -213,11 +228,11 @@ public class BoardOverviewCtrl implements Initializable {
 
             Label s = new Label(cards.get(i).getTitle());
             s.setMaxWidth(80);
-            Font font = Font.font(cards.get(i).getFontType(),
+            Font fontList = Font.font(cards.get(i).getFontType(),
                     cards.get(i).isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
                     cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
                     12);
-            s.setFont(font);
+            s.setFont(fontList);
             s.setTextFill(Color.web(cards.get(i).getFontColour()));
 
             card.getChildren().add(s);

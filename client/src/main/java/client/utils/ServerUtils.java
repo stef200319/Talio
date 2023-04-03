@@ -157,6 +157,150 @@ public class ServerUtils {
     }
 
     /**
+     * Method that edits the title of a Board
+     * @param c Board to edit
+     * @param title new title
+     * @return new Board entity
+     */
+    public Board editBoardTitle(Board c, String title) {
+        long boardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/editBoardTitle/"+boardId+"/"+title)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Board.class);
+    }
+
+
+
+    /**
+     * Method that edits the Background Colour of a Board
+     * @param c Board to edit
+     * @param bgColour new Background Colour
+     * @return new Board entity
+     */
+    public Board editBoardCenterColour(Board c, String bgColour) {
+        long boardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/editBoardCenterColour/"+boardId+"/"+bgColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Board.class);
+    }
+
+    /**
+     * Method that edits the Background Colour of a Board
+     * @param c Board to edit
+     * @param bgColour new Background Colour
+     * @return new Board entity
+     */
+    public Board editBoardSideColour(Board c, String bgColour) {
+        long boardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/editBoardSideColour/"+boardId+"/"+bgColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Board.class);
+    }
+
+
+    /**
+     * Method that edits the Background Colour of a Board
+     * @param c Board to edit
+     * @param bgColour new Background Colour
+     * @return new Board entity
+     */
+    public Board editBoardFontType(Board c, String bgColour) {
+        long boardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/editBoardFontType/"+boardId+"/"+bgColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Board.class);
+    }
+
+
+
+
+    /**
+     * Method that edits the Font Boldness of a Board
+     * @param c Board to edit
+     * @param fontStyleBold new Font Boldness
+     * @return new Board entity
+     */
+    public Board editBoardFontStyleBold(Board c, boolean fontStyleBold) {
+        long boardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/editBoardFontStyleBold/"+boardId+"/"+fontStyleBold)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Board.class);
+    }
+
+
+    /**
+     * Method that edits the Font Italicness of a Board
+     * @param c Board to edit
+     * @param fontStyleItalic new Font Italicness
+     * @return new Board entity
+     */
+    public Board editBoardFontStyleItalic(Board c, boolean fontStyleItalic) {
+        long boardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/editBoardFontStyleItalic/"+boardId+"/"+fontStyleItalic)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Board.class);
+    }
+
+    /**
+     * Method that edits the Font Colour of a Board
+     * @param c Board to edit
+     * @param fontColour new Font Font Colour
+     * @return new Board entity
+     */
+    public Board editBoardFontColour(Board c, String fontColour) {
+        long boardId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/editBoardFontColour/"+boardId+"/"+fontColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Board.class);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
      * Method that deletes a column
      * @param c column to delete
      * @return response
@@ -217,6 +361,115 @@ public class ServerUtils {
             .accept(APPLICATION_JSON)
             .put(Entity.entity(c, APPLICATION_JSON), Column.class);
     }
+
+    /**
+     * Method that edits the Background Colour of a Column
+     * @param c Column to edit
+     * @param bgColour new Background Colour
+     * @return new Column entity
+     */
+    public Column editColumnBackgroundColour(Column c, String bgColour) {
+        long columnId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/editColumnBackgroundColour/"+columnId+"/"+bgColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Column.class);
+    }
+
+    /**
+     * Method that edits the Border Colour of a Column
+     * @param c Column to edit
+     * @param borderColour new Border Colour
+     * @return new Column entity
+     */
+    public Column editColumnBorderColour(Column c, String borderColour) {
+        long columnId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/editColumnBorderColour/"+columnId+"/"+borderColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Column.class);
+    }
+
+
+    /**
+     * Method that edits the Font-type of a Column
+     * @param c Column to edit
+     * @param fontType new Font-type
+     * @return new Column entity
+     */
+    public Column editColumnFontType(Column c, String fontType) {
+        long columnId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/editColumnFontType/"+columnId+"/"+fontType)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Column.class);
+    }
+
+    /**
+     * Method that edits the Font Boldness of a Column
+     * @param c Column to edit
+     * @param fontStyleBold new Font Boldness
+     * @return new Column entity
+     */
+    public Column editColumnFontStyleBold(Column c, boolean fontStyleBold) {
+        long columnId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/editColumnFontStyleBold/"+columnId+"/"+fontStyleBold)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Column.class);
+    }
+
+
+    /**
+     * Method that edits the Font Italicness of a Column
+     * @param c Column to edit
+     * @param fontStyleItalic new Font Italicness
+     * @return new Column entity
+     */
+    public Column editColumnFontStyleItalic(Column c, boolean fontStyleItalic) {
+        long columnId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/editColumnFontStyleItalic/"+columnId+"/"+fontStyleItalic)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Column.class);
+    }
+
+    /**
+     * Method that edits the Font Colour of a Column
+     * @param c Column to edit
+     * @param fontColour new Font Font Colour
+     * @return new Column entity
+     */
+    public Column editColumnFontColour(Column c, String fontColour) {
+        long columnId=c.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/editColumnFontColour/"+columnId+"/"+fontColour)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(c, APPLICATION_JSON), Column.class);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Method that edits the title of a card

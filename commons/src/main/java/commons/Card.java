@@ -35,10 +35,10 @@ public class Card {
 
     private String description;
 
+
     private String bgColour;
 
     private String borderColour;
-
 
     private String fontType;
     private Boolean fontStyleBold;

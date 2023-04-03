@@ -62,6 +62,9 @@ public class MainCtrl {
     private CustomizeCardCtrl customizeCardCtrl;
     private Scene customizeCard;
 
+    private CustomizeListCtrl customizeListCtrl;
+    private Scene customizeList;
+
     /**
      * @param primaryStage
      * @param add
@@ -77,6 +80,7 @@ public class MainCtrl {
      * @param editList
      * @param viewSubtask
      * @param customizeCard
+     * @param customizeList
      * @param editSubtaskTitle
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
@@ -90,6 +94,7 @@ public class MainCtrl {
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
                            Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
                            Pair<CustomizeCardCtrl, Parent> customizeCard,
+                           Pair<CustomizeListCtrl, Parent> customizeList,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle) {
 
 
@@ -137,6 +142,9 @@ public class MainCtrl {
 
         this.customizeCardCtrl = customizeCard.getKey();
         this.customizeCard = new Scene(customizeCard.getValue());
+
+        this.customizeListCtrl = customizeList.getKey();
+        this.customizeList = new Scene(customizeList.getValue());
 
 
         showClientConnect();
@@ -238,6 +246,18 @@ public class MainCtrl {
         editListCtrl.setColumnToEdit(c);
         primaryStage.setTitle("Edit Column");
         primaryStage.setScene(editList);
+    }
+
+    /**
+     * Show customize list page
+     * @param c the list which will be changed
+     * @param boardID boardID of the board to be in
+     */
+    public void showCustomizeList(Column c, long boardID) {
+        customizeListCtrl.setBoardID(boardID);
+        customizeListCtrl.setColumnToShow(c);
+        primaryStage.setTitle("Edit Column");
+        primaryStage.setScene(customizeList);
     }
 
 
