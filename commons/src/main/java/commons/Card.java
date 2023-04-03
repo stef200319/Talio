@@ -20,6 +20,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -53,6 +54,7 @@ public class Card {
     public Card(String title, long columnId) {
         this.title = title;
         this.columnId = columnId;
+        this.tags = new HashSet<>();
     }
 
     /**
@@ -137,6 +139,7 @@ public class Card {
      * @return a list of the CardTags
      */
     public List<CardTag> getCardTags() {
+        if (tags == null) return new ArrayList<>();
         return new ArrayList<>(tags);
     }
 

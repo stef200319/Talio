@@ -1,14 +1,13 @@
 package server.api;
 
-import commons.Board;
-import commons.CardTag;
+import commons.BoardTag;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import server.database.CardTagRepository;
+import server.database.BoardTagRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -17,30 +16,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class TestCardTagRepository implements CardTagRepository {
 
-    List<CardTag> cardTags = new ArrayList<>();
+public class TestBoardTagRepository implements BoardTagRepository {
+
+    List<BoardTag> boardTags = new ArrayList<>();
 
 
-    /**
-     * query that finds the cardTags by board
-     *
-     * @param board
-     * @return the list of the cardTags
-     */
     @Override
-    public List<CardTag> findCardTagsByBoard(Board board) {
-        return null;
+    public List<BoardTag> findAll() {
+        return boardTags;
     }
 
     @Override
-    public List<CardTag> findAll() {
-        return null;
-    }
-
-    @Override
-    public List<CardTag> findAll(Sort sort) {
-        return null;
+    public List<BoardTag> findAll(Sort sort) {
+        return boardTags;
     }
 
     /**
@@ -50,12 +39,12 @@ public class TestCardTagRepository implements CardTagRepository {
      * @return a page of entities
      */
     @Override
-    public Page<CardTag> findAll(Pageable pageable) {
+    public Page<BoardTag> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public List<CardTag> findAllById(Iterable<Long> longs) {
+    public List<BoardTag> findAllById(Iterable<Long> longs) {
         return null;
     }
 
@@ -77,15 +66,14 @@ public class TestCardTagRepository implements CardTagRepository {
      */
     @Override
     public void deleteById(Long aLong) {
-        CardTag cardTag = null;
-        for (CardTag c : cardTags) {
-            if (c.getId() == aLong) {
-                cardTag = c;
+        BoardTag boardTag = null;
+        for (BoardTag b : boardTags) {
+            if (b.getId() == aLong) {
+                boardTag = b;
                 break;
             }
         }
-        if (cardTag != null) cardTags.remove(cardTag);
-
+        if (boardTag != null) boardTags.remove(boardTag);
     }
 
     /**
@@ -95,8 +83,8 @@ public class TestCardTagRepository implements CardTagRepository {
      * @throws IllegalArgumentException in case the given entity is {@literal null}.
      */
     @Override
-    public void delete(CardTag entity) {
-
+    public void delete(BoardTag entity) {
+        boardTags.remove(entity);
     }
 
     /**
@@ -118,7 +106,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @throws IllegalArgumentException in case the given {@literal entities} or one of its entities is {@literal null}.
      */
     @Override
-    public void deleteAll(Iterable<? extends CardTag> entities) {
+    public void deleteAll(Iterable<? extends BoardTag> entities) {
 
     }
 
@@ -139,25 +127,25 @@ public class TestCardTagRepository implements CardTagRepository {
      * @throws IllegalArgumentException in case the given {@literal entity} is {@literal null}.
      */
     @Override
-    public <S extends CardTag> S save(S entity) {
+    public <S extends BoardTag> S save(S entity) {
         if (existsById(entity.getId())) {
             deleteById(entity.getId());
         }
         else if (entity.getId() == null) {
             long max = 0;
-            for (CardTag c : cardTags) {
-                if (c.getId() > max) max = c.getId();
+            for (BoardTag b : boardTags) {
+                if (b.getId() > max) max = b.getId();
             }
             max++;
             entity.setId(max);
         }
 
-        cardTags.add(entity);
+        boardTags.add(entity);
         return entity;
     }
 
     @Override
-    public <S extends CardTag> List<S> saveAll(Iterable<S> entities) {
+    public <S extends BoardTag> List<S> saveAll(Iterable<S> entities) {
         return null;
     }
 
@@ -169,10 +157,10 @@ public class TestCardTagRepository implements CardTagRepository {
      * @throws IllegalArgumentException if {@literal id} is {@literal null}.
      */
     @Override
-    public Optional<CardTag> findById(Long aLong) {
-        for (CardTag c : cardTags) {
-            if (c != null && c.getId().equals(aLong)) {
-                return Optional.of(c);
+    public Optional<BoardTag> findById(Long aLong) {
+        for (BoardTag b : boardTags) {
+            if (b != null && b.getId().equals(aLong)) {
+                return Optional.of(b);
             }
         }
         return Optional.empty();
@@ -187,9 +175,8 @@ public class TestCardTagRepository implements CardTagRepository {
      */
     @Override
     public boolean existsById(Long aLong) {
-        if (aLong == null) return false;
-        for (CardTag c : cardTags) {
-            if (aLong.equals(c.getId())) return true;
+        for (BoardTag b : boardTags) {
+            if (b != null && b.getId().equals(aLong)) return true;
         }
         return false;
     }
@@ -209,7 +196,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @return the saved entity
      */
     @Override
-    public <S extends CardTag> S saveAndFlush(S entity) {
+    public <S extends BoardTag> S saveAndFlush(S entity) {
         return null;
     }
 
@@ -221,7 +208,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @since 2.5
      */
     @Override
-    public <S extends CardTag> List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends BoardTag> List<S> saveAllAndFlush(Iterable<S> entities) {
         return null;
     }
 
@@ -234,7 +221,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @since 2.5
      */
     @Override
-    public void deleteAllInBatch(Iterable<CardTag> entities) {
+    public void deleteAllInBatch(Iterable<BoardTag> entities) {
 
     }
 
@@ -270,7 +257,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @deprecated use  instead.
      */
     @Override
-    public CardTag getOne(Long aLong) {
+    public BoardTag getOne(Long aLong) {
         return null;
     }
 
@@ -286,7 +273,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @since 2.5
      */
     @Override
-    public CardTag getById(Long aLong) {
+    public BoardTag getById(Long aLong) {
         return null;
     }
 
@@ -298,17 +285,17 @@ public class TestCardTagRepository implements CardTagRepository {
      * @throws IncorrectResultSizeDataAccessException if the Example yields more than one result.
      */
     @Override
-    public <S extends CardTag> Optional<S> findOne(Example<S> example) {
+    public <S extends BoardTag> Optional<S> findOne(Example<S> example) {
         return Optional.empty();
     }
 
     @Override
-    public <S extends CardTag> List<S> findAll(Example<S> example) {
-        return (List<S>) cardTags;
+    public <S extends BoardTag> List<S> findAll(Example<S> example) {
+        return null;
     }
 
     @Override
-    public <S extends CardTag> List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends BoardTag> List<S> findAll(Example<S> example, Sort sort) {
         return null;
     }
 
@@ -321,7 +308,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @return a {@link Page} of entities matching the given {@link Example}.
      */
     @Override
-    public <S extends CardTag> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends BoardTag> Page<S> findAll(Example<S> example, Pageable pageable) {
         return null;
     }
 
@@ -332,7 +319,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @return the number of instances matching the {@link Example}.
      */
     @Override
-    public <S extends CardTag> long count(Example<S> example) {
+    public <S extends BoardTag> long count(Example<S> example) {
         return 0;
     }
 
@@ -343,7 +330,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @return {@literal true} if the data store contains elements that match the given {@link Example}.
      */
     @Override
-    public <S extends CardTag> boolean exists(Example<S> example) {
+    public <S extends BoardTag> boolean exists(Example<S> example) {
         return false;
     }
 
@@ -357,7 +344,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @since 2.6
      */
     @Override
-    public <S extends CardTag, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+    public <S extends BoardTag, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
     }
 }

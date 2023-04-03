@@ -158,7 +158,7 @@ public class CardTagController {
     public void deleteCardTagFromCards(CardTag cardTag) {
         List<Card> cards = cardRepository.findAll();
         for (Card card : cards) {
-            if (card.getCardTags().contains(cardTag)) {
+            if (card != null && card.getCardTags().contains(cardTag)) {
                 card.deleteCardTag(cardTag);
                 cardRepository.save(card);
             }

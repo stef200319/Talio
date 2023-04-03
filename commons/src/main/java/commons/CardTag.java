@@ -38,6 +38,11 @@ public class CardTag extends Tag {
     }
 
 
+    /**
+     * tests whether this and other object are equal
+     * @param o the other object to compare with
+     * @return boolean whether equal or not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,11 +52,19 @@ public class CardTag extends Tag {
         return Objects.equals(getBoard(), cardTag.getBoard());
     }
 
+    /**
+     * Hashcode method
+     * @return hashed version of this
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getBoard());
     }
 
+    /**
+     * toString method
+     * @return string representation of this
+     */
     @Override
     public String toString() {
         return "CardTag{" +
