@@ -133,39 +133,7 @@ public class BoardOverviewCtrl implements Initializable {
             createList(columns.get(i));
     }
 
-    /**
-     * private event handler for a key event that listens
-     *       for the "Shift+?" keys to be pressed
-     * when the "Shift+?" keys are pressed, the method showHelp()
-     *       is called to show the help screen
-     */
-    private EventHandler<KeyEvent> openHelp = new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
-            if(event.isShiftDown() && event.getCode()==KeyCode.SLASH)
-            {
 
-                showHelp();
-
-            }
-        }
-    };
-    /**
-     * @return the openHelp event handler
-     */
-    public EventHandler<KeyEvent> getOpenHelp()
-    {
-        return openHelp;
-    }
-
-    /**
-     * method that calls the method from the
-     * MainCtrl class that shows the help screen
-     */
-    public void showHelp()
-    {
-        mainCtrl.setPrevAndShowHelp();
-    }
 
     /**
      * Method that showcases the column on the board

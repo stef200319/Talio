@@ -18,8 +18,11 @@ package client.scenes;
 import commons.Card;
 
 import commons.Column;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -157,9 +160,23 @@ public class MainCtrl {
         this.helpCtrl = help.getKey();
         this.help = new Scene(help.getValue());
 
-        this.boardOverview.setOnKeyPressed(boardOverviewCtrl.getOpenHelp());
-
         this.help.setOnKeyPressed(helpCtrl.getBackToPreviousScene());
+
+        this.boardOverview.setOnKeyPressed(getOpenHelp());
+        this.clientConnect.setOnKeyPressed(getOpenHelp());
+        this.addTask.setOnKeyPressed(getOpenHelp());
+        this.addList.setOnKeyPressed(getOpenHelp());
+        this.createBoard.setOnKeyPressed(getOpenHelp());
+        this.editBoardTitle.setOnKeyPressed(getOpenHelp());
+        this.editCardDescription.setOnKeyPressed(getOpenHelp());
+        this.editCardTitle.setOnKeyPressed(getOpenHelp());
+        this.editList.setOnKeyPressed(getOpenHelp());
+        this.editSubtaskTitle.setOnKeyPressed(getOpenHelp());
+        this.taskDetails.setOnKeyPressed(getOpenHelp());
+        this.taskManagement.setOnKeyPressed(getOpenHelp());
+        this.viewSubtask.setOnKeyPressed(getOpenHelp());
+        this.workspace.setOnKeyPressed(getOpenHelp());
+
 
         showClientConnect();
         primaryStage.show();
@@ -300,6 +317,33 @@ public class MainCtrl {
     }
 
     /**
+     * private event handler for a key event that listens
+     *       for the "CTRL+?" keys to be pressed
+     * when the "CTRL+?" keys are pressed, the method setPrevAndShowHelp()
+     *       is called to show the help screen
+     */
+    private EventHandler<KeyEvent> openHelp = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            if(event.isControlDown() && event.getCode()== KeyCode.SLASH)
+            {
+
+                setPrevAndShowHelp();
+
+            }
+        }
+    };
+    /**
+     * @return the openHelp event handler
+     */
+
+    public EventHandler<KeyEvent> getOpenHelp()
+    {
+        return openHelp;
+    }
+
+
+    /**
      * show the help screen
      */
 
@@ -389,6 +433,7 @@ public class MainCtrl {
 
     public String getPreviousSceneTitle()
     {
+        System.out.println(this.title);
         return this.title;
     }
 
