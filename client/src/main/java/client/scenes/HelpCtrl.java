@@ -19,7 +19,10 @@ public class HelpCtrl {
     private Scene previousScene;
 
 
-
+    /**
+     * @param server the server that you want to connect to
+     * @param mainCtrl the main controller
+     */
     @Inject
     public HelpCtrl(ServerUtils server, MainCtrl mainCtrl)
     {
@@ -30,6 +33,12 @@ public class HelpCtrl {
     }
 
 
+    /**
+     * private event handler for a key event that listens
+     *       for the "Esc" key to be pressed
+     * when the "Esc" key is pressed, the method showPreviousScene()
+     *       is called to switch to the previous scene
+     */
     private EventHandler<KeyEvent> backToPreviousScene = new EventHandler<KeyEvent>() {
 
         @Override
@@ -44,21 +53,23 @@ public class HelpCtrl {
         }
 
     };
-    public Scene getPreviousScene()
-    {
-        return null;
-    }
-    public void setPreviousScene(Scene scene){
-        this.previousScene = getPreviousScene();
-    }
+
+    /**
+     * @return the backToPreviousScene event handler
+     */
+
     public EventHandler<KeyEvent> getBackToPreviousScene()
     {
         return backToPreviousScene;
     }
 
+    /**
+     * method that shows
+     * the previous scene
+     */
+
     public void showPreviousScene(){
         mainCtrl.showPreviousScreen();
-        //mainCtrl.showOverview();
     }
 
 }

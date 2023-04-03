@@ -88,6 +88,7 @@ public class MainCtrl {
      * @param editBoardTitle
      * @param viewSubtask
      * @param editSubtaskTitle
+     * @param help
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -162,12 +163,13 @@ public class MainCtrl {
 
         showClientConnect();
         primaryStage.show();
+
         this.previousScene = primaryStage.getScene();
     }
 
 
     /**
-     *
+     * show the overview
      */
     public void showOverview() {
         primaryStage.setTitle("Board: Overview");
@@ -297,49 +299,98 @@ public class MainCtrl {
         primaryStage.setScene(editCardDescription);
     }
 
+    /**
+     * show the help screen
+     */
+
     public void showHelpScreen()
     {
         primaryStage.setTitle("Help");
         primaryStage.setScene(help);
     }
 
+    /**
+     * show the previous screen
+     */
     public void showPreviousScreen()
     {
 
-        primaryStage.setTitle(getPrevPrevSceneTitle());
-        primaryStage.setScene(getPrevPrevScene());
+        primaryStage.setTitle(getPreviousSceneTitle());
+        primaryStage.setScene(getPreviousScene());
 
     }
 
-    public void showHelpScreenAndGetPrev()
+    /**
+     * method that
+     * sets the previous scene value by calling the methods that
+     * set the previous scene
+     * and then calls the showHelpScreen() method that shows the help screen
+     */
+    public void setPrevAndShowHelp()
     {
 
-        setPreviousScene(getPreviousScene());
-        setPreviousSceneTitle(getPreviousSceneTitle());
-        getPreviousScene();
-        getPreviousSceneTitle();
+        setPreviousScene(getCurrentScene());
+        setPreviousSceneTitle(getCurrentSceneTitle());
         showHelpScreen();
 
     }
 
+    /**
+     * method that sets the previous scene value to the current one
+     * @param scene the current scene
+     */
     public void setPreviousScene(Scene scene)
     {
         this.previousScene = scene;
     }
-    public void setPreviousSceneTitle(String title){this.title = title;}
-    public Scene getPreviousScene()
+
+    /**
+     * method that sets the previous scene title to the current scene's title
+     * @param title the current scene title
+     */
+    public void setPreviousSceneTitle(String title)
+    {
+        this.title = title;
+    }
+
+    /**
+     * method that returns the current scene
+     * @return the current scene
+     */
+
+    public Scene getCurrentScene()
     {
         return primaryStage.getScene();
     }
 
-    public String getPreviousSceneTitle()
+    /**
+     * method that returns the current scene title
+     * @return the current scene title
+     */
+
+    public String getCurrentSceneTitle()
     {
         return primaryStage.getTitle();
     }
 
-    public Scene getPrevPrevScene(){return this.previousScene;}
+    /**
+     * method that returns the previous scene
+     * @return the previous scene
+     */
+    public Scene getPreviousScene()
+    {
+        return this.previousScene;
+    }
 
-    public String getPrevPrevSceneTitle(){return this.title;}
+    /**
+     * method that returns the previous scene title
+     * @return the previous scene title
+     */
+
+    public String getPreviousSceneTitle()
+    {
+        return this.title;
+    }
 
 
 
