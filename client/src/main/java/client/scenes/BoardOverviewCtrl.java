@@ -48,6 +48,9 @@ public class BoardOverviewCtrl implements Initializable {
     private Button joinBoardButton;
 
     @FXML
+    private Button editBoardTitleButton;
+
+    @FXML
     private Label boardName;
 
 
@@ -106,10 +109,14 @@ public class BoardOverviewCtrl implements Initializable {
     public void myBoards() {mainCtrl.showWorkspace();}
 
     /**
-     * Method that shows the workspace page containing all the boards on screen
+     * Method that shows the edit board title page
+     */
+    public void editBoardTitle(){mainCtrl.showEditBoardTitle(boardID);}
+
+    /**
+     * Method that shows the create board page
      */
     public void createBoard() {mainCtrl.showCreateBoard(boardID);}
-
 
     /**
      * Method that refreshes the board
@@ -181,8 +188,7 @@ public class BoardOverviewCtrl implements Initializable {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                server.deleteColumn(c);
-                refresh();
+                mainCtrl.showConfirmDeleteColumn(c);
             }
         });
         Button editTitle = new Button("Edit");

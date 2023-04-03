@@ -15,7 +15,9 @@
  */
 package client.scenes;
 
+import commons.Board;
 import commons.Card;
+
 import commons.Column;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -54,10 +56,17 @@ public class MainCtrl {
     private EditListCtrl editListCtrl;
     private Scene editList;
 
+    private EditBoardTitleCtrl editBoardTitleCtrl;
+    private Scene editBoardTitle;
+
     private ViewSubtaskCtrl viewSubtaskCtrl;
     private Scene viewSubtask;
     private EditSubtaskTitleCtrl editSubtaskTitleCtrl;
     private Scene editSubtaskTitle;
+    private ConfirmDeleteColumnCtrl confirmDeleteColumnCtrl;
+    private Scene confirmDeleteColumn;
+    private ConfirmDeleteBoardCtrl confirmDeleteBoardCtrl;
+    private Scene confirmDeleteBoard;
 
     private CustomizeCardCtrl customizeCardCtrl;
     private Scene customizeCard;
@@ -78,10 +87,13 @@ public class MainCtrl {
      * @param editCardTitle
      * @param editCardDescription
      * @param editList
+     * @param editBoardTitle
      * @param viewSubtask
      * @param customizeCard
      * @param customizeList
      * @param editSubtaskTitle
+     * @param confirmDeleteColumn
+     * @param confirmDeleteBoard
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -92,10 +104,13 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-                           Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
+            Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
+
                            Pair<CustomizeCardCtrl, Parent> customizeCard,
                            Pair<CustomizeListCtrl, Parent> customizeList,
-                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle) {
+                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle, Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
+                           Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
+                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard) {
 
 
         this.primaryStage = primaryStage;
@@ -124,7 +139,6 @@ public class MainCtrl {
         this.workspaceCtrl = workspace.getKey();
         this.workspace = new Scene(workspace.getValue());
 
-
         this.editCardTitleCtrl = editCardTitle.getKey();
         this.editCardTitle = new Scene(editCardTitle.getValue());
 
@@ -134,17 +148,33 @@ public class MainCtrl {
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
 
+
+        this.taskDetails.setOnKeyPressed(taskDetailsCtrl.getBackToOverview());
+
+        this.addTask.setOnKeyPressed(addTaskCtrl.getOpenTaskDetails());
+
+        this.editBoardTitleCtrl = editBoardTitle.getKey();
+        this.editBoardTitle = new Scene(editBoardTitle.getValue());
+
+
         this.viewSubtaskCtrl = viewSubtask.getKey();
         this.viewSubtask = new Scene(viewSubtask.getValue());
 
         this.editSubtaskTitleCtrl = editSubtaskTitle.getKey();
         this.editSubtaskTitle = new Scene(editSubtaskTitle.getValue());
 
+
         this.customizeCardCtrl = customizeCard.getKey();
         this.customizeCard = new Scene(customizeCard.getValue());
 
         this.customizeListCtrl = customizeList.getKey();
         this.customizeList = new Scene(customizeList.getValue());
+
+        this.confirmDeleteColumnCtrl = confirmDeleteColumn.getKey();
+        this.confirmDeleteColumn = new Scene(confirmDeleteColumn.getValue());
+
+        this.confirmDeleteBoardCtrl = confirmDeleteBoard.getKey();
+        this.confirmDeleteBoard = new Scene(confirmDeleteBoard.getValue());
 
 
         showClientConnect();
@@ -153,29 +183,33 @@ public class MainCtrl {
 
 
     /**
-     *
+     *TODO THE BOARD TO BE DISPLAYED MUST NOT BE HARDCODED, BUT DEPENDENT ON THE BOARD THE USER IIS IN!
      */
     public void showOverview() {
         primaryStage.setTitle("Board: Overview");
         primaryStage.setScene(boardOverview);
     }
+
     /**
      * show workspace page
      */
-    public void showWorkspace(){
+    public void showWorkspace() {
         primaryStage.setTitle("Workspace");
+        workspaceCtrl.refresh();
         primaryStage.setScene(workspace);
     }
+
     /**
      * show task management page
      */
-    public void showTaskManagement(){
+    public void showTaskManagement() {
         primaryStage.setTitle("Task management");
         primaryStage.setScene(taskManagement);
     }
 
     /**
      * Show add list page
+     *
      * @param boardID boardID of list's board
      */
     public void showListAdd(Long boardID) {
@@ -187,6 +221,7 @@ public class MainCtrl {
 
     /**
      * Show all the boards
+     *
      * @param boardID boardID of current board
      */
     public void showBoardOverview(Long boardID) {
@@ -198,6 +233,7 @@ public class MainCtrl {
 
     /**
      * Show board create
+     *
      * @param boardID boardID of the board to be in
      */
     public void showCreateBoard(long boardID) {
@@ -216,6 +252,7 @@ public class MainCtrl {
 
     /**
      * Show the task details
+     *
      * @param card Card whose details have to be shown
      */
     public void showTaskDetails(Card card) {
@@ -225,9 +262,18 @@ public class MainCtrl {
     }
 
     /**
+     * Show the task details
+     */
+    public void showDetailOfTask() {
+        primaryStage.setTitle("Task Details");
+        primaryStage.setScene(taskDetails);
+    }
+
+    /**
      * Show add task page specific to a column
+     *
      * @param columnID columnId of the column to show add task
-     * @param boardID boardID of card's board
+     * @param boardID  boardID of card's board
      */
     public void showAddTask(Long columnID, Long boardID) {
         addTaskCtrl.setColumnToAddId(columnID);
@@ -238,7 +284,8 @@ public class MainCtrl {
 
     /**
      * Show edit list page
-     * @param c the list which will be changed
+     *
+     * @param c       the list which will be changed
      * @param boardID boardID of the board to be in
      */
     public void showEditList(Column c, long boardID) {
@@ -250,7 +297,8 @@ public class MainCtrl {
 
     /**
      * Show customize list page
-     * @param c the list which will be changed
+     *
+     * @param c       the list which will be changed
      * @param boardID boardID of the board to be in
      */
     public void showCustomizeList(Column c, long boardID) {
@@ -260,9 +308,21 @@ public class MainCtrl {
         primaryStage.setScene(customizeList);
     }
 
+    /**
+     * Show the edit board title page
+     *
+     * @param boardID boardID of the board
+     */
+    public void showEditBoardTitle(long boardID) {
+        editBoardTitleCtrl.setBoardToEditID(boardID);
+        primaryStage.setTitle("Edit Board Title");
+        primaryStage.setScene(editBoardTitle);
+    }
+
 
     /**
      * Show edit Card Title Page
+     *
      * @param cardToShow Card whose Title needs to be edited
      */
     public void showEditCardTitle(Card cardToShow) {
@@ -273,6 +333,7 @@ public class MainCtrl {
 
     /**
      * Show edit Card Description Page
+     *
      * @param cardToShow Card whose Description needs to be edited
      */
     public void showEditCardDescription(Card cardToShow) {
@@ -284,6 +345,7 @@ public class MainCtrl {
 
     /**
      * Show edit Card Customization Page
+     *
      * @param cardToShow Card whose Customization needs to be edited
      */
     public void showCustomizeCard(Card cardToShow) {
@@ -292,4 +354,25 @@ public class MainCtrl {
         primaryStage.setScene(customizeCard);
     }
 
+    /**
+     * Shows confirm delete column page
+     *
+     * @param c Column which would be deleted
+     */
+    public void showConfirmDeleteColumn(Column c) {
+        confirmDeleteColumnCtrl.setColumnToDelete(c);
+        primaryStage.setTitle("Confirm Delete");
+        primaryStage.setScene(confirmDeleteColumn);
+    }
+
+    /**
+     * Shows confirm delete board page
+     *
+     * @param b Board which would be deleted
+     */
+    public void showConfirmDeleteBoard(Board b) {
+        confirmDeleteBoardCtrl.setBoardToDelete(b);
+        primaryStage.setTitle("Confirm Delete");
+        primaryStage.setScene(confirmDeleteBoard);
+    }
 }
