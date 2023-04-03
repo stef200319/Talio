@@ -108,7 +108,8 @@ public class MainCtrl {
 
                            Pair<CustomizeCardCtrl, Parent> customizeCard,
                            Pair<CustomizeListCtrl, Parent> customizeList,
-                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle, Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
+                           Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
+                           Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
                            Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard) {
 

@@ -4,6 +4,7 @@ import commons.Board;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.database.BoardRepository;
 import server.services.BoardService;
 import server.services.ColumnService;
 
@@ -15,12 +16,16 @@ public class BoardController {
     private final BoardService boardService;
     private final ColumnService columnService;
 
+    private final BoardRepository boardRepository;
+
 
     /**
      * @param boardService the service used for the operations which use the board data access object
      * @param columnService the service used for the operations which use the column data access object
+     * @param boardRepository
      */
-    public BoardController(BoardService boardService, ColumnService columnService) {
+    public BoardController(BoardService boardService, ColumnService columnService, BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
         this.boardService = boardService;
         this.columnService = columnService;
     }

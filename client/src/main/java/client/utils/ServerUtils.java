@@ -156,20 +156,22 @@ public class ServerUtils {
                 .post(Entity.entity(board, APPLICATION_JSON), Board.class);
     }
 
+
     /**
-     * Method that edits the title of a Board
-     * @param c Board to edit
-     * @param title new title
-     * @return new Board entity
+
+     * Method that edits the title of a board
+     * @param b board to edit
+     * @param title is the new title
+     * @return new board entity
      */
-    public Board editBoardTitle(Board c, String title) {
-        long boardId=c.getId();
+    public Board editBoardTitle(Board b, String title) {
+        long boardId = b.getId();
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)
-                .path("board/editBoardTitle/"+boardId+"/"+title)
+                .path("board/editBoardTitle/" + title + "/" + boardId)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
-                .put(Entity.entity(c, APPLICATION_JSON), Board.class);
+                .put(Entity.entity(b, APPLICATION_JSON), Board.class);
     }
 
 
@@ -487,22 +489,7 @@ public class ServerUtils {
             .put(Entity.entity(c, APPLICATION_JSON), Card.class);
     }
 
-    /**
 
-     * Method that edits the title of a board
-     * @param b board to edit
-     * @param title is the new title
-     * @return new board entity
-     */
-    public Board editBoardTitle(Board b, String title) {
-        long boardId = b.getId();
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER)
-                .path("board/editBoardTitle/" + title + "/" + boardId)
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .put(Entity.entity(b, APPLICATION_JSON), Board.class);
-    }
         /**
      * Method that edits the description of a card
      * @param c card to edit
