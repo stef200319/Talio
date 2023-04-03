@@ -105,6 +105,7 @@ public class WorkspaceCtrl implements Initializable{
 
     public void add() {
         server.addBoard(getBoard());
+        refresh();
         boardTitle.clear();
     }
 
@@ -146,7 +147,7 @@ public class WorkspaceCtrl implements Initializable{
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                server.deleteBoard(b);
+                mainCtrl.showConfirmDeleteBoard(b);
             }
         });
 

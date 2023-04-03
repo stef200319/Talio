@@ -109,7 +109,7 @@ public class BoardOverviewCtrl implements Initializable {
     /**
      * Method that shows the edit board title page
      */
-    public void editBoardTitle(){mainCtrl.showEditBoardTitle();}
+    public void editBoardTitle(){mainCtrl.showEditBoardTitle(boardID);}
 
     /**
      * Method that shows the create board page
@@ -180,8 +180,7 @@ public class BoardOverviewCtrl implements Initializable {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                server.deleteColumn(c);
-                refresh();
+                mainCtrl.showConfirmDeleteColumn(c);
             }
         });
         Button editTitle = new Button("Edit");
