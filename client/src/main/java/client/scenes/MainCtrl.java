@@ -547,14 +547,18 @@ public class MainCtrl {
         primaryStage.setScene(confirmDeleteBoard);
     }
 
-    public long copyCode(long boardID){
-        System.out.println(boardID);
+    /**
+     * method that  copiest the id of the board in the clipboard
+     * @param boardID the id of the board whose key we want to copy
+     */
+    public void copyCode(long boardID){
+
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
         content.putString(String.valueOf(boardID));
-        content.putHtml("<b>"+String.valueOf(boardID));
+        content.putHtml(String.valueOf(boardID));
         clipboard.setContent(content);
-        return boardID;
+
     }
 
 }

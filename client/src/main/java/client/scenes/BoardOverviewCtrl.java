@@ -98,7 +98,10 @@ public class BoardOverviewCtrl implements Initializable {
         mainCtrl.showOverview();
     }
 
-
+    /**
+     * method that calls the method in MainCtrl that copies the code
+     * of the current board
+     */
     public void copyCode()
     {
         mainCtrl.copyCode(boardID);
