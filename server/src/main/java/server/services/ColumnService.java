@@ -98,6 +98,10 @@ public class ColumnService {
     public Column update(String title, long columnId) {
         Column column = getById(columnId);
         column.setTitle(title);
+
+        RESTEvent event = new RESTEvent(column, "column was updated");
+        applicationEventPublisher.publishEvent(event);
+
         return columnRepository.save(column);
     }
 

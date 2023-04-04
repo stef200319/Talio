@@ -147,6 +147,30 @@ public class WebSocketEventListener {
         return json;
     }
 
+    @EventListener
+    public String editColumn(RESTEvent event) {
+        if (!event.getMessage().equals("column was updated")) {
+            return null;
+        }
+
+        String json = writeToJSON(event.getSource());
+
+        Column c = (Column) event.getSource();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Service", "column");
+        headers.put("Method", "edit");
+
+        for (User user : users) {
+            if (user.containsBoardId(c.getBoardId())) {
+                messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+            }
+        }
+
+        logger.info("Column with id " + c.getId() + " and board id " + c.getBoardId() + " was updated and renamed to " + c.getTitle());
+
+        return json;
+    }
+
     /**
      * @param o object that needs to be serialized
      * @return json string
