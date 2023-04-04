@@ -85,7 +85,7 @@ public class ColumnService {
         newColumn.setPosition(newPosition);
 
         RESTEvent event = new RESTEvent(newColumn, "column was created");
-        applicationEventPublisher.publishEvent(event);
+            applicationEventPublisher.publishEvent(event);
 
         return columnRepository.save(newColumn);
     }
@@ -114,12 +114,12 @@ public class ColumnService {
         Column column = getById(columnId);
         columnRepository.deleteById(columnId);
 
-        if (column != null && column.getPosition() != null)
+        if (column != null && column.getPosition() != null) {
             updateColumnPosition(column.getBoardId(), column.getPosition());
-
-        RESTEvent event = new RESTEvent(column, "column was deleted");
-        applicationEventPublisher.publishEvent(event);
-
+            RESTEvent event = new RESTEvent(column, "column was deleted");
+            applicationEventPublisher.publishEvent(event);
+        }
+        
         return column;
     }
 
@@ -137,4 +137,7 @@ public class ColumnService {
         }
     }
 
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
 }
