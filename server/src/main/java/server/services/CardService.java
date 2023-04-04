@@ -139,7 +139,10 @@ public class CardService {
             c.setPosition(pos - 1);
         }
 
-        Integer maxPosition = cardRepository.findMaxPositionByColumnId(columnId);
+        Integer maxPosition = 0;
+        cards = cardRepository.findCardsByColumnId(columnId);
+        if(cards!=null && cards.size()>0)
+            maxPosition = cardRepository.findMaxPositionByColumnId(columnId);
         card.setPosition(maxPosition+1);
 
         card.setColumnId(columnId);
