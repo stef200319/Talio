@@ -117,6 +117,9 @@ public class ColumnService {
         if (column != null && column.getPosition() != null)
             updateColumnPosition(column.getBoardId(), column.getPosition());
 
+        RESTEvent event = new RESTEvent(column, "column was deleted");
+        applicationEventPublisher.publishEvent(event);
+
         return column;
     }
 
