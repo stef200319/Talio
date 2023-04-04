@@ -19,8 +19,11 @@ import commons.Board;
 import commons.Card;
 
 import commons.Column;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -68,6 +71,16 @@ public class MainCtrl {
     private ConfirmDeleteBoardCtrl confirmDeleteBoardCtrl;
     private Scene confirmDeleteBoard;
 
+
+    private HelpCtrl helpCtrl;
+
+    private Scene help;
+
+    private Scene previousScene;
+
+    private String title;
+
+
     private CustomizeCardCtrl customizeCardCtrl;
     private Scene customizeCard;
 
@@ -76,6 +89,7 @@ public class MainCtrl {
 
     private CustomizeBoardCtrl customizeBoardCtrl;
     private Scene customizeBoard;
+
 
     /**
      * @param primaryStage
@@ -98,6 +112,7 @@ public class MainCtrl {
      * @param editSubtaskTitle
      * @param confirmDeleteColumn
      * @param confirmDeleteBoard
+     * @param help
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -108,15 +123,17 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-            Parent> editList, Pair<ViewSubtaskCtrl, Parent> viewSubtask,
 
+                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle
+                           , Pair<ViewSubtaskCtrl, Parent> viewSubtask,
                            Pair<CustomizeCardCtrl, Parent> customizeCard,
                            Pair<CustomizeListCtrl, Parent> customizeList,
                            Pair<CustomizeBoardCtrl, Parent> customizeBoard,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
-                           Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
-                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard) {
+                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard, Pair<HelpCtrl, Parent> help) {
+
+
 
 
         this.primaryStage = primaryStage;
@@ -155,6 +172,8 @@ public class MainCtrl {
         this.editList = new Scene(editList.getValue());
 
 
+
+
         this.taskDetails.setOnKeyPressed(taskDetailsCtrl.getBackToOverview());
 
         this.addTask.setOnKeyPressed(addTaskCtrl.getOpenTaskDetails());
@@ -170,14 +189,36 @@ public class MainCtrl {
         this.editSubtaskTitle = new Scene(editSubtaskTitle.getValue());
 
 
+        this.helpCtrl = help.getKey();
+        this.help = new Scene(help.getValue());
+
+        this.help.setOnKeyPressed(helpCtrl.getBackToPreviousScene());
+
+        this.boardOverview.setOnKeyPressed(getOpenHelp());
+        this.clientConnect.setOnKeyPressed(getOpenHelp());
+        this.addTask.setOnKeyPressed(getOpenHelp());
+        this.addList.setOnKeyPressed(getOpenHelp());
+        this.createBoard.setOnKeyPressed(getOpenHelp());
+        this.editBoardTitle.setOnKeyPressed(getOpenHelp());
+        this.editCardDescription.setOnKeyPressed(getOpenHelp());
+        this.editCardTitle.setOnKeyPressed(getOpenHelp());
+        this.editList.setOnKeyPressed(getOpenHelp());
+        this.editSubtaskTitle.setOnKeyPressed(getOpenHelp());
+        this.taskDetails.setOnKeyPressed(getOpenHelp());
+        this.taskManagement.setOnKeyPressed(getOpenHelp());
+        this.viewSubtask.setOnKeyPressed(getOpenHelp());
+        this.workspace.setOnKeyPressed(getOpenHelp());
+
         this.customizeCardCtrl = customizeCard.getKey();
         this.customizeCard = new Scene(customizeCard.getValue());
 
         this.customizeListCtrl = customizeList.getKey();
         this.customizeList = new Scene(customizeList.getValue());
 
+
         this.customizeBoardCtrl = customizeBoard.getKey();
         this.customizeBoard= new Scene(customizeBoard.getValue());
+
 
         this.confirmDeleteColumnCtrl = confirmDeleteColumn.getKey();
         this.confirmDeleteColumn = new Scene(confirmDeleteColumn.getValue());
@@ -186,12 +227,17 @@ public class MainCtrl {
         this.confirmDeleteBoard = new Scene(confirmDeleteBoard.getValue());
 
 
+
+
         showClientConnect();
         primaryStage.show();
+
+        this.previousScene = primaryStage.getScene();
     }
 
 
     /**
+     * show the overview
      *TODO THE BOARD TO BE DISPLAYED MUST NOT BE HARDCODED, BUT DEPENDENT ON THE BOARD THE USER IIS IN!
      */
     public void showOverview() {
@@ -380,6 +426,129 @@ public class MainCtrl {
     }
 
     /**
+
+     * private event handler for a key event that listens
+     *       for the "CTRL+?" keys to be pressed
+     * when the "CTRL+?" keys are pressed, the method setPreviousSceneAndTitle()
+     * to save the previous scene and scene title values and then showHelpScreen() method
+     *       is called to show the help screen
+     */
+    private EventHandler<KeyEvent> openHelp = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            if(event.isControlDown() && event.getCode()== KeyCode.SLASH)
+            {
+
+                setPreviousSceneAndTitle();
+                showHelpScreen();
+
+            }
+        }
+    };
+    /**
+     * @return the openHelp event handler
+     */
+
+    public EventHandler<KeyEvent> getOpenHelp()
+    {
+        return openHelp;
+    }
+
+
+    /**
+     * show the help screen
+     */
+
+    public void showHelpScreen()
+    {
+        primaryStage.setTitle("Help");
+        primaryStage.setScene(help);
+    }
+
+    /**
+     * show the previous screen
+     */
+    public void showPreviousScreen()
+    {
+
+        primaryStage.setTitle(getPreviousSceneTitle());
+        primaryStage.setScene(getPreviousScene());
+
+    }
+
+    /**
+     * method that
+     * sets the previous scene value by calling the methods that
+     * set the previous scene
+     */
+    public void setPreviousSceneAndTitle()
+    {
+
+        setPreviousScene(getCurrentScene());
+        setPreviousSceneTitle(getCurrentSceneTitle());
+
+    }
+
+    /**
+     * method that sets the previous scene value to the current one
+     * @param scene the current scene
+     */
+    public void setPreviousScene(Scene scene)
+    {
+        this.previousScene = scene;
+    }
+
+    /**
+     * method that sets the previous scene title to the current scene's title
+     * @param title the current scene title
+     */
+    public void setPreviousSceneTitle(String title)
+    {
+        this.title = title;
+    }
+
+    /**
+     * method that returns the current scene
+     * @return the current scene
+     */
+
+    public Scene getCurrentScene()
+    {
+        return primaryStage.getScene();
+    }
+
+    /**
+     * method that returns the current scene title
+     * @return the current scene title
+     */
+
+    public String getCurrentSceneTitle()
+    {
+        return primaryStage.getTitle();
+    }
+
+    /**
+     * method that returns the previous scene
+     * @return the previous scene
+     */
+    public Scene getPreviousScene()
+    {
+        return this.previousScene;
+    }
+
+    /**
+     * method that returns the previous scene title
+     * @return the previous scene title
+     */
+
+    public String getPreviousSceneTitle()
+    {
+        return this.title;
+    }
+
+
+
+    /**
      * Shows confirm delete column page
      *
      * @param c Column which would be deleted
@@ -400,4 +569,6 @@ public class MainCtrl {
         primaryStage.setTitle("Confirm Delete");
         primaryStage.setScene(confirmDeleteBoard);
     }
+
+
 }

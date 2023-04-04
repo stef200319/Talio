@@ -35,6 +35,7 @@ public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
     private long boardID = Long.MIN_VALUE;
 
     @FXML
@@ -159,12 +160,12 @@ public class BoardOverviewCtrl implements Initializable {
             createList(columns.get(i));
     }
 
+
+
     /**
      * Method that showcases the column on the board
      * @param c column to be showcased
      */
-
-
 
 
     @SuppressWarnings("checkstyle:MethodLength")

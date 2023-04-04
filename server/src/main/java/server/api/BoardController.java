@@ -1,13 +1,16 @@
 package server.api;
 
 import commons.Board;
+import commons.CardTag;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.database.CardTagRepository;
 import server.database.BoardRepository;
 import server.services.BoardService;
 import server.services.ColumnService;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -15,6 +18,9 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
     private final ColumnService columnService;
+    private final CardTagRepository cardTagRepository;
+    private final CardTagController cardTagController;
+//
 
     private final BoardRepository boardRepository;
 
@@ -22,12 +28,19 @@ public class BoardController {
     /**
      * @param boardService the service used for the operations which use the board data access object
      * @param columnService the service used for the operations which use the column data access object
-     * @param boardRepository
+     * @param boardRepository boardRepo
+     * @param cardTagRepository cardTagRepo
+     * @param cardTagController cardTagController
      */
-    public BoardController(BoardService boardService, ColumnService columnService, BoardRepository boardRepository) {
+    public BoardController(BoardService boardService, ColumnService columnService, CardTagRepository cardTagRepository,
+                           CardTagController cardTagController, BoardRepository boardRepository) {
+
         this.boardRepository = boardRepository;
         this.boardService = boardService;
         this.columnService = columnService;
+        this.cardTagRepository = cardTagRepository;
+        this.cardTagController = cardTagController;
+
     }
 
     /**
@@ -71,9 +84,6 @@ public class BoardController {
         return board == null ? ResponseEntity.badRequest().build():ResponseEntity.ok(board);
 
     }
-
-
-
 
 
     /**Change the Background colour of a Board, if it exists. Receive a message on the success of the edit
@@ -194,30 +204,29 @@ public class BoardController {
         return ResponseEntity.ok(board);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * @param boardId the board id of the board which needs to be deleted
      * @return whether the deletion was successful
      */
     @DeleteMapping("/deleteBoard/{boardId}")
     @ResponseBody public ResponseEntity<Board> deleteBoard(@PathVariable("boardId") long boardId) {
-
-        Board deletedBoard = boardService.delete(boardId);
-
-        if (deletedBoard == null) {
+        if (!boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
+
+        Board board = boardService.getByBoardId(boardId);
+
+        // Delete the corresponding boardTags and cardTags
+        board.setBoardTags(new HashSet<>());
+        List<CardTag> tags = cardTagRepository.findCardTagsByBoard(board);
+        if (tags != null) {
+            for (CardTag cardTag : tags) {
+                cardTagController.deleteCardTagFromBoard(cardTag.getId());
+            }
+        }
+
+
+
 
         // Delete corresponding columns
         List<Column> columnsToDelete = columnService.getByBoardId(boardId);
@@ -225,6 +234,9 @@ public class BoardController {
         for (Column column : columnsToDelete) {
             columnService.delete(column);
         }
+
+        Board deletedBoard = boardService.delete(boardId);
+
 
         return ResponseEntity.ok(deletedBoard);
     }

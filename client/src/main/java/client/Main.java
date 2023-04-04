@@ -54,11 +54,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         var add = FXML.load(AddListCtrl.class, "client", "scenes", "AddList.fxml");
-        var boardOverview = FXML.load(BoardOverviewCtrl.class, "client", "scenes", "BoardOverview.fxml");
-        var clientConnect = FXML.load(ClientConnectCtrl.class, "client", "scenes", "ClientConnect.fxml");
+        var boardOverview = FXML.load(BoardOverviewCtrl.class, "client", "scenes",
+                "BoardOverview.fxml");
+        var clientConnect = FXML.load(ClientConnectCtrl.class, "client", "scenes",
+                "ClientConnect.fxml");
         var taskDetails = FXML.load(TaskDetailsCtrl.class, "client", "scenes", "TaskDetails.fxml");
         var addTask = FXML.load(AddTaskCtrl.class, "client", "scenes", "AddTask.fxml");
-        var taskManagement = FXML.load(TaskManagementCtrl.class, "client", "scenes", "TagManagement.fxml");
+        var taskManagement = FXML.load(TaskManagementCtrl.class, "client", "scenes",
+                "TagManagement.fxml");
         var workspace = FXML.load(WorkspaceCtrl.class, "client", "scenes", "Workspace.fxml");
         var createBoard = FXML.load(CreateBoardCtrl.class, "client", "scenes", "CreateBoard.fxml");
         var editCardTitle = FXML.load(EditCardTitleCtrl.class, "client", "scenes", "EditCardTitle.fxml");
@@ -69,25 +72,36 @@ public class Main extends Application {
         var editBoardTitle = FXML.load(EditBoardTitleCtrl.class, "client",
                 "scenes", "EditBoardTitle.fxml");
 
-
-
-        var viewSubtasks = FXML.load(ViewSubtaskCtrl.class, "client", "scenes", "ViewCardSubtasks.fxml");
+        var viewSubtasks = FXML.load(ViewSubtaskCtrl.class, "client", "scenes",
+                "ViewCardSubtasks.fxml");
         var editSubtaskTitle = FXML.load(EditSubtaskTitleCtrl.class, "client", "scenes",
                 "EditSubtaskTitle.fxml");
+
         var customizeCard = FXML.load(CustomizeCardCtrl.class, "client", "scenes", "CustomizeCard.fxml");
         var customizeList = FXML.load(CustomizeListCtrl.class, "client", "scenes", "CustomizeList.fxml");
         var customizeBoard = FXML.load(CustomizeBoardCtrl.class, "client", "scenes", "CustomizeBoard.fxml");
 
-        var confirmDeleteColumn = FXML.load(ConfirmDeleteColumnCtrl.class, "client", "scenes",
-                "ConfirmDeleteColumn.fxml");
-        var confirmDeleteBoard = FXML.load(ConfirmDeleteBoardCtrl.class, "client", "scenes",
-                "ConfirmDeleteBoard.fxml");
+
+        var confirmDeleteColumn = FXML.load(ConfirmDeleteColumnCtrl.class, "client",
+                "scenes","ConfirmDeleteColumn.fxml");
+        var confirmDeleteBoard = FXML.load(ConfirmDeleteBoardCtrl.class, "client",
+                "scenes", "ConfirmDeleteBoard.fxml");
+        var help = FXML.load(HelpCtrl.class, "client", "scenes", "Help.fxml");
+
+
+
+
+        
+
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
+
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
                 addTask, taskManagement, workspace,createBoard, editCardTitle, editCardDescription, editList,
-                viewSubtasks, customizeCard, customizeList, customizeBoard, editSubtaskTitle, editBoardTitle,
-                confirmDeleteColumn, confirmDeleteBoard);
+                editBoardTitle, viewSubtasks, customizeCard, customizeList, customizeBoard, editSubtaskTitle,
+                confirmDeleteColumn,
+                confirmDeleteBoard, help);
+
 
 
     }
