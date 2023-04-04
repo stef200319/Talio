@@ -123,18 +123,14 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-
-                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle
-                           , Pair<ViewSubtaskCtrl, Parent> viewSubtask,
+                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
+                           Pair<ViewSubtaskCtrl, Parent> viewSubtask,
                            Pair<CustomizeCardCtrl, Parent> customizeCard,
                            Pair<CustomizeListCtrl, Parent> customizeList,
                            Pair<CustomizeBoardCtrl, Parent> customizeBoard,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
                            Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard, Pair<HelpCtrl, Parent> help) {
-
-
-
 
         this.primaryStage = primaryStage;
 
