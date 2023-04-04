@@ -123,6 +123,30 @@ public class WebSocketEventListener {
         return json;
     }
 
+    @EventListener
+    public String addColumn(RESTEvent event) {
+        if (!event.getMessage().equals("column was created")) {
+            return null;
+        }
+
+        String json = writeToJSON(event.getSource());
+
+        Column c = (Column) event.getSource();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Service", "column");
+        headers.put("Method", "add");
+
+        for (User user : users) {
+            if (user.containsBoardId(c.getBoardId())) {
+                messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+            }
+        }
+
+        logger.info("Column with id " + c.getId() + " and board id " + c.getBoardId() + " was created and named: " + c.getTitle());
+
+        return json;
+    }
+
     /**
      * @param o object that needs to be serialized
      * @return json string

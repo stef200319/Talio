@@ -84,6 +84,9 @@ public class ColumnService {
         Column newColumn = new Column(title, boardId);
         newColumn.setPosition(newPosition);
 
+        RESTEvent event = new RESTEvent(newColumn, "column was created");
+        applicationEventPublisher.publishEvent(event);
+
         return columnRepository.save(newColumn);
     }
 
