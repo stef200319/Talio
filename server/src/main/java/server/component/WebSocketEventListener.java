@@ -54,6 +54,10 @@ public class WebSocketEventListener {
      */
     @EventListener
     public void sendAllColumns(RESTEvent event) {
+        if (!event.getMessage().equals("everything was found")) {
+            return;
+        }
+
         String json = writeToJSON(event.getSource());
 
         Map<String, Object> headers = new HashMap<>();
@@ -67,8 +71,15 @@ public class WebSocketEventListener {
         }
     }
 
+    /**
+     * @param event that is sent out
+     */
     @EventListener
-    public void deleteBoard(RESTEvent event) {
+    public String deleteBoard(RESTEvent event) {
+        if (!event.getMessage().equals("board was deleted")) {
+            return null;
+        }
+
         String json = writeToJSON(event.getSource());
 
         Board b = (Board) event.getSource();
@@ -82,6 +93,34 @@ public class WebSocketEventListener {
                 user.removeBoardId(b.getId());
             }
         }
+
+        logger.info("Board with id " + b.getId() + " was deleted.");
+
+        return json;
+    }
+
+    @EventListener
+    public String editBoardTitle(RESTEvent event) {
+        if (!event.getMessage().equals("board was edited")) {
+            return null;
+        }
+
+        String json = writeToJSON(event.getSource());
+
+        Board b = (Board) event.getSource();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Service", "board");
+        headers.put("Method", "edit");
+
+        for (User user : users) {
+            if (user.containsBoardId(b.getId())) {
+                messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+            }
+        }
+
+        logger.info("Board with id " + b.getId() + " was renamed to: " + b.getTitle());
+
+        return json;
     }
 
     /**

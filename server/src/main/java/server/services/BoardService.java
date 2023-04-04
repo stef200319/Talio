@@ -69,6 +69,10 @@ public class BoardService {
 
         Board board = boardRepository.findById(boardId).get();
         board.setTitle(title);
+
+        RESTEvent event = new RESTEvent(board, "board was edited");
+        applicationEventPublisher.publishEvent(event);
+
         return boardRepository.save(board);
     }
 
