@@ -5,6 +5,9 @@ import commons.Card;
 import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import server.services.BoardService;
 import server.services.CardService;
@@ -16,8 +19,11 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
 class BoardControllerTest {
+
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     private TestBoardRepository boardRepository;
     private TestColumnRepository columnRepository;
@@ -43,6 +49,9 @@ class BoardControllerTest {
         boardService = new BoardService(boardRepository);
         columnService = new ColumnService(columnRepository);
         cardService = new CardService(cardRepository);
+
+        boardService.setApplicationEventPublisher(applicationEventPublisher);
+        columnService.setApplicationEventPublisher(applicationEventPublisher);
 
         cardRepository = new TestCardRepository();
         cardController = new CardController(cardRepository, columnRepository, subtaskRepository);

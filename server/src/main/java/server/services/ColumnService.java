@@ -119,7 +119,7 @@ public class ColumnService {
             RESTEvent event = new RESTEvent(column, "column was deleted");
             applicationEventPublisher.publishEvent(event);
         }
-        
+
         return column;
     }
 

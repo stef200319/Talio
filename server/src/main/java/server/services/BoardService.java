@@ -93,4 +93,8 @@ public class BoardService {
 
         return board;
     }
+
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
 }
