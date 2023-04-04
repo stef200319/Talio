@@ -1,11 +1,8 @@
 package client.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import commons.Column;
-import commons.User;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -18,8 +15,11 @@ import java.util.List;
 
 public class StringMessageHandler extends StompSessionHandlerAdapter {
 
-    ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
+    /**
+     * Sets a new objectMapper
+     */
     public StringMessageHandler() {
         this.objectMapper = new ObjectMapper();
     }

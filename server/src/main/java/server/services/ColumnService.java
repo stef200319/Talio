@@ -85,7 +85,7 @@ public class ColumnService {
         newColumn.setPosition(newPosition);
 
         RESTEvent event = new RESTEvent(newColumn, "column was created");
-            applicationEventPublisher.publishEvent(event);
+        applicationEventPublisher.publishEvent(event);
 
         return columnRepository.save(newColumn);
     }
@@ -137,6 +137,9 @@ public class ColumnService {
         }
     }
 
+    /**
+     * @param applicationEventPublisher the new application event publisher
+     */
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }

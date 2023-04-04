@@ -3,8 +3,11 @@ package server;
 import java.security.Principal;
 
 class StompPrincipal implements Principal {
-    String name;
+    private final String name;
 
+    /**
+     * @param name Name of the user
+     */
     StompPrincipal(String name) {
         this.name = name;
     }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
@@ -32,6 +31,11 @@ public class MessageMappingController {
         return "response to " + HtmlUtils.htmlEscape(message);
     }
 
+    /**
+     * @param message that is sent by the user
+     * @param user metadata from the user
+     * @return the message back
+     */
     @MessageMapping("/private")
     @SendToUser("/queue/private")
     public String reply (@Payload String message, Principal user) {
