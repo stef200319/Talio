@@ -87,6 +87,9 @@ public class MainCtrl {
     private CustomizeListCtrl customizeListCtrl;
     private Scene customizeList;
 
+    private EditCardTagsBoardCtrl editCardTagsBoardCtrl;
+    private Scene editCardTagsBoard;
+
 
     /**
      * @param primaryStage
@@ -109,6 +112,7 @@ public class MainCtrl {
      * @param confirmDeleteColumn
      * @param confirmDeleteBoard
      * @param help
+     * @param editCardTagsBoard
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -126,7 +130,8 @@ public class MainCtrl {
                            Pair<CustomizeListCtrl, Parent> customizeList,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
-                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard, Pair<HelpCtrl, Parent> help) {
+                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard, Pair<HelpCtrl, Parent> help,
+                           Pair<EditCardTagsBoardCtrl, Parent> editCardTagsBoard) {
 
 
 
@@ -217,7 +222,8 @@ public class MainCtrl {
         this.confirmDeleteBoardCtrl = confirmDeleteBoard.getKey();
         this.confirmDeleteBoard = new Scene(confirmDeleteBoard.getValue());
 
-
+        this.editCardTagsBoardCtrl = editCardTagsBoard.getKey();
+        this.editCardTagsBoard = new Scene(editCardTagsBoard.getValue());
 
 
         showClientConnect();
@@ -543,6 +549,16 @@ public class MainCtrl {
         confirmDeleteBoardCtrl.setBoardToDelete(b);
         primaryStage.setTitle("Confirm Delete");
         primaryStage.setScene(confirmDeleteBoard);
+    }
+
+    /**
+     * Shows the editCardTagsBoard scene
+     * @param boardId
+     */
+    public void showEditCardTagsBoard(Long boardId) {
+        editCardTagsBoardCtrl.setBoardId(boardId);
+        primaryStage.setTitle("Edit Card Tags");
+        primaryStage.setScene(editCardTagsBoard);
     }
 
 

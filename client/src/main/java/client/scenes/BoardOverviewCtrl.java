@@ -132,7 +132,7 @@ public class BoardOverviewCtrl implements Initializable {
         Board currentBoard = server.getBoardByID(boardID);
         boardName.setText(currentBoard.getTitle());
         List<Column> columns = server.getColumnsByBoardId(boardID);
-        for(int i=0;i<columns.size();i++)
+        for (int i = 0; i < columns.size(); i++)
             createList(columns.get(i));
     }
 
@@ -357,5 +357,13 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void setBoardID(long boardID) {
         this.boardID = boardID;
+    }
+
+
+    /**
+     * Shows the editCardTagsBoard scene
+     */
+    public void showEditCardTagsBoard() {
+        mainCtrl.showEditCardTagsBoard(boardID);
     }
 }

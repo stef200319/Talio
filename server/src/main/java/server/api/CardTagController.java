@@ -9,6 +9,7 @@ import server.database.BoardRepository;
 import server.database.CardRepository;
 import server.database.CardTagRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -149,6 +150,19 @@ public class CardTagController {
         cardTag.setTitle(title);
         cardTagRepository.save(cardTag);
         return ResponseEntity.ok(cardTag);
+    }
+
+    @GetMapping("/getCardTagsByBoardId/{boardId}")
+    @ResponseBody public ResponseEntity<List<CardTag>> getCardTagsByBoardId(@PathVariable("boardId") long boardId) {
+        if (!boardRepository.existsById(boardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Board board = boardRepository.findById(boardId).get();
+        List<CardTag> cardTags = cardTagRepository.findCardTagsByBoard(board);
+
+        if (cardTags == null) return ResponseEntity.ok(new ArrayList<>());
+        return ResponseEntity.ok(cardTags);
     }
 
     /**

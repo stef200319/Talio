@@ -255,4 +255,5 @@ public class BoardController {
         return ResponseEntity.ok(columnService.getByBoardId(boardId));
     }
 
+
 }

@@ -142,6 +142,11 @@ public class BoardTagController {
         return ResponseEntity.ok(boardTag);
     }
 
+    @GetMapping("/getAllBoardTags")
+    @ResponseBody public ResponseEntity<List<BoardTag>> getAllBoardTags() {
+        return ResponseEntity.ok(boardTagRepository.findAll());
+    }
+
 
     /**
      * deletes the boardTags from boards given a specific boardTag

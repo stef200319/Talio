@@ -89,6 +89,8 @@ public class Main extends Application {
         var customizeList = FXML.load(CustomizeListCtrl.class, "client",
                 "scenes", "CustomizeList.fxml");
 
+        var editCardTagsBoard = FXML.load(EditCardTagsBoardCtrl.class,
+                "client", "scenes", "EditCardTagsBoard.fxml");
         
 
 
@@ -98,7 +100,7 @@ public class Main extends Application {
                 addTask, taskManagement, workspace,createBoard, editCardTitle, editCardDescription,
                 editList, editBoardTitle,
                 viewSubtasks, customizeCard, customizeList, editSubtaskTitle, confirmDeleteColumn,
-                confirmDeleteBoard, help);
+                confirmDeleteBoard, help, editCardTagsBoard);
                 
 
 

@@ -15,10 +15,7 @@
  */
 package client.utils;
 
-import commons.Board;
-import commons.Card;
-import commons.Column;
-import commons.Subtask;
+import commons.*;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.GenericType;
@@ -664,7 +661,122 @@ public class ServerUtils {
             .request(APPLICATION_JSON)
             .accept(APPLICATION_JSON)
             .put(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
+    }
 
+
+
+
+
+
+
+
+    /** Method that adds a cardTag to a board so that cards inside of that board can make use of that tag
+     * @param cardTag
+     * @param boardId
+     * @return CardTag that is added
+     */
+    public CardTag addCardTagToBoard(CardTag cardTag, long boardId) {
+        String title = cardTag.getTitle();
+        String color = cardTag.getColor();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("cardTag/addCardTagToBoard/" + title + "/" + color + "/" + boardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(cardTag, APPLICATION_JSON), CardTag.class);
+    }
+
+    /**
+     * Method that deletes a cardTag from a board
+     * @param cardTag
+     * @return Response
+     */
+    public Response deleteCardTagFromBoard(CardTag cardTag) {
+        long cardTagId = cardTag.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("cardTag/deleteCardTagFromBoard/" + cardTagId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .delete();
+    }
+
+    /**
+     * Adds CardTag to Card
+     * @param cardTag
+     * @param cardId
+     * @return the added CardTag
+     */
+    public CardTag addCardTagToCard(CardTag cardTag, long cardId) {
+        long cardTagId = cardTag.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("cardTag/addCardTagToCard/" + cardTagId + "/" + cardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(cardTag, APPLICATION_JSON), CardTag.class);
+    }
+
+    /**
+     * Deletes a CardTag from a Card
+     * @param cardTag
+     * @param cardId
+     * @return Response
+     */
+    public Response deleteCardTagFromCard(CardTag cardTag, long cardId) {
+        long cardTagId = cardTag.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("cardTag/deleteCardTagFromCard/" + cardTagId + "/" + cardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .delete();
+    }
+
+    /**
+     * Edits the CardTag title
+     * @param cardTag
+     * @param title
+     * @return CardTag that is edited
+     */
+    public CardTag editCardTagTitle(CardTag cardTag, String title) {
+        long cardTagId = cardTag.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("cardTag/editCardTagTitle/" + cardTagId + "/" + title)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(cardTag, APPLICATION_JSON), CardTag.class);
+    }
+
+    /**
+     * Edits the CardTag color
+     * @param cardTag
+     * @param color
+     * @return the CardTag that is edited
+     */
+    public CardTag editCardTagColor(CardTag cardTag, String color) {
+        long cardTagId = cardTag.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("cardTag/editCardTagColor/" + cardTagId + "/" + color)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(cardTag, APPLICATION_JSON), CardTag.class);
+    }
+
+    /**
+     * Gets cardTagsByBoardId
+     * @param boardId
+     * @return list of card Tags
+     */
+    public List<CardTag> getCardTagsByBoardId(long boardId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("cardTag/getCardTagsByBoardId/" + boardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<CardTag>>() {});
     }
 
 }
