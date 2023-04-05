@@ -92,6 +92,11 @@ public class ServerUtils {
             .get(new GenericType<List<Card>>() {});
     }
 
+    /**
+     * Fetches a column frmo the database from its id
+     * @param columnID the id of the column
+     * @return a column
+     */
     public Column getColumnByColumnId(long columnID){
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)

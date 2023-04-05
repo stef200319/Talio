@@ -402,10 +402,17 @@ public class MainCtrl {
     /**
 
      * private event handler for a key event that listens
-     *       for the "CTRL+?" keys to be pressed
+     *       for the CTRL+?, CTRL+E, ESCAPE  keys to be pressed
      * when the "CTRL+?" keys are pressed, the method setPreviousSceneAndTitle()
-     * to save the previous scene and scene title values and then showHelpScreen() method
+     *       to save the previous scene and scene title values and then showHelpScreen() method
      *       is called to show the help screen
+     * when the CTRL+E keys are pressed and the user is in the Add Task scene, the method showTaskDetails()
+     *       from AddTaskCtrl is called
+     *       to show the task details page of the
+     *       recently added task
+     * when the ESCAPE key is pressed and the user is in the Task Details scene, the method showBoardOverview()
+     *       from TaskDetailsCtrl is called to go back to the
+     *       board overview
      */
     private EventHandler<KeyEvent> keyboardShortcuts = new EventHandler<KeyEvent>() {
         @Override
@@ -433,7 +440,7 @@ public class MainCtrl {
     };
 
     /**
-     * @return the openHelp event handler
+     * @return the keyboardShortcuts event handler
      */
 
     public EventHandler<KeyEvent> getKeyboardShortcuts()

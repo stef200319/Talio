@@ -95,7 +95,7 @@ public class AddTaskCtrl implements Initializable {
     }
 
     /**
-     * method to show task details
+     * method to show task details and add list to server
      */
     public void showTaskDetails(){
         server.addCard(getCard(), columnToAddId);
