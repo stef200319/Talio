@@ -3,6 +3,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 
+import commons.Column;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -44,7 +45,7 @@ public class TaskDetailsCtrl {
      * when the "Esc" key is pressed, the method showBoardOverview()
      *       is called to switch to the Board Overview scene
      */
-    private EventHandler<KeyEvent> backToOverview = new EventHandler<KeyEvent>() {
+   /* private EventHandler<KeyEvent> backToOverview = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
             if(event.getCode() == KeyCode.ESCAPE)
@@ -52,14 +53,14 @@ public class TaskDetailsCtrl {
                 showBoardOverview();
             }
         }
-    };
+    };*/
 
     /**
      * @return the backToOverview event handler
      */
-    public EventHandler<KeyEvent> getBackToOverview() {
-        return backToOverview;
-    }
+  //  public EventHandler<KeyEvent> getBackToOverview() {
+      //  return backToOverview;
+  //  }
     /**
      * Set the Card whose details have to be displayed
      * @param cardToShow the Card whose details have to be displayed
@@ -96,9 +97,11 @@ public class TaskDetailsCtrl {
     /**
      * show the board overview
      */
-//    TODO THE BOARD ID IS STILL HARDCODED
-    public void showBoardOverview() {
-        mainCtrl.showOverview();
 
+    public void showBoardOverview() {
+        long columnId = cardToShow.getColumnId();
+        Column c = server.getColumnByColumnId(columnId);
+        long boardId = c.getBoardId();
+        mainCtrl.showBoardOverview(boardId);
     }
 }

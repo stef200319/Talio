@@ -92,6 +92,14 @@ public class ServerUtils {
             .get(new GenericType<List<Card>>() {});
     }
 
+    public Column getColumnByColumnId(long columnID){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/getColumnByColumnId/"+columnID)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<Column>(){});
+    }
     /**
      * Fetch a board from database from its id
      * @param boardID the id of the board

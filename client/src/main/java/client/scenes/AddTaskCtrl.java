@@ -11,6 +11,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
+import java.sql.SQLOutput;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddTaskCtrl implements Initializable {
@@ -86,28 +88,6 @@ public class AddTaskCtrl implements Initializable {
     }
 
     /**
-     * private event handler for a key event that listens
-     *       for the "Ctrl+E" keys to be pressed
-     * when the "Ctrl+E" keys are pressed, the method showTaskDetails()
-     *       is called to switch to the Task Details scene
-     */
-    private EventHandler<KeyEvent> openTaskDetails = new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
-            if(event.isControlDown() && event.getCode() == KeyCode.E)
-            {
-                showTaskDetails();
-            }
-        }
-    };
-
-    /**
-     * @return the openTaskDetails event handler
-     */
-    public EventHandler<KeyEvent> getOpenTaskDetails(){
-        return openTaskDetails;
-    }
-    /**
      * @param taskName updates the task name
      */
     public void setTaskName(TextField taskName){
@@ -118,7 +98,10 @@ public class AddTaskCtrl implements Initializable {
      * method to show task details
      */
     public void showTaskDetails(){
-        mainCtrl.showDetailOfTask();
+        server.addCard(getCard(), columnToAddId);
+        taskName.clear();
+        List<Card> cardsList = server.getCardsByColumnId(columnToAddId);//.get();
+        mainCtrl.showTaskDetails(cardsList.get(cardsList.size()-1));
     }
 
     /**
