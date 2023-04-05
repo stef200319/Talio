@@ -4,10 +4,11 @@ import client.utils.ServerUtils;
 import commons.Column;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
-import javafx.scene.input.KeyCode;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,7 +21,10 @@ public class EditListCtrl implements Initializable {
     private long boardID;
 
     @FXML
-    private TextField listName;
+    private Label currentTitle;
+
+    @FXML
+    private TextField newTitle;
 
     /**
      *
@@ -46,14 +50,14 @@ public class EditListCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listName.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                confirm();
-            }
-            else if (event.getCode() == KeyCode.ESCAPE) {
-                cancel();
-            }
-        });
+//        newTitle.setOnKeyPressed(event -> {
+//            if (event.getCode() == KeyCode.ENTER) {
+//                confirm();
+//            }
+//            else if (event.getCode() == KeyCode.ESCAPE) {
+//                cancel();
+//            }
+//        });
     }
 
     /**
@@ -62,13 +66,24 @@ public class EditListCtrl implements Initializable {
      */
     public void setColumnToEdit(Column c) {
         this.columnToEdit = c;
+        this.currentTitle.setText(columnToEdit.getTitle());
     }
+
+
+
+    /**
+     * Show customize list page
+     */
+    public void showCustomizeList() {
+        mainCtrl.showCustomizeList(columnToEdit, boardID);
+    }
+
+
 
     /**
      * cancel edit and return to overview
      */
     public void cancel() {
-        listName.clear();
         mainCtrl.showBoardOverview(boardID);
     }
 
@@ -77,10 +92,13 @@ public class EditListCtrl implements Initializable {
      * @return new title
      */
     public String getTitle() {
-        var l = listName.getText();
-        if(!l.equals(""))
+        String l = newTitle.getText();
+        if(!l.equals("")){
             return l;
-        return null;
+        }
+        else{
+            return "---";
+        }
     }
 
     /**
@@ -89,9 +107,9 @@ public class EditListCtrl implements Initializable {
     public void confirm() {
         if(getTitle() != null) {
             server.editColumnTitle(columnToEdit, getTitle());
-            listName.clear();
-            mainCtrl.showBoardOverview(boardID);
+            newTitle.clear();
         }
+        mainCtrl.showBoardOverview(boardID);
     }
 
     /**
@@ -101,4 +119,8 @@ public class EditListCtrl implements Initializable {
     public void setBoardID(long boardID) {
         this.boardID = boardID;
     }
+
+//    public void showCustomizeList(ActionEvent actionEvent) {
+//
+//    }
 }

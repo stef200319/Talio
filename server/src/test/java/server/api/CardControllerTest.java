@@ -39,7 +39,7 @@ class CardControllerTest {
         columnService = new ColumnService(columnRepository);
         subtaskService = new SubtaskService(subtaskRepository);
 
-        cardController = new CardController(cardService, columnService, subtaskService);
+        cardController = new CardController(cardService, columnService, subtaskService, cardRepository);
     }
 
 

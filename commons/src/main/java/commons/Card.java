@@ -15,12 +15,17 @@
  */
 package commons;
 
-import javax.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
 
 
 @Entity
@@ -36,6 +41,23 @@ public class Card {
     private String description;
 
 
+    @ManyToMany
+    @JoinTable(
+            name = "owned_tags_card",
+            joinColumns = @JoinColumn(name = "card_id"),
+            inverseJoinColumns = @JoinColumn(name = "cardtag_id")
+    )
+    private Set<CardTag> tags;
+    private String bgColour;
+
+    private String borderColour;
+
+    private String fontType;
+    private Boolean fontStyleBold;
+    private Boolean fontStyleItalic;
+    private String fontColour;
+
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Subtask> subtasks;
 
@@ -47,6 +69,7 @@ public class Card {
         // for object mappers
     }
 
+
     /**
      * @param title of the Card
      * @param columnId the column on which the card is going to be present
@@ -54,8 +77,16 @@ public class Card {
     public Card(String title, long columnId) {
         this.title = title;
         this.columnId = columnId;
+        this.bgColour = "#F2F3F4";
+        this.borderColour = "#000000";
+        this.fontType = "Segoe UI";
+        this.fontStyleBold=false;
+        this.fontStyleItalic=false;
+        this.fontColour = "#000000";
 
         this.subtasks = new ArrayList<Subtask>();
+        this.tags = new HashSet<>();
+
     }
 
     /**
@@ -116,6 +147,43 @@ public class Card {
     }
 
     /**
+     * add cardTag to card
+     * @param cardTag cardTag to add
+     */
+    public void addCardTag(CardTag cardTag) {
+        if (tags.contains(cardTag) || cardTag == null) return;
+        tags.add(cardTag);
+    }
+
+    /**
+     * delete cardTag from card
+     * @param cardTag cardTag to delete
+     * @return the deleted cardTag
+     */
+    public CardTag deleteCardTag(CardTag cardTag) {
+        if (!tags.contains(cardTag) || cardTag == null) return null;
+        tags.remove(cardTag);
+        return cardTag;
+    }
+
+    /**
+     * getter for the cardTags
+     * @return a list of the CardTags
+     */
+    public List<CardTag> getCardTags() {
+        if (tags == null) return new ArrayList<>();
+        return new ArrayList<>(tags);
+    }
+
+    /**
+     * Settter for the card tags
+     * @param cardTags
+     */
+    public void setCardTags(Set<CardTag> cardTags) {
+        this.tags = cardTags;
+    }
+
+    /**
      * @param obj other object that you want to compare to this
      * @return whether the objects are the same
      */
@@ -172,6 +240,86 @@ public class Card {
     public void setDescription(String description) {
         this.description = description;
     }
+    /**
+     * @return the String of the Background Colour of a card
+     */
+    public String getBgColour() {
+        return bgColour;
+    }
+    /**
+     * Set the background colour of a Card
+     * @param colour new background colour to replace the card's old one
+     */
+    public void setBgColour(String colour) {
+        this.bgColour = colour;
+    }
+    /**
+     * @return the String of the Border Colour of a card
+     */
+    public String getBorderColour() {
+        return borderColour;
+    }
+    /**
+     * Set the borderColour of a Card
+     * @param borderColour new borderColour to replace the card's old one
+     */
+    public void setBorderColour(String borderColour) {
+        this.borderColour = borderColour;
+    }
+    /**
+     * @return the String of the Font-type of a card
+     */
+    public String getFontType() {
+        return fontType;
+    }
+    /**
+     * Set the font-type of a Card
+     * @param fontType new font type to replace the card's old one
+     */
+    public void setFontType(String fontType) {
+        this.fontType = fontType;
+    }
+    /**
+     * @return whether the Card is Bold
+     */
+    public boolean isFontStyleBold() {
+        return fontStyleBold;
+    }
+
+    /**
+     * Set the card to be Bold or not
+     * @param fontStyleBold value of the Boldness of the card
+     */
+    public void setFontStyleBold(boolean fontStyleBold) {
+        this.fontStyleBold = fontStyleBold;
+    }
+    /**
+     * @return whether the Card is Italic
+     */
+    public boolean isFontStyleItalic() {
+        return fontStyleItalic;
+    }
 
 
+    /**
+     * Set the card to be Italic or not
+     * @param fontStyleItalic value of the Italicness of the card
+     */
+    public void setFontStyleItalic(boolean fontStyleItalic) {
+        this.fontStyleItalic = fontStyleItalic;
+    }
+    /**
+     * @return the String of the Font Colour of a card
+     */
+    public String getFontColour() {
+        return fontColour;
+    }
+
+    /**
+     * Set the font colour of a Card
+     * @param fontColour new font colour to replace the card's old one
+     */
+    public void setFontColour(String fontColour) {
+        this.fontColour = fontColour;
+    }
 }

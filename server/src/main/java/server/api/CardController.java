@@ -4,10 +4,12 @@ import commons.Card;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.database.CardRepository;
 import server.services.ColumnService;
 import server.services.CardService;
 import server.services.SubtaskService;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -16,24 +18,28 @@ public class CardController {
     private final CardService cardService;
     private final ColumnService columnService;
     private final SubtaskService subtaskService;
+    private final CardRepository cardRepository;
 
 
     /**
      * @param cardService the service for card operations
      * @param columnService the service for column (list) operations
      * @param subtaskService the service for subtask operations
+     * @param cardRepository
      */
     public CardController(CardService cardService, ColumnService columnService,
-                                                    SubtaskService subtaskService) {
+                                                    SubtaskService subtaskService, CardRepository cardRepository) {
         this.cardService = cardService;
         this.columnService = columnService;
         this.subtaskService = subtaskService;
+        this.cardRepository = cardRepository;
     }
 
     /**
      * Return all the cards which are stored in the database
      * @return all the cards in the database
      */
+
     @GetMapping("/getAllCards")
     @ResponseBody
     public List<Card> getAllCards() {
@@ -133,6 +139,128 @@ public class CardController {
         return ResponseEntity.ok(card);
     }
 
+    /**Change the Background colour of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param bgColour Background colour which should replace the old Background colour of the card
+     * @return receive a message indicating the Background colour has change, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardBackgroundColour/{cardId}/{bgColour}")
+    @ResponseBody public ResponseEntity<Card> editCardBackgroundColour(@PathVariable("cardId") long cardId,
+                                                                  @PathVariable("bgColour") String bgColour){
+        if (bgColour == null || !cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setBgColour(bgColour);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+    /**Change the Border colour of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param borderColour Border colour which should replace the old Border colour of the card
+     * @return receive a message indicating the Border colour has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardBorderColour/{cardId}/{borderColour}")
+    @ResponseBody public ResponseEntity<Card> editCardBorderColour
+    (@PathVariable("cardId") long cardId, @PathVariable("borderColour") String borderColour){
+        if (borderColour == null || !cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setBorderColour(borderColour);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+    /**Change the Font-type of a Card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param fontType Font Type which should replace the old Font Type of the card
+     * @return receive a message indicating the Font Type has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardFontType/{cardId}/{fontType}")
+    @ResponseBody public ResponseEntity<Card> editCardFontType
+    (@PathVariable("cardId") long cardId, @PathVariable("fontType") String fontType){
+        if (fontType == null || !cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setFontType(fontType);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+    /**Change the Boldness of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param bold Boldness which should replace the old Boldness of the card
+     * @return receive a message indicating the Boldness has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardFontStyleBold/{cardId}/{bold}")
+    @ResponseBody public ResponseEntity<Card> editCardFontStyleBold
+    (@PathVariable("cardId") long cardId, @PathVariable("bold") boolean bold){
+        if (!cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setFontStyleBold(bold);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+    /**Change the Italicness of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param italic Italicness which should replace the old Boldness of the card
+     * @return receive a message indicating the Italicness has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardFontStyleItalic/{cardId}/{italic}")
+    @ResponseBody public ResponseEntity<Card> editCardFontStyleItalic
+    (@PathVariable("cardId") long cardId, @PathVariable("italic") boolean italic){
+        if (!cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setFontStyleItalic(italic);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+    /**Change the Font Colour of a card, if it exists. Receive a message on the success of the edit
+     * @param cardId The ID of the card whose title should be changed
+     * @param fontColour Font Colour which should replace the old Font Colour of the card
+     * @return receive a message indicating the Font Colour has changed, if the card exists. If it doesn't,
+     * receive an appropriate response to the client.
+     */
+    @PutMapping("/editCardFontColour/{cardId}/{fontColour}")
+    @ResponseBody public ResponseEntity<Card> editCardFontColour
+    (@PathVariable("cardId") long cardId, @PathVariable("fontColour") String fontColour){
+        if (!cardRepository.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Card card = cardRepository.findById(cardId).get();
+        card.setFontColour(fontColour);
+        cardRepository.save(card);
+        return ResponseEntity.ok(card);
+    }
+
+
+
+
+
     /**Change the columnId of a card, if it exists. Receive a message on the success of the edit
      * @param cardId The ID of the card whose title should be changed
      * @param columnId columnId which should replace the old columnId of the card
@@ -194,9 +322,19 @@ public class CardController {
      */
     @DeleteMapping("/deleteCard/{cardId}")
     @ResponseBody public ResponseEntity<Card> deleteCard(@PathVariable("cardId") long cardId){
-        Card cardToDelete = cardService.deleteCard(cardId);
-        if(cardToDelete==null)
+        if(!cardService.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
+        }
+
+        Card cardToDelete = cardService.getById(cardId);
+
+
+        // Delete all the cardTags
+        cardToDelete.setCardTags(new HashSet<>());
+
+        // Delete the card
+        cardService.deleteCard(cardId);
+
         return ResponseEntity.ok(cardToDelete);
     }
 
@@ -211,6 +349,38 @@ public class CardController {
         if(subtasks == null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(subtasks);
+    }
+
+    /**
+     * Changes the position of a subtask in a card
+     * @param cardId the card the subtask is in
+     * @param oldPos the old position of the subtask
+     * @param newPos the new position of the subtask
+     * @return the new card with updated subtask positions
+     */
+    @PutMapping("/changeSubtaskPosition/{cardId}/{oldPos}/{newPos}")
+    @ResponseBody public ResponseEntity<Card> changeSubtaskPosition(@PathVariable("cardId") long cardId,
+                                                                            @PathVariable("oldPos") int oldPos,
+                                                                            @PathVariable("newPos") int newPos) {
+        Card c = cardService.changeSubtaskPosition(cardId, oldPos, newPos);
+        if(c == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(c);
+    }
+
+    /**
+     * Deletes a subtask from the card
+     * @param cardId id of the card the subtask is in
+     * @param subtaskId id of the subtask to be deleted
+     * @return the new updated card
+     */
+    @DeleteMapping("/deleteSubtask/{cardId}/{subtaskId}")
+    @ResponseBody public ResponseEntity<Card> deleteSubtask(@PathVariable("cardId") long cardId,
+                                                            @PathVariable("subtaskId") int subtaskId) {
+        Card c = cardService.deleteSubtask(cardId, subtaskId);
+        if(c==null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(c);
     }
 
 }

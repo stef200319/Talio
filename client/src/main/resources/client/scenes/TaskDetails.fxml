@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="642.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.TaskDetailsCtrl">
@@ -26,24 +27,27 @@
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
-            <Button fx:id="editCardDescription" layoutX="23.0" layoutY="121.0" mnemonicParsing="false" onAction="#showEditCardDescription" prefHeight="50.0" prefWidth="57.0" text="Edit">
+            <Button fx:id="editCardDescription" layoutX="23.0" layoutY="121.0" mnemonicParsing="false" onAction="#showEditCardDescription" prefHeight="50.0" prefWidth="63.0" text="Edit">
                <font>
                   <Font size="19.0" />
                </font>
             </Button>
-            <Button fx:id="editCardTitle" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#showEditCardTitle" prefHeight="50.0" prefWidth="57.0" text="Edit">
+            <Button fx:id="editCardTitle" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#showEditCardTitle" prefHeight="50.0" prefWidth="63.0" text="Edit">
                <font>
                   <Font size="19.0" />
                </font>
             </Button>
-            <Button layoutX="23.0" layoutY="316.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="66.0" text="View">
+            <Button layoutX="23.0" layoutY="316.0" mnemonicParsing="false" onAction="#showViewSubtask" prefHeight="50.0" prefWidth="71.0" text="View">
                <font>
                   <Font size="19.0" />
                </font>
             </Button>
             <ScrollPane layoutX="29.0" layoutY="381.0" prefHeight="133.0" prefWidth="418.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <VBox fx:id="subtasksScroll" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="381.0" />
+                     </children></AnchorPane>
               </content>
             </ScrollPane>
             <Label layoutX="559.0" layoutY="321.0" prefHeight="40.0" prefWidth="88.0" text="Tags:">
@@ -51,22 +55,22 @@
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
-            <Button layoutX="748.0" layoutY="381.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="119.0" text="Edit">
+            <Button fx:id="cardCustomize" layoutX="729.0" layoutY="381.0" mnemonicParsing="false" onAction="#showCardCustomization" prefHeight="133.0" prefWidth="143.0" text="Edit">
                <font>
                   <Font size="19.0" />
                </font>
             </Button>
-            <ScrollPane layoutX="492.0" layoutY="381.0" prefHeight="133.0" prefWidth="228.0">
+            <ScrollPane layoutX="492.0" layoutY="381.0" prefHeight="133.0" prefWidth="206.0">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </ScrollPane>
-            <Label layoutX="752.0" layoutY="321.0" prefHeight="40.0" prefWidth="110.0" text="Colours:">
+            <Label layoutX="724.0" layoutY="321.0" prefHeight="40.0" prefWidth="153.0" text="Customize:">
                <font>
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
-            <Button layoutX="486.0" layoutY="316.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="57.0" text="Edit">
+            <Button layoutX="486.0" layoutY="316.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="63.0" text="Edit">
                <font>
                   <Font size="19.0" />
                </font>
