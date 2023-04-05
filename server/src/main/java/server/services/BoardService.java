@@ -79,6 +79,12 @@ public class BoardService {
         boardRepository.delete(board);
         return board;
     }
+
+    /**
+     * method that saves a board in the database
+     * @param board the board to be saved
+     * @return the saved board
+     */
     public Board save(Board board)
     {
         return boardRepository.save(board);

@@ -1,8 +1,6 @@
 package server.services;
 
-import commons.Board;
 import commons.BoardTag;
-import commons.CardTag;
 import org.springframework.stereotype.Service;
 import server.database.BoardTagRepository;
 
@@ -79,30 +77,30 @@ public class BoardTagService {
 
     /**
      * method that edits the color of a board tag
-     * @param Id of the board tag
+     * @param id of the board tag
      * @param color the new color
      * @return the updated board tag
      */
-    public BoardTag editColor(long Id, String color)
+    public BoardTag editColor(long id, String color)
     {
-        if(!boardTagRepository.existsById(Id))
+        if(!boardTagRepository.existsById(id))
             return null;
-        BoardTag boardTag = getById(Id);
+        BoardTag boardTag = getById(id);
         boardTag.setColor(color);
         return save(boardTag);
     }
 
     /**
      * deletes a board tag
-     * @param Id of the board tag
+     * @param id of the board tag
      * @return the board tag that was deleted
      */
-    public BoardTag delete(long Id)
+    public BoardTag delete(long id)
     {
-        if(!boardTagRepository.existsById(Id))
+        if(!boardTagRepository.existsById(id))
             return null;
-        BoardTag boardTag = getById(Id);
-        boardTagRepository.deleteById(Id);
+        BoardTag boardTag = getById(id);
+        boardTagRepository.deleteById(id);
         return boardTag;
     }
 

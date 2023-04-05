@@ -4,8 +4,6 @@ import commons.Board;
 import commons.BoardTag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.BoardRepository;
-import server.database.BoardTagRepository;
 import server.services.BoardService;
 import server.services.BoardTagService;
 
@@ -21,6 +19,7 @@ public class BoardTagController {
     /**
      * Constructor for BoardTagController
      * @param boardTagService
+     * @param boardService
      */
     public BoardTagController(BoardTagService boardTagService, BoardService boardService) {
         this.boardTagService = boardTagService;
