@@ -64,5 +64,13 @@ public class Subtask {
         this.done = done;
     }
 
+    /**
+     * To string method for debugging purposes
+     * @return representation of a subtask as a string
+     */
+    public String toString() {
+        return "Subtask with id: " + id + " has title: " + title + " and status: " + done;
+    }
+
 
 }

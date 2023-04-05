@@ -11,12 +11,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 
 import java.net.URL;
@@ -24,9 +27,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-
-
-
 
 public class WorkspaceCtrl implements Initializable{
 
@@ -39,6 +39,9 @@ public class WorkspaceCtrl implements Initializable{
 
     @FXML
     private HBox boardContainer;
+
+    @FXML
+    private ScrollPane scrollPane;
 
     /**
      *
@@ -127,23 +130,18 @@ public class WorkspaceCtrl implements Initializable{
      */
 
     public void createBoard(Board b) {
+
         VBox board = new VBox();
         board.setPadding(new Insets(5));
-        board.setPrefWidth(400); // Set preferred width to 400 pixels
-        board.setPrefHeight(600); // Set preferred height to 600 pixels
-        board.setMaxWidth(800); // Set max width to 800 pixels
-        board.setMinWidth(200); //Set min width to 200
+        board.setMinHeight(70); // Set max width to 800 pixels
+        board.setMinWidth(150); //Set min width to 200
         board.setAlignment(Pos.CENTER);
-
-        Button open = new Button("Open");
-        open.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                mainCtrl.showBoardOverview(b.getId());
-            }
+        board.setOnMouseClicked(event -> {
+            mainCtrl.showBoardOverview(b.getId());
         });
 
-        Button delete = new Button("X");
+
+        Button delete = new Button("x");
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -151,20 +149,39 @@ public class WorkspaceCtrl implements Initializable{
             }
         });
 
-        HBox box = new HBox(5);
+        delete.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+        delete.setPrefHeight(1);
+        delete.setPrefWidth(1);
+
+
+        HBox box = new HBox();
         box.setAlignment(Pos.TOP_RIGHT);
-        box.getChildren().add(open);
         box.getChildren().add(delete);
         board.getChildren().add(box);
 
         Label title = new Label(b.getTitle());
-        title.setFont(new Font(20));
+        title.setFont(Font.font("System", FontWeight.BOLD, 15));
+
+        VBox.setVgrow(title, Priority.ALWAYS);
+        VBox.setMargin(title, new Insets(0, 0, 5, 0));
+
+        title.setAlignment(Pos.CENTER);
 
         board.getChildren().add(title);
 
+        board.setOnMouseEntered(event -> title.setStyle("-fx-background-color: #F5DEB3"));
+        board.setOnMouseExited(event -> title.setStyle("-fx-text-fill: black;"));
+
         boardContainer.getChildren().add(board);
+        scrollPane.setContent(boardContainer);
+        scrollPane.setPannable(true);
     }
 
-
+    /**
+     * Show client connect scene
+     */
+    public void showClientConnect() {
+        mainCtrl.showClientConnect();
+    }
 
 }
