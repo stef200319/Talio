@@ -16,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.messaging.converter.StringMessageConverter;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
@@ -34,6 +36,7 @@ public class BoardOverviewCtrl implements Initializable {
     private final MainCtrl mainCtrl;
     private int boardID=1;
     private WebSocketStompClient stompClient;
+    private static final Logger logger = LoggerFactory.getLogger(BoardOverviewCtrl.class);
 
     @FXML
     private HBox columnContainer;
@@ -79,7 +82,7 @@ public class BoardOverviewCtrl implements Initializable {
         stompClient.setMessageConverter(new StringMessageConverter());
         stompClient.connect("http://localhost:8080/websocket-stomp", sessionHandler);
 
-        System.out.println("connected!");
+        logger.info("connected to websocket");
     }
 
     /**
