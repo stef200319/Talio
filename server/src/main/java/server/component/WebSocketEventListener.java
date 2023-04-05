@@ -13,7 +13,6 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
-import server.services.ColumnService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,11 +23,12 @@ import java.util.Map;
 public class WebSocketEventListener {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
-    private final ColumnService columnService;
     private final ObjectMapper objectMapper;
 
-    public WebSocketEventListener(ColumnService columnService, ObjectMapper objectMapper) {
-        this.columnService = columnService;
+    /**
+     * @param objectMapper used to serialize to json
+     */
+    public WebSocketEventListener(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
@@ -73,6 +73,7 @@ public class WebSocketEventListener {
 
     /**
      * @param event that is sent out
+     * @return json of the deleted board
      */
     @EventListener
     public String deleteBoard(RESTEvent event) {
@@ -99,6 +100,10 @@ public class WebSocketEventListener {
         return json;
     }
 
+    /**
+     * @param event that is sent out
+     * @return json of the new board
+     */
     @EventListener
     public String editBoardTitle(RESTEvent event) {
         if (!event.getMessage().equals("board was edited")) {
@@ -123,6 +128,10 @@ public class WebSocketEventListener {
         return json;
     }
 
+    /**
+     * @param event that is sent out
+     * @return json of the new column
+     */
     @EventListener
     public String addColumn(RESTEvent event) {
         if (!event.getMessage().equals("column was created")) {
@@ -142,11 +151,16 @@ public class WebSocketEventListener {
             }
         }
 
-        logger.info("Column with id " + c.getId() + " and board id " + c.getBoardId() + " was created and named: " + c.getTitle());
+        logger.info("Column with id " + c.getId() + " and board id " +
+                    c.getBoardId() + " was created and named: " + c.getTitle());
 
         return json;
     }
 
+    /**
+     * @param event that is sent out
+     * @return json of the edited column
+     */
     @EventListener
     public String editColumn(RESTEvent event) {
         if (!event.getMessage().equals("column was updated")) {
@@ -166,11 +180,16 @@ public class WebSocketEventListener {
             }
         }
 
-        logger.info("Column with id " + c.getId() + " and board id " + c.getBoardId() + " was updated and renamed to " + c.getTitle());
+        logger.info("Column with id " + c.getId() + " and board id " +
+                c.getBoardId() + " was updated and renamed to " + c.getTitle());
 
         return json;
     }
 
+    /**
+     * @param event that is sent out
+     * @return json of the deleted column
+     */
     @EventListener
     public String deleteColumn(RESTEvent event) {
         if (!event.getMessage().equals("column was deleted")) {

@@ -114,11 +114,11 @@ public class ColumnService {
         Column column = getById(columnId);
         columnRepository.deleteById(columnId);
 
-        if (column != null && column.getPosition() != null)
+        if (column != null && column.getPosition() != null) {
             updateColumnPosition(column.getBoardId(), column.getPosition());
-
-        RESTEvent event = new RESTEvent(column, "column was deleted");
-        applicationEventPublisher.publishEvent(event);
+            RESTEvent event = new RESTEvent(column, "column was deleted");
+            applicationEventPublisher.publishEvent(event);
+        }
 
         return column;
     }
@@ -137,4 +137,10 @@ public class ColumnService {
         }
     }
 
+    /**
+     * @param applicationEventPublisher the new application event publisher
+     */
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
 }
