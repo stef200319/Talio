@@ -4,9 +4,6 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 
 import commons.Column;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import commons.Card;
 import javafx.fxml.FXML;
