@@ -268,7 +268,7 @@ public class CardService {
      */
     public Card changeSubtaskPosition(long cardId, int oldPos, int newPos) {
         List<Subtask> subtasks = getAllSubtasksByCardId(cardId);
-        if(subtasks==null || oldPos>subtasks.size() || newPos>subtasks.size())
+        if(subtasks==null || oldPos>subtasks.size() || newPos>subtasks.size() || oldPos<0 || newPos<0)
             return null;
         if(oldPos<newPos) {
             Subtask aux = subtasks.get(oldPos);

@@ -11,17 +11,32 @@ import org.springframework.data.repository.query.FluentQuery;
 import server.database.SubtaskRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
 public class TestSubtaskRepository implements SubtaskRepository {
+
+    private final List<Subtask> subtasks;
+    long lastUsedId;
+
+    public TestSubtaskRepository() {
+        List<Subtask> subtasks = new ArrayList<>();
+        Subtask s1 = new Subtask("test1");
+        Subtask s2 = new Subtask("test2");
+        subtasks.add(s1);
+        subtasks.add(s2);
+        lastUsedId=1;
+        this.subtasks = subtasks;
+    }
+
     /**
      * TODO
      */
     @Override
     public List<Subtask> findAll() {
-        return null;
+        return subtasks;
     }
     /**
      * TODO
@@ -29,7 +44,7 @@ public class TestSubtaskRepository implements SubtaskRepository {
 
     @Override
     public List<Subtask> findAll(Sort sort) {
-        return null;
+        return subtasks;
     }
 
     /**
@@ -58,7 +73,7 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public long count() {
-        return 0;
+        return subtasks.size();
     }
 
     /**
@@ -69,7 +84,11 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public void deleteById(Long aLong) {
-
+        for (int i=0;i<subtasks.size();i++)
+            if(subtasks.get(i)!=null && subtasks.get(i).getId()==aLong) {
+                subtasks.remove(i);
+                break;
+            }
     }
 
     /**
@@ -80,7 +99,7 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public void delete(Subtask entity) {
-
+        subtasks.remove(entity);
     }
 
     /**
@@ -92,7 +111,13 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public void deleteAllById(Iterable<? extends Long> longs) {
-
+        for(Subtask s : subtasks) {
+            if(s!=null) {
+                for(long i : longs)
+                    if(s.getId()==i)
+                        subtasks.remove(s);
+            }
+        }
     }
 
     /**
@@ -103,7 +128,8 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public void deleteAll(Iterable<? extends Subtask> entities) {
-
+        for(Subtask s : entities)
+            subtasks.remove(s);
     }
 
     /**
@@ -111,7 +137,8 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public void deleteAll() {
-
+        while (subtasks.size()>0)
+            subtasks.remove(0);
     }
 
     /**
@@ -124,11 +151,17 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public <S extends Subtask> S save(S entity) {
-        return null;
+        for (Subtask s : subtasks) {
+            if(s!=null && s.getId()==entity.getId()) {
+                subtasks.remove(s);
+                subtasks.add(entity);
+                return entity;
+            }
+        }
+        entity.setId(++lastUsedId);
+        subtasks.add(entity);
+        return entity;
     }
-    /**
-     * TODO
-     */
 
     @Override
     public <S extends Subtask> List<S> saveAll(Iterable<S> entities) {
@@ -144,6 +177,10 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public Optional<Subtask> findById(Long aLong) {
+        for(Subtask s : subtasks) {
+            if(s!=null && s.getId()==aLong)
+                return Optional.of(s);
+        }
         return Optional.empty();
     }
 
@@ -156,6 +193,10 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public boolean existsById(Long aLong) {
+        for (Subtask s : subtasks) {
+            if(s!=null && s.getId()==aLong)
+                return true;
+        }
         return false;
     }
 
@@ -249,6 +290,10 @@ public class TestSubtaskRepository implements SubtaskRepository {
      */
     @Override
     public Subtask getById(Long aLong) {
+        for (Subtask s : subtasks) {
+            if(s!=null && s.getId()==aLong)
+                return s;
+        }
         return null;
     }
 
