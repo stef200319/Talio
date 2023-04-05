@@ -3,6 +3,8 @@ package client.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import commons.Column;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -16,6 +18,7 @@ import java.util.List;
 public class StringMessageHandler extends StompSessionHandlerAdapter {
 
     private final ObjectMapper objectMapper;
+    private static final Logger logger = LoggerFactory.getLogger(StringMessageHandler.class);
 
     /**
      * Sets a new objectMapper
@@ -48,14 +51,13 @@ public class StringMessageHandler extends StompSessionHandlerAdapter {
      */
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
-        System.out.println("payload received");
-        System.out.println(payload);
+        logger.info("payload received: " + payload);
 
         if (headers.containsKey("method") && headers.get("method").contains("getAllColumns")) {
             try {
                 List<Column> columns = objectMapper.readValue((String) payload, objectMapper.getTypeFactory().
                         constructCollectionType(List.class, Column.class));
-                System.out.println(columns.get(0).toString());
+                logger.info(columns.get(0).toString());
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
@@ -72,6 +74,7 @@ public class StringMessageHandler extends StompSessionHandlerAdapter {
     @Override
     public void handleException(StompSession session, @Nullable StompCommand command,
                                 StompHeaders headers, byte[] payload, Throwable exception) {
+        logger.error("error: " + exception.getMessage());
         exception.printStackTrace();
 
     }
@@ -82,6 +85,6 @@ public class StringMessageHandler extends StompSessionHandlerAdapter {
      */
     @Override
     public void handleTransportError(StompSession session, Throwable exception) {
-        System.out.println("WebSocket session disconnected");
+        logger.info("WebSocket session disconnected");
     }
 }

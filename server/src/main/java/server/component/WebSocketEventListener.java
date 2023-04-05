@@ -63,12 +63,10 @@ public class WebSocketEventListener {
         Map<String, Object> headers = new HashMap<>();
         headers.put("method", "getAllColumns");
 
-        System.out.println("message sent");
-        System.out.println(event.getMessage());
         for (User user : users) {
-            System.out.println("send to: " + user.getName());
             messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
         }
+        logger.info("All columns sent");
     }
 
     /**
