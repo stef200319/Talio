@@ -18,6 +18,8 @@ import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 
 import java.net.URL;
 import java.util.List;
@@ -140,7 +142,7 @@ public class BoardOverviewCtrl implements Initializable {
 
     @SuppressWarnings("checkstyle:MethodLength")
     public void createList(Column c) {
-        VBox list=new VBox();
+        VBox list=new VBox(20);
         list.setStyle("-fx-border-color: black");
         list.setPadding(new Insets(5));
         list.setPrefWidth(400); // Set preferred width to 400 pixels
@@ -173,7 +175,10 @@ public class BoardOverviewCtrl implements Initializable {
 
 
         // Delete and edit buttons
-        Button delete = new Button("X");
+        Button delete = new Button("x");
+        delete.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+        delete.setPrefHeight(1);
+        delete.setPrefWidth(1);
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -181,22 +186,26 @@ public class BoardOverviewCtrl implements Initializable {
             }
         });
         Button editTitle = new Button("Edit");
+        editTitle.setStyle("-fx-background-color: #E0CDA8");
+        editTitle.setFont(Font.font("System", FontPosture.ITALIC, 12));
         editTitle.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 mainCtrl.showEditList(c, boardID);
             }
         });
-        HBox deleteBox = new HBox(5);
-        deleteBox.setAlignment(Pos.TOP_RIGHT);
+
+        HBox deleteBox = new HBox(130);
         deleteBox.getChildren().add(editTitle);
         deleteBox.getChildren().add(delete);
         list.getChildren().add(deleteBox);
         //End of delete and edit buttons
+        delete.setAlignment(Pos.TOP_RIGHT);
+
 
 
         Label title = new Label(c.getTitle());
-        title.setFont(new Font(20));
+        title.setFont(Font.font("System", FontWeight.BOLD, 15));
 
         list.getChildren().add(title);
 
@@ -211,6 +220,8 @@ public class BoardOverviewCtrl implements Initializable {
             card.setStyle("-fx-border-radius: 50px");
             card.setStyle("-fx-border-color: grey");
 
+
+
             Label s = new Label(cards.get(i).getTitle());       //title of the card
             card.getChildren().add(s);
 
@@ -219,15 +230,19 @@ public class BoardOverviewCtrl implements Initializable {
 
             int finalI = i;
 
-            Button details = new Button("Details");
-            details.setOnAction(new EventHandler<ActionEvent>() {
+            card.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
-                public void handle(ActionEvent event) {
+                public void handle(MouseEvent event) {
+                    // Do something when the card is clicked
                     mainCtrl.showTaskDetails(cards.get(finalI));
                 }
             });
 
-            Button deleteCard = new Button("X");
+            Button deleteCard = new Button("x");
+            deleteCard.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+            deleteCard.setPrefHeight(1);
+            deleteCard.setPrefWidth(1);
+
 
             deleteCard.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -238,7 +253,6 @@ public class BoardOverviewCtrl implements Initializable {
             });
 
             cardButtons.getChildren().add(deleteCard);
-            cardButtons.getChildren().add(details);
 
             card.getChildren().add(cardButtons);
 
@@ -252,7 +266,7 @@ public class BoardOverviewCtrl implements Initializable {
         list.getChildren().add(cardContainer);
 
         //Button for adding a task
-        Button b = new Button("Add task");
+        Button b = new Button("Add Task");
         b.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -260,6 +274,8 @@ public class BoardOverviewCtrl implements Initializable {
             }
         });
         list.getChildren().add(b);
+        b.setAlignment(Pos.BOTTOM_LEFT);
+        b.setStyle("-fx-text-fill: white; -fx-background-color:  #104a03; -fx-font-size: 12px;");
         //End of button for adding a task
 
         columnContainer.getChildren().add(list);

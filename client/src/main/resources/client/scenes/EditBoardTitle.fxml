@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -29,16 +28,8 @@
 
 <AnchorPane prefHeight="375.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EditBoardTitleCtrl">
 <children>
-   <Pane prefHeight="375.0" prefWidth="575.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;">
+   <Pane fx:id="background" prefHeight="375.0" prefWidth="575.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;">
       <children>
-         <Label layoutX="130.0" layoutY="248.0" prefHeight="43.0" prefWidth="332.0" text="Change the Board's Title to Reflect what it Stands for " underline="true">
-            <font>
-               <Font name="System Bold Italic" size="13.0" />
-            </font>
-               <effect>
-                  <Glow />
-               </effect>
-         </Label>
          <Label layoutX="183.0" layoutY="133.0" prefHeight="17.0" prefWidth="52.0" text="New Title:">
             <font>
                <Font name="System Italic" size="12.0" />
