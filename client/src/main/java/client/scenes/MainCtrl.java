@@ -173,9 +173,9 @@ public class MainCtrl {
 
 
 
-        this.taskDetails.setOnKeyPressed(taskDetailsCtrl.getBackToOverview());
+        this.taskDetails.setOnKeyPressed(getKeyboardShortcuts());
 
-        this.addTask.setOnKeyPressed(addTaskCtrl.getOpenTaskDetails());
+        this.addTask.setOnKeyPressed(getKeyboardShortcuts());
 
         this.editBoardTitleCtrl = editBoardTitle.getKey();
         this.editBoardTitle = new Scene(editBoardTitle.getValue());
@@ -193,20 +193,20 @@ public class MainCtrl {
 
         this.help.setOnKeyPressed(helpCtrl.getBackToPreviousScene());
 
-        this.boardOverview.setOnKeyPressed(getOpenHelp());
-        this.clientConnect.setOnKeyPressed(getOpenHelp());
-        this.addTask.setOnKeyPressed(getOpenHelp());
-        this.addList.setOnKeyPressed(getOpenHelp());
-        this.createBoard.setOnKeyPressed(getOpenHelp());
-        this.editBoardTitle.setOnKeyPressed(getOpenHelp());
-        this.editCardDescription.setOnKeyPressed(getOpenHelp());
-        this.editCardTitle.setOnKeyPressed(getOpenHelp());
-        this.editList.setOnKeyPressed(getOpenHelp());
-        this.editSubtaskTitle.setOnKeyPressed(getOpenHelp());
-        this.taskDetails.setOnKeyPressed(getOpenHelp());
-        this.taskManagement.setOnKeyPressed(getOpenHelp());
-        this.viewSubtask.setOnKeyPressed(getOpenHelp());
-        this.workspace.setOnKeyPressed(getOpenHelp());
+        this.boardOverview.setOnKeyPressed(getKeyboardShortcuts());
+        this.clientConnect.setOnKeyPressed(getKeyboardShortcuts());
+        this.addTask.setOnKeyPressed(getKeyboardShortcuts());
+        this.addList.setOnKeyPressed(getKeyboardShortcuts());
+        this.createBoard.setOnKeyPressed(getKeyboardShortcuts());
+        this.editBoardTitle.setOnKeyPressed(getKeyboardShortcuts());
+        this.editCardDescription.setOnKeyPressed(getKeyboardShortcuts());
+        this.editCardTitle.setOnKeyPressed(getKeyboardShortcuts());
+        this.editList.setOnKeyPressed(getKeyboardShortcuts());
+        this.editSubtaskTitle.setOnKeyPressed(getKeyboardShortcuts());
+        this.taskDetails.setOnKeyPressed(getKeyboardShortcuts());
+        this.taskManagement.setOnKeyPressed(getKeyboardShortcuts());
+        this.viewSubtask.setOnKeyPressed(getKeyboardShortcuts());
+        this.workspace.setOnKeyPressed(getKeyboardShortcuts());
 
         this.customizeCardCtrl = customizeCard.getKey();
         this.customizeCard = new Scene(customizeCard.getValue());
@@ -234,7 +234,7 @@ public class MainCtrl {
 
     /**
      * show the overview
-     *TODO THE BOARD TO BE DISPLAYED MUST NOT BE HARDCODED, BUT DEPENDENT ON THE BOARD THE USER IIS IN!
+     *
      */
     public void showOverview() {
         primaryStage.setTitle("Board: Overview");
@@ -267,7 +267,6 @@ public class MainCtrl {
         addListCtrl.setBoardToAddId(boardID);
         primaryStage.setTitle("Adding List");
         primaryStage.setScene(addList);
-        //add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     /**
@@ -409,30 +408,39 @@ public class MainCtrl {
     /**
 
      * private event handler for a key event that listens
-     *       for the "CTRL+?" keys to be pressed
+     *       for the CTRL+?, CTRL+E, ESCAPE  keys to be pressed
      * when the "CTRL+?" keys are pressed, the method setPreviousSceneAndTitle()
-     * to save the previous scene and scene title values and then showHelpScreen() method
+     *       to save the previous scene and scene title values and then showHelpScreen() method
      *       is called to show the help screen
+     * when the ESCAPE key is pressed and the user is in the Task Details scene, the method showBoardOverview()
+     *       from TaskDetailsCtrl is called to go back to the
+     *       board overview
      */
-    private EventHandler<KeyEvent> openHelp = new EventHandler<KeyEvent>() {
+    private EventHandler<KeyEvent> keyboardShortcuts = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
             if(event.isControlDown() && event.getCode()== KeyCode.SLASH)
             {
-
                 setPreviousSceneAndTitle();
                 showHelpScreen();
 
             }
+            if(event.getCode()==KeyCode.ESCAPE && getCurrentSceneTitle().equals("Task Details"))
+            {
+
+                taskDetailsCtrl.showBoardOverview();
+
+            }
         }
     };
+
     /**
-     * @return the openHelp event handler
+     * @return the keyboardShortcuts event handler
      */
 
-    public EventHandler<KeyEvent> getOpenHelp()
+    public EventHandler<KeyEvent> getKeyboardShortcuts()
     {
-        return openHelp;
+        return keyboardShortcuts;
     }
 
 

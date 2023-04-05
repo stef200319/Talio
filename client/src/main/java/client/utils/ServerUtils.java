@@ -93,6 +93,19 @@ public class ServerUtils {
     }
 
     /**
+     * Fetches a column frmo the database from its id
+     * @param columnID the id of the column
+     * @return a column
+     */
+    public Column getColumnByColumnId(long columnID){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/getColumnByColumnId/"+columnID)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<Column>(){});
+    }
+    /**
      * Fetch a board from database from its id
      * @param boardID the id of the board
      * @return a board
