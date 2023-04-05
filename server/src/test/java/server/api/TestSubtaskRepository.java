@@ -19,8 +19,11 @@ import java.util.function.Function;
 public class TestSubtaskRepository implements SubtaskRepository {
 
     private final List<Subtask> subtasks;
-    long lastUsedId;
+    private long lastUsedId;
 
+    /**
+     * setup
+     */
     public TestSubtaskRepository() {
         List<Subtask> subtasks = new ArrayList<>();
         Subtask s1 = new Subtask("test1");
@@ -163,6 +166,11 @@ public class TestSubtaskRepository implements SubtaskRepository {
         return entity;
     }
 
+    /**
+     * @param entities must not be {@literal null} nor must it contain {@literal null}.
+     * @return
+     * @param <S>
+     */
     @Override
     public <S extends Subtask> List<S> saveAll(Iterable<S> entities) {
         return null;

@@ -9,7 +9,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import server.database.CardRepository;
 import commons.Card;
-import server.database.SubtaskRepository;
 
 import java.util.ArrayList;
 import java.util.List;
