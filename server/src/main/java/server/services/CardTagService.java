@@ -23,6 +23,10 @@ public class CardTagService {
         return cardTagRepository.findAll();
     }
 
+    public List<CardTag> getAllByBoard(Board board)
+    {
+        return cardTagRepository.findCardTagsByBoard(board);
+    }
     public boolean existsById(long id)
     {
         return cardTagRepository.existsById(id);

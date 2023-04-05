@@ -12,6 +12,7 @@ import server.services.BoardService;
 import server.services.CardService;
 import server.services.CardTagService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -99,6 +100,17 @@ public class CardTagController {
         return ResponseEntity.ok(cardTag);
     }
 
+    @GetMapping("/getCardTagsByBoardId/{boardId}")
+    @ResponseBody public ResponseEntity<List<CardTag>> getCardTagsByBoardId(@PathVariable("boardId") long boardId){
+        if(!boardService.existsById(boardId)){
+            return ResponseEntity.badRequest().build();
+        }
+        Board board = boardService.getByBoardId(boardId);
+        List<CardTag> cardTags = cardTagService.getAllByBoard(board);
+
+        if(cardTags==null)return ResponseEntity.ok(new ArrayList<>());
+        return ResponseEntity.ok(cardTags);
+    }
     /**
      * deletes a cardTag from a card
      * @param cardTagId cardTagId of the cardTag

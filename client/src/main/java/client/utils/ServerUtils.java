@@ -15,10 +15,7 @@
  */
 package client.utils;
 
-import commons.Board;
-import commons.Card;
-import commons.Column;
-import commons.Subtask;
+import commons.*;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.GenericType;
@@ -753,6 +750,74 @@ public class ServerUtils {
             .request(APPLICATION_JSON)
             .accept(APPLICATION_JSON)
             .delete();
+    }
+
+    public BoardTag addBoardTag(BoardTag boardTag)
+    {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("boardTag/addBoardTag/"+ boardTag.getTitle() + "/" + boardTag.getColor())
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(boardTag, APPLICATION_JSON), BoardTag.class);
+    }
+
+    public Response deleteBoardTag(BoardTag boardTag)
+    {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("boardTag/deleteBoardTag/" + boardTag.getId())
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .delete();
+    }
+
+    public List<BoardTag> getAllBoardTags(){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("boardTag/getAllBoardTags")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<BoardTag>>(){});
+    }
+
+    public BoardTag addBoardTagToBoard(long boardId, BoardTag boardTag)
+    {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("boardTag/addBoardTagToBoard/"+boardTag.getId()+"/"+boardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(boardTag, APPLICATION_JSON), BoardTag.class);
+    }
+
+    public Response deleteBoardTagFromBoard(long boardId, BoardTag boardTag)
+    {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("boardTag/deleteBoardTagFromBoard/"+boardTag.getId()+"/"+boardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .delete();
+    }
+    public BoardTag editBoardTagColor(BoardTag boardTag, String color)
+    {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("boardTag/editBoardTagColor/"+boardTag.getId()+"/"+color)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(boardTag, APPLICATION_JSON), BoardTag.class);
+    }
+
+    public BoardTag editBoardTagTitle(BoardTag boardTag, String title)
+    {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("boardTag/editBoardTagTitle/"+ boardTag.getId()+"/"+title)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(boardTag, APPLICATION_JSON), BoardTag.class);
     }
 
 }
