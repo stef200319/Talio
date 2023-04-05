@@ -84,6 +84,9 @@ public class ColumnService {
         Column newColumn = new Column(title, boardId);
         newColumn.setPosition(newPosition);
 
+        RESTEvent event = new RESTEvent(newColumn, "column was created");
+        applicationEventPublisher.publishEvent(event);
+
         return columnRepository.save(newColumn);
     }
 
@@ -95,6 +98,10 @@ public class ColumnService {
     public Column update(String title, long columnId) {
         Column column = getById(columnId);
         column.setTitle(title);
+
+        RESTEvent event = new RESTEvent(column, "column was updated");
+        applicationEventPublisher.publishEvent(event);
+
         return columnRepository.save(column);
     }
 
@@ -109,6 +116,9 @@ public class ColumnService {
 
         if (column != null && column.getPosition() != null)
             updateColumnPosition(column.getBoardId(), column.getPosition());
+
+        RESTEvent event = new RESTEvent(column, "column was deleted");
+        applicationEventPublisher.publishEvent(event);
 
         return column;
     }

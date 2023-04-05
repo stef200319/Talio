@@ -2,6 +2,7 @@ package server.component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import commons.Board;
 import commons.Column;
 import commons.User;
 import org.slf4j.Logger;
@@ -52,10 +53,12 @@ public class WebSocketEventListener {
      * @param event the event listener listens to
      */
     @EventListener
-    public void sendAllColumns(RESTEvent event) throws JsonProcessingException {
+    public void sendAllColumns(RESTEvent event) {
+        if (!event.getMessage().equals("everything was found")) {
+            return;
+        }
 
-
-        String json = objectMapper.writeValueAsString(event.getSource());
+        String json = writeToJSON(event.getSource());
 
         Map<String, Object> headers = new HashMap<>();
         headers.put("method", "getAllColumns");
@@ -65,6 +68,143 @@ public class WebSocketEventListener {
         for (User user : users) {
             System.out.println("send to: " + user.getName());
             messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+        }
+    }
+
+    /**
+     * @param event that is sent out
+     */
+    @EventListener
+    public String deleteBoard(RESTEvent event) {
+        if (!event.getMessage().equals("board was deleted")) {
+            return null;
+        }
+
+        String json = writeToJSON(event.getSource());
+
+        Board b = (Board) event.getSource();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Service", "board");
+        headers.put("Method", "delete");
+
+        for (User user : users) {
+            if (user.containsBoardId(b.getId())) {
+                messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+                user.removeBoardId(b.getId());
+            }
+        }
+
+        logger.info("Board with id " + b.getId() + " was deleted.");
+
+        return json;
+    }
+
+    @EventListener
+    public String editBoardTitle(RESTEvent event) {
+        if (!event.getMessage().equals("board was edited")) {
+            return null;
+        }
+
+        String json = writeToJSON(event.getSource());
+
+        Board b = (Board) event.getSource();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Service", "board");
+        headers.put("Method", "edit");
+
+        for (User user : users) {
+            if (user.containsBoardId(b.getId())) {
+                messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+            }
+        }
+
+        logger.info("Board with id " + b.getId() + " was renamed to: " + b.getTitle());
+
+        return json;
+    }
+
+    @EventListener
+    public String addColumn(RESTEvent event) {
+        if (!event.getMessage().equals("column was created")) {
+            return null;
+        }
+
+        String json = writeToJSON(event.getSource());
+
+        Column c = (Column) event.getSource();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Service", "column");
+        headers.put("Method", "add");
+
+        for (User user : users) {
+            if (user.containsBoardId(c.getBoardId())) {
+                messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+            }
+        }
+
+        logger.info("Column with id " + c.getId() + " and board id " + c.getBoardId() + " was created and named: " + c.getTitle());
+
+        return json;
+    }
+
+    @EventListener
+    public String editColumn(RESTEvent event) {
+        if (!event.getMessage().equals("column was updated")) {
+            return null;
+        }
+
+        String json = writeToJSON(event.getSource());
+
+        Column c = (Column) event.getSource();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Service", "column");
+        headers.put("Method", "edit");
+
+        for (User user : users) {
+            if (user.containsBoardId(c.getBoardId())) {
+                messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+            }
+        }
+
+        logger.info("Column with id " + c.getId() + " and board id " + c.getBoardId() + " was updated and renamed to " + c.getTitle());
+
+        return json;
+    }
+
+    @EventListener
+    public String deleteColumn(RESTEvent event) {
+        if (!event.getMessage().equals("column was deleted")) {
+            return null;
+        }
+
+        String json = writeToJSON(event.getSource());
+
+        Column c = (Column) event.getSource();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Service", "column");
+        headers.put("Method", "delete");
+
+        for (User user : users) {
+            if (user.containsBoardId(c.getBoardId())) {
+                messagingTemplate.convertAndSendToUser(user.getName(), "/queue/private", json, headers);
+            }
+        }
+
+        logger.info("Column with id " + c.getId() + " and board id " + c.getBoardId() + " was remove");
+
+        return json;
+    }
+
+    /**
+     * @param o object that needs to be serialized
+     * @return json string
+     */
+    private String writeToJSON(Object o) {
+        try {
+            return objectMapper.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            logger.error("JSON serialization failed");
+            throw new RuntimeException(e);
         }
     }
 }
