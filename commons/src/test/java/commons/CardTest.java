@@ -3,6 +3,9 @@ package commons;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CardTest {
@@ -88,5 +91,30 @@ public class CardTest {
     public void testToString() {
         String expectedToString = "The title of this Card is: Test, and the ID of the Column this Card belongs to is: 1";
         assertEquals(expectedToString, card.toString());
+    }
+
+    @Test
+    public void testGetSubtasks() {
+        assertEquals(new ArrayList<Subtask>(), card.getSubtasks());
+    }
+
+    @Test
+    public void testSetSubtasks() {
+        List<Subtask> subtasks = new ArrayList<>();
+        Subtask s = new Subtask("s1");
+        subtasks.add(s);
+        card.setSubtasks(subtasks);
+        assertEquals(subtasks, card.getSubtasks());
+    }
+
+    @Test
+    public void testGetDescription() {
+        assertEquals(null, card.getDescription());
+    }
+
+    @Test
+    public void testSetDescription() {
+        card.setDescription("d1");
+        assertEquals("d1", card.getDescription());
     }
 }
