@@ -63,7 +63,7 @@ public class BoardService {
 
         Board board = boardRepository.findById(boardId).get();
         board.setTitle(title);
-        return boardRepository.save(board);
+        return save(board);
     }
 
     /**
@@ -78,5 +78,9 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).get();
         boardRepository.delete(board);
         return board;
+    }
+    public Board save(Board board)
+    {
+        return boardRepository.save(board);
     }
 }
