@@ -61,6 +61,10 @@ public class BoardTagController {
         return ResponseEntity.ok(boardTag);
     }
 
+    /**
+     * gets all the board tags
+     * @return a list of all the board tags
+     */
     @GetMapping("/getAllBoardTags")
     @ResponseBody public ResponseEntity<List<BoardTag>> getAllBoardTags(){
         return ResponseEntity.ok(boardTagService.getAll());

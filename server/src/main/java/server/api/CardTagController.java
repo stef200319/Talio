@@ -100,6 +100,11 @@ public class CardTagController {
         return ResponseEntity.ok(cardTag);
     }
 
+    /**
+     * gets the card tags of a specified board
+     * @param boardId the id of the board
+     * @return a list of the card tags
+     */
     @GetMapping("/getCardTagsByBoardId/{boardId}")
     @ResponseBody public ResponseEntity<List<CardTag>> getCardTagsByBoardId(@PathVariable("boardId") long boardId){
         if(!boardService.existsById(boardId)){
