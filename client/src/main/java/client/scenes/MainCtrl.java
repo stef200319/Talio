@@ -193,7 +193,8 @@ public class MainCtrl {
 
         this.help.setOnKeyPressed(helpCtrl.getBackToPreviousScene());
 
-        this.boardOverview.setOnKeyPressed(getOpenHelp());
+       // this.boardOverview.setOnKeyPressed(getOpenHelp());
+
         this.clientConnect.setOnKeyPressed(getOpenHelp());
         this.addTask.setOnKeyPressed(getOpenHelp());
         this.addList.setOnKeyPressed(getOpenHelp());

@@ -15,6 +15,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -53,6 +55,9 @@ public class BoardOverviewCtrl implements Initializable {
     private Label boardName;
 
 
+    @FXML
+    private Card highlightedTask;
+
     /**
      * @param server the server that you want to connect to
      * @param mainCtrl the main screen?
@@ -86,6 +91,7 @@ public class BoardOverviewCtrl implements Initializable {
             }
         }, 0, 1000);
     }
+
 
     /**
      * Method that shows the quote overview on screen
@@ -145,7 +151,6 @@ public class BoardOverviewCtrl implements Initializable {
     @SuppressWarnings("checkstyle:MethodLength")
     public void createList(Column c) {
         VBox list=new VBox();
-
         list.setStyle("-fx-background-color: "+c.getBgColour()+"; -fx-border-style: " +
                 "solid; -fx-background-radius: 5px; -fx-border-radius: 5px;" +
                 "-fx-border-color: "+c.getBorderColour());
@@ -237,8 +242,8 @@ public class BoardOverviewCtrl implements Initializable {
                     "solid; -fx-background-radius: 5px; -fx-border-radius: 5px;" +
                     "-fx-border-color: "+cards.get(finalI).getBorderColour());
 
-
             Label s = new Label(cards.get(i).getTitle());
+
             s.setMaxWidth(80);
             Font fontList = Font.font(cards.get(i).getFontType(),
                     cards.get(i).isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
@@ -246,6 +251,12 @@ public class BoardOverviewCtrl implements Initializable {
                     12);
             s.setFont(fontList);
             s.setTextFill(Color.web(cards.get(i).getFontColour()));
+
+
+            //card.setOnMouseEntered(event -> card.setStyle("-fx-background-color: #F5DEB3"));
+            //mai tb sa fie highlightedLabel/highlightedTask; si dupa ne legam
+            //daca e highlighted atunci merg shortcutirle(verif asta din mainctrl si gt)
+            //card.setOnMouseExited(event -> card.setStyle("-fx-text-fill: black;"));
 
             card.getChildren().add(s);
 
@@ -276,6 +287,46 @@ public class BoardOverviewCtrl implements Initializable {
                 }
             });
 
+            s.requestFocus();
+
+            s.setOnMouseEntered(event -> {
+                s.requestFocus();
+                setHighlightedTask(cards.get(finalI));
+                s.requestFocus();
+                //System.out.println(this.highlightedTask.getText());
+            });
+            s.setOnMouseExited(event -> {
+                s.requestFocus();
+                unHighlightTask(cards.get(finalI));
+                s.requestFocus();
+               // System.out.println(this.highlightedTask.getText());
+            });
+            s.setOnKeyPressed(event ->{
+                if(event.getCode()==KeyCode.DOWN && getHighlightedTask()!=null /*&& cards.size()>finalI*/){
+                    System.out.println("New highlighted card is "+getHighlightedTask().getTitle());
+                    unHighlightTask(getHighlightedTask());
+                    System.out.println("Pressed down key");
+                    setHighlightedTask(cards.get(finalI));
+                    System.out.println("New highlighted card is "+getHighlightedTask().getTitle());
+                }
+            });
+
+
+            /*EventHandler<KeyEvent> changeHightlight = new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    if(event.getCode() == KeyCode.DOWN)
+                    {
+                        unHighlightTask(cards.get(finalI));
+                        System.out.println("Pressed down key");
+                        setHighlightedTask(cards.get(finalI+1));
+                        System.out.println("New highlighted card is "+getHighlightedTask().getTitle());
+                    }
+                }
+            };*/
+
+
+
             cardButtons.getChildren().add(deleteCard);
 
             card.getChildren().add(cardButtons);
@@ -283,6 +334,7 @@ public class BoardOverviewCtrl implements Initializable {
             card = enableDragAndDrop(card, c, cards, i);
 
             cardContainer.getChildren().add(card);
+
         }
         cardContainer.setPrefWidth(380); // Set preferred width to 380 pixels
         cardContainer.setPrefHeight(500); // Set preferred height to 500 pixels
@@ -303,6 +355,25 @@ public class BoardOverviewCtrl implements Initializable {
 
         columnContainer.getChildren().add(list);
     }
+
+    public Card getHighlightedTask(){return this.highlightedTask;}
+
+    public void setHighlightedTask(Card l){
+        this.highlightedTask=l;
+        //l.setBgColour("#F5DEB3");
+        //server.editCardBackgroundColour(l, "#F5DEB3");
+        //System.out.println(this.highlightedTask.getTitle());
+        //l.setStyle(("-fx-background-color: #F5DEB3"));
+    }
+    public void unHighlightTask(Card l){
+        //this.highlightedTask=null;
+       // l.setBgColour("#F2F3F4");
+        //server.editCardBackgroundColour(l, "#F2F3F4");
+        //System.out.println(l.getTitle());
+       // l.setStyle("-fx-background-color: white");
+
+    }
+
 
     /**
      * Method that enables drag and drop for a card
@@ -375,4 +446,5 @@ public class BoardOverviewCtrl implements Initializable {
     public void deleteBoard() {
         mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
     }
+
 }
