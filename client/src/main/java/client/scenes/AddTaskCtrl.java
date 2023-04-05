@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddTaskCtrl implements Initializable {
@@ -89,16 +88,6 @@ public class AddTaskCtrl implements Initializable {
      */
     public void setTaskName(TextField taskName){
         this.taskName = taskName;
-    }
-
-    /**
-     * method to show task details and add list to server
-     */
-    public void showTaskDetails(){
-        server.addCard(getCard(), columnToAddId);
-        taskName.clear();
-        List<Card> cardsList = server.getCardsByColumnId(columnToAddId);//.get();
-        mainCtrl.showTaskDetails(cardsList.get(cardsList.size()-1));
     }
 
     /**

@@ -406,10 +406,6 @@ public class MainCtrl {
      * when the "CTRL+?" keys are pressed, the method setPreviousSceneAndTitle()
      *       to save the previous scene and scene title values and then showHelpScreen() method
      *       is called to show the help screen
-     * when the CTRL+E keys are pressed and the user is in the Add Task scene, the method showTaskDetails()
-     *       from AddTaskCtrl is called
-     *       to show the task details page of the
-     *       recently added task
      * when the ESCAPE key is pressed and the user is in the Task Details scene, the method showBoardOverview()
      *       from TaskDetailsCtrl is called to go back to the
      *       board overview
@@ -419,15 +415,8 @@ public class MainCtrl {
         public void handle(KeyEvent event) {
             if(event.isControlDown() && event.getCode()== KeyCode.SLASH)
             {
-
                 setPreviousSceneAndTitle();
                 showHelpScreen();
-
-            }
-            if(event.getCode()==KeyCode.E && event.isControlDown() && getCurrentSceneTitle().equals("Add Task"))
-            {
-
-                addTaskCtrl.showTaskDetails();
 
             }
             if(event.getCode()==KeyCode.ESCAPE && getCurrentSceneTitle().equals("Task Details"))
