@@ -351,4 +351,36 @@ public class CardController {
         return ResponseEntity.ok(subtasks);
     }
 
+    /**
+     * Changes the position of a subtask in a card
+     * @param cardId the card the subtask is in
+     * @param oldPos the old position of the subtask
+     * @param newPos the new position of the subtask
+     * @return the new card with updated subtask positions
+     */
+    @PutMapping("/changeSubtaskPosition/{cardId}/{oldPos}/{newPos}")
+    @ResponseBody public ResponseEntity<Card> changeSubtaskPosition(@PathVariable("cardId") long cardId,
+                                                                            @PathVariable("oldPos") int oldPos,
+                                                                            @PathVariable("newPos") int newPos) {
+        Card c = cardService.changeSubtaskPosition(cardId, oldPos, newPos);
+        if(c == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(c);
+    }
+
+    /**
+     * Deletes a subtask from the card
+     * @param cardId id of the card the subtask is in
+     * @param subtaskId id of the subtask to be deleted
+     * @return the new updated card
+     */
+    @DeleteMapping("/deleteSubtask/{cardId}/{subtaskId}")
+    @ResponseBody public ResponseEntity<Card> deleteSubtask(@PathVariable("cardId") long cardId,
+                                                            @PathVariable("subtaskId") int subtaskId) {
+        Card c = cardService.deleteSubtask(cardId, subtaskId);
+        if(c==null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(c);
+    }
+
 }

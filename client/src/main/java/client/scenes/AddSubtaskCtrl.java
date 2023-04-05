@@ -6,7 +6,6 @@ import commons.Card;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -14,30 +13,23 @@ import javafx.scene.input.KeyEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditCardTitleCtrl implements Initializable {
-
+public class AddSubtaskCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-    private Card cardToShow;
+    private Card cardToAddTo;
 
     @FXML
-    private Label currentTitle;
-
-    @FXML
-    private TextField newTitle;
-
-
+    private TextField title;
 
     /**
-     *
-     * @param server the server connected to
+     * @param server Server we are connected to
      * @param mainCtrl the main controller
      */
     @Inject
-    public EditCardTitleCtrl(ServerUtils server, MainCtrl mainCtrl) {
-        this.server=server;
-        this.mainCtrl=mainCtrl;
+    public AddSubtaskCtrl(ServerUtils server, MainCtrl mainCtrl) {
+        this.server = server;
+        this.mainCtrl = mainCtrl;
     }
 
     /**
@@ -53,7 +45,7 @@ public class EditCardTitleCtrl implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        newTitle.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        title.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if(event.getCode() == KeyCode.ENTER)
@@ -65,43 +57,38 @@ public class EditCardTitleCtrl implements Initializable {
     }
 
     /**
-     * Sets the Title of the current Card which will be displayed
-     * @param cardToShow the Card whose current Title needs to be shown
+     * Sets the card that the subtask needs to be added to
+     * @param c card
      */
-    public void setCardToShow(Card cardToShow) {
-        this.cardToShow = cardToShow;
-        this.currentTitle.setText(cardToShow.getTitle());
+    public void setCard(Card c) {
+        this.cardToAddTo = c;
     }
 
     /**
-     * Cancel edit and return to Card Details
+     * Cancel and return to subtask overview
      */
     public void cancel() {
-        mainCtrl.showTaskDetails(cardToShow);
+        title.clear();
+        mainCtrl.showViewSubtask(cardToAddTo);
     }
 
     /**
-     * will return a string with the new title
-     * @return new title
+     * Reads the title
+     * @return the title for the new subtask
      */
     public String getTitle() {
-        String l = newTitle.getText();
-        if(!l.equals("")){
-            return l;
-        }
-        else{
-            return currentTitle.getText();
-        }
+        String t = title.getText();
+        if(!t.equals(""))
+            return t;
+        return "New Subtask";
     }
 
     /**
-     * Edits the title of the Card and returns to the Card's details
+     * Adds the subtask to the database and returns to subtask overview
      */
     public void confirm() {
-        if(getTitle() != null) {
-            cardToShow = server.editCardTitle(cardToShow, getTitle());
-            newTitle.clear();
-            mainCtrl.showTaskDetails(cardToShow);
-        }
+        String t = getTitle();
+        cardToAddTo = server.addSubtask(cardToAddTo.getId(), t);
+        mainCtrl.showViewSubtask(cardToAddTo);
     }
 }

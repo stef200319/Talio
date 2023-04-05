@@ -45,8 +45,6 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Button myBoardsButton;
 
-    @FXML
-    private Button joinBoardButton;
 
     @FXML
     private Button editBoardTitleButton;
@@ -194,7 +192,10 @@ public class BoardOverviewCtrl implements Initializable {
 
 
         // Delete and edit buttons
-        Button delete = new Button("X");
+        Button delete = new Button("x");
+        delete.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+        delete.setPrefHeight(1);
+        delete.setPrefWidth(1);
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -202,18 +203,22 @@ public class BoardOverviewCtrl implements Initializable {
             }
         });
         Button editTitle = new Button("Edit");
+        editTitle.setStyle("-fx-background-color: #E0CDA8");
+        editTitle.setFont(Font.font("System", FontPosture.ITALIC, 12));
         editTitle.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 mainCtrl.showEditList(c, boardID);
             }
         });
-        HBox deleteBox = new HBox(5);
-        deleteBox.setAlignment(Pos.TOP_RIGHT);
+
+        HBox deleteBox = new HBox(130);
         deleteBox.getChildren().add(editTitle);
         deleteBox.getChildren().add(delete);
         list.getChildren().add(deleteBox);
         //End of delete and edit buttons
+        delete.setAlignment(Pos.TOP_RIGHT);
+
 
 
         Label title = new Label(c.getTitle());
@@ -258,15 +263,19 @@ public class BoardOverviewCtrl implements Initializable {
 
             cardButtons.setAlignment(Pos.CENTER);
 
-            Button details = new Button("Details");
-            details.setOnAction(new EventHandler<ActionEvent>() {
+            card.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
-                public void handle(ActionEvent event) {
+                public void handle(MouseEvent event) {
+                    // Do something when the card is clicked
                     mainCtrl.showTaskDetails(cards.get(finalI));
                 }
             });
 
-            Button deleteCard = new Button("X");
+            Button deleteCard = new Button("x");
+            deleteCard.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+            deleteCard.setPrefHeight(1);
+            deleteCard.setPrefWidth(1);
+
 
             deleteCard.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -277,7 +286,6 @@ public class BoardOverviewCtrl implements Initializable {
             });
 
             cardButtons.getChildren().add(deleteCard);
-            cardButtons.getChildren().add(details);
 
             card.getChildren().add(cardButtons);
 
@@ -290,7 +298,7 @@ public class BoardOverviewCtrl implements Initializable {
         list.getChildren().add(cardContainer);
 
         //Button for adding a task
-        Button b = new Button("Add task");
+        Button b = new Button("Add Task");
         b.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -298,6 +306,8 @@ public class BoardOverviewCtrl implements Initializable {
             }
         });
         list.getChildren().add(b);
+        b.setAlignment(Pos.BOTTOM_LEFT);
+        b.setStyle("-fx-text-fill: white; -fx-background-color:  #104a03; -fx-font-size: 12px;");
         //End of button for adding a task
 
         columnContainer.getChildren().add(list);
@@ -366,5 +376,12 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void setBoardID(long boardID) {
         this.boardID = boardID;
+    }
+
+    /**
+     * Delete the board
+     */
+    public void deleteBoard() {
+        mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
     }
 }

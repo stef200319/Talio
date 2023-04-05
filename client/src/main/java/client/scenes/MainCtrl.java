@@ -19,6 +19,7 @@ import commons.Board;
 import commons.Card;
 
 import commons.Column;
+import commons.Subtask;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -66,20 +67,23 @@ public class MainCtrl {
 
     private ViewSubtaskCtrl viewSubtaskCtrl;
     private Scene viewSubtask;
+
     private EditSubtaskTitleCtrl editSubtaskTitleCtrl;
     private Scene editSubtaskTitle;
+
     private ConfirmDeleteColumnCtrl confirmDeleteColumnCtrl;
     private Scene confirmDeleteColumn;
+
     private ConfirmDeleteBoardCtrl confirmDeleteBoardCtrl;
     private Scene confirmDeleteBoard;
 
+    private AddSubtaskCtrl addSubtaskCtrl;
+    private Scene addSubtask;
 
     private HelpCtrl helpCtrl;
-
     private Scene help;
 
     private Scene previousScene;
-
     private String title;
 
 
@@ -103,13 +107,14 @@ public class MainCtrl {
      * @param editCardTitle
      * @param editCardDescription
      * @param editList
-     * @param editBoardTitle
      * @param viewSubtask
      * @param customizeCard
      * @param customizeList
      * @param editSubtaskTitle
+     * @param editBoardTitle
      * @param confirmDeleteColumn
      * @param confirmDeleteBoard
+     * @param addSubtask
      * @param help
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
@@ -128,10 +133,9 @@ public class MainCtrl {
                            Pair<CustomizeListCtrl, Parent> customizeList,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
-                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard, Pair<HelpCtrl, Parent> help) {
-
-
-
+                           Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard,
+                           Pair<AddSubtaskCtrl, Parent> addSubtask,
+                           Pair<HelpCtrl, Parent> help) {
 
         this.primaryStage = primaryStage;
 
@@ -171,9 +175,9 @@ public class MainCtrl {
 
 
 
-        this.taskDetails.setOnKeyPressed(taskDetailsCtrl.getBackToOverview());
+        this.taskDetails.setOnKeyPressed(getKeyboardShortcuts());
 
-        this.addTask.setOnKeyPressed(addTaskCtrl.getOpenTaskDetails());
+        this.addTask.setOnKeyPressed(getKeyboardShortcuts());
 
         this.editBoardTitleCtrl = editBoardTitle.getKey();
         this.editBoardTitle = new Scene(editBoardTitle.getValue());
@@ -191,20 +195,20 @@ public class MainCtrl {
 
         this.help.setOnKeyPressed(helpCtrl.getBackToPreviousScene());
 
-        this.boardOverview.setOnKeyPressed(getOpenHelp());
-        this.clientConnect.setOnKeyPressed(getOpenHelp());
-        this.addTask.setOnKeyPressed(getOpenHelp());
-        this.addList.setOnKeyPressed(getOpenHelp());
-        this.createBoard.setOnKeyPressed(getOpenHelp());
-        this.editBoardTitle.setOnKeyPressed(getOpenHelp());
-        this.editCardDescription.setOnKeyPressed(getOpenHelp());
-        this.editCardTitle.setOnKeyPressed(getOpenHelp());
-        this.editList.setOnKeyPressed(getOpenHelp());
-        this.editSubtaskTitle.setOnKeyPressed(getOpenHelp());
-        this.taskDetails.setOnKeyPressed(getOpenHelp());
-        this.taskManagement.setOnKeyPressed(getOpenHelp());
-        this.viewSubtask.setOnKeyPressed(getOpenHelp());
-        this.workspace.setOnKeyPressed(getOpenHelp());
+        this.boardOverview.setOnKeyPressed(getKeyboardShortcuts());
+        this.clientConnect.setOnKeyPressed(getKeyboardShortcuts());
+        this.addTask.setOnKeyPressed(getKeyboardShortcuts());
+        this.addList.setOnKeyPressed(getKeyboardShortcuts());
+        this.createBoard.setOnKeyPressed(getKeyboardShortcuts());
+        this.editBoardTitle.setOnKeyPressed(getKeyboardShortcuts());
+        this.editCardDescription.setOnKeyPressed(getKeyboardShortcuts());
+        this.editCardTitle.setOnKeyPressed(getKeyboardShortcuts());
+        this.editList.setOnKeyPressed(getKeyboardShortcuts());
+        this.editSubtaskTitle.setOnKeyPressed(getKeyboardShortcuts());
+        this.taskDetails.setOnKeyPressed(getKeyboardShortcuts());
+        this.taskManagement.setOnKeyPressed(getKeyboardShortcuts());
+        this.viewSubtask.setOnKeyPressed(getKeyboardShortcuts());
+        this.workspace.setOnKeyPressed(getKeyboardShortcuts());
 
         this.customizeCardCtrl = customizeCard.getKey();
         this.customizeCard = new Scene(customizeCard.getValue());
@@ -219,7 +223,8 @@ public class MainCtrl {
         this.confirmDeleteBoardCtrl = confirmDeleteBoard.getKey();
         this.confirmDeleteBoard = new Scene(confirmDeleteBoard.getValue());
 
-
+        this.addSubtaskCtrl = addSubtask.getKey();
+        this.addSubtask = new Scene(addSubtask.getValue());
 
 
         showClientConnect();
@@ -231,7 +236,7 @@ public class MainCtrl {
 
     /**
      * show the overview
-     *TODO THE BOARD TO BE DISPLAYED MUST NOT BE HARDCODED, BUT DEPENDENT ON THE BOARD THE USER IIS IN!
+     *
      */
     public void showOverview() {
         primaryStage.setTitle("Board: Overview");
@@ -264,7 +269,6 @@ public class MainCtrl {
         addListCtrl.setBoardToAddId(boardID);
         primaryStage.setTitle("Adding List");
         primaryStage.setScene(addList);
-        //add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     /**
@@ -305,6 +309,7 @@ public class MainCtrl {
      */
     public void showTaskDetails(Card card) {
         taskDetailsCtrl.setCardToShow(card);
+        taskDetailsCtrl.refresh();
         primaryStage.setTitle("Task Details");
         primaryStage.setScene(taskDetails);
     }
@@ -405,30 +410,39 @@ public class MainCtrl {
     /**
 
      * private event handler for a key event that listens
-     *       for the "CTRL+?" keys to be pressed
+     *       for the CTRL+?, CTRL+E, ESCAPE  keys to be pressed
      * when the "CTRL+?" keys are pressed, the method setPreviousSceneAndTitle()
-     * to save the previous scene and scene title values and then showHelpScreen() method
+     *       to save the previous scene and scene title values and then showHelpScreen() method
      *       is called to show the help screen
+     * when the ESCAPE key is pressed and the user is in the Task Details scene, the method showBoardOverview()
+     *       from TaskDetailsCtrl is called to go back to the
+     *       board overview
      */
-    private EventHandler<KeyEvent> openHelp = new EventHandler<KeyEvent>() {
+    private EventHandler<KeyEvent> keyboardShortcuts = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
             if(event.isControlDown() && event.getCode()== KeyCode.SLASH)
             {
-
                 setPreviousSceneAndTitle();
                 showHelpScreen();
 
             }
+            if(event.getCode()==KeyCode.ESCAPE && getCurrentSceneTitle().equals("Task Details"))
+            {
+
+                taskDetailsCtrl.showBoardOverview();
+
+            }
         }
     };
+
     /**
-     * @return the openHelp event handler
+     * @return the keyboardShortcuts event handler
      */
 
-    public EventHandler<KeyEvent> getOpenHelp()
+    public EventHandler<KeyEvent> getKeyboardShortcuts()
     {
-        return openHelp;
+        return keyboardShortcuts;
     }
 
 
@@ -559,6 +573,37 @@ public class MainCtrl {
         content.putHtml(String.valueOf(boardID));
         clipboard.setContent(content);
 
+    /**
+     * Shows the view subtask page
+     * @param c Card where to get the subtasks from
+     */
+    public void showViewSubtask(Card c) {
+        viewSubtaskCtrl.setCardToShow(c);
+        primaryStage.setTitle("Edit Subtasks");
+        primaryStage.setScene(viewSubtask);
+    }
+
+    /**
+     * Shows the add subtask page
+     * @param c Card where to add the new subtask
+     */
+    public void showAddSubtask(Card c) {
+        addSubtaskCtrl.setCard(c);
+        primaryStage.setTitle("Add Subtask");
+        primaryStage.setScene(addSubtask);
+    }
+
+    /**
+     * Shows the edit subtask page
+     * @param c Card where the subtask is
+     * @param s Subtask which will be edited
+     */
+    public void showEditSubtaskTitle(Card c, Subtask s) {
+        editSubtaskTitleCtrl.setCardToShow(c);
+        editSubtaskTitleCtrl.setSubtaskToShow(s);
+        primaryStage.setTitle("Edit Subtask");
+        primaryStage.setScene(editSubtaskTitle);
     }
 
 }
+
