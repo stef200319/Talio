@@ -548,7 +548,7 @@ public class MainCtrl {
     }
 
     /**
-     * method that  copiest the id of the board in the clipboard
+     * method that  copies the id of the board in the clipboard
      * @param boardID the id of the board whose key we want to copy
      */
     public void copyCode(long boardID){
