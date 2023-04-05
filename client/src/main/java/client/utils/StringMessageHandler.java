@@ -1,5 +1,11 @@
 package client.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import commons.Column;
+import commons.User;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -7,9 +13,16 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 
 public class StringMessageHandler extends StompSessionHandlerAdapter {
+
+    ObjectMapper objectMapper;
+
+    public StringMessageHandler() {
+        this.objectMapper = new ObjectMapper();
+    }
 
     /**
      * @param session          the client STOMP session
@@ -44,6 +57,16 @@ public class StringMessageHandler extends StompSessionHandlerAdapter {
     public void handleFrame(StompHeaders headers, Object payload) {
         System.out.println("payload received");
         System.out.println(payload);
+
+        if (headers.containsKey("method") && headers.get("method").contains("getAllColumns")) {
+            try {
+                List<Column> columns = objectMapper.readValue((String) payload, objectMapper.getTypeFactory().
+                        constructCollectionType(List.class, Column.class));
+                System.out.println(columns.get(0).toString());
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
