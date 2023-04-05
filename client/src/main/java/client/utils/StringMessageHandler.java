@@ -18,9 +18,12 @@ public class StringMessageHandler extends StompSessionHandlerAdapter {
     @Override
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
         session.subscribe("/app/subscribe", this);
+        session.subscribe("/user/queue/private", this);
+
 
         StompSession.Subscription subscription = session.subscribe("/topic/periodic", this);
 
+        session.send("/app/private", "hello world");
         System.out.println(subscription.getSubscriptionId());
     }
 

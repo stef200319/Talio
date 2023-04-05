@@ -1,10 +1,23 @@
 package server.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 
+import java.security.Principal;
+
+@Controller
 public class MessageMappingController {
+
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     /**
      * @param message of the exception
@@ -17,6 +30,13 @@ public class MessageMappingController {
             throw new RuntimeException(String.format("'%s' is rejected", message));
         }
         return "response to " + HtmlUtils.htmlEscape(message);
+    }
+
+    @MessageMapping("/private")
+    @SendToUser("/queue/private")
+    public String reply (@Payload String message, Principal user) {
+        System.out.println("private message: " + user);
+        return "hello " + message;
     }
 
 }
