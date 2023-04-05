@@ -565,14 +565,14 @@ public class MainCtrl {
      * method that  copies the id of the board in the clipboard
      * @param boardID the id of the board whose key we want to copy
      */
-    public void copyCode(long boardID){
+    public void copyCode(long boardID) {
 
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
         content.putString(String.valueOf(boardID));
         content.putHtml(String.valueOf(boardID));
         clipboard.setContent(content);
-
+    }
     /**
      * Shows the view subtask page
      * @param c Card where to get the subtasks from
