@@ -178,9 +178,6 @@ public class MainCtrl {
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
 
-
-
-
         this.taskDetails.setOnKeyPressed(getKeyboardShortcuts());
 
         this.addTask.setOnKeyPressed(getKeyboardShortcuts());
