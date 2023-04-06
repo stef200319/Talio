@@ -130,7 +130,6 @@ public class MainCtrl {
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
-
                            Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
                            Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
                            Pair<AddTaskCtrl, Parent> addTask, Pair<TaskManagementCtrl, Parent> taskManagement,
@@ -144,15 +143,11 @@ public class MainCtrl {
                            Pair<CustomizeBoardCtrl, Parent> customizeBoard,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
-
                            Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard,
                            Pair<HelpCtrl, Parent> help,
                            Pair<AddSubtaskCtrl, Parent> addSubtask,
                            Pair<EditCardTagsBoardCtrl, Parent> editCardTagsBoard,
                            Pair<AddCardTagsToCardCtrl, Parent> addCardTagsToCard) {
-
-
-
         this.primaryStage = primaryStage;
 
         this.addListCtrl = add.getKey();
@@ -195,13 +190,11 @@ public class MainCtrl {
         this.editBoardTitleCtrl = editBoardTitle.getKey();
         this.editBoardTitle = new Scene(editBoardTitle.getValue());
 
-
         this.viewSubtaskCtrl = viewSubtask.getKey();
         this.viewSubtask = new Scene(viewSubtask.getValue());
 
         this.editSubtaskTitleCtrl = editSubtaskTitle.getKey();
         this.editSubtaskTitle = new Scene(editSubtaskTitle.getValue());
-
 
         this.helpCtrl = help.getKey();
         this.help = new Scene(help.getValue());
@@ -228,7 +221,6 @@ public class MainCtrl {
 
         this.customizeListCtrl = customizeList.getKey();
         this.customizeList = new Scene(customizeList.getValue());
-
 
         this.customizeBoardCtrl = customizeBoard.getKey();
         this.customizeBoard= new Scene(customizeBoard.getValue());
