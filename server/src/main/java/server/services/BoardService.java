@@ -1,7 +1,10 @@
 package server.services;
 
 import commons.Board;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import server.component.RESTEvent;
 import server.database.BoardRepository;
 
 import java.util.List;
@@ -10,6 +13,9 @@ import java.util.Optional;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * @param boardRepository the data access model of the board
@@ -63,7 +69,11 @@ public class BoardService {
 
         Board board = boardRepository.findById(boardId).get();
         board.setTitle(title);
-        return boardRepository.save(board);
+
+        RESTEvent event = new RESTEvent(board, "board was edited");
+        applicationEventPublisher.publishEvent(event);
+
+        return save(board);
     }
 
     /**
@@ -77,6 +87,26 @@ public class BoardService {
 
         Board board = boardRepository.findById(boardId).get();
         boardRepository.delete(board);
+
+        RESTEvent event = new RESTEvent(board, "board was deleted");
+        applicationEventPublisher.publishEvent(event);
+
         return board;
+    }
+
+    /**
+     * @param applicationEventPublisher The new application event publisher
+     */
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
+
+    /**
+     * method that saves a board in the database
+     * @param board the board to be saved
+     * @return the saved board
+     */
+    public Board save(Board board) {
+        return boardRepository.save(board);
     }
 }

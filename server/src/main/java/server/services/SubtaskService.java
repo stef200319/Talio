@@ -30,6 +30,8 @@ public class SubtaskService {
      * @return subtask with that id
      */
     public Subtask getById(long subtaskId) {
+        if(!existsById(subtaskId))
+            return null;
         return subtaskRepository.findById(subtaskId).get();
     }
 

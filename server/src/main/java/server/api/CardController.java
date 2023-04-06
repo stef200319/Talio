@@ -5,7 +5,6 @@ import commons.CardTag;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.CardRepository;
 import server.services.ColumnService;
 import server.services.CardService;
 import server.services.SubtaskService;
@@ -19,21 +18,19 @@ public class CardController {
     private final CardService cardService;
     private final ColumnService columnService;
     private final SubtaskService subtaskService;
-    private final CardRepository cardRepository;
+
 
 
     /**
      * @param cardService the service for card operations
      * @param columnService the service for column (list) operations
      * @param subtaskService the service for subtask operations
-     * @param cardRepository
      */
     public CardController(CardService cardService, ColumnService columnService,
-                                                    SubtaskService subtaskService, CardRepository cardRepository) {
+                                                    SubtaskService subtaskService) {
         this.cardService = cardService;
         this.columnService = columnService;
         this.subtaskService = subtaskService;
-        this.cardRepository = cardRepository;
     }
 
     /**
@@ -149,13 +146,13 @@ public class CardController {
     @PutMapping("/editCardBackgroundColour/{cardId}/{bgColour}")
     @ResponseBody public ResponseEntity<Card> editCardBackgroundColour(@PathVariable("cardId") long cardId,
                                                                   @PathVariable("bgColour") String bgColour){
-        if (bgColour == null || !cardRepository.existsById(cardId)) {
+        if (bgColour == null || !cardService.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.findById(cardId).get();
+        Card card = cardService.getById(cardId);
         card.setBgColour(bgColour);
-        cardRepository.save(card);
+        cardService.saveCard(card);
         return ResponseEntity.ok(card);
     }
 
@@ -169,13 +166,13 @@ public class CardController {
     @PutMapping("/editCardBorderColour/{cardId}/{borderColour}")
     @ResponseBody public ResponseEntity<Card> editCardBorderColour
     (@PathVariable("cardId") long cardId, @PathVariable("borderColour") String borderColour){
-        if (borderColour == null || !cardRepository.existsById(cardId)) {
+        if (borderColour == null || !cardService.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.findById(cardId).get();
+        Card card = cardService.getById(cardId);
         card.setBorderColour(borderColour);
-        cardRepository.save(card);
+        cardService.saveCard(card);
         return ResponseEntity.ok(card);
     }
 
@@ -189,13 +186,13 @@ public class CardController {
     @PutMapping("/editCardFontType/{cardId}/{fontType}")
     @ResponseBody public ResponseEntity<Card> editCardFontType
     (@PathVariable("cardId") long cardId, @PathVariable("fontType") String fontType){
-        if (fontType == null || !cardRepository.existsById(cardId)) {
+        if (fontType == null || !cardService.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.findById(cardId).get();
+        Card card = cardService.getById(cardId);
         card.setFontType(fontType);
-        cardRepository.save(card);
+        cardService.saveCard(card);
         return ResponseEntity.ok(card);
     }
 
@@ -208,13 +205,13 @@ public class CardController {
     @PutMapping("/editCardFontStyleBold/{cardId}/{bold}")
     @ResponseBody public ResponseEntity<Card> editCardFontStyleBold
     (@PathVariable("cardId") long cardId, @PathVariable("bold") boolean bold){
-        if (!cardRepository.existsById(cardId)) {
+        if (!cardService.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.findById(cardId).get();
+        Card card = cardService.getById(cardId);
         card.setFontStyleBold(bold);
-        cardRepository.save(card);
+        cardService.saveCard(card);
         return ResponseEntity.ok(card);
     }
 
@@ -228,13 +225,13 @@ public class CardController {
     @PutMapping("/editCardFontStyleItalic/{cardId}/{italic}")
     @ResponseBody public ResponseEntity<Card> editCardFontStyleItalic
     (@PathVariable("cardId") long cardId, @PathVariable("italic") boolean italic){
-        if (!cardRepository.existsById(cardId)) {
+        if (!cardService.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.findById(cardId).get();
+        Card card = cardService.getById(cardId);
         card.setFontStyleItalic(italic);
-        cardRepository.save(card);
+        cardService.saveCard(card);
         return ResponseEntity.ok(card);
     }
 
@@ -248,13 +245,13 @@ public class CardController {
     @PutMapping("/editCardFontColour/{cardId}/{fontColour}")
     @ResponseBody public ResponseEntity<Card> editCardFontColour
     (@PathVariable("cardId") long cardId, @PathVariable("fontColour") String fontColour){
-        if (!cardRepository.existsById(cardId)) {
+        if (!cardService.existsById(cardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.findById(cardId).get();
+        Card card = cardService.getById(cardId);
         card.setFontColour(fontColour);
-        cardRepository.save(card);
+        cardService.saveCard(card);
         return ResponseEntity.ok(card);
     }
 
@@ -353,6 +350,7 @@ public class CardController {
     }
 
     /**
+<<<<<<< HEAD
      * Gets the cardTags given a cardId
      * @param cardId
      * @return list of cardTags
@@ -363,6 +361,38 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(cardService.getCardTagsByCardId(cardId));
+    }
+
+    /**
+     * Changes the position of a subtask in a card
+     * @param cardId the card the subtask is in
+     * @param oldPos the old position of the subtask
+     * @param newPos the new position of the subtask
+     * @return the new card with updated subtask positions
+     */
+    @PutMapping("/changeSubtaskPosition/{cardId}/{oldPos}/{newPos}")
+    @ResponseBody public ResponseEntity<Card> changeSubtaskPosition(@PathVariable("cardId") long cardId,
+                                                                            @PathVariable("oldPos") int oldPos,
+                                                                            @PathVariable("newPos") int newPos) {
+        Card c = cardService.changeSubtaskPosition(cardId, oldPos, newPos);
+        if(c == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(c);
+    }
+
+    /**
+     * Deletes a subtask from the card
+     * @param cardId id of the card the subtask is in
+     * @param subtaskId id of the subtask to be deleted
+     * @return the new updated card
+     */
+    @DeleteMapping("/deleteSubtask/{cardId}/{subtaskId}")
+    @ResponseBody public ResponseEntity<Card> deleteSubtask(@PathVariable("cardId") long cardId,
+                                                            @PathVariable("subtaskId") int subtaskId) {
+        Card c = cardService.deleteSubtask(cardId, subtaskId);
+        if(c==null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(c);
     }
 
 }

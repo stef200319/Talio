@@ -5,9 +5,9 @@ import commons.Card;
 import commons.CardTag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.BoardRepository;
-import server.database.CardRepository;
-import server.database.CardTagRepository;
+import server.services.BoardService;
+import server.services.CardService;
+import server.services.CardTagService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +16,25 @@ import java.util.List;
 @RequestMapping("/cardTag")
 public class CardTagController {
 
-    private CardTagRepository cardTagRepository;
-    private BoardRepository boardRepository;
-    private CardRepository cardRepository;
+    private CardTagService cardTagService;
+
+    private BoardService boardService;
+
+    private CardService cardService;
 
     /**
      * Constructor of the CardTagController
-     * @param cardTagRepository
-     * @param boardRepository
-     * @param cardRepository
+     * @param cardTagService
+     * @param boardService
+     * @param cardService
      */
-    public CardTagController(CardTagRepository cardTagRepository, BoardRepository boardRepository,
-                             CardRepository cardRepository) {
-        this.cardTagRepository = cardTagRepository;
-        this.boardRepository = boardRepository;
-        this.cardRepository = cardRepository;
+    public CardTagController(CardTagService cardTagService, BoardService boardService, CardService cardService)
+    {
+
+        this.cardTagService = cardTagService;
+        this.boardService = boardService;
+        this.cardService = cardService;
+
     }
 
     /**
@@ -44,13 +48,12 @@ public class CardTagController {
     @ResponseBody public ResponseEntity<CardTag> addCardTagToBoard(@PathVariable("title") String title,
                                                                   @PathVariable("color") String color,
                                                                   @PathVariable("boardId") long boardId) {
-        if (!boardRepository.existsById(boardId) || color == null || title == null) {
+        if (!boardService.existsById(boardId) || color == null || title == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardRepository.findById(boardId).get();
-        CardTag cardTag = new CardTag(title, color, board);
-        cardTagRepository.save(cardTag);
+        Board board = boardService.getByBoardId(boardId);
+        CardTag cardTag = cardTagService.add(title, color, board);
         return ResponseEntity.ok(cardTag);
     }
 
@@ -61,15 +64,14 @@ public class CardTagController {
      */
     @DeleteMapping("deleteCardTagFromBoard/{cardTagId}")
     @ResponseBody public ResponseEntity<CardTag> deleteCardTagFromBoard(@PathVariable("cardTagId") long cardTagId) {
-        if (!cardTagRepository.existsById(cardTagId)) {
+        if (!cardTagService.existsById(cardTagId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        CardTag cardTag = cardTagRepository.findById(cardTagId).get();
-
+        CardTag cardTag = cardTagService.delete(cardTagId);
+        Card card = cardService.getById(cardTagId);
         deleteCardTagFromCards(cardTag);
-
-        cardTagRepository.deleteById(cardTagId);
+        cardService.saveCard(card);
         return ResponseEntity.ok(cardTag);
     }
 
@@ -83,17 +85,34 @@ public class CardTagController {
     @PostMapping("/addCardTagToCard/{cardTagId}/{cardId}")
     @ResponseBody public ResponseEntity<CardTag> addCardTagToCard(@PathVariable("cardTagId") long cardTagId,
                                                                   @PathVariable("cardId") long cardId) {
-        if (!cardRepository.existsById(cardId) || !cardTagRepository.existsById(cardTagId)) {
+        if (!cardService.existsById(cardId) || !cardTagService.existsById(cardTagId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.findById(cardId).get();
-        CardTag cardTag = cardTagRepository.findById(cardTagId).get();
+        Card card = cardService.getById(cardId);
+        CardTag cardTag = cardTagService.getById(cardTagId);
+
         card.addCardTag(cardTag);
-        cardRepository.save(card);
+        cardService.saveCard(card);
         return ResponseEntity.ok(cardTag);
     }
 
+    /**
+     * gets the card tags of a specified board
+     * @param boardId the id of the board
+     * @return a list of the card tags
+     */
+    @GetMapping("/getCardTagsByBoardId/{boardId}")
+    @ResponseBody public ResponseEntity<List<CardTag>> getCardTagsByBoardId(@PathVariable("boardId") long boardId){
+        if(!boardService.existsById(boardId)){
+            return ResponseEntity.badRequest().build();
+        }
+        Board board = boardService.getByBoardId(boardId);
+        List<CardTag> cardTags = cardTagService.getAllByBoard(board);
+
+        if(cardTags==null)return ResponseEntity.ok(new ArrayList<>());
+        return ResponseEntity.ok(cardTags);
+    }
     /**
      * deletes a cardTag from a card
      * @param cardTagId cardTagId of the cardTag
@@ -103,14 +122,14 @@ public class CardTagController {
     @DeleteMapping("/deleteCardTagFromCard/{cardTagId}/{cardId}")
     @ResponseBody public ResponseEntity<CardTag> deleteCardTagFromCard(@PathVariable("cardTagId") long cardTagId,
                                                                   @PathVariable("cardId") long cardId) {
-        if (!cardRepository.existsById(cardId) || !cardTagRepository.existsById(cardTagId)) {
+        if (!cardService.existsById(cardId) || !cardTagService.existsById(cardTagId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardRepository.findById(cardId).get();
-        CardTag cardTag = cardTagRepository.findById(cardTagId).get();
-        card.deleteCardTag(cardTag);
-        cardRepository.save(card);
+
+
+        CardTag cardTag = cardTagService.delete(cardTagId);
+        deleteCardTagFromCards(cardTag);
         return ResponseEntity.ok(cardTag);
     }
 
@@ -123,13 +142,11 @@ public class CardTagController {
     @PutMapping("/editCardTagColor/{cardTagId}/{color}")
     @ResponseBody public ResponseEntity<CardTag> editCardTagColor(@PathVariable("cardTagId") long cardTagId,
                                                                   @PathVariable("color") String color) {
-        if (!cardTagRepository.existsById((cardTagId))) {
+        if (!cardTagService.existsById((cardTagId))) {
             return ResponseEntity.badRequest().build();
         }
 
-        CardTag cardTag = cardTagRepository.findById(cardTagId).get();
-        cardTag.setColor(color);
-        cardTagRepository.save(cardTag);
+        CardTag cardTag = cardTagService.editColor(cardTagId, color);
         return ResponseEntity.ok(cardTag);
     }
 
@@ -142,32 +159,12 @@ public class CardTagController {
     @PutMapping("/editCardTagTitle/{cardTagId}/{title}")
     @ResponseBody public ResponseEntity<CardTag> editCardTagTitle(@PathVariable("cardTagId") long cardTagId,
                                                                   @PathVariable("title") String title) {
-        if (!cardTagRepository.existsById(cardTagId)) {
+        if (!cardTagService.existsById(cardTagId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        CardTag cardTag = cardTagRepository.findById(cardTagId).get();
-        cardTag.setTitle(title);
-        cardTagRepository.save(cardTag);
+        CardTag cardTag = cardTagService.editTitle(cardTagId, title);
         return ResponseEntity.ok(cardTag);
-    }
-
-    /**
-     * Gets the cardTags given a certain boardId
-     * @param boardId
-     * @return list of cardTags
-     */
-    @GetMapping("/getCardTagsByBoardId/{boardId}")
-    @ResponseBody public ResponseEntity<List<CardTag>> getCardTagsByBoardId(@PathVariable("boardId") long boardId) {
-        if (!boardRepository.existsById(boardId)) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        Board board = boardRepository.findById(boardId).get();
-        List<CardTag> cardTags = cardTagRepository.findCardTagsByBoard(board);
-
-        if (cardTags == null) return ResponseEntity.ok(new ArrayList<>());
-        return ResponseEntity.ok(cardTags);
     }
 
     /**
@@ -175,11 +172,11 @@ public class CardTagController {
      * @param cardTag
      */
     public void deleteCardTagFromCards(CardTag cardTag) {
-        List<Card> cards = cardRepository.findAll();
+        List<Card> cards = cardService.getAll();
         for (Card card : cards) {
             if (card != null && card.getCardTags().contains(cardTag)) {
                 card.deleteCardTag(cardTag);
-                cardRepository.save(card);
+                cardService.saveCard(card);
             }
         }
     }

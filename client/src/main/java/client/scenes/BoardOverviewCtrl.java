@@ -1,11 +1,11 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.StringMessageHandler;
 import com.google.inject.Inject;
 import commons.Board;
 import commons.Card;
 import commons.Column;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,18 +21,27 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.messaging.converter.StringMessageConverter;
+import org.springframework.messaging.simp.stomp.StompSessionHandler;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
+import org.springframework.web.socket.sockjs.client.SockJsClient;
+import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private WebSocketStompClient stompClient;
+    private static final Logger logger = LoggerFactory.getLogger(BoardOverviewCtrl.class);
 
     private long boardID = Long.MIN_VALUE;
 
@@ -45,8 +54,6 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Button myBoardsButton;
 
-    @FXML
-    private Button joinBoardButton;
 
     @FXML
     private Button editBoardTitleButton;
@@ -64,6 +71,9 @@ public class BoardOverviewCtrl implements Initializable {
         this.mainCtrl = mainCtrl;
         this.server = server;
 
+        stompClient = new WebSocketStompClient(new SockJsClient(
+                Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))
+        ));
     }
 
     /**
@@ -79,14 +89,11 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+        StompSessionHandler sessionHandler = new StringMessageHandler();
+        stompClient.setMessageConverter(new StringMessageConverter());
+        stompClient.connect("http://localhost:8080/websocket-stomp", sessionHandler);
+
+        logger.info("connected to websocket");
     }
 
     /**
@@ -185,7 +192,10 @@ public class BoardOverviewCtrl implements Initializable {
 
 
         // Delete and edit buttons
-        Button delete = new Button("X");
+        Button delete = new Button("x");
+        delete.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+        delete.setPrefHeight(1);
+        delete.setPrefWidth(1);
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -193,18 +203,22 @@ public class BoardOverviewCtrl implements Initializable {
             }
         });
         Button editTitle = new Button("Edit");
+        editTitle.setStyle("-fx-background-color: #E0CDA8");
+        editTitle.setFont(Font.font("System", FontPosture.ITALIC, 12));
         editTitle.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 mainCtrl.showEditList(c, boardID);
             }
         });
-        HBox deleteBox = new HBox(5);
-        deleteBox.setAlignment(Pos.TOP_RIGHT);
+
+        HBox deleteBox = new HBox(130);
         deleteBox.getChildren().add(editTitle);
         deleteBox.getChildren().add(delete);
         list.getChildren().add(deleteBox);
         //End of delete and edit buttons
+        delete.setAlignment(Pos.TOP_RIGHT);
+
 
 
         Label title = new Label(c.getTitle());
@@ -249,15 +263,19 @@ public class BoardOverviewCtrl implements Initializable {
 
             cardButtons.setAlignment(Pos.CENTER);
 
-            Button details = new Button("Details");
-            details.setOnAction(new EventHandler<ActionEvent>() {
+            card.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
-                public void handle(ActionEvent event) {
+                public void handle(MouseEvent event) {
+                    // Do something when the card is clicked
                     mainCtrl.showTaskDetails(cards.get(finalI));
                 }
             });
 
-            Button deleteCard = new Button("X");
+            Button deleteCard = new Button("x");
+            deleteCard.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+            deleteCard.setPrefHeight(1);
+            deleteCard.setPrefWidth(1);
+
 
             deleteCard.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -268,7 +286,6 @@ public class BoardOverviewCtrl implements Initializable {
             });
 
             cardButtons.getChildren().add(deleteCard);
-            cardButtons.getChildren().add(details);
 
             card.getChildren().add(cardButtons);
 
@@ -281,7 +298,7 @@ public class BoardOverviewCtrl implements Initializable {
         list.getChildren().add(cardContainer);
 
         //Button for adding a task
-        Button b = new Button("Add task");
+        Button b = new Button("Add Task");
         b.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -289,6 +306,8 @@ public class BoardOverviewCtrl implements Initializable {
             }
         });
         list.getChildren().add(b);
+        b.setAlignment(Pos.BOTTOM_LEFT);
+        b.setStyle("-fx-text-fill: white; -fx-background-color:  #104a03; -fx-font-size: 12px;");
         //End of button for adding a task
 
         columnContainer.getChildren().add(list);
@@ -365,5 +384,11 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void showEditCardTagsBoard() {
         mainCtrl.showEditCardTagsBoard(boardID);
+    }
+    /**
+     * Delete the board
+     */
+    public void deleteBoard() {
+        mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
     }
 }
