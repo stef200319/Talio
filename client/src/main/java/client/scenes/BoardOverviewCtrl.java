@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -63,6 +64,16 @@ public class BoardOverviewCtrl implements Initializable {
 
     private int highlightedCardIndex;
 
+    private boolean highlightedByKey=false;
+
+    private int highlightedListIndex;
+
+
+
+    private Column highlightedColumn;
+
+    private VBox highlightedList;
+
     /**
      * @param server the server that you want to connect to
      * @param mainCtrl the main screen?
@@ -91,7 +102,7 @@ public class BoardOverviewCtrl implements Initializable {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    refresh();
+                    //refresh();
                 });
             }
         }, 0, 1000);
@@ -293,33 +304,87 @@ public class BoardOverviewCtrl implements Initializable {
             });
 
             HBox cardFinal = card;
+            int numberOfLists = server.getColumnsByBoardId(boardID).size();
+
+            /*cardFinal.setOnMouseEntered(mouseEvent -> {
+                if(!highlightedByKey){
+                    if(highlightedTask!=null){
+                        highlightedTask.setStyle("");
+                    }
+                    highlightedTask = cardFinal;
+                    highlightedTask.setStyle("-fx-background-color: blue");
+                    cardContainer.requestFocus();
+                }
+            });
+            Scene scene = mainCtrl.getCurrentScene();
+            cardContainer.setOnKeyPressed(event ->{
+                if(event.getCode()==KeyCode.DOWN){
+                    highlightedByKey = true;
+                    if(highlightedTask!=null){
+                        int index = cardContainer.getChildren().indexOf(highlightedTask);
+                        System.out.println(index);
+                        if(index< cardContainer.getChildren().size()-1){
+                            highlightedTask.setStyle("");
+                            highlightedTask=(HBox)cardContainer.getChildren().get(index+1);
+                            highlightedTask.setStyle("-fx-background-color: blue");
+                        }
+                    }
+                }
+            }
+            );*/
+            //list.setOnKeyReleased(event -> highlightedByKey = false);
+
+
+            //list.getChildren().add(cardFinal);
+
+       // });
             //highlightedTask = cardFinal;
             EventHandler<MouseEvent>  handler = event -> {
+                if(highlightedByKey == false) {
+                    highlightedByKey = false;
+                    if (highlightedTask != null) {
+                        unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3", cardContainer);
+                        this.highlightedCard = null;
+                        this.highlightedTask = null;
+                        //this.highlightedList = null;
+                        this.highlightedColumn = null;
+                    }
+                    //getcolumnbycardid
+                    highlightedColumn = server.getColumnByColumnId(cards.get(finalI).getColumnId());
+                    highlightedListIndex = highlightedColumn.getPosition()-1;
+                    System.out.println(highlightedListIndex);
+                    setHighlightedTask(cardFinal, cards.get(finalI), "#000000",
+                            cardContainer, finalI, highlightedListIndex);
 
-                if(highlightedTask!=null) {
-                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3",list);
-                    this.highlightedCard=null;
-                    this.highlightedTask=null;
+                    //this.highlightedListIndex = ;
+                    //System.out.println((int)highlightedCard.getColumnId());
+                    //this.highlightedColumn = server.getColumnsByBoardId(boardID).get(highlightedListIndex);
+                    //System.out.println(highlightedColumn.getPosition());
+                    //this.highlightedList = cardContainer;
+
+
                 }
-                setHighlightedTask(cardFinal, cards.get(finalI), "#000000",list,finalI);
-                System.out.println(highlightedCard.getTitle());
-                //cardFinal.setOnMouseEntered(null);
-                //cardFinal.setOnMouseEntered(null);
 
             };
             cardFinal.setOnMouseEntered(handler);
             cardFinal.setOnMouseExited(event -> {
+                //highlightedByKey = false;
                 //cardFinal.removeEventHandler(MouseEvent.MOUSE_ENTERED, handler);
                 //cardFinal.setOnMouseEntered(null);
             });
-            list.setOnKeyPressed(event1 ->{
+            cardContainer.setOnKeyReleased(event -> highlightedByKey = false);
+            cardContainer.setOnKeyPressed(event1 ->{
+
                 if(event1.getCode()==KeyCode.ENTER)
                 {
                     mainCtrl.showTaskDetails(this.highlightedCard); //works only if ur mouse on it
                 }
                 if(event1.getCode()==KeyCode.DELETE || event1.getCode()==KeyCode.BACK_SPACE)
                 {
-                    server.deleteCard(this.highlightedCard); //bug
+                    server.deleteCard(cards.get(finalI)); //bug
+                    this.highlightedCard=null;
+
+                    refresh();
                 }
                 if(event1.getCode()==KeyCode.T)
                 {
@@ -327,19 +392,52 @@ public class BoardOverviewCtrl implements Initializable {
                 }
                 if(event1.getCode()==KeyCode.C)
                 {
-                    
+
                 }
-                if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null /*&& cards.size()>finalI*/){
-                    //cardFinal.removeEventHandler(MouseEvent.MOUSE_ENTERED, handler);
-                    //cardFinal.setOnMouseEntered(null);
-                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3",list);
+                if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null && highlightedCardIndex<cardContainer.getChildren().size()-1){
+                    highlightedByKey = true;
+
+                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3",cardContainer);
                     this.highlightedCard = null;
                     this.highlightedTask = null;
-                    //System.out.println(highlightedCard.getTitle());
                     highlightedCardIndex=highlightedCardIndex+1;
                     setHighlightedTask((HBox)cardContainer.getChildren().get(highlightedCardIndex),
-                            cards.get(highlightedCardIndex), "#000000",list, highlightedCardIndex);
-                    System.out.println("New highlighted card is no "+highlightedCard.getTitle());
+                            cards.get(highlightedCardIndex), "#000000",cardContainer, highlightedCardIndex, highlightedListIndex);
+
+                }
+                if(event1.getCode()==KeyCode.UP && getHighlightedTask()!=null && highlightedCardIndex>0)
+                {
+                    highlightedByKey = true;
+                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3",cardContainer);
+                    this.highlightedCard = null;
+                    this.highlightedTask = null;
+                    highlightedCardIndex=highlightedCardIndex-1;
+                    setHighlightedTask((HBox)cardContainer.getChildren().get(highlightedCardIndex),
+                            cards.get(highlightedCardIndex), "#000000",cardContainer, highlightedCardIndex, highlightedListIndex);
+
+                }
+                if(event1.getCode()==KeyCode.LEFT && getHighlightedTask()!=null && highlightedListIndex>0)
+                {
+                    highlightedByKey = true;
+                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3",cardContainer);
+                    this.highlightedCard = null;
+                    this.highlightedTask = null;
+                    this.highlightedListIndex = highlightedListIndex-1;
+                    setHighlightedTask((HBox)cardContainer.getChildren().get(highlightedCardIndex),
+                            cards.get(highlightedCardIndex), "#000000",cardContainer, highlightedCardIndex, highlightedListIndex);
+                    System.out.println(highlightedListIndex);
+                }
+                if(event1.getCode()==KeyCode.RIGHT && getHighlightedTask()!=null && highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1)
+                {
+                    highlightedByKey = true;
+                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3",cardContainer);
+                    this.highlightedCard = null;
+                    this.highlightedTask = null;
+                    this.highlightedListIndex = highlightedListIndex+1;
+                    setHighlightedTask((HBox)cardContainer.getChildren().get(highlightedCardIndex),
+                            cards.get(highlightedCardIndex), "#000000",cardContainer, highlightedCardIndex, highlightedListIndex);
+                    System.out.println(highlightedListIndex);
+
                 }
             });
 
@@ -379,25 +477,29 @@ public class BoardOverviewCtrl implements Initializable {
 
     public HBox getHighlightedTask(){return this.highlightedTask;}
 
-    public void setHighlightedTask(HBox l, Card card, String colorcode, VBox vbox, int index){
+    public void setHighlightedTask(HBox l, Card card, String colorcode, VBox vbox, int index, int indexList){
         this.highlightedTask=l;
-        l.setStyle(("-fx-background-color: #000000"));
+        //highlightedTask.setStyle(("-fx-background-color: #000000"));
         this.highlightedCard=card;
-        server.editCardBackgroundColour(card, colorcode);
-        card.setBgColour(colorcode);
+        //server.editCardBackgroundColour(card, colorcode);
+        //card.setBgColour(colorcode);
         vbox.requestFocus();
         this.highlightedCardIndex = index;
+        this.highlightedListIndex = indexList;
+        this.highlightedColumn = server.getColumnsByBoardId(boardID).get(indexList);
+        //this.highlightedList =
+        //asta e coloana pe care suntem acum
+        this.highlightedCard = server.getCardsByColumnId(highlightedColumn.getId()).get(index);
+        server.editCardBackgroundColour(highlightedCard, colorcode);
+        this.highlightedCard.setBgColour(colorcode);
+
     }
     public void unHighlightTask(HBox l, Card card, String colorcode, VBox xbox){
 
-        l.setStyle("-fx-background-color: #F5DEB3");
+       // l.setStyle("");
         server.editCardBackgroundColour(card, colorcode);
         card.setBgColour(colorcode);
         xbox.requestFocus();
-       // l.setBgColour("#F2F3F4");
-        //server.editCardBackgroundColour(l, "#F2F3F4");
-        //System.out.println(l.getTitle());
-       // l.setStyle("-fx-background-color: white");
 
     }
 
@@ -473,5 +575,7 @@ public class BoardOverviewCtrl implements Initializable {
     public void deleteBoard() {
         mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
     }
+
+
 
 }

@@ -1,9 +1,11 @@
 package server.services;
 
 import commons.Card;
+import commons.Column;
 import commons.Subtask;
 import org.springframework.stereotype.Service;
 import server.database.CardRepository;
+import server.database.ColumnRepository;
 import server.database.SubtaskRepository;
 
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.List;
 public class CardService {
     private CardRepository cardRepository;
     private SubtaskRepository subtaskRepository;
+
+    private ColumnRepository columnRepository;
 
     /**
      * @param cardRepository the table which contains all the cards
@@ -59,6 +63,7 @@ public class CardService {
             return null;
         return cardRepository.findAll();
     }
+
 
     /**
      * Finds the card with the specified id

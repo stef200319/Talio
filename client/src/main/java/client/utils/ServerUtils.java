@@ -695,6 +695,14 @@ public class ServerUtils {
             .get(new GenericType<Subtask>() {});
     }
 
+    public Column getColumnByColumnId(long columnId){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/getColumnByColumnId/"+columnId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<Column>(){});
+    }
     /**
      * Changes the status of a subtask
      * @param subtaskId id of the subtask to be changed

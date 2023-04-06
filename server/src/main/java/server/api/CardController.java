@@ -1,6 +1,7 @@
 package server.api;
 
 import commons.Card;
+import commons.Column;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -350,6 +351,8 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(subtasks);
     }
+
+
 
     /**
      * Changes the position of a subtask in a card
