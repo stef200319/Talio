@@ -304,6 +304,7 @@ public class BoardOverviewCtrl implements Initializable {
                 setHighlightedTask(cardFinal, cards.get(finalI), "#000000",list,finalI);
                 System.out.println(highlightedCard.getTitle());
                 //cardFinal.setOnMouseEntered(null);
+                //cardFinal.setOnMouseEntered(null);
 
             };
             cardFinal.setOnMouseEntered(handler);
@@ -312,6 +313,22 @@ public class BoardOverviewCtrl implements Initializable {
                 //cardFinal.setOnMouseEntered(null);
             });
             list.setOnKeyPressed(event1 ->{
+                if(event1.getCode()==KeyCode.ENTER)
+                {
+                    mainCtrl.showTaskDetails(this.highlightedCard); //works only if ur mouse on it
+                }
+                if(event1.getCode()==KeyCode.DELETE || event1.getCode()==KeyCode.BACK_SPACE)
+                {
+                    server.deleteCard(this.highlightedCard); //bug
+                }
+                if(event1.getCode()==KeyCode.T)
+                {
+
+                }
+                if(event1.getCode()==KeyCode.C)
+                {
+                    
+                }
                 if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null /*&& cards.size()>finalI*/){
                     //cardFinal.removeEventHandler(MouseEvent.MOUSE_ENTERED, handler);
                     //cardFinal.setOnMouseEntered(null);
