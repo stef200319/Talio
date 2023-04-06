@@ -58,6 +58,8 @@ public class BoardOverviewCtrl implements Initializable {
 
     private TextField highlightedTextField;
 
+    private Card highlightedCard;
+
     /**
      * @param server the server that you want to connect to
      * @param mainCtrl the main screen?
@@ -292,44 +294,29 @@ public class BoardOverviewCtrl implements Initializable {
 
             cardFinal.setOnMouseEntered(event -> {
 
-
-                setHighlightedTask(cardFinal);
-                System.out.println("New highlighted card is "+highlightedTask.getChildren().get(0).toString());
+                if(highlightedTask!=null) {
+                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3");
+                }
+                setHighlightedTask(cardFinal, cards.get(finalI), "#000000");
+                System.out.println(highlightedCard.getTitle());
 
             });
             cardFinal.setOnMouseExited(event -> {
-                if(highlightedTask!=null)
-                unHighlightTask(highlightedTask);
-                setHighlightedTask(cardFinal);
+                System.out.println("when EXITING "+cards.get(finalI).getTitle());
 
             });
             cardFinal.setOnKeyPressed(event ->{
                 if(event.getCode()==KeyCode.DOWN && getHighlightedTask()!=null /*&& cards.size()>finalI*/){
 
-                    unHighlightTask(highlightedTask);
-                    System.out.println("Pressed down key");
-                    System.out.println(highlightedTask.getChildren().get(0).toString());
-                    setHighlightedTask((HBox)cardContainer.getChildren().get(finalI+1));
-                    //highlightedTask.setStyle(("-fx-background-color: #6e0518"));
-                    //highlightedTask.requestFocus();
-                    //cardFinal = highlightedTask;
-                    System.out.println("New highlighted card is no "+highlightedTask.getChildren().get(0).toString());
+                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3");
+                    System.out.println(highlightedCard.getTitle());
+                    setHighlightedTask((HBox)cardContainer.getChildren().get(finalI+1), cards.get(finalI+1), "#000000");
+                    System.out.println("New highlighted card is no "+highlightedCard.getTitle());
                 }
             });
 
 
-            /*EventHandler<KeyEvent> changeHightlight = new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) {
-                    if(event.getCode() == KeyCode.DOWN)
-                    {
-                        unHighlightTask(cards.get(finalI));
-                        System.out.println("Pressed down key");
-                        setHighlightedTask(cards.get(finalI+1));
-                        System.out.println("New highlighted card is "+getHighlightedTask().getTitle());
-                    }
-                }
-            };*/
+
 
 
 
@@ -364,20 +351,19 @@ public class BoardOverviewCtrl implements Initializable {
 
     public HBox getHighlightedTask(){return this.highlightedTask;}
 
-    public void setHighlightedTask(HBox l){
+    public void setHighlightedTask(HBox l, Card card, String colorcode){
         this.highlightedTask=l;
         l.setStyle(("-fx-background-color: #000000"));
+        this.highlightedCard=card;
+        server.editCardBackgroundColour(card, colorcode);
+        card.setBgColour(colorcode);
         l.requestFocus();
-        //l.setBgColour("#F5DEB3");
-        //server.editCardBackgroundColour(l, "#F5DEB3");
-        //System.out.println(this.highlightedTask.getTitle());
-        //l.setStyle(("-fx-background-color: #F5DEB3"));
     }
-    public void unHighlightTask(HBox l){
+    public void unHighlightTask(HBox l, Card card, String colorcode){
 
         l.setStyle("-fx-background-color: #F5DEB3");
-        //this.highlightedTask=null;
-
+        server.editCardBackgroundColour(card, colorcode);
+        card.setBgColour(colorcode);
        // l.setBgColour("#F2F3F4");
         //server.editCardBackgroundColour(l, "#F2F3F4");
         //System.out.println(l.getTitle());
