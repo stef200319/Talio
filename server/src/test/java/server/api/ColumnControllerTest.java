@@ -67,8 +67,6 @@ class ColumnControllerTest {
 //        columnController = new ColumnController(columnService, boardService, cardService);
         columnService.setApplicationEventPublisher(applicationEventPublisher);
 
-        cardController = new CardController(cardRepository, columnRepository,subtaskRepository);
-        columnController = new ColumnController(columnService, boardService, cardService);
     }
 
     @Test
