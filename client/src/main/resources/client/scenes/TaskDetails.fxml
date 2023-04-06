@@ -73,7 +73,7 @@
 <!--<<<<<<< HEAD-->
 <!--            <Button layoutX="486.0" layoutY="316.0" mnemonicParsing="false" onAction="#showEditCardTagsToCard" prefHeight="50.0" prefWidth="57.0" text="Edit">-->
 <!--=======-->
-            <Button layoutX="486.0" layoutY="316.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="63.0" text="Edit">
+            <Button layoutX="486.0" layoutY="316.0" mnemonicParsing="false" onAction="#showEditCardTagsToCard" prefHeight="50.0" prefWidth="63.0" text="Edit">
 <!--&gt;>>>>>> main-->
                <font>
                   <Font size="19.0" />

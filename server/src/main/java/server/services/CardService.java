@@ -85,7 +85,8 @@ public class CardService {
         Card card = new Card(title,columnId);
         card.setPosition(newPosition);
 
-        return cardRepository.save(card);
+        cardRepository.save(card);
+        return card;
     }
 
     /**
@@ -108,7 +109,8 @@ public class CardService {
             return null;
         Card card = getById(cardId);
         card.setTitle(title);
-        return cardRepository.save(card);
+        cardRepository.save(card);
+        return card;
     }
 
     /**
@@ -120,7 +122,8 @@ public class CardService {
     public Card editDescription(long cardId, String description) {
         Card card = getById(cardId);
         card.setDescription(description);
-        return cardRepository.save(card);
+        cardRepository.save(card);
+        return card;
     }
 
     /**
@@ -147,7 +150,8 @@ public class CardService {
         card.setPosition(maxPosition+1);
 
         card.setColumnId(columnId);
-        return cardRepository.save(card);
+        cardRepository.save(card);
+        return card;
     }
 
     /**
@@ -246,7 +250,8 @@ public class CardService {
         subtaskRepository.save(newSubtask);
 
         card.getSubtasks().add(newSubtask);
-        return cardRepository.save(card);
+        cardRepository.save(card);
+        return card;
     }
 
     /**
@@ -294,7 +299,8 @@ public class CardService {
             subtasks.set(newPos, aux);
             Card card = getById(cardId);
             card.setSubtasks(subtasks);
-            return cardRepository.save(card);
+            cardRepository.save(card);
+            return card;
         }
         else {
             Subtask aux = subtasks.get(oldPos);
@@ -305,7 +311,8 @@ public class CardService {
             subtasks.set(newPos, aux);
             Card card = getById(cardId);
             card.setSubtasks(subtasks);
-            return cardRepository.save(card);
+            cardRepository.save(card);
+            return card;
         }
     }
 
@@ -324,7 +331,8 @@ public class CardService {
                 subtasks.remove(i);
         Card card = getById(cardId);
         card.setSubtasks(subtasks);
-        return cardRepository.save(card);
+        cardRepository.save(card);
+        return card;
     }
 
 }

@@ -83,8 +83,7 @@ public class BoardController {
     @ResponseBody public ResponseEntity<Board> editBoardTitle(@PathVariable("title") String title,
                                                               @PathVariable("boardId") long boardId) {
         Board board = boardService.editTitle(title, boardId);
-        return board == null ? ResponseEntity.badRequest().build():ResponseEntity.ok(board);
-
+        return board == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(board);
     }
 
 

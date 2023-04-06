@@ -47,7 +47,8 @@ public class SubtaskService {
 
         Subtask subtask = getById(subtaskId);
         subtask.setDone(status);
-        return subtaskRepository.save(subtask);
+        subtaskRepository.save(subtask);
+        return subtask;
     }
 
     /**
@@ -62,7 +63,8 @@ public class SubtaskService {
 
         Subtask subtask = getById(subtaskId);
         subtask.setTitle(title);
-        return subtaskRepository.save(subtask);
+        subtaskRepository.save(subtask);
+        return subtask;
     }
 
     /**
@@ -84,6 +86,7 @@ public class SubtaskService {
      * @return the subtask that was saved
      */
     public Subtask save(Subtask subtask) {
-        return subtaskRepository.save(subtask);
+        subtaskRepository.save(subtask);
+        return subtask;
     }
 }

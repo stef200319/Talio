@@ -65,6 +65,7 @@
             </Label>
             <Button fx:id="createBoardButton" layoutX="119.0" layoutY="6.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #e0cda8;" text="Create Board " />
                  <Button layoutX="540.0" layoutY="6.0" mnemonicParsing="false" onAction="#addList" style="-fx-background-color: #104a03;" text="Add List" textFill="WHITE" />
+            <Button layoutX="229.0" layoutY="6.0" mnemonicParsing="false" onAction="#showEditCardTagsBoard" prefHeight="25.0" prefWidth="81.0" style="-fx-background-color: #e0cda8;" text="Card Tags" />
          </children>
       </Pane>
         <ScrollPane hbarPolicy="ALWAYS" layoutY="37.0" prefHeight="447.0" prefWidth="703.0" vbarPolicy="ALWAYS">
