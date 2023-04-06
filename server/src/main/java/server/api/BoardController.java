@@ -88,7 +88,8 @@ public class BoardController {
     /**
      * Retrieves updates for the board.
      *
-     * @return a DeferredResult containing a ResponseEntity with the board updates, or a NO_CONTENT response if no updates are available
+     * @return a DeferredResult containing a ResponseEntity with the board updates
+     * or a NO_CONTENT response if no updates are available
      *
      * @throws Exception if an error occurs while processing the request
      */
