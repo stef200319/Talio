@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import server.database.BoardRepository;
 import server.database.BoardTagRepository;
+import server.services.BoardService;
+import server.services.BoardTagService;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,13 +24,20 @@ class BoardTagControllerTest {
     Board board1;
     BoardTag boardTag1;
 
+    BoardTagService boardTagService;
+
+    BoardService boardService;
+
 
 
     @BeforeEach
     void setUp() {
         boardTagRepository = new TestBoardTagRepository();
         boardRepository = new TestBoardRepository();
-        boardTagController = new BoardTagController(boardTagRepository, boardRepository);
+
+        boardTagService = new BoardTagService(boardTagRepository);
+        boardService = new BoardService(boardRepository);
+        boardTagController = new BoardTagController(boardTagService, boardService);
 
         board1 = new Board("board1");
         board1.setId(69L);

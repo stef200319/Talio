@@ -23,6 +23,8 @@ import commons.Subtask;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -585,6 +587,18 @@ public class MainCtrl {
         primaryStage.setScene(confirmDeleteBoard);
     }
 
+    /**
+     * method that  copies the id of the board in the clipboard
+     * @param boardID the id of the board whose key we want to copy
+     */
+    public void copyCode(long boardID) {
+
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(String.valueOf(boardID));
+        content.putHtml(String.valueOf(boardID));
+        clipboard.setContent(content);
+    }
     /**
      * Shows the view subtask page
      * @param c Card where to get the subtasks from

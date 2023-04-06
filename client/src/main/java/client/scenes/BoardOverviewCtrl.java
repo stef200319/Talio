@@ -1,11 +1,11 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.StringMessageHandler;
 import com.google.inject.Inject;
 import commons.Board;
 import commons.Card;
 import commons.Column;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,18 +23,27 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.messaging.converter.StringMessageConverter;
+import org.springframework.messaging.simp.stomp.StompSessionHandler;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
+import org.springframework.web.socket.sockjs.client.SockJsClient;
+import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private WebSocketStompClient stompClient;
+    private static final Logger logger = LoggerFactory.getLogger(BoardOverviewCtrl.class);
 
     private long boardID = Long.MIN_VALUE;
 
@@ -51,6 +60,8 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Button editBoardTitleButton;
 
+    @FXML
+    private Button copyCodeButton;
     @FXML
     private Label boardName;
 
@@ -71,6 +82,9 @@ public class BoardOverviewCtrl implements Initializable {
         this.mainCtrl = mainCtrl;
         this.server = server;
 
+        stompClient = new WebSocketStompClient(new SockJsClient(
+                Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))
+        ));
     }
 
     /**
@@ -86,14 +100,11 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+        StompSessionHandler sessionHandler = new StringMessageHandler();
+        stompClient.setMessageConverter(new StringMessageConverter());
+        stompClient.connect("http://localhost:8080/websocket-stomp", sessionHandler);
+
+        logger.info("connected to websocket");
     }
 
     /**
@@ -103,7 +114,14 @@ public class BoardOverviewCtrl implements Initializable {
         mainCtrl.showOverview();
     }
 
-
+    /**
+     * method that calls the method in MainCtrl that copies the code
+     * of the current board
+     */
+    public void copyCode()
+    {
+        mainCtrl.copyCode(boardID);
+    }
     /**
      * Method that shows the add list page on screen
      */
