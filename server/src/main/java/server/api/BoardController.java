@@ -5,9 +5,9 @@ import commons.CardTag;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.CardTagRepository;
-import server.database.BoardRepository;
 import server.services.BoardService;
+import server.services.CardService;
+import server.services.CardTagService;
 import server.services.ColumnService;
 
 import java.util.HashSet;
@@ -18,29 +18,31 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
     private final ColumnService columnService;
-    private final CardTagRepository cardTagRepository;
-    private final CardTagController cardTagController;
+
+
+    private final CardTagService cardTagService;
 //
 
-    private final BoardRepository boardRepository;
+    private final CardService cardService;
+
+    private final CardTagController cardTagController;
 
 
     /**
      * @param boardService the service used for the operations which use the board data access object
      * @param columnService the service used for the operations which use the column data access object
-     * @param boardRepository boardRepo
-     * @param cardTagRepository cardTagRepo
-     * @param cardTagController cardTagController
+     * @param cardTagService
+     * @param cardService
+     * @param cardTagController
      */
-    public BoardController(BoardService boardService, ColumnService columnService, CardTagRepository cardTagRepository,
-                           CardTagController cardTagController, BoardRepository boardRepository) {
+    public BoardController(BoardService boardService, ColumnService columnService, CardTagService cardTagService,
+                           CardService cardService, CardTagController cardTagController) {
 
-        this.boardRepository = boardRepository;
         this.boardService = boardService;
         this.columnService = columnService;
-        this.cardTagRepository = cardTagRepository;
+        this.cardTagService = cardTagService;
+        this.cardService = cardService;
         this.cardTagController = cardTagController;
-
     }
 
     /**
@@ -81,8 +83,7 @@ public class BoardController {
     @ResponseBody public ResponseEntity<Board> editBoardTitle(@PathVariable("title") String title,
                                                               @PathVariable("boardId") long boardId) {
         Board board = boardService.editTitle(title, boardId);
-        return board == null ? ResponseEntity.badRequest().build():ResponseEntity.ok(board);
-
+        return board == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(board);
     }
 
 
@@ -95,13 +96,13 @@ public class BoardController {
     @PutMapping("/editBoardCenterColour/{boardId}/{bgColour}")
     @ResponseBody public ResponseEntity<Board> editBoardCenterColour(@PathVariable("boardId") long boardId,
                                                                            @PathVariable("bgColour") String bgColour){
-        if (bgColour == null || !boardRepository.existsById(boardId)) {
+        if (bgColour == null || !boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardRepository.findById(boardId).get();
+        Board board = boardService.getByBoardId(boardId);
         board.setCenterColour(bgColour);
-        boardRepository.save(board);
+        boardService.save(board);
         return ResponseEntity.ok(board);
     }
 
@@ -115,13 +116,13 @@ public class BoardController {
     @PutMapping("/editBoardSideColour/{boardId}/{borderColour}")
     @ResponseBody public ResponseEntity<Board> editBoardSideColour
     (@PathVariable("boardId") long boardId, @PathVariable("borderColour") String borderColour){
-        if (borderColour == null || !boardRepository.existsById(boardId)) {
+        if (borderColour == null || !boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardRepository.findById(boardId).get();
+        Board board = boardService.getByBoardId(boardId);
         board.setSideColour(borderColour);
-        boardRepository.save(board);
+        boardService.save(board);
         return ResponseEntity.ok(board);
     }
 
@@ -135,13 +136,13 @@ public class BoardController {
     @PutMapping("/editBoardFontType/{boardId}/{fontType}")
     @ResponseBody public ResponseEntity<Board> editBoardFontType
     (@PathVariable("boardId") long boardId, @PathVariable("fontType") String fontType){
-        if (fontType == null || !boardRepository.existsById(boardId)) {
+        if (fontType == null || !boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardRepository.findById(boardId).get();
+        Board board = boardService.getByBoardId(boardId);
         board.setFontType(fontType);
-        boardRepository.save(board);
+        boardService.save(board);
         return ResponseEntity.ok(board);
     }
 
@@ -154,13 +155,13 @@ public class BoardController {
     @PutMapping("/editBoardFontStyleBold/{boardId}/{bold}")
     @ResponseBody public ResponseEntity<Board> editBoardFontStyleBold
     (@PathVariable("boardId") long boardId, @PathVariable("bold") boolean bold){
-        if (!boardRepository.existsById(boardId)) {
+        if (!boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardRepository.findById(boardId).get();
+        Board board = boardService.getByBoardId(boardId);
         board.setFontStyleBold(bold);
-        boardRepository.save(board);
+        boardService.save(board);
         return ResponseEntity.ok(board);
     }
 
@@ -174,13 +175,13 @@ public class BoardController {
     @PutMapping("/editBoardFontStyleItalic/{boardId}/{italic}")
     @ResponseBody public ResponseEntity<Board> editBoardFontStyleItalic
     (@PathVariable("boardId") long boardId, @PathVariable("italic") boolean italic){
-        if (!boardRepository.existsById(boardId)) {
+        if (!boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardRepository.findById(boardId).get();
+        Board board = boardService.getByBoardId(boardId);
         board.setFontStyleItalic(italic);
-        boardRepository.save(board);
+        boardService.save(board);
         return ResponseEntity.ok(board);
     }
 
@@ -194,13 +195,13 @@ public class BoardController {
     @PutMapping("/editBoardFontColour/{boardId}/{fontColour}")
     @ResponseBody public ResponseEntity<Board> editBoardFontColour
     (@PathVariable("boardId") long boardId, @PathVariable("fontColour") String fontColour){
-        if (!boardRepository.existsById(boardId)) {
+        if (!boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardRepository.findById(boardId).get();
+        Board board = boardService.getByBoardId(boardId);
         board.setFontColour(fontColour);
-        boardRepository.save(board);
+        boardService.save(board);
         return ResponseEntity.ok(board);
     }
 
@@ -218,15 +219,13 @@ public class BoardController {
 
         // Delete the corresponding boardTags and cardTags
         board.setBoardTags(new HashSet<>());
-        List<CardTag> tags = cardTagRepository.findCardTagsByBoard(board);
+        List<CardTag> tags = cardTagService.findCardTagsByBoard(board);
+
         if (tags != null) {
             for (CardTag cardTag : tags) {
                 cardTagController.deleteCardTagFromBoard(cardTag.getId());
             }
         }
-
-
-
 
         // Delete corresponding columns
         List<Column> columnsToDelete = columnService.getByBoardId(boardId);
@@ -254,5 +253,21 @@ public class BoardController {
 
         return ResponseEntity.ok(columnService.getByBoardId(boardId));
     }
+
+    /**
+     * Gets a board by a CardId
+     * @param cardId
+     * @return the board
+     */
+    @GetMapping("getBoardByCardId/{cardId}")
+    @ResponseBody public ResponseEntity<Board> getBoardByCardId(@PathVariable("cardId") long cardId) {
+        if (!cardService.existsById(cardId)) return ResponseEntity.badRequest().build();
+
+        Long columnId = cardService.getById(cardId).getColumnId();
+        Long boardId = columnService.getById(columnId).getBoardId();
+        Board board = boardService.getByBoardId(boardId);
+        return ResponseEntity.ok(board);
+    }
+
 
 }

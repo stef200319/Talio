@@ -109,8 +109,8 @@ public class BoardTagService {
      * @param boardTag to be saved
      * @return the saved board tag
      */
-    public BoardTag save(BoardTag boardTag)
-    {
-        return boardTagRepository.save(boardTag);
+    public BoardTag save(BoardTag boardTag) {
+        boardTagRepository.save(boardTag);
+        return boardTag;
     }
 }

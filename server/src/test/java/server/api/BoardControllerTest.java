@@ -64,12 +64,11 @@ class BoardControllerTest {
         boardService.setApplicationEventPublisher(applicationEventPublisher);
         columnService.setApplicationEventPublisher(applicationEventPublisher);
 
-        cardController = new CardController(cardService, columnService, subtaskService, cardRepository);
-        columnController = new ColumnController(columnRepository, boardRepository, cardRepository, cardController,
+        cardController = new CardController(cardService, columnService, subtaskService);
+        columnController = new ColumnController(columnRepository,
                 columnService, boardService, cardService);
         cardTagController = new CardTagController(cardTagService, boardService, cardService);
-        boardController = new BoardController(boardService, columnService, cardTagRepository, cardTagController,
-                boardRepository);
+        boardController = new BoardController(boardService, columnService, cardTagService, cardService, cardTagController);
 
     }
 

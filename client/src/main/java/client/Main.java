@@ -89,12 +89,20 @@ public class Main extends Application {
                 "scenes", "CustomizeList.fxml");
         var customizeBoard = FXML.load(CustomizeBoardCtrl.class, "client", "scenes", "CustomizeBoard.fxml");
 
+        var editCardTagsBoard = FXML.load(EditCardTagsBoardCtrl.class,
+                "client", "scenes", "EditCardTagsBoard.fxml");
+
+        var addCardTagsToCard = FXML.load(AddCardTagsToCardCtrl.class,
+                "client", "scenes", "AddCardTagsToCard.fxml");
+
+
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
                 addTask, taskManagement, workspace, createBoard, editCardTitle, editCardDescription, editList,
             editBoardTitle, viewSubtasks, customizeCard, customizeList, customizeBoard, editSubtaskTitle,
-            confirmDeleteColumn, confirmDeleteBoard, addSubtask, help);
+            confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard, addCardTagsToCard);
+
 
     }
 }

@@ -95,6 +95,11 @@ public class MainCtrl {
 
     private CustomizeBoardCtrl customizeBoardCtrl;
     private Scene customizeBoard;
+    private EditCardTagsBoardCtrl editCardTagsBoardCtrl;
+    private Scene editCardTagsBoard;
+
+    private AddCardTagsToCardCtrl addCardTagsToCardCtrl;
+    private Scene addCardTagsToCard;
 
 
     /**
@@ -120,6 +125,8 @@ public class MainCtrl {
      * @param confirmDeleteBoard
      * @param addSubtask
      * @param help
+     * @param editCardTagsBoard
+     * @param addCardTagsToCard
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -139,8 +146,11 @@ public class MainCtrl {
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
 
                            Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard,
+                           Pair<HelpCtrl, Parent> help,
                            Pair<AddSubtaskCtrl, Parent> addSubtask,
-                           Pair<HelpCtrl, Parent> help) {
+                           Pair<EditCardTagsBoardCtrl, Parent> editCardTagsBoard,
+                           Pair<AddCardTagsToCardCtrl, Parent> addCardTagsToCard) {
+
 
 
         this.primaryStage = primaryStage;
@@ -230,6 +240,11 @@ public class MainCtrl {
         this.confirmDeleteBoardCtrl = confirmDeleteBoard.getKey();
         this.confirmDeleteBoard = new Scene(confirmDeleteBoard.getValue());
 
+        this.editCardTagsBoardCtrl = editCardTagsBoard.getKey();
+        this.editCardTagsBoard = new Scene(editCardTagsBoard.getValue());
+
+        this.addCardTagsToCardCtrl = addCardTagsToCard.getKey();
+        this.addCardTagsToCard = new Scene(addCardTagsToCard.getValue());
         this.addSubtaskCtrl = addSubtask.getKey();
         this.addSubtask = new Scene(addSubtask.getValue());
 
@@ -596,6 +611,27 @@ public class MainCtrl {
         content.putHtml(String.valueOf(boardID));
         clipboard.setContent(content);
     }
+
+    /**
+     * Shows the editCardTagsBoard scene
+     * @param boardId
+     */
+    public void showEditCardTagsBoard(Long boardId) {
+        editCardTagsBoardCtrl.setBoardId(boardId);
+        primaryStage.setTitle("Edit Card Tags");
+        primaryStage.setScene(editCardTagsBoard);
+    }
+
+    /**
+     * shows the addCardTagsToCard scene
+     * @param card
+     */
+    public void showAddCardTagsToCard(Card card) {
+        addCardTagsToCardCtrl.setCard(card);
+        primaryStage.setTitle("Add Card Tags to Card");
+        primaryStage.setScene(addCardTagsToCard);
+    }
+
     /**
      * Shows the view subtask page
      * @param c Card where to get the subtasks from

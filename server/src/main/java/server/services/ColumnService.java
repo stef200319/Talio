@@ -86,8 +86,8 @@ public class ColumnService {
 
         RESTEvent event = new RESTEvent(newColumn, "column was created");
         applicationEventPublisher.publishEvent(event);
-
-        return columnRepository.save(newColumn);
+        columnRepository.save(newColumn);
+        return newColumn;
     }
 
     /**
@@ -102,7 +102,9 @@ public class ColumnService {
         RESTEvent event = new RESTEvent(column, "column was updated");
         applicationEventPublisher.publishEvent(event);
 
-        return columnRepository.save(column);
+        columnRepository.save(column);
+
+        return column;
     }
 
     /**

@@ -28,6 +28,7 @@ import java.util.List;
 
 public class TaskDetailsCtrl implements Initializable {
     private Card cardToShow;
+
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
@@ -122,6 +123,13 @@ public class TaskDetailsCtrl implements Initializable {
         Column c = server.getColumnByColumnId(columnId);
         long boardId = c.getBoardId();
         mainCtrl.showBoardOverview(boardId);
+    }
+
+    /**
+     * shows the addCardTagsToCard scene
+     */
+    public void showEditCardTagsToCard() {
+        mainCtrl.showAddCardTagsToCard(cardToShow);
     }
 
     /**
