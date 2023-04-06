@@ -21,13 +21,15 @@ public class Column {
 
 
     private String bgColour;
-
+    private String defaultBgColour = "#F2F3F4";
     private String borderColour;
-
+    private String defaultBorderColour = "#000000";
     private String fontType;
+    private String defaultFontType = "Segoe UI";
     private Boolean fontStyleBold;
     private Boolean fontStyleItalic;
     private String fontColour;
+    private String defaultFontColour = "#000000";
 
 
 
@@ -47,12 +49,12 @@ public class Column {
         this.title = title;
         this.boardId = boardId;
 
-        this.bgColour = "#F2F3F4";
-        this.borderColour = "#000000";
-        this.fontType = "Segoe UI";
+        this.bgColour = defaultBgColour;
+        this.borderColour = defaultBorderColour;
+        this.fontType = defaultFontType;
         this.fontStyleBold=false;
         this.fontStyleItalic=false;
-        this.fontColour = "#000000";
+        this.fontColour = defaultFontColour;
     }
 
     /**
@@ -222,5 +224,34 @@ public class Column {
      */
     public void setFontColour(String fontColour) {
         this.fontColour = fontColour;
+    }
+
+
+    /**
+     * @return The default Background Colour of a Column
+     */
+    public String getDefaultBgColour() {
+        return defaultBgColour;
+    }
+
+    /**
+     * @return The default Border Colour of a Column
+     */
+    public String getDefaultBorderColour() {
+        return defaultBorderColour;
+    }
+
+    /**
+     * @return The default Font-Type of a Column
+     */
+    public String getDefaultFontType() {
+        return defaultFontType;
+    }
+
+    /**
+     * @return The default Font Colour of a Column
+     */
+    public String getDefaultFontColour() {
+        return defaultFontColour;
     }
 }

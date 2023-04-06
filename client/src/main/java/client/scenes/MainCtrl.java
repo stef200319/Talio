@@ -93,6 +93,9 @@ public class MainCtrl {
     private CustomizeListCtrl customizeListCtrl;
     private Scene customizeList;
 
+    private CustomizeBoardCtrl customizeBoardCtrl;
+    private Scene customizeBoard;
+
 
     /**
      * @param primaryStage
@@ -110,6 +113,7 @@ public class MainCtrl {
      * @param viewSubtask
      * @param customizeCard
      * @param customizeList
+     * @param customizeBoard
      * @param editSubtaskTitle
      * @param editBoardTitle
      * @param confirmDeleteColumn
@@ -126,16 +130,18 @@ public class MainCtrl {
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
                            Pair<EditCardDescriptionCtrl, Parent> editCardDescription, Pair<EditListCtrl,
-
-                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle
-                           , Pair<ViewSubtaskCtrl, Parent> viewSubtask,
+                           Parent> editList, Pair<EditBoardTitleCtrl, Parent> editBoardTitle,
+                           Pair<ViewSubtaskCtrl, Parent> viewSubtask,
                            Pair<CustomizeCardCtrl, Parent> customizeCard,
                            Pair<CustomizeListCtrl, Parent> customizeList,
+                           Pair<CustomizeBoardCtrl, Parent> customizeBoard,
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
+
                            Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard,
                            Pair<AddSubtaskCtrl, Parent> addSubtask,
                            Pair<HelpCtrl, Parent> help) {
+
 
         this.primaryStage = primaryStage;
 
@@ -171,9 +177,6 @@ public class MainCtrl {
 
         this.editListCtrl = editList.getKey();
         this.editList = new Scene(editList.getValue());
-
-
-
 
         this.taskDetails.setOnKeyPressed(getKeyboardShortcuts());
 
@@ -215,6 +218,10 @@ public class MainCtrl {
 
         this.customizeListCtrl = customizeList.getKey();
         this.customizeList = new Scene(customizeList.getValue());
+
+
+        this.customizeBoardCtrl = customizeBoard.getKey();
+        this.customizeBoard= new Scene(customizeBoard.getValue());
 
 
         this.confirmDeleteColumnCtrl = confirmDeleteColumn.getKey();
@@ -294,6 +301,11 @@ public class MainCtrl {
         primaryStage.setScene(createBoard);
     }
 
+
+
+
+
+
     /**
      * Connect to client
      */
@@ -370,6 +382,17 @@ public class MainCtrl {
         editBoardTitleCtrl.setBoardToEditID(boardID);
         primaryStage.setTitle("Edit Board Title");
         primaryStage.setScene(editBoardTitle);
+    }
+
+    /**
+     * Show customize board page
+     *
+     * @param boardID the board which will be changed
+     */
+    public void showCustomizeBoard(long boardID) {
+        customizeBoardCtrl.setBoardToShow(boardID);
+        primaryStage.setTitle("Edit Board");
+        primaryStage.setScene(customizeBoard);
     }
 
 
