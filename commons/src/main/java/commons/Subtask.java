@@ -1,6 +1,7 @@
 package commons;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Subtask {
@@ -33,6 +34,14 @@ public class Subtask {
     }
 
     /**
+     * Sets a new id for a subtask (for testing)
+     * @param id new id of the subtask
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /**
      * Get the title of the subtask
      * @return the title of the subtask as a String
      */
@@ -62,6 +71,37 @@ public class Subtask {
      */
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    /**
+     * equals method
+     * @param o object we're comparing to
+     * @return true if equal false otherwise
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subtask subtask = (Subtask) o;
+        return id == subtask.id && done == subtask.done &&
+            Objects.equals(title, subtask.title);
+    }
+
+    /**
+     * hashing method
+     * @return hash of subtask
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, done);
+    }
+
+    /**
+     * To string method for debugging purposes
+     * @return representation of a subtask as a string
+     */
+    public String toString() {
+        return "Subtask with id: " + id + " has title: " + title + " and status: " + done;
     }
 
 

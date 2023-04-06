@@ -93,6 +93,19 @@ public class ServerUtils {
     }
 
     /**
+     * Fetches a column frmo the database from its id
+     * @param columnID the id of the column
+     * @return a column
+     */
+    public Column getColumnByColumnId(long columnID){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("column/getColumnByColumnId/"+columnID)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<Column>(){});
+    }
+    /**
      * Fetch a board from database from its id
      * @param boardID the id of the board
      * @return a board
@@ -664,7 +677,95 @@ public class ServerUtils {
             .request(APPLICATION_JSON)
             .accept(APPLICATION_JSON)
             .put(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
+    }
 
+    /**
+     * Method that adds a subtask to a card
+     * @param cardId id of the card to add the subtask to
+     * @param subtaskTitle title of the new subtask
+     * @return the new card with updated subtasks
+     */
+    public Card addSubtask(long cardId, String subtaskTitle) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("card/addSubtask/" + cardId + "/" + subtaskTitle)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .post(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Gets a subtask by its id
+     * @param subtaskId id of the subtask
+     * @return the subtask with that id
+     */
+    public Subtask getSubtaskById(long subtaskId) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("subtask/getSubtaskById/" + subtaskId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<Subtask>() {});
+    }
+
+    /**
+     * Changes the status of a subtask
+     * @param subtaskId id of the subtask to be changed
+     * @param status new status of the subtask
+     * @return the new status with an updated status
+     */
+    public Subtask editSubtaskStatus(long subtaskId, boolean status) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("subtask/editSubtaskStatus/" + subtaskId + "/" + status)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .put(Entity.entity(getSubtaskById(subtaskId), APPLICATION_JSON), Subtask.class);
+    }
+
+    /**
+     * Change a position of a subtask in a card
+     * @param cardId id of the card the subtask is in
+     * @param oldPos old position of the subtask
+     * @param newPos new position of the subtask
+     * @return the card with specified cardId and updated subtasks
+     */
+    public Card changeSubtaskPosition(long cardId, int oldPos, int newPos) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("card/changeSubtaskPosition/" + cardId + "/" + oldPos + "/" + newPos)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .put(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Deletes a subtask
+     * @param subtaskId subtask to be deleted
+     * @return response
+     */
+    public Response deleteSubtask(long subtaskId) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("subtask/deleteSubtask/" + subtaskId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .delete();
+    }
+
+    /**
+     * Deletes a subtask from a card
+     * @param cardId id of the card the subtask is in
+     * @param subtaskId id of the subtask to be deleted
+     * @return response
+     */
+    public Response deleteSubtaskFromCard(long cardId, long subtaskId) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("card/deleteSubtask/" + cardId + "/" + subtaskId)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .delete();
     }
 
 }
