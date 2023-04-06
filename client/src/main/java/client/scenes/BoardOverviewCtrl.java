@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -59,6 +60,8 @@ public class BoardOverviewCtrl implements Initializable {
     private TextField highlightedTextField;
 
     private Card highlightedCard;
+
+    private int highlightedCardIndex;
 
     /**
      * @param server the server that you want to connect to
@@ -289,28 +292,36 @@ public class BoardOverviewCtrl implements Initializable {
                 }
             });
 
-
             HBox cardFinal = card;
-
-            cardFinal.setOnMouseEntered(event -> {
+            //highlightedTask = cardFinal;
+            EventHandler<MouseEvent>  handler = event -> {
 
                 if(highlightedTask!=null) {
-                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3");
+                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3",list);
+                    this.highlightedCard=null;
+                    this.highlightedTask=null;
                 }
-                setHighlightedTask(cardFinal, cards.get(finalI), "#000000");
+                setHighlightedTask(cardFinal, cards.get(finalI), "#000000",list,finalI);
                 System.out.println(highlightedCard.getTitle());
+                //cardFinal.setOnMouseEntered(null);
 
-            });
+            };
+            cardFinal.setOnMouseEntered(handler);
             cardFinal.setOnMouseExited(event -> {
-                System.out.println("when EXITING "+cards.get(finalI).getTitle());
-
+                //cardFinal.removeEventHandler(MouseEvent.MOUSE_ENTERED, handler);
+                //cardFinal.setOnMouseEntered(null);
             });
-            cardFinal.setOnKeyPressed(event ->{
-                if(event.getCode()==KeyCode.DOWN && getHighlightedTask()!=null /*&& cards.size()>finalI*/){
-
-                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3");
-                    System.out.println(highlightedCard.getTitle());
-                    setHighlightedTask((HBox)cardContainer.getChildren().get(finalI+1), cards.get(finalI+1), "#000000");
+            list.setOnKeyPressed(event1 ->{
+                if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null /*&& cards.size()>finalI*/){
+                    //cardFinal.removeEventHandler(MouseEvent.MOUSE_ENTERED, handler);
+                    //cardFinal.setOnMouseEntered(null);
+                    unHighlightTask(highlightedTask, highlightedCard, "#F5DEB3",list);
+                    this.highlightedCard = null;
+                    this.highlightedTask = null;
+                    //System.out.println(highlightedCard.getTitle());
+                    highlightedCardIndex=highlightedCardIndex+1;
+                    setHighlightedTask((HBox)cardContainer.getChildren().get(highlightedCardIndex),
+                            cards.get(highlightedCardIndex), "#000000",list, highlightedCardIndex);
                     System.out.println("New highlighted card is no "+highlightedCard.getTitle());
                 }
             });
@@ -351,19 +362,21 @@ public class BoardOverviewCtrl implements Initializable {
 
     public HBox getHighlightedTask(){return this.highlightedTask;}
 
-    public void setHighlightedTask(HBox l, Card card, String colorcode){
+    public void setHighlightedTask(HBox l, Card card, String colorcode, VBox vbox, int index){
         this.highlightedTask=l;
         l.setStyle(("-fx-background-color: #000000"));
         this.highlightedCard=card;
         server.editCardBackgroundColour(card, colorcode);
         card.setBgColour(colorcode);
-        l.requestFocus();
+        vbox.requestFocus();
+        this.highlightedCardIndex = index;
     }
-    public void unHighlightTask(HBox l, Card card, String colorcode){
+    public void unHighlightTask(HBox l, Card card, String colorcode, VBox xbox){
 
         l.setStyle("-fx-background-color: #F5DEB3");
         server.editCardBackgroundColour(card, colorcode);
         card.setBgColour(colorcode);
+        xbox.requestFocus();
        // l.setBgColour("#F2F3F4");
         //server.editCardBackgroundColour(l, "#F2F3F4");
         //System.out.println(l.getTitle());
