@@ -1,74 +1,63 @@
 /*package client.scenes;
 
+import commons.Column;
+import client.utils.ServerUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import client.utils.ServerUtils;
-import commons.Card;
 import javafx.scene.control.TextField;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-class AddTaskCtrlTest {
+class AddListCtrlTest {
 
-    private AddTaskCtrl addTaskCtrl;
-
-    @Mock
-    private ServerUtils server;
+    private AddListCtrl addListCtrl;
 
     @Mock
     private MainCtrl mainCtrl;
 
     @Mock
-    private TextField taskName;
+    private ServerUtils server;
+
+    @Mock
+    private TextField listName;
 
     @BeforeEach
     void setUp() {
         server = mock(ServerUtils.class);
-        taskName = mock(TextField.class);
+        listName = mock(TextField.class);
         mainCtrl = mock(MainCtrl.class);
+        //MockitoAnnotations.openMocks(this);
 
-        addTaskCtrl = new AddTaskCtrl(server, mainCtrl);
-        addTaskCtrl.setTaskName(taskName);
+        addListCtrl = new AddListCtrl(server, mainCtrl);
+        addListCtrl.setListName(listName);
     }
 
     @Test
     void testCancel() {
-        addTaskCtrl.cancel();
-        verify(taskName).clear();
-        verify(mainCtrl).showBoardOverview();
+        addListCtrl.cancel();
+        verify(listName, times(1)).clear();
+        verify(mainCtrl, times(1)).showBoardOverview();
     }
 
     @Test
-    void testGetCard() {
-        when(taskName.getText()).thenReturn("");
-        Card card1 = addTaskCtrl.getCard();
-        assertEquals("New List", card1.getTitle());
-        assertEquals(1L, card1.getColumnId());
-
-        when(taskName.getText()).thenReturn("Task 1");
-        card1 = addTaskCtrl.getCard();
-        assertEquals("Task 1", card1.getTitle());
-        assertEquals(1L, card1.getColumnId());
+    void testGetList() {
+        when(listName.getText()).thenReturn("Test List");
+        Column column = new Column("Test List",1 );
+        assertEquals(column, addListCtrl.getList());
+        when(listName.getText()).thenReturn("");
+        column = new Column("New List", 1);
+        assertEquals(column, addListCtrl.getList());
     }
 
     @Test
     void testConfirm() {
-        when(taskName.getText()).thenReturn("Task 1");
-        addTaskCtrl.confirm();
-        verify(server).addCard(any(Card.class));
-        verify(taskName).clear();
-        verify(mainCtrl).showBoardOverview();
+        when(listName.getText()).thenReturn("Test List");
+        addListCtrl.confirm();
+        verify(server, times(1)).addColumn(new Column("Test List",1));
+        verify(listName, times(1)).clear();
+        verify(mainCtrl, times(1)).showBoardOverview();
     }
-
-    @Test
-    void testShowTaskDetails(){
-        addTaskCtrl.showTaskDetails();
-        verify(mainCtrl, times(1)).showTaskDetails();
-    }
-
-
 }*/

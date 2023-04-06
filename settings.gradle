@@ -3,6 +3,3 @@ rootProject.name = 'quizzzz'
 include 'client'
 include 'server'
 include 'commons'
-include 'wsclient'
-include 'wsclient'
-
