@@ -1,6 +1,12 @@
 package server.api;
 
-import static org.junit.jupiter.api.Assertions.*;
+import commons.Card;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import server.services.CardService;
+import server.services.ColumnService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,6 +24,8 @@ import commons.Card;
 import server.services.CardService;
 import server.services.ColumnService;
 import server.services.SubtaskService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 class CardControllerTest {
