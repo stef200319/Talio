@@ -14,11 +14,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -56,7 +54,9 @@ public class BoardOverviewCtrl implements Initializable {
 
 
     @FXML
-    private Card highlightedTask;
+    private HBox highlightedTask;
+
+    private TextField highlightedTextField;
 
     /**
      * @param server the server that you want to connect to
@@ -244,7 +244,7 @@ public class BoardOverviewCtrl implements Initializable {
 
             Label s = new Label(cards.get(i).getTitle());
 
-            s.setMaxWidth(80);
+
             Font fontList = Font.font(cards.get(i).getFontType(),
                     cards.get(i).isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
                     cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
@@ -287,27 +287,33 @@ public class BoardOverviewCtrl implements Initializable {
                 }
             });
 
-            s.requestFocus();
 
-            s.setOnMouseEntered(event -> {
-                s.requestFocus();
-                setHighlightedTask(cards.get(finalI));
-                s.requestFocus();
-                //System.out.println(this.highlightedTask.getText());
+            HBox cardFinal = card;
+
+            cardFinal.setOnMouseEntered(event -> {
+
+
+                setHighlightedTask(cardFinal);
+                System.out.println("New highlighted card is "+highlightedTask.getChildren().get(0).toString());
+
             });
-            s.setOnMouseExited(event -> {
-                s.requestFocus();
-                unHighlightTask(cards.get(finalI));
-                s.requestFocus();
-               // System.out.println(this.highlightedTask.getText());
+            cardFinal.setOnMouseExited(event -> {
+                if(highlightedTask!=null)
+                unHighlightTask(highlightedTask);
+                setHighlightedTask(cardFinal);
+
             });
-            s.setOnKeyPressed(event ->{
+            cardFinal.setOnKeyPressed(event ->{
                 if(event.getCode()==KeyCode.DOWN && getHighlightedTask()!=null /*&& cards.size()>finalI*/){
-                    System.out.println("New highlighted card is "+getHighlightedTask().getTitle());
-                    unHighlightTask(getHighlightedTask());
+
+                    unHighlightTask(highlightedTask);
                     System.out.println("Pressed down key");
-                    setHighlightedTask(cards.get(finalI));
-                    System.out.println("New highlighted card is "+getHighlightedTask().getTitle());
+                    System.out.println(highlightedTask.getChildren().get(0).toString());
+                    setHighlightedTask((HBox)cardContainer.getChildren().get(finalI+1));
+                    //highlightedTask.setStyle(("-fx-background-color: #6e0518"));
+                    //highlightedTask.requestFocus();
+                    //cardFinal = highlightedTask;
+                    System.out.println("New highlighted card is no "+highlightedTask.getChildren().get(0).toString());
                 }
             });
 
@@ -356,17 +362,22 @@ public class BoardOverviewCtrl implements Initializable {
         columnContainer.getChildren().add(list);
     }
 
-    public Card getHighlightedTask(){return this.highlightedTask;}
+    public HBox getHighlightedTask(){return this.highlightedTask;}
 
-    public void setHighlightedTask(Card l){
+    public void setHighlightedTask(HBox l){
         this.highlightedTask=l;
+        l.setStyle(("-fx-background-color: #000000"));
+        l.requestFocus();
         //l.setBgColour("#F5DEB3");
         //server.editCardBackgroundColour(l, "#F5DEB3");
         //System.out.println(this.highlightedTask.getTitle());
         //l.setStyle(("-fx-background-color: #F5DEB3"));
     }
-    public void unHighlightTask(Card l){
+    public void unHighlightTask(HBox l){
+
+        l.setStyle("-fx-background-color: #F5DEB3");
         //this.highlightedTask=null;
+
        // l.setBgColour("#F2F3F4");
         //server.editCardBackgroundColour(l, "#F2F3F4");
         //System.out.println(l.getTitle());
