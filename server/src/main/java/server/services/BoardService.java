@@ -73,7 +73,7 @@ public class BoardService {
         RESTEvent event = new RESTEvent(board, "board was edited");
         applicationEventPublisher.publishEvent(event);
 
-        return boardRepository.save(board);
+        return save(board);
     }
 
     /**
@@ -99,5 +99,14 @@ public class BoardService {
      */
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
+    }
+
+    /**
+     * method that saves a board in the database
+     * @param board the board to be saved
+     * @return the saved board
+     */
+    public Board save(Board board) {
+        return boardRepository.save(board);
     }
 }
