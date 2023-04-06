@@ -1,6 +1,7 @@
 package server.api;
 
 import commons.Card;
+import commons.CardTag;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -349,6 +350,19 @@ public class CardController {
         if(subtasks == null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(subtasks);
+    }
+
+    /**
+     * Gets the cardTags given a cardId
+     * @param cardId
+     * @return list of cardTags
+     */
+    @GetMapping("/getCardTagsByCardId/{cardId}")
+    @ResponseBody public ResponseEntity<List<CardTag>> getCardTagsByCardId(@PathVariable("cardId") long cardId) {
+        if (!cardService.existsById(cardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(cardService.getCardTagsByCardId(cardId));
     }
 
 }

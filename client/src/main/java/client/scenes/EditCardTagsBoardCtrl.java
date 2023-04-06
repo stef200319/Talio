@@ -161,6 +161,12 @@ public class EditCardTagsBoardCtrl implements Initializable {
                             label.setText("");
                         }
                         else {
+                            if (cardTag.equals(selectedCardTag)) {
+                                label.setStyle("-fx-text-fill: black; -fx-font-weight: bold;");
+                            }
+                            else {
+                                label.setStyle("-fx-text-fill: black;");
+                            }
                             coloredSquare.setStyle("-fx-background-color:" + cardTag.getColor() + ";");
                             label.setText(cardTag.getTitle());
                             setGraphic(container);

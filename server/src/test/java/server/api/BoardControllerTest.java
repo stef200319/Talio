@@ -61,7 +61,7 @@ class BoardControllerTest {
                 columnService, boardService, cardService);
         cardTagController = new CardTagController(cardTagRepository, boardRepository, cardRepository);
         boardController = new BoardController(boardService, columnService, cardTagRepository, cardTagController,
-                boardRepository);
+                boardRepository, cardService);
 
     }
 

@@ -152,6 +152,11 @@ public class CardTagController {
         return ResponseEntity.ok(cardTag);
     }
 
+    /**
+     * Gets the cardTags given a certain boardId
+     * @param boardId
+     * @return list of cardTags
+     */
     @GetMapping("/getCardTagsByBoardId/{boardId}")
     @ResponseBody public ResponseEntity<List<CardTag>> getCardTagsByBoardId(@PathVariable("boardId") long boardId) {
         if (!boardRepository.existsById(boardId)) {
@@ -178,4 +183,6 @@ public class CardTagController {
             }
         }
     }
+
+
 }

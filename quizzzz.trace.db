@@ -2330,3 +2330,9 @@ Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection wa
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:622)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	... 18 more
+2023-04-06 09:17:08 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]\OWNED_TAGS_CARD"; SQL statement:
+\OWNED_TAGS_CARD [42000-200]
+2023-04-06 09:17:25 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]\CARD_TAG"; SQL statement:
+\CARD_TAG [42000-200]

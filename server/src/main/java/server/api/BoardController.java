@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import server.database.CardTagRepository;
 import server.database.BoardRepository;
 import server.services.BoardService;
+import server.services.CardService;
 import server.services.ColumnService;
 
 import java.util.HashSet;
@@ -23,6 +24,7 @@ public class BoardController {
 //
 
     private final BoardRepository boardRepository;
+    private final CardService cardService;
 
 
     /**
@@ -31,15 +33,18 @@ public class BoardController {
      * @param boardRepository boardRepo
      * @param cardTagRepository cardTagRepo
      * @param cardTagController cardTagController
+     * @param cardService
      */
     public BoardController(BoardService boardService, ColumnService columnService, CardTagRepository cardTagRepository,
-                           CardTagController cardTagController, BoardRepository boardRepository) {
+                           CardTagController cardTagController, BoardRepository boardRepository,
+                           CardService cardService) {
 
         this.boardRepository = boardRepository;
         this.boardService = boardService;
         this.columnService = columnService;
         this.cardTagRepository = cardTagRepository;
         this.cardTagController = cardTagController;
+        this.cardService = cardService;
 
     }
 
@@ -253,6 +258,21 @@ public class BoardController {
         }
 
         return ResponseEntity.ok(columnService.getByBoardId(boardId));
+    }
+
+    /**
+     * Gets a board by a CardId
+     * @param cardId
+     * @return the board
+     */
+    @GetMapping("getBoardByCardId/{cardId}")
+    @ResponseBody public ResponseEntity<Board> getBoardByCardId(@PathVariable("cardId") long cardId) {
+        if (!cardService.existsById(cardId)) return ResponseEntity.badRequest().build();
+
+        Long columnId = cardService.getById(cardId).getColumnId();
+        Long boardId = columnService.getById(columnId).getBoardId();
+        Board board = boardService.getByBoardId(boardId);
+        return ResponseEntity.ok(board);
     }
 
 

@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 
 public class TaskDetailsCtrl {
     private Card cardToShow;
+
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
@@ -100,5 +101,12 @@ public class TaskDetailsCtrl {
     public void showBoardOverview() {
         mainCtrl.showOverview();
 
+    }
+
+    /**
+     * shows the addCardTagsToCard scene
+     */
+    public void showEditCardTagsToCard() {
+        mainCtrl.showAddCardTagsToCard(cardToShow);
     }
 }

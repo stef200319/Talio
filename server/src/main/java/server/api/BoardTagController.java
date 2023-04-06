@@ -142,6 +142,10 @@ public class BoardTagController {
         return ResponseEntity.ok(boardTag);
     }
 
+    /**
+     * Gets all the boardTags
+     * @return list of boardTags
+     */
     @GetMapping("/getAllBoardTags")
     @ResponseBody public ResponseEntity<List<BoardTag>> getAllBoardTags() {
         return ResponseEntity.ok(boardTagRepository.findAll());

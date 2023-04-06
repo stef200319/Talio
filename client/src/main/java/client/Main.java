@@ -91,7 +91,9 @@ public class Main extends Application {
 
         var editCardTagsBoard = FXML.load(EditCardTagsBoardCtrl.class,
                 "client", "scenes", "EditCardTagsBoard.fxml");
-        
+
+        var addCardTagsToCard = FXML.load(AddCardTagsToCardCtrl.class,
+                "client", "scenes", "AddCardTagsToCard.fxml");
 
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
@@ -100,7 +102,7 @@ public class Main extends Application {
                 addTask, taskManagement, workspace,createBoard, editCardTitle, editCardDescription,
                 editList, editBoardTitle,
                 viewSubtasks, customizeCard, customizeList, editSubtaskTitle, confirmDeleteColumn,
-                confirmDeleteBoard, help, editCardTagsBoard);
+                confirmDeleteBoard, help, editCardTagsBoard, addCardTagsToCard);
                 
 
 

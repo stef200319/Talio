@@ -779,4 +779,32 @@ public class ServerUtils {
                 .get(new GenericType<List<CardTag>>() {});
     }
 
+    /**
+     * Gets all the cardTags given a cardId
+     * @param cardId
+     * @return a List of cardTags
+     */
+    public List<CardTag> getCardTagsByCardId(Long cardId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/getCardTagsByCardId/" + cardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<CardTag>>() {});
+    }
+
+    /**
+     * Gets the board given a certain CardId
+     * @param cardId
+     * @return the board
+     */
+    public Board getBoardByCardId(Long cardId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/getBoardByCardId/" + cardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<Board>() {});
+    }
+
 }

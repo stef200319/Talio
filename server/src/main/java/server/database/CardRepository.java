@@ -40,4 +40,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
      */
     @Query("SELECT c.subtasks FROM Card c WHERE c.id = :cardId")
     List<Subtask> findSubtasksByCardId(Long cardId);
+
+
 }

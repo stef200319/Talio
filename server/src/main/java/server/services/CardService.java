@@ -1,6 +1,7 @@
 package server.services;
 
 import commons.Card;
+import commons.CardTag;
 import commons.Subtask;
 import org.springframework.stereotype.Service;
 import server.database.CardRepository;
@@ -257,6 +258,16 @@ public class CardService {
         if(subtasks == null)
             return new ArrayList<Subtask>();
         return subtasks;
+    }
+
+    /**
+     * Gets the cardTags given a certain cardId
+     * @param cardId
+     * @return list of cardTags
+     */
+    public List<CardTag> getCardTagsByCardId(long cardId) {
+        if (!existsById(cardId)) return null;
+        return cardRepository.getById(cardId).getCardTags();
     }
 
 }

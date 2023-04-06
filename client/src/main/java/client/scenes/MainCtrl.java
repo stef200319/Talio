@@ -90,6 +90,9 @@ public class MainCtrl {
     private EditCardTagsBoardCtrl editCardTagsBoardCtrl;
     private Scene editCardTagsBoard;
 
+    private AddCardTagsToCardCtrl addCardTagsToCardCtrl;
+    private Scene addCardTagsToCard;
+
 
     /**
      * @param primaryStage
@@ -113,6 +116,7 @@ public class MainCtrl {
      * @param confirmDeleteBoard
      * @param help
      * @param editCardTagsBoard
+     * @param addCardTagsToCard
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -131,10 +135,8 @@ public class MainCtrl {
                            Pair<EditSubtaskTitleCtrl, Parent> editSubtaskTitle,
                            Pair<ConfirmDeleteColumnCtrl, Parent> confirmDeleteColumn,
                            Pair<ConfirmDeleteBoardCtrl, Parent> confirmDeleteBoard, Pair<HelpCtrl, Parent> help,
-                           Pair<EditCardTagsBoardCtrl, Parent> editCardTagsBoard) {
-
-
-
+                           Pair<EditCardTagsBoardCtrl, Parent> editCardTagsBoard,
+                           Pair<AddCardTagsToCardCtrl, Parent> addCardTagsToCard) {
 
         this.primaryStage = primaryStage;
 
@@ -225,6 +227,8 @@ public class MainCtrl {
         this.editCardTagsBoardCtrl = editCardTagsBoard.getKey();
         this.editCardTagsBoard = new Scene(editCardTagsBoard.getValue());
 
+        this.addCardTagsToCardCtrl = addCardTagsToCard.getKey();
+        this.addCardTagsToCard = new Scene(addCardTagsToCard.getValue());
 
         showClientConnect();
         primaryStage.show();
@@ -559,6 +563,16 @@ public class MainCtrl {
         editCardTagsBoardCtrl.setBoardId(boardId);
         primaryStage.setTitle("Edit Card Tags");
         primaryStage.setScene(editCardTagsBoard);
+    }
+
+    /**
+     * shows the addCardTagsToCard scene
+     * @param card
+     */
+    public void showAddCardTagsToCard(Card card) {
+        addCardTagsToCardCtrl.setCard(card);
+        primaryStage.setTitle("Add Card Tags to Card");
+        primaryStage.setScene(addCardTagsToCard);
     }
 
 
