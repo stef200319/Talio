@@ -4,32 +4,19 @@ import client.utils.LongPolling;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Board;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import javafx.scene.control.TableColumn;
 import javafx.scene.input.MouseEvent;
 
@@ -64,6 +51,7 @@ public class WorkspaceCtrl implements Initializable{
      *
      * @param server the server connected to
      * @param mainCtrl the main controller
+     * @param longPolling long polling in utils
      */
     @Inject
     public WorkspaceCtrl(ServerUtils server, MainCtrl mainCtrl, LongPolling longPolling) {
@@ -122,13 +110,13 @@ public class WorkspaceCtrl implements Initializable{
         });
 
         tableView.setOnKeyPressed(event -> {
-                if (event.getCode() == KeyCode.ENTER) {
-                    Board selectedBoard = tableView.getSelectionModel().getSelectedItem();
-                    if (selectedBoard != null) {
-                        mainCtrl.showBoardOverview(selectedBoard.getId());
-                    }
+            if (event.getCode() == KeyCode.ENTER) {
+                Board selectedBoard = tableView.getSelectionModel().getSelectedItem();
+                if (selectedBoard != null) {
+                    mainCtrl.showBoardOverview(selectedBoard.getId());
                 }
-            });
+            }
+        });
 
 
 //        Short Polling
