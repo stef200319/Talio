@@ -12,9 +12,6 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
-repositories {
-	mavenCentral()
-}
 
 dependencies {
 	implementation project(":commons")
@@ -27,14 +24,9 @@ dependencies {
 	
 	implementation 'com.google.inject:guice:5.0.1'
 	
+	
+	
 	implementation 'org.openjfx:javafx-controls:17.0.2'
 	implementation 'org.openjfx:javafx-fxml:17.0.2'
-
-	// Spring WebSocket and STOMP
-	implementation 'org.springframework.boot:spring-boot-starter-websocket:2.6.3'
-	implementation 'org.springframework:spring-messaging:5.3.20'
-	implementation group: 'org.webjars.npm', name: 'webstomp-client', version:'1.2.6'
-
-
-
+	
 }
