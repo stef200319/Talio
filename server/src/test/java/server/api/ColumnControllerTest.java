@@ -1,10 +1,18 @@
 package server.api;
 
+import commons.Board;
 import commons.Card;
 import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 import server.database.BoardRepository;
 import server.database.CardRepository;
 import server.database.ColumnRepository;
@@ -21,7 +29,11 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 class ColumnControllerTest {
+
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     private ColumnController columnController;
 
@@ -53,6 +65,8 @@ class ColumnControllerTest {
         columnController = new ColumnController(columnRepository,boardRepository,cardRepository,
                 cardController, columnService, boardService, cardService);
 //        columnController = new ColumnController(columnService, boardService, cardService);
+        columnService.setApplicationEventPublisher(applicationEventPublisher);
+
     }
 
     @Test
