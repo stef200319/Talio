@@ -170,7 +170,7 @@ public class BoardOverviewCtrl implements Initializable {
         centerPane.setStyle("-fx-background-color: "+currentBoard.getCenterColour());
 
         List<Column> columns = server.getColumnsByBoardId(boardID);
-        for(int i=0;i<columns.size();i++)
+        for (int i = 0; i < columns.size(); i++)
             createList(columns.get(i));
     }
 
@@ -409,6 +409,13 @@ public class BoardOverviewCtrl implements Initializable {
         this.boardID = boardID;
     }
 
+
+    /**
+     * Shows the editCardTagsBoard scene
+     */
+    public void showEditCardTagsBoard() {
+        mainCtrl.showEditCardTagsBoard(boardID);
+    }
     /**
      * Delete the board
      */

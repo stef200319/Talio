@@ -61,9 +61,8 @@ class ColumnControllerTest {
         subtaskService = new SubtaskService(subtaskRepository);
 
 
-        cardController = new CardController(cardService, columnService, subtaskService, cardRepository);
-        columnController = new ColumnController(columnRepository,boardRepository,cardRepository,
-                cardController, columnService, boardService, cardService);
+        cardController = new CardController(cardService, columnService, subtaskService);
+        columnController = new ColumnController(columnRepository, columnService, boardService, cardService);
 //        columnController = new ColumnController(columnService, boardService, cardService);
         columnService.setApplicationEventPublisher(applicationEventPublisher);
 

@@ -5,6 +5,7 @@ import commons.CardTag;
 import org.springframework.stereotype.Service;
 import server.database.CardTagRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -125,4 +126,16 @@ public class CardTagService {
     {
         return cardTagRepository.save(cardTag);
     }
+
+    /**
+     * finds all the cardTags given a board
+     * @param board
+     * @return list of cardtags
+     */
+    public List<CardTag> findCardTagsByBoard(Board board) {
+        List<CardTag> cardTags = cardTagRepository.findCardTagsByBoard(board);
+        if (cardTags == null) return new ArrayList<>();
+        return cardTags;
+    }
+
 }

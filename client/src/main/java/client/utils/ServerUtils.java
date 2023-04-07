@@ -615,23 +615,6 @@ public class ServerUtils {
     }
 
 
-
-
-    /**
-     * Method that edits the title of a Subtask
-     * @param s Subtask to edit
-     * @param title new title
-     * @return new Subtask entity
-     */
-    public Subtask editSubtaskTitle(Subtask s, String title) {
-        long subtaskID = s.getId();
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER)
-                .path("subtask/editSubtaskTitle/" + subtaskID + "/" + title)
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .put(Entity.entity(s, APPLICATION_JSON), Subtask.class);
-    }
      /**
      * Method that returns a card by its id
      * @param id id of the card
@@ -676,94 +659,147 @@ public class ServerUtils {
             .put(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
     }
 
-    /**
-     * Method that adds a subtask to a card
-     * @param cardId id of the card to add the subtask to
-     * @param subtaskTitle title of the new subtask
-     * @return the new card with updated subtasks
+
+
+
+
+
+
+
+    /** Method that adds a cardTag to a board so that cards inside of that board can make use of that tag
+     * @param cardTag
+     * @param boardId
+     * @return CardTag that is added
      */
-    public Card addSubtask(long cardId, String subtaskTitle) {
+    public CardTag addCardTagToBoard(CardTag cardTag, long boardId) {
+        String title = cardTag.getTitle();
+        String color = cardTag.getColor();
         return ClientBuilder.newClient(new ClientConfig())
-            .target(SERVER)
-            .path("card/addSubtask/" + cardId + "/" + subtaskTitle)
-            .request(APPLICATION_JSON)
-            .accept(APPLICATION_JSON)
-            .post(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
+                .target(SERVER)
+                .path("cardTag/addCardTagToBoard/" + title + "/" + color + "/" + boardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(cardTag, APPLICATION_JSON), CardTag.class);
     }
 
     /**
-     * Gets a subtask by its id
-     * @param subtaskId id of the subtask
-     * @return the subtask with that id
+     * Method that deletes a cardTag from a board
+     * @param cardTag
+     * @return Response
      */
-    public Subtask getSubtaskById(long subtaskId) {
+    public Response deleteCardTagFromBoard(CardTag cardTag) {
+        long cardTagId = cardTag.getId();
         return ClientBuilder.newClient(new ClientConfig())
-            .target(SERVER)
-            .path("subtask/getSubtaskById/" + subtaskId)
-            .request(APPLICATION_JSON)
-            .accept(APPLICATION_JSON)
-            .get(new GenericType<Subtask>() {});
+                .target(SERVER)
+                .path("cardTag/deleteCardTagFromBoard/" + cardTagId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .delete();
     }
 
     /**
-     * Changes the status of a subtask
-     * @param subtaskId id of the subtask to be changed
-     * @param status new status of the subtask
-     * @return the new status with an updated status
+     * Adds CardTag to Card
+     * @param cardTag
+     * @param cardId
+     * @return the added CardTag
      */
-    public Subtask editSubtaskStatus(long subtaskId, boolean status) {
+    public CardTag addCardTagToCard(CardTag cardTag, long cardId) {
+        long cardTagId = cardTag.getId();
         return ClientBuilder.newClient(new ClientConfig())
-            .target(SERVER)
-            .path("subtask/editSubtaskStatus/" + subtaskId + "/" + status)
-            .request(APPLICATION_JSON)
-            .accept(APPLICATION_JSON)
-            .put(Entity.entity(getSubtaskById(subtaskId), APPLICATION_JSON), Subtask.class);
+                .target(SERVER)
+                .path("cardTag/addCardTagToCard/" + cardTagId + "/" + cardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(cardTag, APPLICATION_JSON), CardTag.class);
     }
 
     /**
-     * Change a position of a subtask in a card
-     * @param cardId id of the card the subtask is in
-     * @param oldPos old position of the subtask
-     * @param newPos new position of the subtask
-     * @return the card with specified cardId and updated subtasks
+     * Deletes a CardTag from a Card
+     * @param cardTag
+     * @param cardId
+     * @return Response
      */
-    public Card changeSubtaskPosition(long cardId, int oldPos, int newPos) {
+    public Response deleteCardTagFromCard(CardTag cardTag, long cardId){
+        long cardTagId = cardTag.getId();
         return ClientBuilder.newClient(new ClientConfig())
-            .target(SERVER)
-            .path("card/changeSubtaskPosition/" + cardId + "/" + oldPos + "/" + newPos)
-            .request(APPLICATION_JSON)
-            .accept(APPLICATION_JSON)
-            .put(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
+                .target(SERVER)
+                .path("cardTag/deleteCardTagFromCard/" + cardTagId + "/" + cardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .delete();
     }
 
     /**
-     * Deletes a subtask
-     * @param subtaskId subtask to be deleted
-     * @return response
+     * Edits the CardTag title
+     * @param cardTag
+     * @param title
+     * @return CardTag that is edited
      */
-    public Response deleteSubtask(long subtaskId) {
+    public CardTag editCardTagTitle(CardTag cardTag, String title) {
+        long cardTagId = cardTag.getId();
         return ClientBuilder.newClient(new ClientConfig())
-            .target(SERVER)
-            .path("subtask/deleteSubtask/" + subtaskId)
-            .request(APPLICATION_JSON)
-            .accept(APPLICATION_JSON)
-            .delete();
+                .target(SERVER)
+                .path("cardTag/editCardTagTitle/" + cardTagId + "/" + title)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(cardTag, APPLICATION_JSON), CardTag.class);
     }
 
     /**
-     * Deletes a subtask from a card
-     * @param cardId id of the card the subtask is in
-     * @param subtaskId id of the subtask to be deleted
-     * @return response
+     * Edits the CardTag color
+     * @param cardTag
+     * @param color
+     * @return the CardTag that is edited
      */
-    public Response deleteSubtaskFromCard(long cardId, long subtaskId) {
+    public CardTag editCardTagColor(CardTag cardTag, String color) {
+        long cardTagId = cardTag.getId();
         return ClientBuilder.newClient(new ClientConfig())
-            .target(SERVER)
-            .path("card/deleteSubtask/" + cardId + "/" + subtaskId)
-            .request(APPLICATION_JSON)
-            .accept(APPLICATION_JSON)
-            .delete();
+                .target(SERVER)
+                .path("cardTag/editCardTagColor/" + cardTagId + "/" + color)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(cardTag, APPLICATION_JSON), CardTag.class);
     }
+
+    /**
+     * Gets cardTagsByBoardId
+     * @param boardId
+     * @return list of card Tags
+     */
+    public List<CardTag> getCardTagsByBoardId(long boardId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("cardTag/getCardTagsByBoardId/" + boardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<CardTag>>() {});
+    }
+
+    /**
+     * Gets all the cardTags given a cardId
+     * @param cardId
+     * @return a List of cardTags
+     */
+    public List<CardTag> getCardTagsByCardId(Long cardId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/getCardTagsByCardId/" + cardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<CardTag>>() {});
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Adds a board tag
@@ -830,17 +866,16 @@ public class ServerUtils {
      * @param boardTag the board tag to be deleted
      * @return response
      */
-    public Response deleteBoardTagFromBoard(long boardId, BoardTag boardTag)
-    {
+    public Response deleteBoardTagFromBoard(long boardId, BoardTag boardTag) {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)
-                .path("boardTag/deleteBoardTagFromBoard/"+boardTag.getId()+"/"+boardId)
+                .path("boardTag/deleteBoardTagFromBoard/" + boardTag.getId() + "/" + boardId)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .delete();
     }
 
-    /**
+     /**
      * edits the color of a board tag
      * @param boardTag the board tag that is going to be edited
      * @param color the new color
@@ -870,6 +905,147 @@ public class ServerUtils {
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .post(Entity.entity(boardTag, APPLICATION_JSON), BoardTag.class);
+    }
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Gets the board given a certain CardId
+     * @param cardId
+     * @return the board
+     */
+    public Board getBoardByCardId(Long cardId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/getBoardByCardId/" + cardId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<Board>() {});
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Method that adds a subtask to a card
+     * @param cardId id of the card to add the subtask to
+     * @param subtaskTitle title of the new subtask
+     * @return the new card with updated subtasks
+     */
+    public Card addSubtask(long cardId, String subtaskTitle) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/addSubtask/" + cardId + "/" + subtaskTitle)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Gets a subtask by its id
+     * @param subtaskId id of the subtask
+     * @return the subtask with that id
+     */
+    public Subtask getSubtaskById(long subtaskId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("subtask/getSubtaskById/" + subtaskId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<Subtask>() {});
+    }
+
+    /**
+     * Changes the status of a subtask
+     * @param subtaskId id of the subtask to be changed
+     * @param status new status of the subtask
+     * @return the new status with an updated status
+     */
+    public Subtask editSubtaskStatus(long subtaskId, boolean status) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("subtask/editSubtaskStatus/" + subtaskId + "/" + status)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(getSubtaskById(subtaskId), APPLICATION_JSON), Subtask.class);
+    }
+
+    /**
+     * Change a position of a subtask in a card
+     * @param cardId id of the card the subtask is in
+     * @param oldPos old position of the subtask
+     * @param newPos new position of the subtask
+     * @return the card with specified cardId and updated subtasks
+     */
+    public Card changeSubtaskPosition(long cardId, int oldPos, int newPos) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/changeSubtaskPosition/" + cardId + "/" + oldPos + "/" + newPos)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
+    }
+
+    /**
+     * Deletes a subtask
+     * @param subtaskId subtask to be deleted
+     * @return response
+     */
+    public Response deleteSubtask(long subtaskId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("subtask/deleteSubtask/" + subtaskId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .delete();
+    }
+
+    /**
+     * Deletes a subtask from a card
+     * @param cardId id of the card the subtask is in
+     * @param subtaskId id of the subtask to be deleted
+     * @return response
+     */
+    public Response deleteSubtaskFromCard(long cardId, long subtaskId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("card/deleteSubtask/" + cardId + "/" + subtaskId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .delete();
+    }
+
+    /**
+     * Method that edits the title of a Subtask
+     * @param s Subtask to edit
+     * @param title new title
+     * @return new Subtask entity
+     */
+    public Subtask editSubtaskTitle(Subtask s, String title) {
+        long subtaskID = s.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("subtask/editSubtaskTitle/" + subtaskID + "/" + title)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(s, APPLICATION_JSON), Subtask.class);
     }
 
 }
