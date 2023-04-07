@@ -47,6 +47,8 @@ public class User {
      * @return whether the id is present
      */
     public boolean containsBoardId(long id) {
+        if(boardIds==null)
+            return false;
         return boardIds.contains(id);
     }
 
