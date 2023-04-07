@@ -101,6 +101,10 @@ public class MainCtrl {
     private AddCardTagsToCardCtrl addCardTagsToCardCtrl;
     private Scene addCardTagsToCard;
 
+    private JoinBoardByKeyCtrl joinBoardByKeyCtrl;
+
+    private Scene joinBoardByKey;
+
 
     /**
      * @param primaryStage
@@ -127,6 +131,7 @@ public class MainCtrl {
      * @param help
      * @param editCardTagsBoard
      * @param addCardTagsToCard
+     * @param joinBoardByKey
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
     public void initialize(Stage primaryStage,
@@ -147,7 +152,8 @@ public class MainCtrl {
                            Pair<HelpCtrl, Parent> help,
                            Pair<AddSubtaskCtrl, Parent> addSubtask,
                            Pair<EditCardTagsBoardCtrl, Parent> editCardTagsBoard,
-                           Pair<AddCardTagsToCardCtrl, Parent> addCardTagsToCard) {
+                           Pair<AddCardTagsToCardCtrl, Parent> addCardTagsToCard,
+                           Pair<JoinBoardByKeyCtrl, Parent> joinBoardByKey) {
         this.primaryStage = primaryStage;
 
         this.addListCtrl = add.getKey();
@@ -199,8 +205,11 @@ public class MainCtrl {
         this.helpCtrl = help.getKey();
         this.help = new Scene(help.getValue());
 
-        this.help.setOnKeyPressed(helpCtrl.getBackToPreviousScene());
+        this.joinBoardByKeyCtrl = joinBoardByKey.getKey();
+        this.joinBoardByKey = new Scene(joinBoardByKey.getValue());
 
+        this.help.setOnKeyPressed(helpCtrl.getBackToPreviousScene());
+        this.joinBoardByKey.setOnKeyPressed(getKeyboardShortcuts());
         this.boardOverview.setOnKeyPressed(getKeyboardShortcuts());
         this.clientConnect.setOnKeyPressed(getKeyboardShortcuts());
         this.addTask.setOnKeyPressed(getKeyboardShortcuts());
@@ -440,8 +449,8 @@ public class MainCtrl {
     /**
 
      * private event handler for a key event that listens
-     *       for the CTRL+?, CTRL+E, ESCAPE  keys to be pressed
-     * when the "CTRL+?" keys are pressed, the method setPreviousSceneAndTitle()
+     *       for the ?,  ESCAPE  keys to be pressed
+     * when the "SHIFT+/" keys are pressed, the method setPreviousSceneAndTitle()
      *       to save the previous scene and scene title values and then showHelpScreen() method
      *       is called to show the help screen
      * when the ESCAPE key is pressed and the user is in the Task Details scene, the method showBoardOverview()
@@ -451,7 +460,7 @@ public class MainCtrl {
     private EventHandler<KeyEvent> keyboardShortcuts = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            if(event.isControlDown() && event.getCode()== KeyCode.SLASH)
+            if(event.isShiftDown() && event.getCode()== KeyCode.SLASH)
             {
                 setPreviousSceneAndTitle();
                 showHelpScreen();
@@ -604,6 +613,8 @@ public class MainCtrl {
         clipboard.setContent(content);
     }
 
+
+
     /**
      * Shows the editCardTagsBoard scene
      * @param boardId
@@ -613,7 +624,12 @@ public class MainCtrl {
         primaryStage.setTitle("Edit Card Tags");
         primaryStage.setScene(editCardTagsBoard);
     }
+    public void showJoinBoard(Long boardId){
 
+        primaryStage.setTitle("Join board by key");
+        this.primaryStage.setScene(joinBoardByKey);
+        joinBoardByKeyCtrl.setPrevBoardId(boardId);
+    }
     /**
      * shows the addCardTagsToCard scene
      * @param card

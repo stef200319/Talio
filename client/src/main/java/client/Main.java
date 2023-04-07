@@ -94,6 +94,8 @@ public class Main extends Application {
 
         var addCardTagsToCard = FXML.load(AddCardTagsToCardCtrl.class,
                 "client", "scenes", "AddCardTagsToCard.fxml");
+        var joinBoardByKey = FXML.load(JoinBoardByKeyCtrl.class, "client",
+                "scenes", "JoinBoardByKey.fxml");
 
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
@@ -101,7 +103,7 @@ public class Main extends Application {
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
                 addTask, taskManagement, workspace, createBoard, editCardTitle, editCardDescription, editList,
             editBoardTitle, viewSubtasks, customizeCard, customizeList, customizeBoard, editSubtaskTitle,
-            confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard, addCardTagsToCard);
+            confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard, addCardTagsToCard, joinBoardByKey);
 
 
     }
