@@ -27,6 +27,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -460,6 +461,9 @@ public class MainCtrl {
             if(event.getCode()==KeyCode.ESCAPE && getCurrentSceneTitle().equals("Task Details"))
             {
 
+                boardOverviewCtrl.setHighlightedByKey(false);
+                HBox hbox = boardOverviewCtrl.getHighlightedTask();
+                boardOverviewCtrl.setHighlightedTask(hbox);
                 taskDetailsCtrl.showBoardOverview();
 
             }
