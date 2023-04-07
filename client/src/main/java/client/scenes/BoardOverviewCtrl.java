@@ -1,11 +1,15 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Board;
 import commons.Card;
 import commons.Column;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,6 +18,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -33,6 +39,8 @@ public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
+    private final Websocket websocket;
 
     private long boardID = Long.MIN_VALUE;
 
@@ -54,15 +62,26 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Label boardName;
 
+    @FXML
+    private TableView<Column> tableView;
+
+    @FXML
+    private TableColumn<Column, String> colListName;
+
+    private ObservableList<Column> data;
+
+    private List<Column> columnList;
+
 
     /**
      * @param server the server that you want to connect to
      * @param mainCtrl the main screen?
      */
     @Inject
-    public BoardOverviewCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public BoardOverviewCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.websocket = websocket;
 
     }
 
@@ -79,14 +98,32 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+
+        colListName.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTitle()));
+
+        websocket.registerForMessages("/topic/column", Column.class, c -> {
+            System.out.println("Working");
+
+//            createList(c); Not working
+
+//            data.add(c);   Must be implemented
+
+            // For testing
+            tableView.setStyle("-fx-background-color: red;");
+            System.out.println("Hey");
+        });
+
+
+
+//        Short polling
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    refresh();
+//                });
+//            }
+//        }, 0, 1000);
     }
 
     /**

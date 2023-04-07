@@ -3,6 +3,8 @@ package server.api;
 import commons.Card;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.database.BoardRepository;
 import server.database.CardRepository;
@@ -61,6 +63,12 @@ public class ColumnController {
         return columns.size() > 0? ResponseEntity.ok(columns) : ResponseEntity.notFound().build();
     }
 
+    @MessageMapping("/column")
+    @SendTo("/topic/column")
+    public Column addMessage(Column c) {
+        addColumn(c.getTitle(), c.getId());
+        return c;
+    }
 
     /**
      * @param columnId the id of the column which will be retrieved
