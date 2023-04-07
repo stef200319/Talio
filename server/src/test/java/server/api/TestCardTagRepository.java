@@ -291,6 +291,7 @@ public class TestCardTagRepository implements CardTagRepository {
      * @see EntityManager#getReference(Class, Object) for details on when an exception is thrown.
      * @deprecated use  instead.
      */
+    @Deprecated
     @Override
     public CardTag getOne(Long aLong) {
         return null;

@@ -3,15 +3,20 @@ package server.api;
 import commons.Board;
 import commons.CardTag;
 import commons.Column;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 import server.services.BoardService;
 import server.services.CardService;
 import server.services.CardTagService;
 import server.services.ColumnService;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("/board")
@@ -71,8 +76,40 @@ public class BoardController {
     @PostMapping("/addBoard/{title}")
     @ResponseBody public ResponseEntity<Board> addBoard(@PathVariable("title") String title) {
         Board board = boardService.add(title);
+
+        listeners.forEach((k, l) -> l.accept(board));
+
         return board == null?ResponseEntity.badRequest().build() : ResponseEntity.ok(board);
     }
+
+    //Listener for long polling
+    private Map<Object, Consumer<Board>> listeners = new HashMap<>();
+
+    /**
+     * Retrieves updates for the board.
+     *
+     * @return a DeferredResult containing a ResponseEntity with the board updates
+     * or a NO_CONTENT response if no updates are available
+     *
+     * @throws Exception if an error occurs while processing the request
+     */
+    @GetMapping("/updates")
+    @ResponseBody public DeferredResult<ResponseEntity<Board>> getUpdates() {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        var res = new DeferredResult<ResponseEntity<Board>>(5000L, noContent);
+
+        var key = new Object();
+        listeners.put(key, b -> {
+            res.setResult(ResponseEntity.ok(b));
+        });
+
+        res.onCompletion(() -> {
+            listeners.remove(key);
+        });
+
+        return res;
+    }
+
 
     /**
      * @param title the new title of the board

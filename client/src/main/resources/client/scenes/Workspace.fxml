@@ -2,14 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WorkspaceCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="417.0" prefWidth="538.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WorkspaceCtrl">
    <children>
       <Pane prefHeight="90.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
          <children>
@@ -38,14 +37,16 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="scrollPane" layoutX="61.0" layoutY="199.0" prefHeight="341.0" prefWidth="870.0">
-         <content>
-            <HBox fx:id="boardContainer" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="59.0" prefWidth="66.0" />
-         </content></ScrollPane>
-      <TextField fx:id="boardTitle" layoutX="700.0" layoutY="136.0" prefHeight="25.0" prefWidth="198.0" style="-fx-background-color: #e7e3db;">
+      <Button layoutX="427.0" layoutY="14.0" mnemonicParsing="false" onAction="#showClientConnect" style="-fx-background-color: #e0cda8;" text="Connect Server">
          <font>
             <Font size="14.0" />
          </font>
-      </TextField>
+      </Button>
+      <TableView fx:id="tableView" layoutX="162.0" layoutY="190.0" prefHeight="200.0" prefWidth="215.0">
+        <columns>
+          <TableColumn fx:id="colBoardName" prefWidth="181.0" text="Title" />
+            <TableColumn fx:id="colDeleteBoard" minWidth="0.0" prefWidth="33.0" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
