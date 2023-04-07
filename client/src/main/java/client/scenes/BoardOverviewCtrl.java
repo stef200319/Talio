@@ -386,7 +386,7 @@ public class BoardOverviewCtrl implements Initializable {
                 }
                 if(event1.getCode()==KeyCode.DELETE || event1.getCode()==KeyCode.BACK_SPACE)
                 {
-                    server.deleteCard(cards.get(finalI));
+                    server.deleteCard(this.highlightedCard);
 
                     refresh();
                 }
@@ -401,7 +401,7 @@ public class BoardOverviewCtrl implements Initializable {
                 if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null &&
                         highlightedCardIndex<cardContainer.getChildren().size()-1){
                     if(server.getCardsByColumnId(server.getColumnsByBoardId(boardID).
-                            get(highlightedListIndex).getId()).size()-1==this.highlightedCardIndex+1) {
+                            get(highlightedListIndex).getId()).size()-1>=this.highlightedCardIndex+1) {
                         highlightedByKey = true;
 
                         unHighlightTask(highlightedTask, cardContainer);
