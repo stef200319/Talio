@@ -13,8 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -218,7 +216,7 @@ public class BoardOverviewCtrl implements Initializable {
      */
 
 
-    @SuppressWarnings("checkstyle:MethodLength")
+    @SuppressWarnings({"checkstyle:MethodLength","checkstyle:CyclomaticComplexity"})
     public void createList(Column c) {
         VBox list=new VBox();
 
@@ -400,15 +398,18 @@ public class BoardOverviewCtrl implements Initializable {
                 {
                     //show pop up
                 }
-                if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null && highlightedCardIndex<cardContainer.getChildren().size()-1){
-                    if(server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1==this.highlightedCardIndex+1) {
+                if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null &&
+                        highlightedCardIndex<cardContainer.getChildren().size()-1){
+                    if(server.getCardsByColumnId(server.getColumnsByBoardId(boardID).
+                            get(highlightedListIndex).getId()).size()-1==this.highlightedCardIndex+1) {
                         highlightedByKey = true;
 
                         unHighlightTask(highlightedTask, cardContainer);
 
                         highlightedCardIndex = highlightedCardIndex + 1;
 
-                        setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
+                        setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex,
+                                        highlightedCardIndex),
                                 cardContainer, highlightedCardIndex, highlightedListIndex);
                     }
 
@@ -431,24 +432,34 @@ public class BoardOverviewCtrl implements Initializable {
                     highlightedByKey = true;
                     unHighlightTask(highlightedTask, cardContainer);
                     this.highlightedListIndex = highlightedListIndex-1;
-                    if(this.highlightedCardIndex>server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1)
+                    if(this.highlightedCardIndex>server.getCardsByColumnId(
+                            server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1)
                     {
-                        this.highlightedCardIndex = server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1;
+                        this.highlightedCardIndex = server.getCardsByColumnId(server.getColumnsByBoardId(boardID)
+                                .get(highlightedListIndex).getId()).size()-1;
                     }
 
-                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex) ,cardContainer, highlightedCardIndex, highlightedListIndex);
+                    setHighlightedTask(getCardToHiglight(columnContainer,
+                            highlightedListIndex, highlightedCardIndex) ,cardContainer, highlightedCardIndex,
+                            highlightedListIndex);
                 }
-                if(event1.getCode()==KeyCode.RIGHT && getHighlightedTask()!=null && highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1)
+                if(event1.getCode()==KeyCode.RIGHT && getHighlightedTask()!=null &&
+                        highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1)
                 {
                     highlightedByKey = true;
                     unHighlightTask(highlightedTask, cardContainer);
                     this.highlightedListIndex = highlightedListIndex+1;
-                    if(this.highlightedCardIndex>server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1)
+                    if(this.highlightedCardIndex>server.
+                            getCardsByColumnId(server.getColumnsByBoardId(boardID).
+                                    get(highlightedListIndex).getId()).size()-1)
                     {
-                        this.highlightedCardIndex = server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1;
+                        this.highlightedCardIndex = server.
+                                getCardsByColumnId(server.getColumnsByBoardId(boardID).
+                                        get(highlightedListIndex).getId()).size()-1;
                     }
-                    
-                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
+
+                    setHighlightedTask(getCardToHiglight(columnContainer,
+                                    highlightedListIndex, highlightedCardIndex),
                             cardContainer, highlightedCardIndex, highlightedListIndex);
 
                 }
@@ -486,20 +497,51 @@ public class BoardOverviewCtrl implements Initializable {
         columnContainer.getChildren().add(list);
     }
 
+    /**
+     * @return the currently highlighted task
+     */
     public HBox getHighlightedTask(){return this.highlightedTask;}
 
+    /**
+     * sets the newly highlighted card
+     * @param card
+     */
     public void setHighlightedCard(Card card){this.highlightedCard = card;}
+
+    /**
+     * sets the newly highlighted task
+     * @param hbox
+     */
     public void setHighlightedTask(HBox hbox){this.highlightedTask = hbox;}
+
+    /**
+     * method that changes the highlighted by key value
+     * @param bool
+     */
     public void setHighlightedByKey(boolean bool){this.highlightedByKey = bool;}
 
-    public HBox getCardToHiglight(HBox contain,  int indexList, int indexCard)
+    /**
+     * @param container
+     * @param indexList of the list that contains the card
+     * @param indexCard of the card
+     * @return the card to be highlighted
+     */
+
+    public HBox getCardToHiglight(HBox container,  int indexList, int indexCard)
     {
-        VBox list = (VBox)contain.getChildren().get(indexList);
+        VBox list = (VBox)container.getChildren().get(indexList);
         VBox cardList = (VBox)list.getChildren().get(2);
         HBox cardToHighlight = (HBox) cardList.getChildren().get(indexCard);
         return cardToHighlight;
     }
 
+    /**
+     * method that sets the highlighted task
+     * @param l
+     * @param vbox
+     * @param index
+     * @param indexList
+     */
     public void setHighlightedTask(HBox l, VBox vbox, int index, int indexList){
         this.highlightedTask=l;
         vbox.requestFocus();
@@ -512,10 +554,16 @@ public class BoardOverviewCtrl implements Initializable {
         this.highlightedTask.setEffect(dropShadow);
 
     }
-    public void unHighlightTask(HBox l, VBox xbox){
+
+    /**
+     * method that unhighlights the task
+     * @param l
+     * @param vbox
+     */
+    public void unHighlightTask(HBox l, VBox vbox){
 
         l.setEffect(null);
-        xbox.requestFocus();
+        vbox.requestFocus();
 
     }
 
