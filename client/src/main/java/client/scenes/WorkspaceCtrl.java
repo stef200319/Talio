@@ -72,6 +72,7 @@ public class WorkspaceCtrl implements Initializable{
      * The resources used to localize the root object, or {@code null} if
      * the root object was not localized.
      */
+    @SuppressWarnings("checkstyle:CyclomaticComplexity")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         colBoardName.setCellValueFactory(b -> new SimpleStringProperty(b.getValue().getTitle()));
@@ -82,11 +83,14 @@ public class WorkspaceCtrl implements Initializable{
         });
 
         //Keyboard Shortcuts
-        boardTitle.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                add();
-            }
-        });
+        if (this.boardTitle != null){
+            boardTitle.setOnKeyPressed(event -> {
+
+                if (event.getCode() == KeyCode.ENTER) {
+                    add();
+                }
+            });
+        }
 
         colDeleteBoard.setCellValueFactory(boardToDelete -> {
             Button deleteButton = new Button("X");

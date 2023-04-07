@@ -48,6 +48,7 @@ public class BoardOverviewCtrl implements Initializable {
 
     private long boardID = Long.MIN_VALUE;
 
+
     @FXML
     private HBox columnContainer;
 
@@ -57,7 +58,8 @@ public class BoardOverviewCtrl implements Initializable {
     @FXML
     private Button myBoardsButton;
 
-
+    @FXML
+    private Button joinBoardButton;
     @FXML
     private Button editBoardTitleButton;
 
@@ -127,6 +129,13 @@ public class BoardOverviewCtrl implements Initializable {
         mainCtrl.showOverview();
     }
 
+    /**
+     * method that shows the join board by key screen
+     */
+    public void joinBoard(){
+
+        mainCtrl.showJoinBoard(boardID);
+    }
     /**
      * method that calls the method in MainCtrl that copies the code
      * of the current board

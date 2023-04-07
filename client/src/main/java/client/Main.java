@@ -87,13 +87,16 @@ public class Main extends Application {
                 "scenes", "CustomizeCard.fxml");
         var customizeList = FXML.load(CustomizeListCtrl.class, "client",
                 "scenes", "CustomizeList.fxml");
-        var customizeBoard = FXML.load(CustomizeBoardCtrl.class, "client", "scenes", "CustomizeBoard.fxml");
+        var customizeBoard = FXML.load(CustomizeBoardCtrl.class, "client",
+                "scenes", "CustomizeBoard.fxml");
 
         var editCardTagsBoard = FXML.load(EditCardTagsBoardCtrl.class,
                 "client", "scenes", "EditCardTagsBoard.fxml");
 
         var addCardTagsToCard = FXML.load(AddCardTagsToCardCtrl.class,
                 "client", "scenes", "AddCardTagsToCard.fxml");
+        var joinBoardKey = FXML.load(JoinBoardByKeyCtrl.class, "client",
+                "scenes", "JoinBoardByKey.fxml");
 
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
@@ -101,7 +104,8 @@ public class Main extends Application {
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
                 addTask, taskManagement, workspace, createBoard, editCardTitle, editCardDescription, editList,
             editBoardTitle, viewSubtasks, customizeCard, customizeList, customizeBoard, editSubtaskTitle,
-            confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard, addCardTagsToCard);
+            confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard,
+                addCardTagsToCard, joinBoardKey);
 
         //Stopping the thread working for long polling in Workspace
         primaryStage.setOnCloseRequest(e -> {

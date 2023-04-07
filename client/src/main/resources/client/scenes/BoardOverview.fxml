@@ -12,7 +12,9 @@
     <children>
         <Pane fx:id="sidePane" prefHeight="90.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
          <children>
+
             <Button fx:id="myBoardsButton" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" onAction="#myBoards" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Workspace" textAlignment="CENTER">
+
                <font>
                   <Font size="14.0" />
                </font></Button>
@@ -30,6 +32,9 @@
                   <Font name="System Bold" size="26.0" />
                </font>
             </Label>
+            <Button fx:id="joinBoardButton" layoutX="686.0" layoutY="33.0" mnemonicParsing="false" onAction="#joinBoard" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Join board" />
+            <Button fx:id="copyCodeButton" layoutX="602.0" layoutY="33.0" mnemonicParsing="false" onAction="#copyCode" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Copy key" />
+
             <Button fx:id="createBoardButton" layoutX="226.0" layoutY="33.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: #e0cda8;" text="Create Board " textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
@@ -42,6 +47,7 @@
                <font>
                   <Font size="14.0" />
                </font></Button>
+
          </children>
       </Pane>
         <ScrollPane hbarPolicy="ALWAYS" layoutY="90.0" prefHeight="510.0" prefWidth="1000.0" vbarPolicy="ALWAYS">
