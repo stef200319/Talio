@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.StringMessageHandler;
 import com.google.inject.Inject;
 import commons.Board;
 import commons.Card;
@@ -17,14 +18,28 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.messaging.converter.StringMessageConverter;
+import org.springframework.messaging.simp.stomp.StompSessionHandler;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
+import org.springframework.web.socket.sockjs.client.SockJsClient;
+import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -35,6 +50,8 @@ public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private WebSocketStompClient stompClient;
+    private static final Logger logger = LoggerFactory.getLogger(BoardOverviewCtrl.class);
 
     private long boardID = Long.MIN_VALUE;
 
@@ -52,7 +69,16 @@ public class BoardOverviewCtrl implements Initializable {
     private Button editBoardTitleButton;
 
     @FXML
+    private Button copyCodeButton;
+    @FXML
     private Label boardName;
+
+    @FXML
+    private Pane sidePane;
+
+
+    @FXML
+    private AnchorPane centerPane;
 
 
     @FXML
@@ -83,6 +109,9 @@ public class BoardOverviewCtrl implements Initializable {
         this.mainCtrl = mainCtrl;
         this.server = server;
 
+        stompClient = new WebSocketStompClient(new SockJsClient(
+                Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))
+        ));
     }
 
     /**
@@ -98,6 +127,11 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        StompSessionHandler sessionHandler = new StringMessageHandler();
+        stompClient.setMessageConverter(new StringMessageConverter());
+        stompClient.connect("http://localhost:8080/websocket-stomp", sessionHandler);
+
+        logger.info("connected to websocket");
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -116,7 +150,14 @@ public class BoardOverviewCtrl implements Initializable {
         mainCtrl.showOverview();
     }
 
-
+    /**
+     * method that calls the method in MainCtrl that copies the code
+     * of the current board
+     */
+    public void copyCode()
+    {
+        mainCtrl.copyCode(boardID);
+    }
     /**
      * Method that shows the add list page on screen
      */
@@ -150,9 +191,22 @@ public class BoardOverviewCtrl implements Initializable {
             return;
         }
         Board currentBoard = server.getBoardByID(boardID);
+
+        Font fontBoard = Font.font(currentBoard.getFontType(),
+                currentBoard.isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
+                currentBoard.isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                20);
+        boardName.setFont(fontBoard);
+        boardName.setTextFill(Color.web(currentBoard.getFontColour()));
+
         boardName.setText(currentBoard.getTitle());
+
+        sidePane.setStyle("-fx-background-color: "+currentBoard.getSideColour());
+
+        centerPane.setStyle("-fx-background-color: "+currentBoard.getCenterColour());
+
         List<Column> columns = server.getColumnsByBoardId(boardID);
-        for(int i=0;i<columns.size();i++)
+        for (int i = 0; i < columns.size(); i++)
             createList(columns.get(i));
     }
 
@@ -167,6 +221,7 @@ public class BoardOverviewCtrl implements Initializable {
     @SuppressWarnings("checkstyle:MethodLength")
     public void createList(Column c) {
         VBox list=new VBox();
+
         list.setStyle("-fx-background-color: "+c.getBgColour()+"; -fx-border-style: " +
                 "solid; -fx-background-radius: 5px; -fx-border-radius: 5px;" +
                 "-fx-border-color: "+c.getBorderColour());
@@ -269,12 +324,6 @@ public class BoardOverviewCtrl implements Initializable {
             s.setFont(fontList);
             s.setTextFill(Color.web(cards.get(i).getFontColour()));
 
-
-            //card.setOnMouseEntered(event -> card.setStyle("-fx-background-color: #F5DEB3"));
-            //mai tb sa fie highlightedLabel/highlightedTask; si dupa ne legam
-            //daca e highlighted atunci merg shortcutirle(verif asta din mainctrl si gt)
-            //card.setOnMouseExited(event -> card.setStyle("-fx-text-fill: black;"));
-
             card.getChildren().add(s);
 
 
@@ -342,11 +391,13 @@ public class BoardOverviewCtrl implements Initializable {
 
                 if(event1.getCode()==KeyCode.ENTER)
                 {
+
                     mainCtrl.showTaskDetails(this.highlightedCard);
+
                 }
                 if(event1.getCode()==KeyCode.DELETE || event1.getCode()==KeyCode.BACK_SPACE)
                 {
-                    server.deleteCard(cards.get(finalI)); //bug
+                    server.deleteCard(cards.get(finalI));
 
 
                     refresh();
@@ -450,7 +501,6 @@ public class BoardOverviewCtrl implements Initializable {
             card = enableDragAndDrop(card, c, cards, i);
 
             cardContainer.getChildren().add(card);
-
         }
         cardContainer.setPrefWidth(380); // Set preferred width to 380 pixels
         cardContainer.setPrefHeight(500); // Set preferred height to 500 pixels
@@ -474,24 +524,32 @@ public class BoardOverviewCtrl implements Initializable {
 
     public HBox getHighlightedTask(){return this.highlightedTask;}
 
+    public void setHighlightedCard(Card card){this.highlightedCard = card;}
+    public void setHighlightedTask(HBox hbox){this.highlightedTask = hbox;}
+    public void setHighlightedByKey(boolean bool){this.highlightedByKey = bool;}
+
     public void setHighlightedTask(HBox l, Card card, String colorcode, VBox vbox, int index, int indexList){
         this.highlightedTask=l;
-        highlightedTask.setStyle(("-fx-background-color: #000000"));
+       // highlightedTask.setStyle(("-fx-background-color: #000000"));
         this.highlightedCard=card;
         vbox.requestFocus();
         this.highlightedCardIndex = index;
         this.highlightedListIndex = indexList;
         this.highlightedColumn = server.getColumnsByBoardId(boardID).get(indexList);
         this.highlightedCard = server.getCardsByColumnId(highlightedColumn.getId()).get(index);
-        server.editCardBackgroundColour(highlightedCard, colorcode);
-        this.highlightedCard.setBgColour(colorcode);
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setColor(Color.BLUE);
+        this.highlightedTask.setEffect(dropShadow);
+       // server.editCardBackgroundColour(highlightedCard, colorcode);
+       // this.highlightedCard.setBgColour(colorcode);
 
     }
     public void unHighlightTask(HBox l, Card card, String colorcode, VBox xbox){
 
-        l.setStyle("");
-        server.editCardBackgroundColour(card, colorcode);
-        card.setBgColour(colorcode);
+        //l.setStyle("");
+        l.setEffect(null);
+        //server.editCardBackgroundColour(card, colorcode);
+        //card.setBgColour(colorcode);
         xbox.requestFocus();
 
     }
@@ -562,13 +620,17 @@ public class BoardOverviewCtrl implements Initializable {
         this.boardID = boardID;
     }
 
+
+    /**
+     * Shows the editCardTagsBoard scene
+     */
+    public void showEditCardTagsBoard() {
+        mainCtrl.showEditCardTagsBoard(boardID);
+    }
     /**
      * Delete the board
      */
     public void deleteBoard() {
         mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
     }
-
-
-
 }

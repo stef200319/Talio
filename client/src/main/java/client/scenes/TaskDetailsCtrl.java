@@ -3,6 +3,9 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 
+
+import commons.Column;
+
 import commons.Subtask;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -11,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.*;
+
 
 import commons.Card;
 import javafx.fxml.FXML;
@@ -24,8 +28,11 @@ import java.util.List;
 
 public class TaskDetailsCtrl implements Initializable {
     private Card cardToShow;
+
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
+    private BoardOverviewCtrl boardOverviewCtrl;
 
 
 
@@ -73,29 +80,9 @@ public class TaskDetailsCtrl implements Initializable {
         }, 0, 1000);
     }
 
-    /**
+    
 
-     * private event handler for a key event that listens
-     *       for the "Esc" key to be pressed
-     * when the "Esc" key is pressed, the method showBoardOverview()
-     *       is called to switch to the Board Overview scene
-     */
-    private EventHandler<KeyEvent> backToOverview = new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
-            if(event.getCode() == KeyCode.ESCAPE)
-            {
-                showBoardOverview();
-            }
-        }
-    };
-
-    /**
-     * @return the backToOverview event handler
-     */
-    public EventHandler<KeyEvent> getBackToOverview() {
-        return backToOverview;
-    }
+    
     /**
      * Set the Card whose details have to be displayed
      * @param cardToShow the Card whose details have to be displayed
@@ -130,10 +117,19 @@ public class TaskDetailsCtrl implements Initializable {
     /**
      * show the board overview
      */
-//    TODO THE BOARD ID IS STILL HARDCODED
-    public void showBoardOverview() {
-        mainCtrl.showOverview();
 
+    public void showBoardOverview() {
+        long columnId = cardToShow.getColumnId();
+        Column c = server.getColumnByColumnId(columnId);
+        long boardId = c.getBoardId();
+        mainCtrl.showBoardOverview(boardId);
+    }
+
+    /**
+     * shows the addCardTagsToCard scene
+     */
+    public void showEditCardTagsToCard() {
+        mainCtrl.showAddCardTagsToCard(cardToShow);
     }
 
     /**

@@ -36,10 +36,10 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Button fx:id="resetCardBgColour" layoutX="33.0" layoutY="103.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
-            <Button fx:id="resetCardBorderColour" layoutX="409.0" layoutY="103.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+            <Button fx:id="resetCardBgColour" layoutX="33.0" layoutY="103.0" mnemonicParsing="false" onAction="#setDefaultCardBgColour" prefHeight="31.0" prefWidth="32.0" text="Re" />
+            <Button fx:id="resetCardBorderColour" layoutX="409.0" layoutY="103.0" mnemonicParsing="false" onAction="#setDefaultCardBorderColour" prefHeight="31.0" prefWidth="32.0" text="Re" />
             <ColorPicker fx:id="cardBorderColourPicker" editable="true" layoutX="452.0" layoutY="146.0" prefHeight="43.0" prefWidth="252.0" promptText="Select Bg-colour" style="-fx-background-color: linear-gradient(to bottom, #e9eaed 0%, #f4f5f8 100%); -fx-border-color: #a2a2a2; -fx-border-width: 1; -fx-border-radius: 4px; -fx-background-radius: 4; -fx-padding: 1px;" />
-            <Button fx:id="resetCardFontType" layoutX="33.0" layoutY="225.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+            <Button fx:id="resetCardFontType" layoutX="33.0" layoutY="225.0" mnemonicParsing="false" onAction="#setDefaultCardFontType" prefHeight="31.0" prefWidth="32.0" text="Re" />
             <ChoiceBox fx:id="cardFontType" layoutX="76.0" layoutY="263.0" prefHeight="43.0" prefWidth="178.0" />
             <Label layoutX="320.0" layoutY="225.0" prefHeight="31.0" prefWidth="116.0" text="Font Style:">
                <font>
@@ -61,7 +61,7 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Button fx:id="resetCardFontColourFill" layoutX="488.0" layoutY="225.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+            <Button fx:id="resetCardFontColourFill" layoutX="488.0" layoutY="225.0" mnemonicParsing="false" onAction="#setDefaultCardFontColour" prefHeight="31.0" prefWidth="32.0" text="Re" />
             <ColorPicker fx:id="cardFontColourPicker" editable="true" layoutX="533.0" layoutY="263.0" prefHeight="43.0" prefWidth="178.0" promptText="Select Bg-colour" style="-fx-background-color: linear-gradient(to bottom, #e9eaed 0%, #f4f5f8 100%); -fx-border-color: #a2a2a2; -fx-border-width: 1; -fx-border-radius: 4px; -fx-background-radius: 4; -fx-padding: 1px;" />
             </children></Pane>
         <Pane prefHeight="86.0" prefWidth="744.0" style="-fx-background-color: #372C2E; -fx-border-color: black;">

@@ -18,7 +18,7 @@
             <Font name="System Italic" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="serverAddress" layoutX="193.0" layoutY="99.0">
+      <TextField fx:id="serverAddress" focusTraversable="false" layoutX="193.0" layoutY="99.0">
          <font>
             <Font name="Arial" size="14.0" />
          </font>

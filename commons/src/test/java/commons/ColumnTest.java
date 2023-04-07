@@ -44,8 +44,8 @@ public class ColumnTest {
 
     @Test
     public void testSetBoardId() {
-        column.setId(2L);
-        assertEquals(1L, column.getBoardId());
+        column.setBoardId(2L);
+        assertEquals(2L, column.getBoardId());
     }
 
     @Test

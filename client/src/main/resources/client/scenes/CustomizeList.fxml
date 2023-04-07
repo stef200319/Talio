@@ -36,10 +36,10 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <Button fx:id="resetListBgColour" layoutX="33.0" layoutY="103.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
-                <Button fx:id="resetListBorderColour" layoutX="409.0" layoutY="103.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+                <Button fx:id="resetListBgColour" layoutX="33.0" layoutY="103.0" mnemonicParsing="false" onAction="#setDefaultColumnBgColour" prefHeight="31.0" prefWidth="32.0" text="Re" />
+                <Button fx:id="resetListBorderColour" layoutX="409.0" layoutY="103.0" mnemonicParsing="false" onAction="#setDefaultColumnBorderColour" prefHeight="31.0" prefWidth="32.0" text="Re" />
                 <ColorPicker fx:id="listBorderColourPicker" editable="true" layoutX="452.0" layoutY="146.0" prefHeight="43.0" prefWidth="252.0" promptText="Select Bg-colour" style="-fx-background-color: linear-gradient(to bottom, #e9eaed 0%, #f4f5f8 100%); -fx-border-color: #a2a2a2; -fx-border-width: 1; -fx-border-radius: 4px; -fx-background-radius: 4; -fx-padding: 1px;" />
-                <Button fx:id="resetListFontType" layoutX="33.0" layoutY="225.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+                <Button fx:id="resetListFontType" layoutX="33.0" layoutY="225.0" mnemonicParsing="false" onAction="#setDefaultColumnFontType" prefHeight="31.0" prefWidth="32.0" text="Re" />
                 <ChoiceBox fx:id="listFontType" layoutX="76.0" layoutY="263.0" prefHeight="43.0" prefWidth="178.0" />
                 <Label layoutX="320.0" layoutY="225.0" prefHeight="31.0" prefWidth="116.0" text="Font Style:">
                     <font>
@@ -61,7 +61,7 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
-                <Button fx:id="resetListFontColourFill" layoutX="488.0" layoutY="225.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" text="Re" />
+                <Button fx:id="resetListFontColourFill" layoutX="488.0" layoutY="225.0" mnemonicParsing="false" onAction="#setDefaultColumnFontColour" prefHeight="31.0" prefWidth="32.0" text="Re" />
                 <ColorPicker fx:id="listFontColourPicker" editable="true" layoutX="533.0" layoutY="263.0" prefHeight="43.0" prefWidth="178.0" promptText="Select Bg-colour" style="-fx-background-color: linear-gradient(to bottom, #e9eaed 0%, #f4f5f8 100%); -fx-border-color: #a2a2a2; -fx-border-width: 1; -fx-border-radius: 4px; -fx-background-radius: 4; -fx-padding: 1px;" />
             </children></Pane>
         <Pane prefHeight="86.0" prefWidth="744.0" style="-fx-background-color: #372C2E; -fx-border-color: black;">

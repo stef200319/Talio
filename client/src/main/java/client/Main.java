@@ -76,6 +76,7 @@ public class Main extends Application {
                 "ViewCardSubtasks.fxml");
         var editSubtaskTitle = FXML.load(EditSubtaskTitleCtrl.class, "client", "scenes",
                 "EditSubtaskTitle.fxml");
+
         var confirmDeleteColumn = FXML.load(ConfirmDeleteColumnCtrl.class, "client", "scenes",
             "ConfirmDeleteColumn.fxml");
         var confirmDeleteBoard = FXML.load(ConfirmDeleteBoardCtrl.class, "client", "scenes",
@@ -86,11 +87,22 @@ public class Main extends Application {
                 "scenes", "CustomizeCard.fxml");
         var customizeList = FXML.load(CustomizeListCtrl.class, "client",
                 "scenes", "CustomizeList.fxml");
+        var customizeBoard = FXML.load(CustomizeBoardCtrl.class, "client", "scenes", "CustomizeBoard.fxml");
+
+        var editCardTagsBoard = FXML.load(EditCardTagsBoardCtrl.class,
+                "client", "scenes", "EditCardTagsBoard.fxml");
+
+        var addCardTagsToCard = FXML.load(AddCardTagsToCardCtrl.class,
+                "client", "scenes", "AddCardTagsToCard.fxml");
+
+
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
                 addTask, taskManagement, workspace, createBoard, editCardTitle, editCardDescription, editList,
-            editBoardTitle, viewSubtasks, customizeCard, customizeList, editSubtaskTitle,
-            confirmDeleteColumn, confirmDeleteBoard, addSubtask, help);
+            editBoardTitle, viewSubtasks, customizeCard, customizeList, customizeBoard, editSubtaskTitle,
+            confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard, addCardTagsToCard);
+
+
     }
 }

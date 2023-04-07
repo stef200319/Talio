@@ -49,13 +49,17 @@ public class Card {
     )
     private Set<CardTag> tags;
     private String bgColour;
+    private String defaultBgColour = "#F2F3F4";
 
     private String borderColour;
+    private String defaultBorderColour = "#000000";
 
     private String fontType;
+    private String defaultFontType = "Segoe UI";
     private Boolean fontStyleBold;
     private Boolean fontStyleItalic;
     private String fontColour;
+    private String defaultFontColour = "#000000";
 
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -77,12 +81,12 @@ public class Card {
     public Card(String title, long columnId) {
         this.title = title;
         this.columnId = columnId;
-        this.bgColour = "#F2F3F4";
-        this.borderColour = "#000000";
-        this.fontType = "Segoe UI";
+        this.bgColour = defaultBgColour;
+        this.borderColour = defaultBorderColour;
+        this.fontType = defaultFontType;
         this.fontStyleBold=false;
         this.fontStyleItalic=false;
-        this.fontColour = "#000000";
+        this.fontColour = defaultFontColour;
 
         this.subtasks = new ArrayList<Subtask>();
         this.tags = new HashSet<>();
@@ -321,5 +325,33 @@ public class Card {
      */
     public void setFontColour(String fontColour) {
         this.fontColour = fontColour;
+    }
+
+    /**
+     * @return The default Background Colour of a Card
+     */
+    public String getDefaultBgColour() {
+        return defaultBgColour;
+    }
+
+    /**
+     * @return The default Border Colour of a Card
+     */
+    public String getDefaultBorderColour() {
+        return defaultBorderColour;
+    }
+
+    /**
+     * @return The default Font-Type of a Card
+     */
+    public String getDefaultFontType() {
+        return defaultFontType;
+    }
+
+    /**
+     * @return The default Font Colour of a Card
+     */
+    public String getDefaultFontColour() {
+        return defaultFontColour;
     }
 }
