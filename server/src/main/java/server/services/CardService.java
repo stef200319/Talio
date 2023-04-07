@@ -122,6 +122,10 @@ public class CardService {
         return cardRepository.save(card);
     }
 
+
+
+
+
     /**
      * Updates the column of a card and sets its position to last on the column
      * @param cardId The id of the card to be changed
