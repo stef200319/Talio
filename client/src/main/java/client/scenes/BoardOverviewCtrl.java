@@ -116,6 +116,9 @@ public class BoardOverviewCtrl implements Initializable {
         mainCtrl.showOverview();
     }
 
+    /**
+     * method that shows the join board by key screen
+     */
     public void joinBoard(){
 
         mainCtrl.showJoinBoard(boardID);

@@ -87,14 +87,15 @@ public class Main extends Application {
                 "scenes", "CustomizeCard.fxml");
         var customizeList = FXML.load(CustomizeListCtrl.class, "client",
                 "scenes", "CustomizeList.fxml");
-        var customizeBoard = FXML.load(CustomizeBoardCtrl.class, "client", "scenes", "CustomizeBoard.fxml");
+        var customizeBoard = FXML.load(CustomizeBoardCtrl.class, "client",
+                "scenes", "CustomizeBoard.fxml");
 
         var editCardTagsBoard = FXML.load(EditCardTagsBoardCtrl.class,
                 "client", "scenes", "EditCardTagsBoard.fxml");
 
         var addCardTagsToCard = FXML.load(AddCardTagsToCardCtrl.class,
                 "client", "scenes", "AddCardTagsToCard.fxml");
-        var joinBoardByKey = FXML.load(JoinBoardByKeyCtrl.class, "client",
+        var joinBoardKey = FXML.load(JoinBoardByKeyCtrl.class, "client",
                 "scenes", "JoinBoardByKey.fxml");
 
 
@@ -103,7 +104,8 @@ public class Main extends Application {
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
                 addTask, taskManagement, workspace, createBoard, editCardTitle, editCardDescription, editList,
             editBoardTitle, viewSubtasks, customizeCard, customizeList, customizeBoard, editSubtaskTitle,
-            confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard, addCardTagsToCard, joinBoardByKey);
+            confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard,
+                addCardTagsToCard, joinBoardKey);
 
 
     }

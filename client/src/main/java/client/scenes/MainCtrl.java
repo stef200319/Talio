@@ -131,12 +131,13 @@ public class MainCtrl {
      * @param help
      * @param editCardTagsBoard
      * @param addCardTagsToCard
-     * @param joinBoardByKey
+     * @param joinBoardKey
      */
-    @SuppressWarnings("checkstyle:ParameterNumber")
+    @SuppressWarnings({"checkstyle:ParameterNumber", "checkstyle:MethodLength"})
     public void initialize(Stage primaryStage,
                            Pair<AddListCtrl, Parent> add, Pair<BoardOverviewCtrl, Parent> boardOverview,
-                           Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl, Parent> taskDetails,
+                           Pair<ClientConnectCtrl, Parent> clientConnect, Pair<TaskDetailsCtrl,
+            Parent> taskDetails,
                            Pair<AddTaskCtrl, Parent> addTask, Pair<TaskManagementCtrl, Parent> taskManagement,
                            Pair<WorkspaceCtrl, Parent> workspace, Pair<CreateBoardCtrl, Parent> createBoard,
                            Pair<EditCardTitleCtrl, Parent> editCardTitle,
@@ -153,7 +154,7 @@ public class MainCtrl {
                            Pair<AddSubtaskCtrl, Parent> addSubtask,
                            Pair<EditCardTagsBoardCtrl, Parent> editCardTagsBoard,
                            Pair<AddCardTagsToCardCtrl, Parent> addCardTagsToCard,
-                           Pair<JoinBoardByKeyCtrl, Parent> joinBoardByKey) {
+                           Pair<JoinBoardByKeyCtrl, Parent> joinBoardKey) {
         this.primaryStage = primaryStage;
 
         this.addListCtrl = add.getKey();
@@ -205,8 +206,8 @@ public class MainCtrl {
         this.helpCtrl = help.getKey();
         this.help = new Scene(help.getValue());
 
-        this.joinBoardByKeyCtrl = joinBoardByKey.getKey();
-        this.joinBoardByKey = new Scene(joinBoardByKey.getValue());
+        this.joinBoardByKeyCtrl = joinBoardKey.getKey();
+        this.joinBoardByKey = new Scene(joinBoardKey.getValue());
 
         this.help.setOnKeyPressed(helpCtrl.getBackToPreviousScene());
         this.joinBoardByKey.setOnKeyPressed(getKeyboardShortcuts());
@@ -624,6 +625,11 @@ public class MainCtrl {
         primaryStage.setTitle("Edit Card Tags");
         primaryStage.setScene(editCardTagsBoard);
     }
+
+    /**
+     * method that shows the join board by key screen
+     * @param boardId the id of the current board
+     */
     public void showJoinBoard(Long boardId){
 
         primaryStage.setTitle("Join board by key");
