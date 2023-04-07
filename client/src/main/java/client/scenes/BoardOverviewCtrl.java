@@ -306,39 +306,7 @@ public class BoardOverviewCtrl implements Initializable {
 
             HBox cardFinal = card;
 
-            /*cardFinal.setOnMouseEntered(mouseEvent -> {
-                if(!highlightedByKey){
-                    if(highlightedTask!=null){
-                        highlightedTask.setStyle("");
-                    }
-                    highlightedTask = cardFinal;
-                    highlightedTask.setStyle("-fx-background-color: blue");
-                    cardContainer.requestFocus();
-                }
-            });
-            Scene scene = mainCtrl.getCurrentScene();
-            cardContainer.setOnKeyPressed(event ->{
-                if(event.getCode()==KeyCode.DOWN){
-                    highlightedByKey = true;
-                    if(highlightedTask!=null){
-                        int index = cardContainer.getChildren().indexOf(highlightedTask);
-                        System.out.println(index);
-                        if(index< cardContainer.getChildren().size()-1){
-                            highlightedTask.setStyle("");
-                            highlightedTask=(HBox)cardContainer.getChildren().get(index+1);
-                            highlightedTask.setStyle("-fx-background-color: blue");
-                        }
-                    }
-                }
-            }
-            );*/
-            //list.setOnKeyReleased(event -> highlightedByKey = false);
 
-
-            //list.getChildren().add(cardFinal);
-
-       // });
-            //highlightedTask = cardFinal;
             EventHandler<MouseEvent>  handler = event -> {
 
                 if(highlightedByKey == false) {
@@ -521,7 +489,6 @@ public class BoardOverviewCtrl implements Initializable {
     }
     public void unHighlightTask(HBox l, Card card, String colorcode, VBox xbox){
 
-       // l.setStyle("");
         l.setStyle("");
         server.editCardBackgroundColour(card, colorcode);
         card.setBgColour(colorcode);
