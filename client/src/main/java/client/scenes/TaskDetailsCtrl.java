@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 
 
+import commons.CardTag;
 import commons.Column;
 
 import commons.Subtask;
@@ -12,14 +13,20 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.input.*;
 
 
 import commons.Card;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.*;
@@ -42,6 +49,9 @@ public class TaskDetailsCtrl implements Initializable {
 
     @FXML
     private VBox subtasksScroll;
+
+    @FXML
+    private ListView<CardTag> cardTagListView;
 
 
     /**
@@ -78,6 +88,8 @@ public class TaskDetailsCtrl implements Initializable {
                 });
             }
         }, 0, 1000);
+
+        cardTagListView.setStyle("-fx-border-width: 3px; -fx-border-color: white; -fx-focus-color: white");
     }
 
     
@@ -170,6 +182,11 @@ public class TaskDetailsCtrl implements Initializable {
                 subtasksScroll.getChildren().add(checkbox);
             }
         }
+
+        if (cardToShow != null) {
+            updateCardTagListViewItems();
+            updateCardTagListViewLook();
+        }
     }
 
     /**
@@ -212,6 +229,66 @@ public class TaskDetailsCtrl implements Initializable {
             }
         });
         return checkBox;
+
+
+    }
+
+    /**
+     * Updates the items of the cardTagsListView
+     */
+    public void updateCardTagListViewItems() {
+        List<CardTag> cardTagsDB = server.getCardTagsByCardId(cardToShow.getId());
+
+        if (!cardTagsDB.equals(cardTagListView.getItems())) {
+            cardTagListView.getItems().clear();
+            cardTagListView.getItems().addAll(cardTagsDB);
+        }
+    }
+
+    /**
+     * Displays the cardTags
+     */
+    public void updateCardTagListViewLook() {
+        cardTagListView.setCellFactory(new Callback<ListView<CardTag>, ListCell<CardTag>>() {
+            @Override
+            public ListCell<CardTag> call(ListView<CardTag> cardTagListView) {
+                return new ListCell<CardTag>() {
+                    private final StackPane container = new StackPane();
+                    private final StackPane coloredSquare = new StackPane();
+                    private final Label label = new Label();
+
+                    {
+                        // Set the size of the colored square
+                        coloredSquare.setMaxHeight(12);
+                        coloredSquare.setMaxWidth(12);
+                        container.setAlignment(Pos.BASELINE_LEFT);
+                        // Set the label to be right-aligned
+                        label.setPadding(new Insets(0, 0, 0, 22));
+                        // Add the colored square and label to the container
+                        container.getChildren().addAll(coloredSquare, label);
+                    }
+
+                    @Override
+                    protected void updateItem(CardTag cardTag, boolean empty) {
+                        super.updateItem(cardTag, empty);
+
+                        // Set the background color for the cell based on its contents
+                        setText(null);
+                        setStyle("-fx-background-color: white;");
+                        if (empty) {
+                            setGraphic(null);
+                            label.setText("");
+                        }
+                        else {
+                            label.setStyle("-fx-text-fill: black;");
+                            coloredSquare.setStyle("-fx-background-color:" + cardTag.getColor() + ";");
+                            label.setText(cardTag.getTitle());
+                            setGraphic(container);
+                        }
+                    }
+                };
+            }
+        });
     }
 
 

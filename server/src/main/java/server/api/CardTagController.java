@@ -62,16 +62,15 @@ public class CardTagController {
      * @param cardTagId cardTagId of the corresponding cardTag
      * @return the deleted cardTag
      */
-    @DeleteMapping("deleteCardTagFromBoard/{cardTagId}")
+    @DeleteMapping("/deleteCardTagFromBoard/{cardTagId}")
     @ResponseBody public ResponseEntity<CardTag> deleteCardTagFromBoard(@PathVariable("cardTagId") long cardTagId) {
         if (!cardTagService.existsById(cardTagId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        CardTag cardTag = cardTagService.delete(cardTagId);
-        Card card = cardService.getById(cardTagId);
+        CardTag cardTag = cardTagService.getById(cardTagId);
         deleteCardTagFromCards(cardTag);
-        cardService.saveCard(card);
+        cardTagService.delete(cardTagId);
         return ResponseEntity.ok(cardTag);
     }
 
@@ -110,7 +109,7 @@ public class CardTagController {
         Board board = boardService.getByBoardId(boardId);
         List<CardTag> cardTags = cardTagService.getAllByBoard(board);
 
-        if(cardTags==null)return ResponseEntity.ok(new ArrayList<>());
+        if (cardTags == null) return ResponseEntity.ok(new ArrayList<>());
         return ResponseEntity.ok(cardTags);
     }
     /**
@@ -126,10 +125,10 @@ public class CardTagController {
             return ResponseEntity.badRequest().build();
         }
 
-
-
-        CardTag cardTag = cardTagService.delete(cardTagId);
-        deleteCardTagFromCards(cardTag);
+        CardTag cardTag = cardTagService.getById(cardTagId);
+        Card card = cardService.getById(cardId);
+        card.deleteCardTag(cardTag);
+        cardService.saveCard(card);
         return ResponseEntity.ok(cardTag);
     }
 
