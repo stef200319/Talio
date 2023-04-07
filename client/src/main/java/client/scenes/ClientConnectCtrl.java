@@ -54,4 +54,8 @@ public class ClientConnectCtrl implements Initializable {
     public void showWorkspace() {
         mainCtrl.showWorkspace();
     }
+    /**
+     * Show the help screen
+     */
+    public void showHelpScreen(){mainCtrl.showHelpScreen();}
 }

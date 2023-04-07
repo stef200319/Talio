@@ -631,13 +631,17 @@ public class BoardOverviewCtrl implements Initializable {
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardPosition(oldId, newPos);
                     highlightedCard = cards.get(newPos);
+                    highlightedCardIndex = newPos-1;
+                    highlightedListIndex = c.getPosition()-1;
                     event.setDropCompleted(true);
                 }
-                else {                                              //Changhing columns
+                else {                                              //Changing columns
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardColumn(oldId,c.getId());
                     server.editCardPosition(oldId, newPos);
                     highlightedCard = cards.get(newPos);
+                    highlightedCardIndex = newPos-1;
+                    highlightedListIndex = c.getPosition()-1;
                     event.setDropCompleted(true);
                 }
                 refresh();
