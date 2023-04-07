@@ -9,33 +9,65 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EditCardTagsBoardCtrl">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EditCardTagsBoardCtrl">
    <children>
-      <Pane prefHeight="62.0" prefWidth="757.0" style="-fx-background-color: #F5DEB3;">
+      <Pane prefHeight="90.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
          <children>
-            <Button layoutX="22.0" layoutY="19.0" mnemonicParsing="false" onAction="#showBoardOverview" style="-fx-background-color: #e0cda8;" text="Back" />
-            <Text layoutX="231.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit card tags for this board">
+            <Button layoutX="32.0" layoutY="30.0" mnemonicParsing="false" onAction="#showBoardOverview" style="-fx-background-color: #e0cda8;" text="Back">
                <font>
-                  <Font size="24.0" />
+                  <Font size="14.0" />
+               </font></Button>
+            <Text layoutX="325.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Card Tags for this board" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="26.0" />
                </font>
             </Text>
          </children>
       </Pane>
-      <ListView fx:id="cardTagsContainer" layoutX="62.0" layoutY="88.0" prefHeight="361.0" prefWidth="251.0" />
-      <TextField fx:id="cardTagTitle" layoutX="360.0" layoutY="157.0" prefHeight="25.0" prefWidth="319.0" promptText="Title" style="-fx-background-color: #e0cda8;" />
-      <Button fx:id="saveButton" layoutX="360.0" layoutY="345.0" mnemonicParsing="false" onAction="#saveCardTag" style="-fx-background-color: #104a03;" text="Save" textFill="WHITE" />
-      <Button fx:id="deleteButton" layoutX="411.0" layoutY="345.0" mnemonicParsing="false" onAction="#deleteCardTag" style="-fx-background-color: #6e0518;" text="Delete" textFill="WHITE" />
-      <ColorPicker fx:id="cardTagColor" layoutX="360.0" layoutY="256.0" prefHeight="25.0" prefWidth="319.0" style="-fx-background-color: #e0cda8;" />
-      <Button layoutX="618.0" layoutY="345.0" mnemonicParsing="false" onAction="#newCardTag" style="-fx-background-color: #e0cda8;" text="New tag" />
-      <Text layoutX="360.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title of the tag" wrappingWidth="318.9999999999999">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Text layoutX="360.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour of the tag" wrappingWidth="318.9999999999999">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
+      <Pane layoutX="57.0" layoutY="125.0" prefHeight="433.0" prefWidth="412.0">
+         <children>
+            <Text layoutX="7.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Card Tags">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+            <ListView fx:id="cardTagsContainer" layoutX="7.0" layoutY="41.0" prefHeight="385.0" prefWidth="381.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="507.0" layoutY="185.0" prefHeight="313.0" prefWidth="412.0">
+         <children>
+            <Text layoutX="47.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour of the tag" wrappingWidth="318.9999999999999">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="47.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title of the tag" wrappingWidth="318.9999999999999">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Button layoutX="296.0" layoutY="235.0" mnemonicParsing="false" onAction="#newCardTag" style="-fx-background-color: #e0cda8;" text="New tag">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <ColorPicker fx:id="cardTagColor" layoutX="47.0" layoutY="157.0" prefHeight="25.0" prefWidth="319.0" style="-fx-background-color: #e7e3db;" />
+            <Button fx:id="deleteButton" layoutX="108.0" layoutY="235.0" mnemonicParsing="false" onAction="#deleteCardTag" style="-fx-background-color: #6e0518;" text="Delete" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="saveButton" layoutX="47.0" layoutY="235.0" mnemonicParsing="false" onAction="#saveCardTag" style="-fx-background-color: #104a03;" text="Save" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <TextField fx:id="cardTagTitle" layoutX="47.0" layoutY="60.0" prefHeight="25.0" prefWidth="319.0" promptText="Title" style="-fx-background-color: #e7e3db;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
