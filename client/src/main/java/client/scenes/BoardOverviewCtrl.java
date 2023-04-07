@@ -207,7 +207,6 @@ public class BoardOverviewCtrl implements Initializable {
     @SuppressWarnings({"checkstyle:MethodLength","checkstyle:CyclomaticComplexity"})
     public void createList(Column c) {
         VBox list=new VBox();
-
         list.setStyle("-fx-background-color: "+c.getBgColour()+"; -fx-border-style: " +
                 "solid; -fx-background-radius: 5px; -fx-border-radius: 5px;" +
                 "-fx-border-color: "+c.getBorderColour());
@@ -388,7 +387,7 @@ public class BoardOverviewCtrl implements Initializable {
                     //show pop up
                 }
                 if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null &&
-                        highlightedCardIndex<cardContainer.getChildren().size()-1){
+                                 highlightedCardIndex<cardContainer.getChildren().size()-1 && !event1.isShiftDown()){
                     if(server.getCardsByColumnId(server.getColumnsByBoardId(boardID).
                             get(highlightedListIndex).getId()).size()-1>=this.highlightedCardIndex+1) {
                         highlightedByKey = true;
@@ -403,7 +402,8 @@ public class BoardOverviewCtrl implements Initializable {
                     }
 
                 }
-                if(event1.getCode()==KeyCode.UP && getHighlightedTask()!=null && highlightedCardIndex>0)
+                if(event1.getCode()==KeyCode.UP && getHighlightedTask()!=null && highlightedCardIndex>0
+                            && !event1.isShiftDown())
                 {
                     highlightedByKey = true;
 
@@ -414,6 +414,43 @@ public class BoardOverviewCtrl implements Initializable {
 
                     setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
                             cardContainer, highlightedCardIndex, highlightedListIndex);
+
+                }
+                if(event1.isShiftDown() && event1.getCode()==KeyCode.UP && getHighlightedTask()!=null)
+                {
+                    /*highlightedByKey = true;
+                    Card swapCard = server.getCardsByColumnId(server.getColumnsByBoardId(boardID).
+                            get(highlightedListIndex).getId()).get(highlightedCardIndex-1);
+                    highlightedCardIndex--;  //position = index+1; so index is now at the position-1 value
+
+                    server.editCardPosition(highlightedCard.getId(), highlightedCardIndex+1);
+                    server.editCardPosition(swapCard.getId(), highlightedCardIndex+2);
+
+                    //refresh();
+                    cardContainer.requestFocus();
+                    unHighlightTask(this.highlightedTask, cardContainer);
+                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
+                            cardContainer, highlightedCardIndex, highlightedListIndex);
+                    cardContainer.requestFocus();*/
+                }
+                if(event1.isShiftDown() && event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null)
+                {
+                    /*highlightedByKey = true;
+                    //the card under the highlighted card
+                    Card swapCard = server.getCardsByColumnId(server.getColumnsByBoardId(boardID).
+                            get(highlightedListIndex).getId()).get(highlightedCardIndex+1);
+                    //index moves to the position we want to move the highlighted card to
+                    highlightedCardIndex++;
+
+                    server.editCardPosition(highlightedCard.getId(), highlightedCardIndex+1);
+                    server.editCardPosition(swapCard.getId(), highlightedCardIndex);
+
+                    //refresh();
+                    cardContainer.requestFocus();
+                    unHighlightTask(this.highlightedTask, cardContainer);
+                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
+                            cardContainer, highlightedCardIndex, highlightedListIndex);
+                    cardContainer.requestFocus();;*/
 
                 }
                 if(event1.getCode()==KeyCode.LEFT && getHighlightedTask()!=null && highlightedListIndex>0)
@@ -568,6 +605,7 @@ public class BoardOverviewCtrl implements Initializable {
                 Dragboard db = card.startDragAndDrop(TransferMode.MOVE);
                 ClipboardContent content = new ClipboardContent();
                 content.putString(Long.toString(cards.get(finalI1).getId()));
+                highlightedTask=card;
                 db.setContent(content);
 
                 event.consume();
@@ -592,16 +630,19 @@ public class BoardOverviewCtrl implements Initializable {
                 if(oldCard.getColumnId()==c.getId()) {              //Same column
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardPosition(oldId, newPos);
+                    highlightedCard = cards.get(newPos);
                     event.setDropCompleted(true);
                 }
                 else {                                              //Changhing columns
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardColumn(oldId,c.getId());
                     server.editCardPosition(oldId, newPos);
+                    highlightedCard = cards.get(newPos);
                     event.setDropCompleted(true);
                 }
                 refresh();
                 event.consume();
+
             }
         });
         //End of drag and drop methods
