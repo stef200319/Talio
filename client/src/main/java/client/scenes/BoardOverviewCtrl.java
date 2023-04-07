@@ -195,7 +195,7 @@ public class BoardOverviewCtrl implements Initializable {
      */
 
 
-    @SuppressWarnings("checkstyle:MethodLength")
+    @SuppressWarnings({"checkstyle:MethodLength","checkstyle:CyclomaticComplexity"})
     public void createList(Column c) {
         VBox list=new VBox();
 
