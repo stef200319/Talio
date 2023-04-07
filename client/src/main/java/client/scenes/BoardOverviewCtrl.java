@@ -366,15 +366,9 @@ public class BoardOverviewCtrl implements Initializable {
 
                     highlightedColumn = server.getColumnByColumnId(cards.get(finalI).getColumnId());
                     highlightedListIndex = highlightedColumn.getPosition()-1;
-                    VBox listt = (VBox)columnContainer.getChildren().get(highlightedListIndex);
 
-                    VBox cardList = (VBox)listt.getChildren().get(2);
-                    HBox cardToHighlight = (HBox) cardList.getChildren().get(finalI);
-                    setHighlightedTask(cardToHighlight,
+                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, finalI),
                             cardContainer, finalI, highlightedListIndex);
-
-
-
 
                 }
 
@@ -396,16 +390,15 @@ public class BoardOverviewCtrl implements Initializable {
                 {
                     server.deleteCard(cards.get(finalI));
 
-
                     refresh();
                 }
                 if(event1.getCode()==KeyCode.T)
                 {
-
+                    //show pop up
                 }
                 if(event1.getCode()==KeyCode.C)
                 {
-
+                    //show pop up
                 }
                 if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null && highlightedCardIndex<cardContainer.getChildren().size()-1){
                     if(server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1==this.highlightedCardIndex+1) {
@@ -414,11 +407,8 @@ public class BoardOverviewCtrl implements Initializable {
                         unHighlightTask(highlightedTask, cardContainer);
 
                         highlightedCardIndex = highlightedCardIndex + 1;
-                        VBox listt = (VBox) columnContainer.getChildren().get(highlightedListIndex);
 
-                        VBox cardList = (VBox) listt.getChildren().get(2);
-                        HBox cardToHighlight = (HBox) cardList.getChildren().get(highlightedCardIndex);
-                        setHighlightedTask(cardToHighlight,
+                        setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
                                 cardContainer, highlightedCardIndex, highlightedListIndex);
                     }
 
@@ -426,47 +416,39 @@ public class BoardOverviewCtrl implements Initializable {
                 if(event1.getCode()==KeyCode.UP && getHighlightedTask()!=null && highlightedCardIndex>0)
                 {
                     highlightedByKey = true;
-                    VBox listt = (VBox)columnContainer.getChildren().get(highlightedListIndex);
 
-                    VBox cardList = (VBox)listt.getChildren().get(2);
 
                     unHighlightTask(highlightedTask, cardContainer);
 
                     highlightedCardIndex=highlightedCardIndex-1;
-                    HBox cardToHighlight = (HBox) cardList.getChildren().get(highlightedCardIndex);
-                    setHighlightedTask(cardToHighlight,
+
+                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
                             cardContainer, highlightedCardIndex, highlightedListIndex);
 
                 }
                 if(event1.getCode()==KeyCode.LEFT && getHighlightedTask()!=null && highlightedListIndex>0)
                 {
                     highlightedByKey = true;
-                    VBox listt;
                     unHighlightTask(highlightedTask, cardContainer);
                     this.highlightedListIndex = highlightedListIndex-1;
                     if(this.highlightedCardIndex>server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1)
                     {
                         this.highlightedCardIndex = server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1;
                     }
-                    listt = (VBox)columnContainer.getChildren().get(highlightedListIndex);
-                    VBox cardList = (VBox)listt.getChildren().get(2);
-                    HBox cardToHighlight = (HBox) cardList.getChildren().get(highlightedCardIndex);
-                    setHighlightedTask(cardToHighlight ,cardContainer, highlightedCardIndex, highlightedListIndex);
+
+                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex) ,cardContainer, highlightedCardIndex, highlightedListIndex);
                 }
                 if(event1.getCode()==KeyCode.RIGHT && getHighlightedTask()!=null && highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1)
                 {
                     highlightedByKey = true;
-                    VBox listt;
                     unHighlightTask(highlightedTask, cardContainer);
-                    this.highlightedListIndex = highlightedListIndex+1; 
+                    this.highlightedListIndex = highlightedListIndex+1;
                     if(this.highlightedCardIndex>server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1)
                     {
                         this.highlightedCardIndex = server.getCardsByColumnId(server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1;
                     }
-                    listt = (VBox)columnContainer.getChildren().get(highlightedListIndex);
-                    VBox cardList = (VBox)listt.getChildren().get(2);
-                    HBox cardToHighlight = (HBox) cardList.getChildren().get(highlightedCardIndex);
-                    setHighlightedTask(cardToHighlight,
+                    
+                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
                             cardContainer, highlightedCardIndex, highlightedListIndex);
 
                 }
@@ -509,6 +491,14 @@ public class BoardOverviewCtrl implements Initializable {
     public void setHighlightedCard(Card card){this.highlightedCard = card;}
     public void setHighlightedTask(HBox hbox){this.highlightedTask = hbox;}
     public void setHighlightedByKey(boolean bool){this.highlightedByKey = bool;}
+
+    public HBox getCardToHiglight(HBox contain,  int indexList, int indexCard)
+    {
+        VBox list = (VBox)contain.getChildren().get(indexList);
+        VBox cardList = (VBox)list.getChildren().get(2);
+        HBox cardToHighlight = (HBox) cardList.getChildren().get(indexCard);
+        return cardToHighlight;
+    }
 
     public void setHighlightedTask(HBox l, VBox vbox, int index, int indexList){
         this.highlightedTask=l;
