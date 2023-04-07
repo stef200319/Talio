@@ -107,7 +107,6 @@ public class EditCardTagsBoardCtrl implements Initializable {
         if (cardTagsDB.isEmpty()) selectedCardTag = null;
 
         if (!cardTagsContainer.getItems().equals(cardTagsDB)) {
-            System.out.println("fa");
             cardTagsContainer.getItems().clear();
             cardTagsContainer.getItems().addAll(cardTagsDB);
 
