@@ -239,6 +239,7 @@ public class BoardOverviewCtrl implements Initializable {
                 if(oldCard.getColumnId()!=c.getId()) {
                     server.editCardColumn(oldId,c.getId());
                 }
+                refresh();
             }
         });
         // End of dropping card on column

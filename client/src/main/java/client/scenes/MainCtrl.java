@@ -656,6 +656,7 @@ public class MainCtrl {
      */
     public void showViewSubtask(Card c) {
         viewSubtaskCtrl.setCardToShow(c);
+        viewSubtaskCtrl.refresh();
         primaryStage.setTitle("Edit Subtasks");
         primaryStage.setScene(viewSubtask);
     }
