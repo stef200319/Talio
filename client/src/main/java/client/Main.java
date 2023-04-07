@@ -107,6 +107,9 @@ public class Main extends Application {
             confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard,
                 addCardTagsToCard, joinBoardKey);
 
-
+        //Stopping the thread working for long polling in Workspace
+        primaryStage.setOnCloseRequest(e -> {
+            workspace.getKey().stop();
+        });
     }
 }

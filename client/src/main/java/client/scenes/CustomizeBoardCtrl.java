@@ -43,8 +43,6 @@ public class CustomizeBoardCtrl implements Initializable {
 
 
 
-
-
     /**
      *
      * @param server the server connected to

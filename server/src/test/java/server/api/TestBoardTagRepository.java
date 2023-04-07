@@ -277,6 +277,7 @@ public class TestBoardTagRepository implements BoardTagRepository {
      * @see EntityManager#getReference(Class, Object) for details on when an exception is thrown.
      * @deprecated use  instead.
      */
+    @Deprecated
     @Override
     public BoardTag getOne(Long aLong) {
         return null;

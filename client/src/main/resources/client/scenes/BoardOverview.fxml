@@ -8,32 +8,51 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
     <children>
-        <Pane fx:id="sidePane" prefHeight="37.0" prefWidth="703.0" style="-fx-background-color: #F5DEB3;">
+        <Pane fx:id="sidePane" prefHeight="90.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
          <children>
-            <Button fx:id="myBoardsButton" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onAction="#myBoards" prefHeight="25.0" prefWidth="81.0" style="-fx-background-color: #e0cda8;" text="Workspace" />
-            <Button layoutX="630.0" layoutY="6.0" mnemonicParsing="false" onAction="#deleteBoard" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #6e0518;" text="Delete" textFill="WHITE" />
-            <Button fx:id="editBoardTitleButton" layoutX="490.0" layoutY="6.0" mnemonicParsing="false" onAction="#editBoardTitle" prefHeight="5.0" prefWidth="39.0" style="-fx-background-color: #e0cda8;" text="Edit">
+
+            <Button fx:id="myBoardsButton" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" onAction="#myBoards" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Workspace" textAlignment="CENTER">
+
                <font>
-                  <Font name="System Italic" size="12.0" />
+                  <Font size="14.0" />
+               </font></Button>
+            <Button layoutX="927.0" layoutY="33.0" mnemonicParsing="false" onAction="#deleteBoard" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #6e0518;" text="Delete" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="editBoardTitleButton" layoutX="781.0" layoutY="33.0" mnemonicParsing="false" onAction="#editBoardTitle" prefHeight="30.0" prefWidth="50.0" style="-fx-background-color: #e0cda8;" text="Edit" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Button>
-            <Label fx:id="boardName" alignment="CENTER" contentDisplay="CENTER" layoutX="252.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0">
+            <Label fx:id="boardName" alignment="CENTER" contentDisplay="CENTER" layoutX="339.0" layoutY="29.0" prefHeight="38.0" prefWidth="323.0">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="System Bold" size="26.0" />
                </font>
             </Label>
-            <Button fx:id="createBoardButton" layoutX="119.0" layoutY="6.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #e0cda8;" text="Create Board " />
-                 <Button layoutX="540.0" layoutY="6.0" mnemonicParsing="false" onAction="#addList" style="-fx-background-color: #104a03;" text="Add List" textFill="WHITE" />
-            <Button layoutX="229.0" layoutY="6.0" mnemonicParsing="false" onAction="#showEditCardTagsBoard" prefHeight="25.0" prefWidth="81.0" style="-fx-background-color: #e0cda8;" text="Card Tags" />
-            <Button fx:id="joinBoardButton" layoutX="396.0" layoutY="6.0" mnemonicParsing="false" onAction="#joinBoard" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Join board" />
-            <Button fx:id="copyCodeButton" layoutX="319.0" layoutY="6.0" mnemonicParsing="false" onAction="#copyCode" prefHeight="25.0" prefWidth="68.0" style="-fx-background-color: #e0cda8;" text="Copy key" />
+            <Button fx:id="joinBoardButton" layoutX="396.0" layoutY="6.0" mnemonicParsing="false" onAction="#joinBoard" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Join board" />
+            <Button fx:id="copyCodeButton" layoutX="319.0" layoutY="6.0" mnemonicParsing="false" onAction="#copyCode" prefHeight=30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Copy key" />
+
+            <Button fx:id="createBoardButton" layoutX="226.0" layoutY="33.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: #e0cda8;" text="Create Board " textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+                 <Button layoutX="845.0" layoutY="33.0" mnemonicParsing="false" onAction="#addList" style="-fx-background-color: #104a03;" text="Add List" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button layoutX="122.0" layoutY="33.0" mnemonicParsing="false" onAction="#showEditCardTagsBoard" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Card Tags" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+
          </children>
       </Pane>
-        <ScrollPane hbarPolicy="ALWAYS" layoutY="37.0" prefHeight="447.0" prefWidth="703.0" vbarPolicy="ALWAYS">
+        <ScrollPane hbarPolicy="ALWAYS" layoutY="90.0" prefHeight="510.0" prefWidth="1000.0" vbarPolicy="ALWAYS">
          <content>
-                <AnchorPane fx:id="centerPane" prefHeight="444.0" prefWidth="701.0">
+                <AnchorPane fx:id="centerPane" prefHeight="496.0" prefWidth="988.0">
                     <HBox fx:id="columnContainer" layoutX="39.0" layoutY="127.0" prefHeight="128.0" prefWidth="243.0" spacing="100.0">
                     </HBox>
                 </AnchorPane>
