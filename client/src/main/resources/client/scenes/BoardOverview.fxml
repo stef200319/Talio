@@ -32,8 +32,8 @@
                   <Font name="System Bold" size="26.0" />
                </font>
             </Label>
-            <Button fx:id="joinBoardButton" layoutX="396.0" layoutY="6.0" mnemonicParsing="false" onAction="#joinBoard" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Join board" />
-            <Button fx:id="copyCodeButton" layoutX="319.0" layoutY="6.0" mnemonicParsing="false" onAction="#copyCode" prefHeight=30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Copy key" />
+            <Button fx:id="joinBoardButton" layoutX="686.0" layoutY="33.0" mnemonicParsing="false" onAction="#joinBoard" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Join board" />
+            <Button fx:id="copyCodeButton" layoutX="602.0" layoutY="33.0" mnemonicParsing="false" onAction="#copyCode" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Copy key" />
 
             <Button fx:id="createBoardButton" layoutX="226.0" layoutY="33.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: #e0cda8;" text="Create Board " textAlignment="CENTER">
                <font>

@@ -82,7 +82,9 @@ public class WorkspaceCtrl implements Initializable{
         });
 
         //Keyboard Shortcuts
+        if(this.boardTitle!=null)
         boardTitle.setOnKeyPressed(event -> {
+
             if (event.getCode() == KeyCode.ENTER) {
                 add();
             }
