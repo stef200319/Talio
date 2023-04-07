@@ -27,6 +27,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -440,8 +441,8 @@ public class MainCtrl {
     /**
 
      * private event handler for a key event that listens
-     *       for the CTRL+?, CTRL+E, ESCAPE  keys to be pressed
-     * when the "CTRL+?" keys are pressed, the method setPreviousSceneAndTitle()
+     *       for the SHIFT+/, ESCAPE  keys to be pressed
+     * when the "SHIFT+/" keys are pressed, the method setPreviousSceneAndTitle()
      *       to save the previous scene and scene title values and then showHelpScreen() method
      *       is called to show the help screen
      * when the ESCAPE key is pressed and the user is in the Task Details scene, the method showBoardOverview()
@@ -451,7 +452,7 @@ public class MainCtrl {
     private EventHandler<KeyEvent> keyboardShortcuts = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            if(event.isControlDown() && event.getCode()== KeyCode.SLASH)
+            if(event.isShiftDown() && event.getCode()== KeyCode.SLASH)
             {
                 setPreviousSceneAndTitle();
                 showHelpScreen();
@@ -460,6 +461,9 @@ public class MainCtrl {
             if(event.getCode()==KeyCode.ESCAPE && getCurrentSceneTitle().equals("Task Details"))
             {
 
+                boardOverviewCtrl.setHighlightedByKey(false);
+                HBox hbox = boardOverviewCtrl.getHighlightedTask();
+                boardOverviewCtrl.setHighlightedTask(hbox);
                 taskDetailsCtrl.showBoardOverview();
 
             }
