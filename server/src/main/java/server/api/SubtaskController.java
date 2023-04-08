@@ -1,6 +1,5 @@
 package server.api;
 
-import commons.Column;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;

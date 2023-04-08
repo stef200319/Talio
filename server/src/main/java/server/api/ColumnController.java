@@ -1,7 +1,6 @@
 package server.api;
 
 import commons.Card;
-import commons.CardTag;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;

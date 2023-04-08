@@ -44,12 +44,12 @@ public class CardController {
         return cardService.getAll();
     }
 
-    @MessageMapping("/card/addCard")
-    @SendTo("/topic/card")
-    public Card addMessage(Card c) {
-        addCard(c.getTitle(), c.getColumnId());
-        return c;
-    }
+//    @MessageMapping("/card/addCard")
+//    @SendTo("/topic/card")
+//    public Card addMessage(Card c) {
+//        addCard(c.getTitle(), c.getColumnId());
+//        return c;
+//    }
 
     /**
      * Get a single card whose id matches the input cardId, if a card with the input id exists.

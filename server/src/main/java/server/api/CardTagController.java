@@ -204,8 +204,8 @@ public class CardTagController {
 
     /**
      * Get card tag by id
-     * @param cardTagId
-     * @return
+     * @param cardTagId id of the card
+     * @return card with specified id
      */
     @GetMapping("/getCardTagById/{cardTagId}")
     public ResponseEntity<CardTag> getCardTagById(@PathVariable("{cardTagId}") long cardTagId) {
