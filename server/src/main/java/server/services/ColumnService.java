@@ -1,11 +1,7 @@
 package server.services;
 
 import commons.Column;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import server.component.RESTEvent;
 import server.database.ColumnRepository;
 
 import java.util.List;
@@ -14,12 +10,6 @@ import java.util.Optional;
 @Service
 public class ColumnService {
     private ColumnRepository columnRepository;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
-
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
 
     /**
      * @param columnRepository The data access model of the columns
@@ -33,8 +23,6 @@ public class ColumnService {
      * @return all columns in the table
      */
     public List<Column> getAll() {
-        RESTEvent event = new RESTEvent(columnRepository.findAll(), "everything was found");
-        applicationEventPublisher.publishEvent(event);
         return columnRepository.findAll();
     }
 
@@ -84,10 +72,7 @@ public class ColumnService {
         Column newColumn = new Column(title, boardId);
         newColumn.setPosition(newPosition);
 
-        RESTEvent event = new RESTEvent(newColumn, "column was created");
-        applicationEventPublisher.publishEvent(event);
-        columnRepository.save(newColumn);
-        return newColumn;
+        return columnRepository.save(newColumn);
     }
 
     /**
@@ -98,13 +83,7 @@ public class ColumnService {
     public Column update(String title, long columnId) {
         Column column = getById(columnId);
         column.setTitle(title);
-
-        RESTEvent event = new RESTEvent(column, "column was updated");
-        applicationEventPublisher.publishEvent(event);
-
-        columnRepository.save(column);
-
-        return column;
+        return columnRepository.save(column);
     }
 
     /**
@@ -116,11 +95,8 @@ public class ColumnService {
         Column column = getById(columnId);
         columnRepository.deleteById(columnId);
 
-        if (column != null && column.getPosition() != null) {
+        if (column != null && column.getPosition() != null)
             updateColumnPosition(column.getBoardId(), column.getPosition());
-            RESTEvent event = new RESTEvent(column, "column was deleted");
-            applicationEventPublisher.publishEvent(event);
-        }
 
         return column;
     }
@@ -139,10 +115,4 @@ public class ColumnService {
         }
     }
 
-    /**
-     * @param applicationEventPublisher the new application event publisher
-     */
-    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-        this.applicationEventPublisher = applicationEventPublisher;
-    }
 }

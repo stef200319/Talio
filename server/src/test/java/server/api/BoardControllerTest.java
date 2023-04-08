@@ -5,9 +5,6 @@ import commons.Card;
 import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import server.database.CardTagRepository;
 import server.services.*;
@@ -17,12 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
-@SpringBootTest
-class BoardControllerTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+class BoardControllerTest {
 
     private TestBoardRepository boardRepository;
     private TestColumnRepository columnRepository;
@@ -60,13 +55,8 @@ class BoardControllerTest {
         subtaskService = new SubtaskService(subtaskRepository);
         cardTagService = new CardTagService(cardTagRepository);
 
-
-        boardService.setApplicationEventPublisher(applicationEventPublisher);
-        columnService.setApplicationEventPublisher(applicationEventPublisher);
-
         cardController = new CardController(cardService, columnService, subtaskService);
-        columnController = new ColumnController(columnRepository,
-                columnService, boardService, cardService);
+        columnController = new ColumnController(columnRepository, columnService, boardService, cardService);
         cardTagController = new CardTagController(cardTagService, boardService, cardService);
         boardController = new BoardController(boardService, columnService, cardTagService, cardService, cardTagController);
 
