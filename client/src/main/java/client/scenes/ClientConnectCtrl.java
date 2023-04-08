@@ -1,5 +1,6 @@
 package client.scenes;
 
+import client.utils.LongPolling;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ public class ClientConnectCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final LongPolling longPolling;
 
     @FXML
     private TextField serverAddress;
@@ -23,9 +25,10 @@ public class ClientConnectCtrl implements Initializable {
      * @param mainCtrl the main screen?
      */
     @Inject
-    public ClientConnectCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public ClientConnectCtrl(ServerUtils server, MainCtrl mainCtrl, LongPolling longPolling) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.longPolling = longPolling;
     }
 
     /**
@@ -53,5 +56,8 @@ public class ClientConnectCtrl implements Initializable {
      */
     public void showWorkspace() {
         mainCtrl.showWorkspace();
+        server.setSERVER(serverAddress.getText());
+        longPolling.setSERVER(serverAddress.getText());
     }
+
 }
