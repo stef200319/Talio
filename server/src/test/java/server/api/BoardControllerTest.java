@@ -55,9 +55,8 @@ class BoardControllerTest {
         subtaskService = new SubtaskService(subtaskRepository);
         cardTagService = new CardTagService(cardTagRepository);
 
-        cardController = new CardController(cardService, columnService, subtaskService, cardRepository);
-        columnController = new ColumnController(columnRepository, boardRepository, cardRepository, cardController,
-                columnService, boardService, cardService);
+        cardController = new CardController(cardService, columnService, subtaskService);
+        columnController = new ColumnController(columnRepository, columnService, boardService, cardService);
         cardTagController = new CardTagController(cardTagService, boardService, cardService);
         boardController = new BoardController(boardService, columnService, cardTagService, cardService, cardTagController);
 
