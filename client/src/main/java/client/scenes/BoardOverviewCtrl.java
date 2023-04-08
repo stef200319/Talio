@@ -117,7 +117,7 @@ public class BoardOverviewCtrl implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         StompSessionHandler sessionHandler = new StringMessageHandler();
         stompClient.setMessageConverter(new StringMessageConverter());
-        stompClient.connect(server.getSERVER() + "/websocket-stomp", sessionHandler);
+        stompClient.connect("http://localhost:8080/websocket-stomp", sessionHandler);
 
         logger.info("connected to websocket");
     }

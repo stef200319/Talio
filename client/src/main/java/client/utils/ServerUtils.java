@@ -32,19 +32,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 
-    private static String SERVER = "http://localhost:8080/";
-
-    /**
-     * Set server
-     * @param server server to connect to
-     */
-    public void setSERVER(String server) {
-        SERVER = "http://" + server + "/";
-    }
-
-    public String getSERVER() {
-        return SERVER;
-    }
+    private static final String SERVER = "http://localhost:8080/";
 
     /**
      * @throws IOException

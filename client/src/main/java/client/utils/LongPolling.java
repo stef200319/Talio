@@ -13,17 +13,9 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class LongPolling {
 
-    private static String SERVER = "http://localhost:8080/";
+    private static final String SERVER = "http://localhost:8080/";
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
-
-    /**
-     * Set server
-     * @param server server to connect to
-     */
-    public void setSERVER(String server) {
-        SERVER = "http://" + server + "/";
-    }
 
     /**
      * Method which works as a register for updates in long polling for boards
