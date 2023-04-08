@@ -35,9 +35,9 @@ public class EditSubtaskTitleCtrl implements Initializable {
 
 
     /**
-     *
-     * @param server the server connected to
+     * @param server Server we are connected to
      * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
     public EditSubtaskTitleCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {

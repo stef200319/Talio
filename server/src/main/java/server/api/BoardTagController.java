@@ -3,6 +3,8 @@ package server.api;
 import commons.Board;
 import commons.BoardTag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.services.BoardService;
 import server.services.BoardTagService;
@@ -155,6 +157,19 @@ public class BoardTagController {
                 boardService.save(board);
             }
         }
+    }
+
+    /**
+     * Updates the given board tag and sends it to the "/topic/updateBoardTag" topic.
+     *
+     * @param boardTag the board tag to be updated
+     *
+     * @return the updated board tag
+     */
+    @MessageMapping("/updateBoardTag")
+    @SendTo("/topic/updateBoardTag")
+    public BoardTag updateBoardTag(BoardTag boardTag) {
+        return boardTag;
     }
 
 }

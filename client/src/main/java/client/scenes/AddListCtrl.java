@@ -24,9 +24,9 @@ public class AddListCtrl implements Initializable {
     private TextField listName;
 
     /**
-     *
-     * @param server the server connected to
+     * @param server Server we are connected to
      * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
     public AddListCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
@@ -83,8 +83,7 @@ public class AddListCtrl implements Initializable {
      */
     public void confirm() {
         server.addColumn(getList(), boardToAddId);
-
-        websocket.send("/app/column/addColumn", getList());
+        websocket.send("/app/updateColumn", getList());
 
         listName.clear();
         mainCtrl.showBoardOverview(boardToAddId);

@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import javafx.event.EventHandler;
@@ -16,6 +17,8 @@ import java.util.ResourceBundle;
 public class AddSubtaskCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
+
 
     private Card cardToAddTo;
 
@@ -25,11 +28,13 @@ public class AddSubtaskCtrl implements Initializable {
     /**
      * @param server Server we are connected to
      * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public AddSubtaskCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public AddSubtaskCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -90,6 +95,7 @@ public class AddSubtaskCtrl implements Initializable {
         String t = getTitle();
         title.clear();
         cardToAddTo = server.addSubtask(cardToAddTo.getId(), t);
+        websocket.send("app/updateCard", cardToAddTo);
         mainCtrl.showViewSubtask(cardToAddTo);
     }
 }

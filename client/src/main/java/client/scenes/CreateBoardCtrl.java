@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Board;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ public class CreateBoardCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
     private long boardID;
 
     @FXML
@@ -22,13 +24,15 @@ public class CreateBoardCtrl implements Initializable {
 
 
     /**
-     * @param server the server that you want to connect to
-     * @param mainCtrl the main screen?
+     * @param server Server we are connected to
+     * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public CreateBoardCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public CreateBoardCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.websocket = websocket;
     }
 
     /**
@@ -79,6 +83,7 @@ public class CreateBoardCtrl implements Initializable {
      */
     public void confirm() {
         server.addBoard(getBoard());
+        websocket.send("app/updateBoard", getBoard());
         boardName.clear();
         mainCtrl.showBoardOverview(server.getAllBoardsWithoutServers()
             .get(server.getAllBoardsWithoutServers().size() -1).getId());

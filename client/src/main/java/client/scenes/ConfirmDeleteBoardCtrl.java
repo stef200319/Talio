@@ -1,23 +1,27 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Board;
 
 public class ConfirmDeleteBoardCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
     private Board boardToDelete;
 
     /**
-     * @param server server we're connected to
+     * @param server Server we are connected to
      * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public ConfirmDeleteBoardCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public ConfirmDeleteBoardCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -32,6 +36,7 @@ public class ConfirmDeleteBoardCtrl {
      */
     public void confirm() {
         server.deleteBoard(boardToDelete);
+        websocket.send("app/updateBoard", boardToDelete);
         mainCtrl.showWorkspace();
     }
 
