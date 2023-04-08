@@ -626,6 +626,7 @@ public class MainCtrl {
      */
     public void showEditCardTagsBoard(Long boardId) {
         editCardTagsBoardCtrl.setBoardId(boardId);
+        editCardTagsBoardCtrl.refresh();
         primaryStage.setTitle("Edit Card Tags");
         primaryStage.setScene(editCardTagsBoard);
     }

@@ -115,7 +115,7 @@ public class EditSubtaskTitleCtrl implements Initializable {
         if(getTitle() != null) {
             server.editSubtaskTitle(subtaskToShow, getTitle());
             cardToShow = server.getCardById(cardToShow.getId());
-            websocket.send("app/updateSubtask", subtaskToShow);
+            websocket.send("/app/updateSubtask", subtaskToShow);
             newTitle.clear();
             mainCtrl.showTaskDetails(cardToShow);
         }

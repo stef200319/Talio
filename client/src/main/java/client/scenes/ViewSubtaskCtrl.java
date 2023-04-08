@@ -120,6 +120,7 @@ public class ViewSubtaskCtrl implements Initializable {
                 buttons.setAlignment(Pos.CENTER);
 
                 Button delete = new Button("X");
+                delete.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
                 delete.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -131,6 +132,7 @@ public class ViewSubtaskCtrl implements Initializable {
                 });
 
                 Button edit = new Button("Edit");
+                edit.setStyle("-fx-background-color: #e0cda8;");
                 edit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {

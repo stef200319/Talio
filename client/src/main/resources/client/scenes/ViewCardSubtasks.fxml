@@ -27,7 +27,7 @@
          </children></Pane>
       <ScrollPane hbarPolicy="NEVER" layoutX="83.0" layoutY="245.0" prefHeight="259.0" prefWidth="833.0" vbarPolicy="ALWAYS">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="258.0" prefWidth="832.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="832.0">
                <children>
                   <VBox fx:id="subtaskList" layoutX="11.0" layoutY="11.0" prefHeight="234.0" prefWidth="811.0" />
                </children>

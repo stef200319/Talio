@@ -169,39 +169,41 @@ public class TaskDetailsCtrl implements Initializable {
      * Refreshes the page
      */
     public void refresh() {
-        subtasksScroll.getChildren().clear();
-
-        cardToShow = server.getCardById(cardToShow.getId());
-
-        if(cardToShow!=null) {
-            cardTitle.setText(cardToShow.getTitle());
-            cardDescription.setText(cardToShow.getDescription());
-
-            List<Subtask> subtasks = cardToShow.getSubtasks();
-            for (int i = 0; i < subtasks.size(); i++) {
-                Subtask s = subtasks.get(i);
-
-                CheckBox checkbox = new CheckBox();
-                checkbox.setText(s.getTitle());
-                checkbox.setSelected(s.getDone());
-                checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable,
-                                        Boolean oldValue, Boolean newValue) {
-                        server.editSubtaskStatus(s.getId(), newValue);
-                        cardToShow = server.getCardById(cardToShow.getId());
-                    }
-                });
-
-                checkbox = enableDragAndDrop(checkbox, cardToShow, i);
-
-                subtasksScroll.getChildren().add(checkbox);
-            }
-        }
-
         if (cardToShow != null) {
-            updateCardTagListViewItems();
-            updateCardTagListViewLook();
+            subtasksScroll.getChildren().clear();
+
+            cardToShow = server.getCardById(cardToShow.getId());
+
+            if (cardToShow != null) {
+                cardTitle.setText(cardToShow.getTitle());
+                cardDescription.setText(cardToShow.getDescription());
+
+                List<Subtask> subtasks = cardToShow.getSubtasks();
+                for (int i = 0; i < subtasks.size(); i++) {
+                    Subtask s = subtasks.get(i);
+
+                    CheckBox checkbox = new CheckBox();
+                    checkbox.setText(s.getTitle());
+                    checkbox.setSelected(s.getDone());
+                    checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                        @Override
+                        public void changed(ObservableValue<? extends Boolean> observable,
+                                            Boolean oldValue, Boolean newValue) {
+                            server.editSubtaskStatus(s.getId(), newValue);
+                            cardToShow = server.getCardById(cardToShow.getId());
+                        }
+                    });
+
+                    checkbox = enableDragAndDrop(checkbox, cardToShow, i);
+
+                    subtasksScroll.getChildren().add(checkbox);
+                }
+            }
+
+            if (cardToShow != null) {
+                updateCardTagListViewItems();
+                updateCardTagListViewLook();
+            }
         }
     }
 
