@@ -4,7 +4,6 @@ import client.utils.ServerUtils;
 import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
-import commons.Column;
 import commons.Subtask;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

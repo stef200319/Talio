@@ -3,7 +3,6 @@ package client.scenes;
 import client.utils.ServerUtils;
 import client.utils.Websocket;
 import com.google.inject.Inject;
-import commons.Card;
 import commons.CardTag;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -20,8 +19,6 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 public class EditCardTagsBoardCtrl implements Initializable {

@@ -187,19 +187,18 @@ public class TaskDetailsCtrl implements Initializable {
                 List<Subtask> subtasks = cardToShow.getSubtasks();
                 for (int i = 0; i < subtasks.size(); i++) {
                     Subtask s = subtasks.get(i);
-
-                CheckBox checkbox = new CheckBox();
-                checkbox.setText(s.getTitle());
-                checkbox.setSelected(s.getDone());
-                checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                    CheckBox checkbox = new CheckBox();
+                    checkbox.setText(s.getTitle());
+                    checkbox.setSelected(s.getDone());
+                    checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
                     @Override
                     public void changed(ObservableValue<? extends Boolean> observable,
                                         Boolean oldValue, Boolean newValue) {
                         server.editSubtaskStatus(s.getId(), newValue);
                         websocket.send("/app/updateSubtask", s);
                         cardToShow = server.getCardById(cardToShow.getId());
-                    }
-                });
+                        }
+                    });
 
                     checkbox = enableDragAndDrop(checkbox, cardToShow, i);
 
