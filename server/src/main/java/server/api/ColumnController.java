@@ -4,8 +4,6 @@ import commons.Card;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.BoardRepository;
-import server.database.CardRepository;
 import server.database.ColumnRepository;
 import server.services.BoardService;
 import server.services.CardService;
@@ -23,29 +21,20 @@ public class ColumnController {
 
 
     private final ColumnRepository columnRepository;
-    private final BoardRepository boardRepository;
-    private final CardRepository cardRepository;
-    private final CardController cardController;
+
 
 
     /**
      *
      * @param columnRepository the data container which includes all the columns
-     * @param boardRepository the repository of the board -> used for checking whether boardId exists
-     * @param cardRepository the repository of the cards
-     * @param cardController the controller which controls all card crud operations
      * @param columnService the service used for the operations which use the column data access object
      * @param boardService the service used for the operations which use the board data access object
      * @param cardService the service used for the operations which use the card data access object
 
      */
-    public ColumnController(ColumnRepository columnRepository, BoardRepository boardRepository,
-                            CardRepository cardRepository, CardController cardController,
+    public ColumnController(ColumnRepository columnRepository,
                             ColumnService columnService, BoardService boardService, CardService cardService) {
         this.columnRepository = columnRepository;
-        this.boardRepository=boardRepository;
-        this.cardRepository=cardRepository;
-        this.cardController=cardController;
         this.columnService = columnService;
         this.boardService = boardService;
         this.cardService = cardService;

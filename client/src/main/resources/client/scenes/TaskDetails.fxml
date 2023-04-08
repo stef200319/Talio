@@ -2,103 +2,97 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="642.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.TaskDetailsCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.TaskDetailsCtrl">
    <children>
-      <Pane layoutY="70.0" prefHeight="542.0" prefWidth="894.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;">
+      <Pane prefHeight="90.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
          <children>
-            <Label layoutX="94.0" layoutY="55.0" prefHeight="40.0" prefWidth="249.0" text="Title of this Card:" underline="true">
+            <Button fx:id="close" layoutX="21.0" layoutY="29.0" mnemonicParsing="false" onAction="#showBoardOverview" prefHeight="30.0" prefWidth="52.0" style="-fx-background-color: #e0cda8;" text="Back">
                <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-            </Label>
-            <Label layoutX="91.0" layoutY="126.0" prefHeight="40.0" prefWidth="255.0" text="Card Description:">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-            </Label>
-            <Label layoutX="101.0" layoutY="321.0" prefHeight="40.0" prefWidth="255.0" text="Subtasks:">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-            </Label>
-            <Button fx:id="editCardDescription" layoutX="23.0" layoutY="121.0" mnemonicParsing="false" onAction="#showEditCardDescription" prefHeight="50.0" prefWidth="63.0" text="Edit">
-               <font>
-                  <Font size="19.0" />
+                  <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="editCardTitle" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#showEditCardTitle" prefHeight="50.0" prefWidth="63.0" text="Edit">
+            <Text layoutX="424.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Details" textAlignment="CENTER" wrappingWidth="153.0">
                <font>
-                  <Font size="19.0" />
+                  <Font name="System Bold" size="26.0" />
                </font>
-            </Button>
-            <Button layoutX="23.0" layoutY="316.0" mnemonicParsing="false" onAction="#showViewSubtask" prefHeight="50.0" prefWidth="71.0" text="View">
+            </Text>
+            <Button fx:id="cardCustomize" layoutX="769.0" layoutY="25.0" mnemonicParsing="false" onAction="#showCardCustomization" prefHeight="40.0" prefWidth="199.0" style="-fx-background-color: #e0cda8;" text="Customize Card Appearance">
                <font>
-                  <Font size="19.0" />
-               </font>
-            </Button>
-            <ScrollPane layoutX="29.0" layoutY="381.0" prefHeight="133.0" prefWidth="418.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <VBox fx:id="subtasksScroll" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="381.0" />
-                     </children></AnchorPane>
-              </content>
-            </ScrollPane>
-            <Label layoutX="559.0" layoutY="321.0" prefHeight="40.0" prefWidth="88.0" text="Tags:">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-            </Label>
-            <Button fx:id="cardCustomize" layoutX="729.0" layoutY="381.0" mnemonicParsing="false" onAction="#showCardCustomization" prefHeight="133.0" prefWidth="143.0" text="Edit">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Button>
-            <ScrollPane layoutX="492.0" layoutY="381.0" prefHeight="133.0" prefWidth="206.0">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-               </content>
-            </ScrollPane>
-            <Label layoutX="724.0" layoutY="321.0" prefHeight="40.0" prefWidth="153.0" text="Customize:">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-            </Label>
-            <Button layoutX="486.0" layoutY="316.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="63.0" text="Edit">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Button>
-            <Label fx:id="cardTitle" layoutX="344.0" layoutY="55.0" prefHeight="40.0" prefWidth="518.0" style="-fx-background-color: white; -fx-border-color: grey;">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Label>
-            <Label fx:id="cardDescription" alignment="TOP_LEFT" layoutX="29.0" layoutY="187.0" prefHeight="118.0" prefWidth="832.0" style="-fx-background-color: white; -fx-border-color: grey;" text="Label">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Label>
-         </children></Pane>
-      <Pane prefHeight="98.0" prefWidth="894.0" style="-fx-background-color: #372C2E; -fx-border-color: black;">
-         <children>
-            <Label alignment="CENTER" layoutX="244.0" layoutY="7.0" prefHeight="66.0" prefWidth="406.0" text="Card Details" textFill="WHITE">
-               <font>
-                  <Font name="Arial Black" size="56.0" />
-               </font>
-            </Label>
-            <Button fx:id="close" layoutX="741.0" layoutY="18.0" mnemonicParsing="false" onAction="#showBoardOverview" prefHeight="59.0" prefWidth="119.0" text="Exit">
-               <font>
-                  <Font size="19.0" />
+                  <Font size="14.0" />
                </font>
             </Button>
          </children></Pane>
-      <Pane layoutY="611.0" prefHeight="34.0" prefWidth="894.0" style="-fx-background-color: #b5b1b1; -fx-border-color: black;" />
+      <Button fx:id="editCardTitle" layoutX="436.0" layoutY="103.0" mnemonicParsing="false" onAction="#showEditCardTitle" prefHeight="30.0" prefWidth="52.0" style="-fx-background-color: #e0cda8;" text="Edit">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="cardTitle" layoutX="50.0" layoutY="138.0" prefHeight="40.0" prefWidth="438.0" style="-fx-background-color: white; -fx-border-color: grey;">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="editCardDescription" layoutX="436.0" layoutY="204.0" mnemonicParsing="false" onAction="#showEditCardDescription" prefHeight="30.0" prefWidth="52.0" style="-fx-background-color: #e0cda8;" text="Edit">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="cardDescription" alignment="TOP_LEFT" layoutX="50.0" layoutY="241.0" prefHeight="118.0" prefWidth="438.0" style="-fx-background-color: white; -fx-border-color: grey;" text="Label">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="50.0" layoutY="415.0" prefHeight="133.0" prefWidth="438.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="131.0" prefWidth="435.0">
+               <children>
+                  <VBox fx:id="subtasksScroll" prefHeight="133.0" prefWidth="438.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <Button layoutX="436.0" layoutY="378.0" mnemonicParsing="false" onAction="#showViewSubtask" prefHeight="30.0" prefWidth="52.0" style="-fx-background-color: #e0cda8;" text="View">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+<!--<<<<<<< HEAD-->
+<!--            <Button layoutX="486.0" layoutY="316.0" mnemonicParsing="false" onAction="#showEditCardTagsToCard" prefHeight="50.0" prefWidth="57.0" text="Edit">-->
+<!--=======-->
+      <Button layoutX="833.0" layoutY="103.0" mnemonicParsing="false" onAction="#showEditCardTagsToCard" prefHeight="14.0" prefWidth="63.0" style="-fx-background-color: #e0cda8;" text="Edit">
+<!--&gt;>>>>>> main-->
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <ListView fx:id="cardTagListView" layoutX="609.0" layoutY="138.0" prefHeight="410.0" prefWidth="287.0" />
+      <Text layoutX="51.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card description">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Text layoutX="50.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title of this Card">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Text layoutX="51.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subtasks" wrappingWidth="94.0">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Text layoutX="609.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags" textAlignment="CENTER" wrappingWidth="52.0">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

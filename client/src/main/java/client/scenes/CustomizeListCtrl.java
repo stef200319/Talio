@@ -145,6 +145,35 @@ public class CustomizeListCtrl implements Initializable {
                 (int) (colour.getBlue() * 255));
     }
 
+
+    /**
+     * Set the Background Colour of this Column to the Default Column Background Colour
+     */
+    public void setDefaultColumnBgColour(){
+        server.editColumnBackgroundColour(columnToShow, columnToShow.getDefaultBgColour());
+    }
+
+    /**
+     * Set the Border Colour of this Column to the Default Column Border Colour
+     */
+    public void setDefaultColumnBorderColour(){
+        server.editColumnBorderColour(columnToShow, columnToShow.getDefaultBorderColour());
+    }
+
+    /**
+     * Set the Font-Type of this Column to the Default Column Font-Type
+     */
+    public void setDefaultColumnFontType(){
+        server.editColumnFontType(columnToShow, columnToShow.getDefaultFontType());
+    }
+
+    /**
+     * Set the Font Colour of this Column to the Default Column Font Colour
+     */
+    public void setDefaultColumnFontColour(){
+        server.editColumnFontColour(columnToShow, columnToShow.getDefaultFontColour());
+    }
+
     /**
      * Edits the title of the Column and returns to the Column's details
      */

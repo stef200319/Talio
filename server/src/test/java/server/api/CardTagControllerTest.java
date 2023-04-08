@@ -8,10 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import server.database.BoardRepository;
-import server.database.CardRepository;
-import server.database.CardTagRepository;
-import server.database.ColumnRepository;
+import server.database.*;
+import server.services.BoardService;
+import server.services.CardService;
+import server.services.CardTagService;
 
 import static junit.framework.TestCase.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,6 +31,13 @@ class CardTagControllerTest {
     CardRepository cardRepository;
     ColumnRepository columnRepository;
 
+    CardTagService cardTagService;
+
+    BoardService boardService;
+
+    CardService cardService;
+
+    SubtaskRepository subtaskRepository;
 
 
     @BeforeEach
@@ -39,8 +46,14 @@ class CardTagControllerTest {
         boardRepository = new TestBoardRepository();
         cardRepository = new TestCardRepository();
         columnRepository = new TestColumnRepository();
+        subtaskRepository = new TestSubtaskRepository();
 
-        cardTagController = new CardTagController(cardTagRepository, boardRepository, cardRepository);
+
+        cardTagService = new CardTagService(cardTagRepository);
+        cardService = new CardService(cardRepository, subtaskRepository);
+        boardService = new BoardService(boardRepository);
+
+        cardTagController = new CardTagController(cardTagService, boardService, cardService);
 
         board1 = new Board("board1");
         board1.setId(69L);
@@ -94,7 +107,7 @@ class CardTagControllerTest {
         long id = c.getId();
         ResponseEntity<CardTag> response = cardTagController.deleteCardTagFromBoard(id);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertFalse(cardTagRepository.existsById(response.getBody().getId()));
+        assertFalse(cardTagService.existsById(response.getBody().getId()));
     }
 
     @Test

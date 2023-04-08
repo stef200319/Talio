@@ -3,26 +3,45 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="292.0" prefWidth="458.0" style="-fx-background-color: #F5DEB3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ClientConnectCtrl">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ClientConnectCtrl">
    <children>
-      <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" text="Connect Server">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="90.0" layoutY="104.0" prefHeight="17.0" prefWidth="84.0" text="Server Address:">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font>
-      </Label>
-      <TextField fx:id="serverAddress" layoutX="193.0" layoutY="99.0">
-         <font>
-            <Font name="Arial" size="14.0" />
-         </font>
-      </TextField>
-      <Button layoutX="306.0" layoutY="146.0" mnemonicParsing="false" onAction="#showWorkspace" prefHeight="17.0" prefWidth="62.0" style="-fx-background-color: #104a03;" text="Connect" textFill="WHITE" />
+      <ImageView fitHeight="603.0" fitWidth="1000.0" layoutX="1.0">
+         <image>
+            <Image url="@/client/scenes/Images/Talio_homepage_background.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="14.0" layoutY="323.0" prefHeight="230.0" prefWidth="426.0" style="-fx-background-color: #FAE5BD; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: black;">
+         <children>
+            <Label alignment="CENTER" layoutX="12.0" layoutY="20.0" prefHeight="59.0" prefWidth="402.0" text="Connect to a Server">
+               <font>
+                  <Font name="System Bold" size="41.0" />
+               </font>
+            </Label>
+            <TextField fx:id="serverAddress" layoutX="66.0" layoutY="92.0" prefHeight="46.0" prefWidth="289.0" promptText="Insert the Server Address">
+               <font>
+                  <Font name="Arial" size="22.0" />
+               </font>
+            </TextField>
+            <Button layoutX="134.0" layoutY="164.0" mnemonicParsing="false" onAction="#showWorkspace" prefHeight="46.0" prefWidth="154.0" style="-fx-background-color: #104a03;" text="Connect" textFill="WHITE">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Button layoutX="345.0" layoutY="168.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="24.0" style="-fx-border-radius: 50%; -fx-background-radius: 50%;">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/client/scenes/Images/help_button.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

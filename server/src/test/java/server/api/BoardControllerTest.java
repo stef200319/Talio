@@ -7,10 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import server.database.CardTagRepository;
-import server.services.BoardService;
-import server.services.CardService;
-import server.services.ColumnService;
-import server.services.SubtaskService;
+import server.services.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,6 +29,7 @@ class BoardControllerTest {
     private CardService cardService;
     private SubtaskService subtaskService;
 
+    private CardTagService cardTagService;
     private BoardController boardController;
     private ColumnController columnController;
     private CardController cardController;
@@ -55,13 +53,13 @@ class BoardControllerTest {
         columnService = new ColumnService(columnRepository);
         cardService = new CardService(cardRepository, subtaskRepository);
         subtaskService = new SubtaskService(subtaskRepository);
+        cardTagService = new CardTagService(cardTagRepository);
 
         cardController = new CardController(cardService, columnService, subtaskService, cardRepository);
         columnController = new ColumnController(columnRepository, boardRepository, cardRepository, cardController,
                 columnService, boardService, cardService);
-        cardTagController = new CardTagController(cardTagRepository, boardRepository, cardRepository);
-        boardController = new BoardController(boardService, columnService, cardTagRepository, cardTagController,
-                boardRepository);
+        cardTagController = new CardTagController(cardTagService, boardService, cardService);
+        boardController = new BoardController(boardService, columnService, cardTagService, cardService, cardTagController);
 
     }
 

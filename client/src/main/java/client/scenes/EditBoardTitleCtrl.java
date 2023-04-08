@@ -1,8 +1,10 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import commons.Board;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import com.google.inject.Inject;
@@ -17,7 +19,12 @@ public class EditBoardTitleCtrl implements Initializable {
 
     private final MainCtrl mainCtrl;
 
-    private long boardToEditID;
+    private Long boardToEditID;
+
+    private Board boardToEdit;
+
+    @FXML
+    private Label currentTitle;
     @FXML
     private TextField newTitle;
 
@@ -70,6 +77,16 @@ public class EditBoardTitleCtrl implements Initializable {
 
     public void setBoardToEditID(long boardToEditID) {
         this.boardToEditID = boardToEditID;
+        this.boardToEdit = server.getBoardByID(boardToEditID);
+        this.currentTitle.setText(boardToEdit.getTitle());
+    }
+
+    /**
+     * Show Board edit page
+     */
+
+    public void showBoardCustomize() {
+        mainCtrl.showCustomizeBoard(boardToEditID);
     }
 
     /**
@@ -90,7 +107,9 @@ public class EditBoardTitleCtrl implements Initializable {
         if(getTitle() != null) {
             server.editBoardTitle(server.getBoardByID(boardToEditID), getTitle());
             newTitle.clear();
-            mainCtrl.showBoardOverview(boardToEditID);
         }
+        mainCtrl.showBoardOverview(boardToEditID);
     }
+
+
 }
