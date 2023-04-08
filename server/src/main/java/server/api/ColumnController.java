@@ -1,6 +1,7 @@
 package server.api;
 
 import commons.Card;
+import commons.CardTag;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -263,5 +264,16 @@ public class ColumnController {
 
         List<Card> cards = cardService.getByColumnId(columnId);
         return ResponseEntity.ok(cards);
+    }
+
+    /**
+     * Message mapping for websockets
+     * @param column column that was changed
+     * @return column
+     */
+    @MessageMapping("/updateColumn")
+    @SendTo("/topic/updateColumn")
+    public Column updateColumn(Column column) {
+        return column;
     }
 }

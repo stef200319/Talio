@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import commons.CardTag;
@@ -25,6 +26,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
 
     private ServerUtils server;
     private MainCtrl mainCtrl;
+    private Websocket websocket;
 
 
     @FXML
@@ -53,9 +55,10 @@ public class AddCardTagsToCardCtrl implements Initializable {
      * @param mainCtrl
      */
     @Inject
-    public AddCardTagsToCardCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public AddCardTagsToCardCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -230,6 +233,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
      */
     public void addButtonPressed() {
         server.addCardTagToCard(selectedAvailable, card.getId());
+        websocket.send("/app/updateCardTag", selectedAvailable);
         refresh();
     }
 
@@ -238,6 +242,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
      */
     public void removeButtonPressed() {
         server.deleteCardTagFromCard(selectedOwned, card.getId());
+        websocket.send("/app/updateCardTag", selectedOwned);
         refresh();
     }
 

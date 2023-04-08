@@ -1,6 +1,7 @@
 package client.utils;
 
 import commons.Column;
+import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;

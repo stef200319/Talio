@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 
 
@@ -38,6 +39,7 @@ public class TaskDetailsCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
 
 
@@ -59,10 +61,10 @@ public class TaskDetailsCtrl implements Initializable {
      * @param mainCtrl the main screen?
      */
     @Inject
-    public TaskDetailsCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public TaskDetailsCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.mainCtrl = mainCtrl;
         this.server = server;
-
+        this.websocket = websocket;
     }
 
     /**
@@ -80,16 +82,28 @@ public class TaskDetailsCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    refresh();
+//                });
+//            }
+//        }, 0, 1000);
 
         cardTagListView.setStyle("-fx-border-width: 3px; -fx-border-color: white; -fx-focus-color: white");
+
+        websocket.registerForMessages("/topic/updateSubtask", Subtask.class, c -> {
+            System.out.println("Websocket subtask working");
+            Platform.runLater(() -> refresh());
+        });
+
+        websocket.registerForMessages("/topic/updateCardTag", CardTag.class, c -> {
+            System.out.println("Websocket cardTag working");
+            Platform.runLater(() -> refresh());
+        });
+
+        //need register for card
     }
 
     
@@ -156,6 +170,8 @@ public class TaskDetailsCtrl implements Initializable {
      */
     public void refresh() {
         subtasksScroll.getChildren().clear();
+
+        cardToShow = server.getCardById(cardToShow.getId());
 
         if(cardToShow!=null) {
             cardTitle.setText(cardToShow.getTitle());
