@@ -83,7 +83,7 @@ public class AddTaskCtrl implements Initializable {
      */
     public void confirm() {
         server.addCard(getCard(), columnToAddId);
-        websocket.send("/app/card/addCard", getCard());
+        websocket.send("/app/updateCard", getCard());
         taskName.clear();
         mainCtrl.showBoardOverview(boardID);
     }

@@ -152,7 +152,7 @@ public class CustomizeCardCtrl implements Initializable {
      */
     public void setDefaultCardBgColour(){
         server.editCardBackgroundColour(cardToShow, cardToShow.getDefaultBgColour());
-        websocket.send("app/updateCard", cardToShow);
+        websocket.send("/app/updateCard", cardToShow);
     }
 
     /**
@@ -160,7 +160,7 @@ public class CustomizeCardCtrl implements Initializable {
      */
     public void setDefaultCardBorderColour(){
         server.editCardBorderColour(cardToShow, cardToShow.getDefaultBorderColour());
-        websocket.send("app/updateCard", cardToShow);
+        websocket.send("/app/updateCard", cardToShow);
     }
 
     /**
@@ -168,7 +168,7 @@ public class CustomizeCardCtrl implements Initializable {
      */
     public void setDefaultCardFontType(){
         server.editCardFontType(cardToShow, cardToShow.getDefaultFontType());
-        websocket.send("app/updateCard", cardToShow);
+        websocket.send("/app/updateCard", cardToShow);
     }
 
     /**
@@ -176,7 +176,7 @@ public class CustomizeCardCtrl implements Initializable {
      */
     public void setDefaultCardFontColour(){
         server.editCardFontColour(cardToShow, cardToShow.getDefaultFontColour());
-        websocket.send("app/updateCard", cardToShow);
+        websocket.send("/app/updateCard", cardToShow);
     }
 
     /**
@@ -189,7 +189,7 @@ public class CustomizeCardCtrl implements Initializable {
         server.editCardFontStyleBold(cardToShow, getCardFontStyleBold());
         server.editCardFontStyleItalic(cardToShow, getCardFontStyleItalic());
         server.editCardFontColour(cardToShow, getNewCardFontColour());
-        websocket.send("app/updateCard", cardToShow);
+        websocket.send("/app/updateCard", cardToShow);
 
         mainCtrl.showTaskDetails(cardToShow);
     }

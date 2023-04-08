@@ -130,6 +130,14 @@ public class BoardOverviewCtrl implements Initializable {
             });
         });
 
+        websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
+            System.out.println("Websocket board working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
+
 //        Short polling
 //        new Timer().scheduleAtFixedRate(new TimerTask() {
 //            @Override
@@ -257,7 +265,7 @@ public class BoardOverviewCtrl implements Initializable {
                 Card oldCard = server.getCardById(oldId);
                 if(oldCard.getColumnId()!=c.getId()) {
                     server.editCardColumn(oldId,c.getId());
-                    websocket.send("app/updateCard", oldCard);
+                    websocket.send("/app/updateCard", oldCard);
                 }
 //                refresh(); We are using websocket.
             }
@@ -356,7 +364,7 @@ public class BoardOverviewCtrl implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     server.deleteCard(cards.get(finalI));
-                    websocket.send("app/updateCard", cards.get(finalI));
+                    websocket.send("/app/updateCard", cards.get(finalI));
 //                    refresh(); We are using websocket.
                 }
             });
@@ -397,7 +405,7 @@ public class BoardOverviewCtrl implements Initializable {
                 if(event1.getCode()==KeyCode.DELETE || event1.getCode()==KeyCode.BACK_SPACE)
                 {
                     server.deleteCard(this.highlightedCard);
-                    websocket.send("app/updateCard", this.highlightedCard);
+                    websocket.send("/app/updateCard", this.highlightedCard);
 
 //                    refresh(); We are using websocket.
                 }
@@ -614,14 +622,14 @@ public class BoardOverviewCtrl implements Initializable {
                 if(oldCard.getColumnId()==c.getId()) {              //Same column
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardPosition(oldId, newPos);
-                    websocket.send("app/updateCard", oldCard);
+                    websocket.send("/app/updateCard", oldCard);
                     event.setDropCompleted(true);
                 }
                 else {                                              //Changhing columns
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardColumn(oldId,c.getId());
                     server.editCardPosition(oldId, newPos);
-                    websocket.send("app/updateCard", oldCard);
+                    websocket.send("/app/updateCard", oldCard);
                     event.setDropCompleted(true);
                 }
 //                refresh(); We are using websocket.

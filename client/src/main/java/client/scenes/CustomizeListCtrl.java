@@ -150,7 +150,7 @@ public class CustomizeListCtrl implements Initializable {
      */
     public void setDefaultColumnBgColour(){
         server.editColumnBackgroundColour(columnToShow, columnToShow.getDefaultBgColour());
-        websocket.send("app/updateColumn", columnToShow);
+        websocket.send("/app/updateColumn", columnToShow);
     }
 
     /**
@@ -158,7 +158,7 @@ public class CustomizeListCtrl implements Initializable {
      */
     public void setDefaultColumnBorderColour(){
         server.editColumnBorderColour(columnToShow, columnToShow.getDefaultBorderColour());
-        websocket.send("app/updateColumn", columnToShow);
+        websocket.send("/app/updateColumn", columnToShow);
     }
 
     /**
@@ -166,7 +166,7 @@ public class CustomizeListCtrl implements Initializable {
      */
     public void setDefaultColumnFontType(){
         server.editColumnFontType(columnToShow, columnToShow.getDefaultFontType());
-        websocket.send("app/updateColumn", columnToShow);
+        websocket.send("/app/updateColumn", columnToShow);
     }
 
     /**
@@ -174,7 +174,7 @@ public class CustomizeListCtrl implements Initializable {
      */
     public void setDefaultColumnFontColour(){
         server.editColumnFontColour(columnToShow, columnToShow.getDefaultFontColour());
-        websocket.send("app/updateColumn", columnToShow);
+        websocket.send("/app/updateColumn", columnToShow);
     }
 
     /**
@@ -187,7 +187,7 @@ public class CustomizeListCtrl implements Initializable {
         server.editColumnFontStyleBold(columnToShow, getColumnFontStyleBold());
         server.editColumnFontStyleItalic(columnToShow, getColumnFontStyleItalic());
         server.editColumnFontColour(columnToShow, getNewColumnFontColour());
-        websocket.send("app/updateColumn", columnToShow);
+        websocket.send("/app/updateColumn", columnToShow);
 
         mainCtrl.showEditList(columnToShow,boardID);
     }

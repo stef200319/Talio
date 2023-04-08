@@ -36,7 +36,7 @@ public class ConfirmDeleteBoardCtrl {
      */
     public void confirm() {
         server.deleteBoard(boardToDelete);
-        websocket.send("app/updateBoard", boardToDelete);
+        websocket.send("/app/updateBoard", boardToDelete);
         mainCtrl.showWorkspace();
     }
 

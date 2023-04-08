@@ -111,7 +111,7 @@ public class EditListCtrl implements Initializable {
 
         if(getTitle() != null) {
             server.editColumnTitle(columnToEdit, getTitle());
-            websocket.send("app/updateColumn", columnToEdit);
+            websocket.send("/app/updateColumn", columnToEdit);
             newTitle.clear();
         }
 

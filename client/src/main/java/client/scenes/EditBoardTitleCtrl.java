@@ -109,7 +109,7 @@ public class EditBoardTitleCtrl implements Initializable {
     public void confirm() {
         if(getTitle() != null) {
             server.editBoardTitle(server.getBoardByID(boardToEditID), getTitle());
-            websocket.send("app/updateBoard", boardToEdit);
+            websocket.send("/app/updateBoard", boardToEdit);
             newTitle.clear();
         }
         mainCtrl.showBoardOverview(boardToEditID);

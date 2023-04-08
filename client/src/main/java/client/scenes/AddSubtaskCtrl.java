@@ -95,7 +95,7 @@ public class AddSubtaskCtrl implements Initializable {
         String t = getTitle();
         title.clear();
         cardToAddTo = server.addSubtask(cardToAddTo.getId(), t);
-        websocket.send("app/updateCard", cardToAddTo);
+        websocket.send("/app/updateCard", cardToAddTo);
         mainCtrl.showViewSubtask(cardToAddTo);
     }
 }

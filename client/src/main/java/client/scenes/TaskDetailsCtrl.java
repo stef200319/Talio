@@ -196,7 +196,7 @@ public class TaskDetailsCtrl implements Initializable {
                     public void changed(ObservableValue<? extends Boolean> observable,
                                         Boolean oldValue, Boolean newValue) {
                         server.editSubtaskStatus(s.getId(), newValue);
-                        websocket.send("app/updateSubtask", s);
+                        websocket.send("/app/updateSubtask", s);
                         cardToShow = server.getCardById(cardToShow.getId());
                     }
                 });
@@ -249,7 +249,7 @@ public class TaskDetailsCtrl implements Initializable {
                 int oldPos = Integer.parseInt(db.getString());
                 int newPos = i;
                 Card newCard = server.changeSubtaskPosition(c.getId(), oldPos, newPos);
-                websocket.send("app/updateCard", newCard);
+                websocket.send("/app/updateCard", newCard);
                 setCardToShow(newCard);
 //                refresh(); We are using websocket.
             }

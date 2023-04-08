@@ -83,7 +83,7 @@ public class CreateBoardCtrl implements Initializable {
      */
     public void confirm() {
         server.addBoard(getBoard());
-        websocket.send("app/updateBoard", getBoard());
+        websocket.send("/app/updateBoard", getBoard());
         boardName.clear();
         mainCtrl.showBoardOverview(server.getAllBoardsWithoutServers()
             .get(server.getAllBoardsWithoutServers().size() -1).getId());

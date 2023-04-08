@@ -131,7 +131,7 @@ public class ViewSubtaskCtrl implements Initializable {
                     public void changed(ObservableValue<? extends Boolean> observable,
                                         Boolean oldValue, Boolean newValue) {
                         server.editSubtaskStatus(s.getId(), newValue);
-                        websocket.send("app/updateSubtask", s);
+                        websocket.send("/app/updateSubtask", s);
                         cardToShow = server.getCardById(cardToShow.getId());
                     }
                 });
@@ -146,7 +146,7 @@ public class ViewSubtaskCtrl implements Initializable {
                     public void handle(ActionEvent event) {
                         //server.deleteSubtask(s.getId());
                         server.deleteSubtaskFromCard(cardToShow.getId(), s.getId());
-                        websocket.send("app/updateCard", cardToShow);
+                        websocket.send("/app/updateCard", cardToShow);
                         setCardToShow(server.getCardById(cardToShow.getId()));
 //                        refresh(); We are using websocket.
                     }
@@ -215,7 +215,7 @@ public class ViewSubtaskCtrl implements Initializable {
                 int oldPos = Integer.parseInt(db.getString());
                 int newPos = i;
                 Card newCard = server.changeSubtaskPosition(c.getId(), oldPos, newPos);
-                websocket.send("app/updateCard", newCard);
+                websocket.send("/app/updateCard", newCard);
                 setCardToShow(newCard);
 //                refresh(); We are using websocket.
             }

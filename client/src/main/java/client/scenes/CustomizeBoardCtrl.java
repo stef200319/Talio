@@ -152,7 +152,7 @@ public class CustomizeBoardCtrl implements Initializable {
      */
     public void setDefaultBoardCenterColour(){
         server.editBoardCenterColour(boardToShow, boardToShow.getDefaultCenterColour());
-        websocket.send("app/updateBoard", boardToShow);
+        websocket.send("/app/updateBoard", boardToShow);
     }
 
     /**
@@ -160,7 +160,7 @@ public class CustomizeBoardCtrl implements Initializable {
      */
     public void setDefaultBoardSideColour(){
         server.editBoardSideColour(boardToShow, boardToShow.getDefaultSideColour());
-        websocket.send("app/updateBoard", boardToShow);
+        websocket.send("/app/updateBoard", boardToShow);
     }
 
     /**
@@ -168,7 +168,7 @@ public class CustomizeBoardCtrl implements Initializable {
      */
     public void setDefaultBoardFontType(){
         server.editBoardFontType(boardToShow, boardToShow.getDefaultFontType());
-        websocket.send("app/updateBoard", boardToShow);
+        websocket.send("/app/updateBoard", boardToShow);
     }
 
     /**
@@ -176,7 +176,7 @@ public class CustomizeBoardCtrl implements Initializable {
      */
     public void setDefaultBoardFontColour(){
         server.editBoardFontColour(boardToShow, boardToShow.getDefaultFontColour());
-        websocket.send("app/updateBoard", boardToShow);
+        websocket.send("/app/updateBoard", boardToShow);
     }
 
     /**
@@ -189,7 +189,7 @@ public class CustomizeBoardCtrl implements Initializable {
         server.editBoardFontStyleBold(boardToShow, getColumnFontStyleBold());
         server.editBoardFontStyleItalic(boardToShow, getColumnFontStyleItalic());
         server.editBoardFontColour(boardToShow, getNewColumnFontColour());
-        websocket.send("app/updateBoard", boardToShow);
+        websocket.send("/app/updateBoard", boardToShow);
 
         mainCtrl.showEditBoardTitle(boardID);
     }

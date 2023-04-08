@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,6 +66,17 @@ public class EditCardDescriptionCtrl implements Initializable {
                     cancel();
             }
         });
+
+        websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
+            System.out.println("Websocket card working");
+
+            Platform.runLater(() -> {
+                if(cardToShow!=null) {
+                    cardToShow = server.getCardById(cardToShow.getId());
+                    setCardToShow(cardToShow);
+                }
+            });
+        });
     }
 
     /**
@@ -101,7 +113,7 @@ public class EditCardDescriptionCtrl implements Initializable {
     public void confirm() {
         if (getDescription() != "") {
             cardToShow = server.editCardDescription(cardToShow, getDescription());
-            websocket.send("app/updateCard", cardToShow);
+            websocket.send("/app/updateCard", cardToShow);
         }
         newDescription.clear();
         mainCtrl.showTaskDetails(cardToShow);

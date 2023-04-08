@@ -36,7 +36,7 @@ public class ConfirmDeleteColumnCtrl {
      */
     public void confirm() {
         server.deleteColumn(columnToDelete);
-        websocket.send("app/updateColumn", columnToDelete);
+        websocket.send("/app/updateColumn", columnToDelete);
         mainCtrl.showBoardOverview(columnToDelete.getBoardId());
     }
 

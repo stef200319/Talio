@@ -264,6 +264,7 @@ public class EditCardTagsBoardCtrl implements Initializable {
     public void deleteCardTag() {
         if (selectedCardTag == null) return;;
         server.deleteCardTagFromBoard(selectedCardTag);
+        websocket.send("/app/updateCardTag", selectedCardTag);
         refresh();
     }
 
@@ -271,10 +272,10 @@ public class EditCardTagsBoardCtrl implements Initializable {
      * Makes a new card Tag
      */
     public void newCardTag() {
+        CardTag cardTag = new CardTag("New CardTag", "#ff0000", server.getBoardByID(boardId));
+        server.addCardTagToBoard(cardTag, boardId);
         websocket.send("/app/updateCardTag", cardTag);
 //        refresh(); We are using websocket.
-        server.addCardTagToBoard(cardTag, boardId);
-        CardTag cardTag = new CardTag("New CardTag", "#ff0000", server.getBoardByID(boardId));
         cardTagsContainer.getSelectionModel().select(cardTagsContainer.getItems().size() - 1);
     }
 
