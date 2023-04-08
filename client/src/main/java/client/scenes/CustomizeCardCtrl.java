@@ -148,6 +148,12 @@ public class CustomizeCardCtrl implements Initializable {
      * Set the Background Colour of this Card to the Default Card Background Colour
      */
     public void setDefaultCardBgColour(){
+        String fontColourString = cardToShow.getDefaultBgColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.cardBgColourPicker.setValue(Color.web(fontColourString));
+
         server.editCardBackgroundColour(cardToShow, cardToShow.getDefaultBgColour());
     }
 
@@ -155,6 +161,11 @@ public class CustomizeCardCtrl implements Initializable {
      * Set the Border Colour of this Card to the Default Card Border Colour
      */
     public void setDefaultCardBorderColour(){
+        String fontColourString = cardToShow.getDefaultBorderColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.cardBorderColourPicker.setValue(Color.web(fontColourString));
         server.editCardBorderColour(cardToShow, cardToShow.getDefaultBorderColour());
     }
 
@@ -162,6 +173,7 @@ public class CustomizeCardCtrl implements Initializable {
      * Set the Font-Type of this Card to the Default Card Font-Type
      */
     public void setDefaultCardFontType(){
+        cardFontType.setValue(cardToShow.getDefaultFontType());
         server.editCardFontType(cardToShow, cardToShow.getDefaultFontType());
     }
 
@@ -169,6 +181,11 @@ public class CustomizeCardCtrl implements Initializable {
      * Set the Font Colour of this Card to the Default Card Font Colour
      */
     public void setDefaultCardFontColour(){
+        String fontColourString = cardToShow.getDefaultFontColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.cardFontColourPicker.setValue(Color.web(fontColourString));
         server.editCardFontColour(cardToShow, cardToShow.getDefaultFontColour());
     }
 

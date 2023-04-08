@@ -148,6 +148,11 @@ public class CustomizeBoardCtrl implements Initializable {
      * Set the Center Colour of this Board to the Default Board Center Colour
      */
     public void setDefaultBoardCenterColour(){
+        String fontColourString = boardToShow.getDefaultCenterColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.boardBgColourPicker.setValue(Color.web(fontColourString));
         server.editBoardCenterColour(boardToShow, boardToShow.getDefaultCenterColour());
     }
 
@@ -155,6 +160,11 @@ public class CustomizeBoardCtrl implements Initializable {
      * Set the Side Colour of this Board to the Default Board Side Colour
      */
     public void setDefaultBoardSideColour(){
+        String fontColourString = boardToShow.getDefaultSideColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.boardBorderColourPicker.setValue(Color.web(fontColourString));
         server.editBoardSideColour(boardToShow, boardToShow.getDefaultSideColour());
     }
 
@@ -162,6 +172,7 @@ public class CustomizeBoardCtrl implements Initializable {
      * Set the Font-Type of this Board to the Default Board Font-Type
      */
     public void setDefaultBoardFontType(){
+        boardFontType.setValue(boardToShow.getDefaultFontType());
         server.editBoardFontType(boardToShow, boardToShow.getDefaultFontType());
     }
 
@@ -169,6 +180,12 @@ public class CustomizeBoardCtrl implements Initializable {
      * Set the Font Colour of this Board to the Default Board Font Colour
      */
     public void setDefaultBoardFontColour(){
+        String fontColourString = boardToShow.getDefaultFontColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.boardFontColourPicker.setValue(Color.web(fontColourString));
+
         server.editBoardFontColour(boardToShow, boardToShow.getDefaultFontColour());
     }
 

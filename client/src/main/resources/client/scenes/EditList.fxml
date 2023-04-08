@@ -20,5 +20,10 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
+      <Button fx:id="customizeBoard" layoutX="349.0" layoutY="9.0" mnemonicParsing="false" onAction="#showCustomizeList" prefHeight="30.0" prefWidth="201.0" style="-fx-background-color: #e0cda8;" text="Customize List Appearence">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>
