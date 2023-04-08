@@ -1,9 +1,6 @@
 package server.api;
 
-import commons.Card;
-import commons.CardTag;
-import commons.Column;
-import commons.Subtask;
+import commons.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -403,6 +400,19 @@ public class CardController {
         if(c==null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(c);
+    }
+
+    /**
+     * Updates the given card and sends it to the "/topic/updateCard" topic.
+     *
+     * @param card the card to be updated
+     *
+     * @return the updated card
+     */
+    @MessageMapping("/updateCard")
+    @SendTo("/topic/updateCard")
+    public Card updateCard(Card card) {
+        return card;
     }
 
 }

@@ -320,10 +320,6 @@ public class MainCtrl {
     }
 
 
-
-
-
-
     /**
      * Connect to client
      */

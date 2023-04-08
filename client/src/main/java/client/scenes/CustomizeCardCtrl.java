@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ public class CustomizeCardCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
     private Card cardToShow;
 
@@ -44,14 +46,15 @@ public class CustomizeCardCtrl implements Initializable {
 
 
     /**
-     *
-     * @param server the server connected to
+     * @param server Server we are connected to
      * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public CustomizeCardCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public CustomizeCardCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server=server;
         this.mainCtrl=mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -149,6 +152,7 @@ public class CustomizeCardCtrl implements Initializable {
      */
     public void setDefaultCardBgColour(){
         server.editCardBackgroundColour(cardToShow, cardToShow.getDefaultBgColour());
+        websocket.send("app/updateCard", cardToShow);
     }
 
     /**
@@ -156,6 +160,7 @@ public class CustomizeCardCtrl implements Initializable {
      */
     public void setDefaultCardBorderColour(){
         server.editCardBorderColour(cardToShow, cardToShow.getDefaultBorderColour());
+        websocket.send("app/updateCard", cardToShow);
     }
 
     /**
@@ -163,6 +168,7 @@ public class CustomizeCardCtrl implements Initializable {
      */
     public void setDefaultCardFontType(){
         server.editCardFontType(cardToShow, cardToShow.getDefaultFontType());
+        websocket.send("app/updateCard", cardToShow);
     }
 
     /**
@@ -170,6 +176,7 @@ public class CustomizeCardCtrl implements Initializable {
      */
     public void setDefaultCardFontColour(){
         server.editCardFontColour(cardToShow, cardToShow.getDefaultFontColour());
+        websocket.send("app/updateCard", cardToShow);
     }
 
     /**
@@ -182,6 +189,7 @@ public class CustomizeCardCtrl implements Initializable {
         server.editCardFontStyleBold(cardToShow, getCardFontStyleBold());
         server.editCardFontStyleItalic(cardToShow, getCardFontStyleItalic());
         server.editCardFontColour(cardToShow, getNewCardFontColour());
+        websocket.send("app/updateCard", cardToShow);
 
         mainCtrl.showTaskDetails(cardToShow);
     }

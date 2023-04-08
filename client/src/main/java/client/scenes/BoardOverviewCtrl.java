@@ -86,8 +86,9 @@ public class BoardOverviewCtrl implements Initializable {
 
 
     /**
-     * @param server the server that you want to connect to
-     * @param mainCtrl the main screen?
+     * @param server Server we are connected to
+     * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
     public BoardOverviewCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
@@ -110,8 +111,8 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        websocket.registerForMessages("/topic/column", Column.class, c -> {
-            System.out.println("Working");
+        websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
+            System.out.println("Websocket column working");
 
             Platform.runLater(() -> {
                 refresh();
@@ -119,32 +120,15 @@ public class BoardOverviewCtrl implements Initializable {
 
 //            createList(c); Not working
 
-//            data.add(c);   Must be implemented
-
-            // For testing
-//            tableView.setStyle("-fx-background-color: red;");
-//            refresh();
-            System.out.println("Hey");
         });
 
-        websocket.registerForMessages("/topic/card", Card.class, c -> {
-            System.out.println("Working");
+        websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
+            System.out.println("Websocket card working");
 
             Platform.runLater(() -> {
                 refresh();
             });
-
-//            createList(c); Not working
-
-//            data.add(c);   Must be implemented
-
-            // For testing
-//            tableView.setStyle("-fx-background-color: red;");
-//            refresh();
-            System.out.println("Hey");
         });
-
-
 
 //        Short polling
 //        new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -273,8 +257,9 @@ public class BoardOverviewCtrl implements Initializable {
                 Card oldCard = server.getCardById(oldId);
                 if(oldCard.getColumnId()!=c.getId()) {
                     server.editCardColumn(oldId,c.getId());
+                    websocket.send("app/updateCard", oldCard);
                 }
-                refresh();
+//                refresh(); We are using websocket.
             }
         });
         // End of dropping card on column
@@ -371,7 +356,8 @@ public class BoardOverviewCtrl implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     server.deleteCard(cards.get(finalI));
-                    refresh();
+                    websocket.send("app/updateCard", cards.get(finalI));
+//                    refresh(); We are using websocket.
                 }
             });
 
@@ -411,8 +397,9 @@ public class BoardOverviewCtrl implements Initializable {
                 if(event1.getCode()==KeyCode.DELETE || event1.getCode()==KeyCode.BACK_SPACE)
                 {
                     server.deleteCard(this.highlightedCard);
+                    websocket.send("app/updateCard", this.highlightedCard);
 
-                    refresh();
+//                    refresh(); We are using websocket.
                 }
                 if(event1.getCode()==KeyCode.T)
                 {
@@ -627,15 +614,17 @@ public class BoardOverviewCtrl implements Initializable {
                 if(oldCard.getColumnId()==c.getId()) {              //Same column
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardPosition(oldId, newPos);
+                    websocket.send("app/updateCard", oldCard);
                     event.setDropCompleted(true);
                 }
                 else {                                              //Changhing columns
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardColumn(oldId,c.getId());
                     server.editCardPosition(oldId, newPos);
+                    websocket.send("app/updateCard", oldCard);
                     event.setDropCompleted(true);
                 }
-                refresh();
+//                refresh(); We are using websocket.
                 event.consume();
             }
         });

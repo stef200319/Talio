@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ public class EditCardTitleCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
     private Card cardToShow;
 
@@ -30,14 +32,15 @@ public class EditCardTitleCtrl implements Initializable {
 
 
     /**
-     *
-     * @param server the server connected to
+     * @param server Server we are connected to
      * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public EditCardTitleCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public EditCardTitleCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server=server;
         this.mainCtrl=mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -100,6 +103,7 @@ public class EditCardTitleCtrl implements Initializable {
     public void confirm() {
         if(getTitle() != null) {
             cardToShow = server.editCardTitle(cardToShow, getTitle());
+            websocket.send("app/updateCard", cardToShow);
             newTitle.clear();
             mainCtrl.showTaskDetails(cardToShow);
         }

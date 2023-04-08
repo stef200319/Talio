@@ -3,6 +3,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import client.utils.Websocket;
 import com.google.inject.Inject;
+import commons.Card;
 import commons.CardTag;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -50,9 +51,9 @@ public class EditCardTagsBoardCtrl implements Initializable {
 
 
     /**
-     * Injects the needed dependencies
-     * @param server
-     * @param mainCtrl
+     * @param server Server we are connected to
+     * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
     public EditCardTagsBoardCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
@@ -254,7 +255,7 @@ public class EditCardTagsBoardCtrl implements Initializable {
         server.editCardTagTitle(selectedCardTag, newTitle);
         websocket.send("/app/updateCardTag", selectedCardTag);
         changedCardTag = selectedCardTag;
-        refresh();
+//        refresh(); We are using websocket.
     }
 
     /**
@@ -263,7 +264,6 @@ public class EditCardTagsBoardCtrl implements Initializable {
     public void deleteCardTag() {
         if (selectedCardTag == null) return;;
         server.deleteCardTagFromBoard(selectedCardTag);
-        websocket.send("/app/updateCardTag", selectedCardTag);
         refresh();
     }
 
@@ -271,10 +271,10 @@ public class EditCardTagsBoardCtrl implements Initializable {
      * Makes a new card Tag
      */
     public void newCardTag() {
-        CardTag cardTag = new CardTag("New CardTag", "#ff0000", server.getBoardByID(boardId));
-        server.addCardTagToBoard(cardTag, boardId);
         websocket.send("/app/updateCardTag", cardTag);
-        refresh();
+//        refresh(); We are using websocket.
+        server.addCardTagToBoard(cardTag, boardId);
+        CardTag cardTag = new CardTag("New CardTag", "#ff0000", server.getBoardByID(boardId));
         cardTagsContainer.getSelectionModel().select(cardTagsContainer.getItems().size() - 1);
     }
 

@@ -53,12 +53,20 @@ public class ColumnController {
         return columns.size() > 0? ResponseEntity.ok(columns) : ResponseEntity.notFound().build();
     }
 
-    @MessageMapping("/column/addColumn")
-    @SendTo("/topic/column")
-    public Column addMessage(Column c) {
-        addColumn(c.getTitle(), c.getId());
-        return c;
-    }
+//    /**
+//     * Adds a new column to the board and sends the updated column list to the "/topic/column" topic.
+//     *
+//     * @param c the column to be added to the board
+//     *
+//     * @return the added column
+//     */
+//
+//    @MessageMapping("/column/addColumn")
+//    @SendTo("/topic/column")
+//    public Column addMessage(Column c) {
+//        addColumn(c.getTitle(), c.getId());
+//        return c;
+//    }
 
     /**
      * @param columnId the id of the column which will be retrieved
