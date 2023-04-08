@@ -47,7 +47,7 @@ public class CardController {
         return cardService.getAll();
     }
 
-    @MessageMapping("/card")
+    @MessageMapping("/card/addCard")
     @SendTo("/topic/card")
     public Card addMessage(Card c) {
         addCard(c.getTitle(), c.getColumnId());

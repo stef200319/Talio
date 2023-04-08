@@ -82,10 +82,9 @@ public class AddListCtrl implements Initializable {
      * adds list to server and returns to overview
      */
     public void confirm() {
-        System.out.println(boardToAddId);
         server.addColumn(getList(), boardToAddId);
 
-        websocket.send("/app/column", getList());
+        websocket.send("/app/column/addColumn", getList());
 
         listName.clear();
         mainCtrl.showBoardOverview(boardToAddId);

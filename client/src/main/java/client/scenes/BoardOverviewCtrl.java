@@ -110,9 +110,6 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        colListName.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTitle()));
-
         websocket.registerForMessages("/topic/column", Column.class, c -> {
             System.out.println("Working");
 

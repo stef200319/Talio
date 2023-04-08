@@ -304,7 +304,7 @@ public class MainCtrl {
     public void showBoardOverview(Long boardID) {
         boardOverviewCtrl.setBoardID(boardID);
         primaryStage.setTitle("Board Overview");
-//        boardOverviewCtrl.refresh();
+        boardOverviewCtrl.refresh();
         primaryStage.setScene(boardOverview);
     }
 

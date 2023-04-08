@@ -52,7 +52,7 @@ public class ColumnController {
         return columns.size() > 0? ResponseEntity.ok(columns) : ResponseEntity.notFound().build();
     }
 
-    @MessageMapping("/column")
+    @MessageMapping("/column/addColumn")
     @SendTo("/topic/column")
     public Column addMessage(Column c) {
         addColumn(c.getTitle(), c.getId());

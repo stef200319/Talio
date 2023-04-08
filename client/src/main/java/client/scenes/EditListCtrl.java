@@ -105,10 +105,12 @@ public class EditListCtrl implements Initializable {
      * adds list to server and returns to overview
      */
     public void confirm() {
+
         if(getTitle() != null) {
             server.editColumnTitle(columnToEdit, getTitle());
             newTitle.clear();
         }
+
         mainCtrl.showBoardOverview(boardID);
     }
 
