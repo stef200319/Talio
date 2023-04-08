@@ -104,12 +104,34 @@ public class BoardOverviewCtrl implements Initializable {
         websocket.registerForMessages("/topic/column", Column.class, c -> {
             System.out.println("Working");
 
+            Platform.runLater(() -> {
+                refresh();
+            });
+
 //            createList(c); Not working
 
 //            data.add(c);   Must be implemented
 
             // For testing
-            tableView.setStyle("-fx-background-color: red;");
+//            tableView.setStyle("-fx-background-color: red;");
+//            refresh();
+            System.out.println("Hey");
+        });
+
+        websocket.registerForMessages("/topic/card", Card.class, c -> {
+            System.out.println("Working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+
+//            createList(c); Not working
+
+//            data.add(c);   Must be implemented
+
+            // For testing
+//            tableView.setStyle("-fx-background-color: red;");
+//            refresh();
             System.out.println("Hey");
         });
 

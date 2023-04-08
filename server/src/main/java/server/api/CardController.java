@@ -2,8 +2,11 @@ package server.api;
 
 import commons.Card;
 import commons.CardTag;
+import commons.Column;
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 import server.services.ColumnService;
@@ -45,6 +48,13 @@ public class CardController {
     @ResponseBody
     public List<Card> getAllCards() {
         return cardService.getAll();
+    }
+
+    @MessageMapping("/card")
+    @SendTo("/topic/card")
+    public Card addMessage(Card c) {
+        addCard(c.getTitle(), c.getColumnId());
+        return c;
     }
 
     /**
