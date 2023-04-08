@@ -646,6 +646,7 @@ public class MainCtrl {
      */
     public void showAddCardTagsToCard(Card card) {
         addCardTagsToCardCtrl.setCard(card);
+        addCardTagsToCardCtrl.refresh();
         primaryStage.setTitle("Add Card Tags to Card");
         primaryStage.setScene(addCardTagsToCard);
     }

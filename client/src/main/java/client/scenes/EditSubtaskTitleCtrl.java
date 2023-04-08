@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import commons.Subtask;
@@ -19,6 +20,7 @@ public class EditSubtaskTitleCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
     private Card cardToShow;
 
@@ -38,9 +40,10 @@ public class EditSubtaskTitleCtrl implements Initializable {
      * @param mainCtrl the main controller
      */
     @Inject
-    public EditSubtaskTitleCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public EditSubtaskTitleCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server=server;
         this.mainCtrl=mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -112,6 +115,7 @@ public class EditSubtaskTitleCtrl implements Initializable {
         if(getTitle() != null) {
             server.editSubtaskTitle(subtaskToShow, getTitle());
             cardToShow = server.getCardById(cardToShow.getId());
+            websocket.send("app/updateSubtask", subtaskToShow);
             newTitle.clear();
             mainCtrl.showTaskDetails(cardToShow);
         }

@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import commons.Subtask;
@@ -28,6 +29,7 @@ public class ViewSubtaskCtrl implements Initializable {
     private Card cardToShow;
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
     @FXML
     private VBox subtaskList;
@@ -37,10 +39,10 @@ public class ViewSubtaskCtrl implements Initializable {
      * @param mainCtrl the main screen?
      */
     @Inject
-    public ViewSubtaskCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public ViewSubtaskCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.mainCtrl = mainCtrl;
         this.server = server;
-
+        this.websocket = websocket;
     }
 
     /**
