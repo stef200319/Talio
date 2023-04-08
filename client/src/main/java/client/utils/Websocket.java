@@ -62,6 +62,11 @@ public class Websocket {
         });
     }
 
+    /**
+     * Send method
+     * @param dest path
+     * @param o payload
+     */
     public void send(String dest, Object o) {
         session.send(dest, o);
     }
