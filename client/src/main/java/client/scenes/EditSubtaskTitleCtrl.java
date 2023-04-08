@@ -4,11 +4,18 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Card;
 import commons.Subtask;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
-public class EditSubtaskTitleCtrl {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditSubtaskTitleCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
@@ -37,6 +44,30 @@ public class EditSubtaskTitleCtrl {
     }
 
     /**
+     * Method that is once executed when the application starts that includes event listener
+     *
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        newTitle.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == KeyCode.ENTER)
+                    confirm();
+                else if (event.getCode() == KeyCode.ESCAPE)
+                    cancel();
+            }
+        });
+    }
+
+    /**
      * Sets the Title of the current Card which will be displayed
      * @param cardToShow the Card whose current Title needs to be shown
      */
@@ -54,10 +85,10 @@ public class EditSubtaskTitleCtrl {
     }
 
     /**
-     * Cancel edit and return to Card Details
+     * Cancel edit and return to subtask overview
      */
     public void cancel() {
-        mainCtrl.showTaskDetails(cardToShow);
+        mainCtrl.showViewSubtask(cardToShow);
     }
 
     /**
@@ -70,7 +101,7 @@ public class EditSubtaskTitleCtrl {
             return l;
         }
         else{
-            return "Unnamed Subtask";
+            return currentTitle.getText();
         }
     }
 
@@ -80,6 +111,7 @@ public class EditSubtaskTitleCtrl {
     public void confirm() {
         if(getTitle() != null) {
             server.editSubtaskTitle(subtaskToShow, getTitle());
+            cardToShow = server.getCardById(cardToShow.getId());
             newTitle.clear();
             mainCtrl.showTaskDetails(cardToShow);
         }

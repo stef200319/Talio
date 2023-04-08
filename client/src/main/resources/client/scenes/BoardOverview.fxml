@@ -10,63 +10,55 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<?import javafx.scene.control.Button?>-->
-<!--<?import javafx.scene.control.ScrollPane?>-->
-<!--<?import javafx.scene.layout.AnchorPane?>-->
-<!--<?import javafx.scene.layout.HBox?>-->
-<!--<?import javafx.scene.layout.Pane?>-->
-<!--<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="928.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">-->
-<!--    <children>-->
-<!--        <Pane layoutY="68.0" prefHeight="510.0" prefWidth="134.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;" />-->
-<!--        <Pane prefHeight="69.0" prefWidth="928.0" style="-fx-background-color: #372C2E; -fx-border-color: black;" />-->
-<!--        <Pane layoutX="803.0" layoutY="68.0" prefHeight="510.0" prefWidth="124.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;" />-->
-<!--        <Pane layoutY="577.0" prefHeight="35.0" prefWidth="928.0" style="-fx-background-color: #b5b1b1; -fx-border-color: black;" />-->
-<!--        <ScrollPane hbarPolicy="ALWAYS" layoutX="135.0" layoutY="71.0" prefHeight="504.0" prefWidth="666.0" vbarPolicy="ALWAYS">-->
-<!--            <content>-->
-<!--                <AnchorPane fx:id="anchorPane" prefHeight="502.0" prefWidth="666.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">-->
-<!--                    <Button layoutX="543.0" layoutY="39.0" mnemonicParsing="false" onAction="#addList" text="AllL" />-->
-<!--                    <HBox fx:id="columnContainer" layoutX="25.0" layoutY="181.0" prefHeight="140.0" prefWidth="604.0" spacing="100.0">-->
-<!--                    </HBox>-->
-<!--                </AnchorPane>-->
-<!--            </content>-->
-<!--        </ScrollPane>-->
-<!--    </children>-->
-<!--</AnchorPane>-->
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="928.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardOverviewCtrl">
     <children>
-        <Pane layoutY="68.0" prefHeight="510.0" prefWidth="134.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;" />
-        <Pane prefHeight="69.0" prefWidth="928.0" style="-fx-background-color: #372C2E; -fx-border-color: black;">
+        <Pane fx:id="sidePane" prefHeight="90.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
          <children>
-            <Button fx:id="myBoardsButton" layoutX="151.0" layoutY="13.0" mnemonicParsing="false" onAction="#myBoards" prefHeight="43.0" prefWidth="110.0" text="MY BOARDS" />
-            <Button fx:id="createBoardButton" layoutX="409.0" layoutY="13.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="43.0" prefWidth="110.0" text="CREATE BOARD" />
-            <Button fx:id="joinBoardButton" layoutX="684.0" layoutY="13.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="110.0" text="JOIN BOARD" />
-            <Button fx:id="editBoardTitleButton" layoutX="545.0" layoutY="22.0" mnemonicParsing="false" onAction="#editBoardTitle" text="Edit title" />
-            <Button layoutX="312.0" layoutY="22.0" mnemonicParsing="false" onAction="#showEditCardTagsBoard" text="Card tags" />
-         </children></Pane>
-        <Pane layoutX="803.0" layoutY="68.0" prefHeight="510.0" prefWidth="124.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;" />
-        <Pane layoutY="577.0" prefHeight="35.0" prefWidth="928.0" style="-fx-background-color: #b5b1b1; -fx-border-color: black;" />
-        <ScrollPane hbarPolicy="ALWAYS" layoutX="135.0" layoutY="71.0" prefHeight="504.0" prefWidth="666.0" vbarPolicy="ALWAYS">
-            <content>
-                <AnchorPane fx:id="anchorPane" prefHeight="502.0" prefWidth="666.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                    <Button layoutX="543.0" layoutY="39.0" mnemonicParsing="false" onAction="#addList" text="AllL" />
-                    <HBox fx:id="columnContainer" layoutX="25.0" layoutY="104.0" prefHeight="358.0" prefWidth="604.0" spacing="100.0">
-                  <children>
-                     <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
-                       <columns>
-                         <TableColumn fx:id="colListName" prefWidth="75.0" text="C1" />
-                         <TableColumn prefWidth="75.0" text="C2" />
-                       </columns>
-                     </TableView>
-                  </children></HBox>
-               <Label fx:id="boardName" alignment="CENTER" layoutX="284.0" layoutY="14.0" prefHeight="35.0" prefWidth="85.0">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
+
+            <Button fx:id="myBoardsButton" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" onAction="#myBoards" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Workspace" textAlignment="CENTER">
+
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button layoutX="927.0" layoutY="33.0" mnemonicParsing="false" onAction="#deleteBoard" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #6e0518;" text="Delete" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="editBoardTitleButton" layoutX="781.0" layoutY="33.0" mnemonicParsing="false" onAction="#editBoardTitle" prefHeight="30.0" prefWidth="50.0" style="-fx-background-color: #e0cda8;" text="Edit" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Label fx:id="boardName" alignment="CENTER" contentDisplay="CENTER" layoutX="339.0" layoutY="29.0" prefHeight="38.0" prefWidth="323.0">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <Button fx:id="joinBoardButton" layoutX="686.0" layoutY="33.0" mnemonicParsing="false" onAction="#joinBoard" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Join board" />
+            <Button fx:id="copyCodeButton" layoutX="602.0" layoutY="33.0" mnemonicParsing="false" onAction="#copyCode" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #e0cda8;" text="Copy key" />
+
+            <Button fx:id="createBoardButton" layoutX="226.0" layoutY="33.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: #e0cda8;" text="Create Board " textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+                 <Button layoutX="845.0" layoutY="33.0" mnemonicParsing="false" onAction="#addList" style="-fx-background-color: #104a03;" text="Add List" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button layoutX="122.0" layoutY="33.0" mnemonicParsing="false" onAction="#showEditCardTagsBoard" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Card Tags" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+
+         </children>
+      </Pane>
+        <ScrollPane hbarPolicy="ALWAYS" layoutY="90.0" prefHeight="510.0" prefWidth="1000.0" vbarPolicy="ALWAYS">
+         <content>
+                <AnchorPane fx:id="centerPane" prefHeight="496.0" prefWidth="988.0">
+                    <HBox fx:id="columnContainer" layoutX="39.0" layoutY="127.0" prefHeight="128.0" prefWidth="243.0" spacing="100.0">
+                    </HBox>
                 </AnchorPane>
-            </content>
+         </content>
         </ScrollPane>
     </children>
 </AnchorPane>

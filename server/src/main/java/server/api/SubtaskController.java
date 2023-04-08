@@ -73,4 +73,17 @@ public class SubtaskController {
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(subtaskDeleted);
     }
+
+    /**
+     * Gets a subtask by its id
+     * @param subtaskId id of the subtask
+     * @return the subtask with specified id
+     */
+    @GetMapping("/getSubtaskById/{subtaskId}")
+    @ResponseBody public ResponseEntity<Subtask> getSubtaskById(@PathVariable("subtaskId") long subtaskId) {
+        Subtask subtask = subtaskService.getById(subtaskId);
+        if(subtask==null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(subtask);
+    }
 }

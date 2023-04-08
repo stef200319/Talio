@@ -4,12 +4,10 @@ import client.utils.ServerUtils;
 import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -91,39 +89,10 @@ public class AddTaskCtrl implements Initializable {
     }
 
     /**
-     * private event handler for a key event that listens
-     *       for the "Ctrl+E" keys to be pressed
-     * when the "Ctrl+E" keys are pressed, the method showTaskDetails()
-     *       is called to switch to the Task Details scene
-     */
-    private EventHandler<KeyEvent> openTaskDetails = new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
-            if(event.isControlDown() && event.getCode() == KeyCode.E)
-            {
-                showTaskDetails();
-            }
-        }
-    };
-
-    /**
-     * @return the openTaskDetails event handler
-     */
-    public EventHandler<KeyEvent> getOpenTaskDetails(){
-        return openTaskDetails;
-    }
-    /**
      * @param taskName updates the task name
      */
     public void setTaskName(TextField taskName){
         this.taskName = taskName;
-    }
-
-    /**
-     * method to show task details
-     */
-    public void showTaskDetails(){
-        mainCtrl.showDetailOfTask();
     }
 
     /**

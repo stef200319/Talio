@@ -75,13 +75,14 @@ public class AddListCtrl implements Initializable {
         var l = listName.getText();
         if(l.equals(""))
             l="New List";
-        return new Column(l,1);
+        return new Column(l,boardToAddId);
     }
 
     /**
      * adds list to server and returns to overview
      */
     public void confirm() {
+        System.out.println(boardToAddId);
         server.addColumn(getList(), boardToAddId);
 
         websocket.send("/app/column", getList());

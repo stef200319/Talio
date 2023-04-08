@@ -18,10 +18,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -44,6 +45,7 @@ public class BoardOverviewCtrl implements Initializable {
 
     private long boardID = Long.MIN_VALUE;
 
+
     @FXML
     private HBox columnContainer;
 
@@ -55,22 +57,32 @@ public class BoardOverviewCtrl implements Initializable {
 
     @FXML
     private Button joinBoardButton;
-
     @FXML
     private Button editBoardTitleButton;
 
     @FXML
+    private Button copyCodeButton;
+    @FXML
     private Label boardName;
 
     @FXML
-    private TableView<Column> tableView;
+    private Pane sidePane;
+
 
     @FXML
-    private TableColumn<Column, String> colListName;
+    private AnchorPane centerPane;
 
-    private ObservableList<Column> data;
+    private Card highlightedCard;
 
-    private List<Column> columnList;
+    private boolean highlightedByKey;
+
+    private int highlightedListIndex;
+
+    private int highlightedCardIndex;
+
+    private Column highlightedColumn;
+
+    private HBox highlightedTask;
 
 
     /**
@@ -155,7 +167,21 @@ public class BoardOverviewCtrl implements Initializable {
         mainCtrl.showOverview();
     }
 
+    /**
+     * method that shows the join board by key screen
+     */
+    public void joinBoard(){
 
+        mainCtrl.showJoinBoard(boardID);
+    }
+    /**
+     * method that calls the method in MainCtrl that copies the code
+     * of the current board
+     */
+    public void copyCode()
+    {
+        mainCtrl.copyCode(boardID);
+    }
     /**
      * Method that shows the add list page on screen
      */
@@ -189,7 +215,20 @@ public class BoardOverviewCtrl implements Initializable {
             return;
         }
         Board currentBoard = server.getBoardByID(boardID);
+
+        Font fontBoard = Font.font(currentBoard.getFontType(),
+                currentBoard.isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
+                currentBoard.isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                20);
+        boardName.setFont(fontBoard);
+        boardName.setTextFill(Color.web(currentBoard.getFontColour()));
+
         boardName.setText(currentBoard.getTitle());
+
+        sidePane.setStyle("-fx-background-color: "+currentBoard.getSideColour());
+
+        centerPane.setStyle("-fx-background-color: "+currentBoard.getCenterColour());
+
         List<Column> columns = server.getColumnsByBoardId(boardID);
         for (int i = 0; i < columns.size(); i++)
             createList(columns.get(i));
@@ -203,7 +242,7 @@ public class BoardOverviewCtrl implements Initializable {
      */
 
 
-    @SuppressWarnings("checkstyle:MethodLength")
+    @SuppressWarnings({"checkstyle:MethodLength","checkstyle:CyclomaticComplexity"})
     public void createList(Column c) {
         VBox list=new VBox();
 
@@ -238,13 +277,17 @@ public class BoardOverviewCtrl implements Initializable {
                 if(oldCard.getColumnId()!=c.getId()) {
                     server.editCardColumn(oldId,c.getId());
                 }
+                refresh();
             }
         });
         // End of dropping card on column
 
 
         // Delete and edit buttons
-        Button delete = new Button("X");
+        Button delete = new Button("x");
+        delete.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+        delete.setPrefHeight(1);
+        delete.setPrefWidth(1);
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -252,18 +295,22 @@ public class BoardOverviewCtrl implements Initializable {
             }
         });
         Button editTitle = new Button("Edit");
+        editTitle.setStyle("-fx-background-color: #E0CDA8");
+        editTitle.setFont(Font.font("System", FontPosture.ITALIC, 12));
         editTitle.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 mainCtrl.showEditList(c, boardID);
             }
         });
-        HBox deleteBox = new HBox(5);
-        deleteBox.setAlignment(Pos.TOP_RIGHT);
+
+        HBox deleteBox = new HBox(130);
         deleteBox.getChildren().add(editTitle);
         deleteBox.getChildren().add(delete);
         list.getChildren().add(deleteBox);
         //End of delete and edit buttons
+        delete.setAlignment(Pos.TOP_RIGHT);
+
 
 
         Label title = new Label(c.getTitle());
@@ -283,6 +330,7 @@ public class BoardOverviewCtrl implements Initializable {
         List<Card> cards = server.getCardsByColumnId(c.getId());
         VBox cardContainer = new VBox();
         cardContainer.setSpacing(10);
+        list.getChildren().add(cardContainer);
         for(int i=0;i<cards.size();i++) {
             int finalI = i;
             HBox card = new HBox(80);                   //card box
@@ -308,15 +356,19 @@ public class BoardOverviewCtrl implements Initializable {
 
             cardButtons.setAlignment(Pos.CENTER);
 
-            Button details = new Button("Details");
-            details.setOnAction(new EventHandler<ActionEvent>() {
+            card.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
-                public void handle(ActionEvent event) {
+                public void handle(MouseEvent event) {
+                    // Do something when the card is clicked
                     mainCtrl.showTaskDetails(cards.get(finalI));
                 }
             });
 
-            Button deleteCard = new Button("X");
+            Button deleteCard = new Button("x");
+            deleteCard.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+            deleteCard.setPrefHeight(1);
+            deleteCard.setPrefWidth(1);
+
 
             deleteCard.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -326,8 +378,120 @@ public class BoardOverviewCtrl implements Initializable {
                 }
             });
 
+            HBox cardFinal = card;
+
+
+            EventHandler<MouseEvent>  handler = event -> {
+
+                if(highlightedByKey == false) {
+                    highlightedByKey = false;
+                    if (highlightedTask != null) {
+                        unHighlightTask(highlightedTask, cardContainer);
+                    }
+
+                    highlightedColumn = server.getColumnByColumnId(cards.get(finalI).getColumnId());
+                    highlightedListIndex = highlightedColumn.getPosition()-1;
+
+                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, finalI),
+                            cardContainer, finalI, highlightedListIndex);
+
+                }
+
+            };
+            cardFinal.setOnMouseEntered(handler);
+            cardFinal.setOnMouseExited(event -> {
+
+            });
+            cardContainer.setOnKeyReleased(event -> highlightedByKey = false);
+            cardContainer.setOnKeyPressed(event1 ->{
+
+                if(event1.getCode()==KeyCode.ENTER)
+                {
+
+                    mainCtrl.showTaskDetails(this.highlightedCard);
+
+                }
+                if(event1.getCode()==KeyCode.DELETE || event1.getCode()==KeyCode.BACK_SPACE)
+                {
+                    server.deleteCard(this.highlightedCard);
+
+                    refresh();
+                }
+                if(event1.getCode()==KeyCode.T)
+                {
+                    //show pop up
+                }
+                if(event1.getCode()==KeyCode.C)
+                {
+                    //show pop up
+                }
+                if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null &&
+                        highlightedCardIndex<cardContainer.getChildren().size()-1){
+                    if(server.getCardsByColumnId(server.getColumnsByBoardId(boardID).
+                            get(highlightedListIndex).getId()).size()-1>=this.highlightedCardIndex+1) {
+                        highlightedByKey = true;
+
+                        unHighlightTask(highlightedTask, cardContainer);
+
+                        highlightedCardIndex = highlightedCardIndex + 1;
+
+                        setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex,
+                                        highlightedCardIndex),
+                                cardContainer, highlightedCardIndex, highlightedListIndex);
+                    }
+
+                }
+                if(event1.getCode()==KeyCode.UP && getHighlightedTask()!=null && highlightedCardIndex>0)
+                {
+                    highlightedByKey = true;
+
+
+                    unHighlightTask(highlightedTask, cardContainer);
+
+                    highlightedCardIndex=highlightedCardIndex-1;
+
+                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
+                            cardContainer, highlightedCardIndex, highlightedListIndex);
+
+                }
+                if(event1.getCode()==KeyCode.LEFT && getHighlightedTask()!=null && highlightedListIndex>0)
+                {
+                    highlightedByKey = true;
+                    unHighlightTask(highlightedTask, cardContainer);
+                    this.highlightedListIndex = highlightedListIndex-1;
+                    if(this.highlightedCardIndex>server.getCardsByColumnId(
+                            server.getColumnsByBoardId(boardID).get(highlightedListIndex).getId()).size()-1)
+                    {
+                        this.highlightedCardIndex = server.getCardsByColumnId(server.getColumnsByBoardId(boardID)
+                                .get(highlightedListIndex).getId()).size()-1;
+                    }
+
+                    setHighlightedTask(getCardToHiglight(columnContainer,
+                                    highlightedListIndex, highlightedCardIndex) ,cardContainer, highlightedCardIndex,
+                            highlightedListIndex);
+                }
+                if(event1.getCode()==KeyCode.RIGHT && getHighlightedTask()!=null &&
+                        highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1)
+                {
+                    highlightedByKey = true;
+                    unHighlightTask(highlightedTask, cardContainer);
+                    this.highlightedListIndex = highlightedListIndex+1;
+                    if(this.highlightedCardIndex>server.
+                            getCardsByColumnId(server.getColumnsByBoardId(boardID).
+                                    get(highlightedListIndex).getId()).size()-1)
+                    {
+                        this.highlightedCardIndex = server.
+                                getCardsByColumnId(server.getColumnsByBoardId(boardID).
+                                        get(highlightedListIndex).getId()).size()-1;
+                    }
+
+                    setHighlightedTask(getCardToHiglight(columnContainer,
+                                    highlightedListIndex, highlightedCardIndex),
+                            cardContainer, highlightedCardIndex, highlightedListIndex);
+
+                }
+            });
             cardButtons.getChildren().add(deleteCard);
-            cardButtons.getChildren().add(details);
 
             card.getChildren().add(cardButtons);
 
@@ -337,10 +501,10 @@ public class BoardOverviewCtrl implements Initializable {
         }
         cardContainer.setPrefWidth(380); // Set preferred width to 380 pixels
         cardContainer.setPrefHeight(500); // Set preferred height to 500 pixels
-        list.getChildren().add(cardContainer);
+
 
         //Button for adding a task
-        Button b = new Button("Add task");
+        Button b = new Button("Add Task");
         b.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -348,9 +512,81 @@ public class BoardOverviewCtrl implements Initializable {
             }
         });
         list.getChildren().add(b);
+        b.setAlignment(Pos.BOTTOM_LEFT);
+        b.setStyle("-fx-text-fill: white; -fx-background-color:  #104a03; -fx-font-size: 12px;");
         //End of button for adding a task
 
         columnContainer.getChildren().add(list);
+    }
+
+    /**
+     * @return the currently highlighted task
+     */
+    public HBox getHighlightedTask(){return this.highlightedTask;}
+
+    /**
+     * sets the newly highlighted card
+     * @param card
+     */
+    public void setHighlightedCard(Card card){this.highlightedCard = card;}
+
+    /**
+     * sets the newly highlighted task
+     * @param hbox
+     */
+    public void setHighlightedTask(HBox hbox){this.highlightedTask = hbox;}
+
+    /**
+     * method that changes the highlighted by key value
+     * @param bool
+     */
+    public void setHighlightedByKey(boolean bool){this.highlightedByKey = bool;}
+
+    /**
+     * @param container
+     * @param indexList of the list that contains the card
+     * @param indexCard of the card
+     * @return the card to be highlighted
+     */
+
+    public HBox getCardToHiglight(HBox container,  int indexList, int indexCard)
+    {
+        VBox list = (VBox)container.getChildren().get(indexList);
+        VBox cardList = (VBox)list.getChildren().get(2);
+        HBox cardToHighlight = (HBox) cardList.getChildren().get(indexCard);
+        return cardToHighlight;
+    }
+
+    /**
+     * method that sets the highlighted task
+     * @param l
+     * @param vbox
+     * @param index
+     * @param indexList
+     */
+    public void setHighlightedTask(HBox l, VBox vbox, int index, int indexList){
+        this.highlightedTask=l;
+        vbox.requestFocus();
+        this.highlightedCardIndex = index;
+        this.highlightedListIndex = indexList;
+        this.highlightedColumn = server.getColumnsByBoardId(boardID).get(indexList);
+        this.highlightedCard = server.getCardsByColumnId(highlightedColumn.getId()).get(index);
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setColor(Color.BLUE);
+        this.highlightedTask.setEffect(dropShadow);
+
+    }
+
+    /**
+     * method that unhighlights the task
+     * @param l
+     * @param vbox
+     */
+    public void unHighlightTask(HBox l, VBox vbox){
+
+        l.setEffect(null);
+        vbox.requestFocus();
+
     }
 
     /**
@@ -424,5 +660,11 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void showEditCardTagsBoard() {
         mainCtrl.showEditCardTagsBoard(boardID);
+    }
+    /**
+     * Delete the board
+     */
+    public void deleteBoard() {
+        mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
     }
 }

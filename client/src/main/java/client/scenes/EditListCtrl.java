@@ -66,7 +66,7 @@ public class EditListCtrl implements Initializable {
      */
     public void setColumnToEdit(Column c) {
         this.columnToEdit = c;
-        this.currentTitle.setText(columnToEdit.getTitle());
+        this.newTitle.setText(columnToEdit.getTitle());
     }
 
 
@@ -97,7 +97,7 @@ public class EditListCtrl implements Initializable {
             return l;
         }
         else{
-            return "---";
+            return columnToEdit.getTitle();
         }
     }
 

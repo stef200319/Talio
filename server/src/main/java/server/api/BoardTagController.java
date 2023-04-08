@@ -4,8 +4,8 @@ import commons.Board;
 import commons.BoardTag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.BoardRepository;
-import server.database.BoardTagRepository;
+import server.services.BoardService;
+import server.services.BoardTagService;
 
 import java.util.List;
 
@@ -13,17 +13,17 @@ import java.util.List;
 @RequestMapping("/boardTag")
 public class BoardTagController {
 
-    private BoardTagRepository boardTagRepository;
-    private BoardRepository boardRepository;
+    private final BoardService boardService;
+    private final BoardTagService boardTagService;
 
     /**
      * Constructor for BoardTagController
-     * @param boardTagRepository
-     * @param boardRepository
+     * @param boardTagService
+     * @param boardService
      */
-    public BoardTagController(BoardTagRepository boardTagRepository, BoardRepository boardRepository) {
-        this.boardTagRepository = boardTagRepository;
-        this.boardRepository = boardRepository;
+    public BoardTagController(BoardTagService boardTagService, BoardService boardService) {
+        this.boardTagService = boardTagService;
+        this.boardService = boardService;
     }
 
     /**
@@ -40,8 +40,7 @@ public class BoardTagController {
             return ResponseEntity.badRequest().build();
         }
 
-        BoardTag boardTag = new BoardTag(title, color);
-        boardTagRepository.save(boardTag);
+        BoardTag boardTag = boardTagService.add(title, color);
         return ResponseEntity.ok(boardTag);
     }
 
@@ -52,18 +51,23 @@ public class BoardTagController {
      */
     @DeleteMapping("deleteBoardTag/{boardTagId}")
     @ResponseBody public ResponseEntity<BoardTag> deleteBoardTag(@PathVariable("boardTagId") long boardTagId) {
-        if (!boardTagRepository.existsById(boardTagId)) {
+        if (!boardTagService.existsById(boardTagId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        BoardTag boardTag = boardTagRepository.findById(boardTagId).get();
-
+        BoardTag boardTag = boardTagService.delete(boardTagId);
         deleteBoardTagFromBoards(boardTag);
-
-        boardTagRepository.deleteById(boardTagId);
         return ResponseEntity.ok(boardTag);
     }
 
+    /**
+     * gets all the board tags
+     * @return a list of all the board tags
+     */
+    @GetMapping("/getAllBoardTags")
+    @ResponseBody public ResponseEntity<List<BoardTag>> getAllBoardTags(){
+        return ResponseEntity.ok(boardTagService.getAll());
+    }
     /**
      * adds a boardTag to a board
      * @param boardTagId
@@ -73,14 +77,14 @@ public class BoardTagController {
     @PostMapping("/addBoardTagToBoard/{boardTagId}/{boardId}")
     @ResponseBody public ResponseEntity<BoardTag> addBoardTagToBoard(@PathVariable("boardTagId") long boardTagId,
                                                                   @PathVariable("boardId") long boardId) {
-        if (!boardTagRepository.existsById(boardTagId) || !boardRepository.existsById(boardId)) {
+        if (!boardTagService.existsById(boardTagId) || !boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        BoardTag boardTag = boardTagRepository.findById(boardTagId).get();
-        Board board = boardRepository.findById(boardId).get();
+        BoardTag boardTag = boardTagService.getById(boardTagId);
+        Board board = boardService.getByBoardId(boardId);
         board.addBoardTag(boardTag);
-        boardRepository.save(board);
+        boardService.save(board);
         return ResponseEntity.ok(boardTag);
     }
 
@@ -93,14 +97,14 @@ public class BoardTagController {
     @DeleteMapping("/deleteBoardTagFromBoard/{boardTagId}/{boardId}")
     @ResponseBody public ResponseEntity<BoardTag> deleteBoardTagFromBoard(@PathVariable("boardTagId") long boardTagId,
                                                                        @PathVariable("boardId") long boardId) {
-        if (!boardTagRepository.existsById(boardTagId) || !boardRepository.existsById(boardId)) {
+        if (!boardTagService.existsById(boardTagId) || !boardService.existsById(boardId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        BoardTag boardTag = boardTagRepository.findById(boardTagId).get();
-        Board board = boardRepository.findById(boardId).get();
+        BoardTag boardTag = boardTagService.getById(boardTagId);
+        Board board = boardService.getByBoardId(boardId);
         board.deleteBoardTag(boardTag);
-        boardRepository.save(board);
+        boardService.save(board);
         return ResponseEntity.ok(boardTag);
     }
 
@@ -113,13 +117,11 @@ public class BoardTagController {
     @PutMapping("/editBoardTagColor/{boardTagId}/{color}")
     @ResponseBody public ResponseEntity<BoardTag> editBoardTagColor(@PathVariable("boardTagId") long boardTagId,
                                                                   @PathVariable("color") String color) {
-        if (!boardTagRepository.existsById((boardTagId))) {
+        if (!boardTagService.existsById((boardTagId))) {
             return ResponseEntity.badRequest().build();
         }
 
-        BoardTag boardTag = boardTagRepository.findById(boardTagId).get();
-        boardTag.setColor(color);
-        boardTagRepository.save(boardTag);
+        BoardTag boardTag = boardTagService.editColor(boardTagId, color);
         return ResponseEntity.ok(boardTag);
     }
 
@@ -132,23 +134,12 @@ public class BoardTagController {
     @PutMapping("/editBoardTagTitle/{boardTagId}/{title}")
     @ResponseBody public ResponseEntity<BoardTag> editBoardTagTitle(@PathVariable("boardTagId") long boardTagId,
                                                                   @PathVariable("title") String title) {
-        if (!boardTagRepository.existsById(boardTagId)) {
+        if (!boardTagService.existsById(boardTagId)) {
             return ResponseEntity.badRequest().build();
         }
 
-        BoardTag boardTag = boardTagRepository.findById(boardTagId).get();
-        boardTag.setTitle(title);
-        boardTagRepository.save(boardTag);
+        BoardTag boardTag = boardTagService.editTitle(boardTagId, title);
         return ResponseEntity.ok(boardTag);
-    }
-
-    /**
-     * Gets all the boardTags
-     * @return list of boardTags
-     */
-    @GetMapping("/getAllBoardTags")
-    @ResponseBody public ResponseEntity<List<BoardTag>> getAllBoardTags() {
-        return ResponseEntity.ok(boardTagRepository.findAll());
     }
 
 
@@ -157,11 +148,11 @@ public class BoardTagController {
      * @param boardTag
      */
     public void deleteBoardTagFromBoards(BoardTag boardTag) {
-        List<Board> boards = boardRepository.findAll();
+        List<Board> boards = boardService.getAll();
         for (Board board : boards) {
             if (board.getBoardTags().contains(boardTag)) {
                 board.deleteBoardTag(boardTag);
-                boardRepository.save(board);
+                boardService.save(board);
             }
         }
     }

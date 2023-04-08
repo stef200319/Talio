@@ -77,35 +77,39 @@ public class Main extends Application {
         var editSubtaskTitle = FXML.load(EditSubtaskTitleCtrl.class, "client", "scenes",
                 "EditSubtaskTitle.fxml");
 
-        var confirmDeleteColumn = FXML.load(ConfirmDeleteColumnCtrl.class, "client",
-                "scenes","ConfirmDeleteColumn.fxml");
-        var confirmDeleteBoard = FXML.load(ConfirmDeleteBoardCtrl.class, "client",
-                "scenes", "ConfirmDeleteBoard.fxml");
+        var confirmDeleteColumn = FXML.load(ConfirmDeleteColumnCtrl.class, "client", "scenes",
+            "ConfirmDeleteColumn.fxml");
+        var confirmDeleteBoard = FXML.load(ConfirmDeleteBoardCtrl.class, "client", "scenes",
+            "ConfirmDeleteBoard.fxml");
+        var addSubtask = FXML.load(AddSubtaskCtrl.class, "client", "scenes", "AddSubtask.fxml");
         var help = FXML.load(HelpCtrl.class, "client", "scenes", "Help.fxml");
-
-
         var customizeCard = FXML.load(CustomizeCardCtrl.class, "client",
                 "scenes", "CustomizeCard.fxml");
         var customizeList = FXML.load(CustomizeListCtrl.class, "client",
                 "scenes", "CustomizeList.fxml");
+        var customizeBoard = FXML.load(CustomizeBoardCtrl.class, "client",
+                "scenes", "CustomizeBoard.fxml");
 
         var editCardTagsBoard = FXML.load(EditCardTagsBoardCtrl.class,
                 "client", "scenes", "EditCardTagsBoard.fxml");
 
         var addCardTagsToCard = FXML.load(AddCardTagsToCardCtrl.class,
                 "client", "scenes", "AddCardTagsToCard.fxml");
+        var joinBoardKey = FXML.load(JoinBoardByKeyCtrl.class, "client",
+                "scenes", "JoinBoardByKey.fxml");
 
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
         mainCtrl.initialize(primaryStage, add, boardOverview, clientConnect, taskDetails,
-                addTask, taskManagement, workspace,createBoard, editCardTitle, editCardDescription,
-                editList, editBoardTitle,
-                viewSubtasks, customizeCard, customizeList, editSubtaskTitle, confirmDeleteColumn,
-                confirmDeleteBoard, help, editCardTagsBoard, addCardTagsToCard);
-                
+                addTask, taskManagement, workspace, createBoard, editCardTitle, editCardDescription, editList,
+            editBoardTitle, viewSubtasks, customizeCard, customizeList, customizeBoard, editSubtaskTitle,
+            confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard,
+                addCardTagsToCard, joinBoardKey);
 
-
-
+        //Stopping the thread working for long polling in Workspace
+        primaryStage.setOnCloseRequest(e -> {
+            workspace.getKey().stop();
+        });
     }
 }

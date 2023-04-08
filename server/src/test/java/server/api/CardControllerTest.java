@@ -4,16 +4,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import commons.Subtask;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import commons.Card;
-import server.services.BoardService;
 import server.services.CardService;
 import server.services.ColumnService;
 import server.services.SubtaskService;
@@ -39,7 +40,7 @@ class CardControllerTest {
         columnService = new ColumnService(columnRepository);
         subtaskService = new SubtaskService(subtaskRepository);
 
-        cardController = new CardController(cardService, columnService, subtaskService, cardRepository);
+        cardController = new CardController(cardService, columnService, subtaskService);
     }
 
 
@@ -245,4 +246,83 @@ class CardControllerTest {
 //        assertEquals(1, cardController.getAllCards().get(1).getPosition());
     }
 
+    @Test
+    void createSubtask_nullTitle() {
+        ResponseEntity<Card> ret = cardController.createSubtask(1, null);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
+
+    @Test
+    void createSubtask_unsuccessful() {
+        ResponseEntity<Card> ret = cardController.createSubtask(10, "title");
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
+
+    @Test
+    void createSubtask_successful() {
+        ResponseEntity<Card> ret = cardController.createSubtask(1, "subtask");
+
+        Card expected = new Card("Test2", 1);
+        expected.setId(1);
+        expected.setPosition(1);
+        List<Subtask> subtasks = expected.getSubtasks();
+        subtasks.add(new Subtask("s1"));
+        subtasks.add(new Subtask("s2"));
+        subtasks.add(new Subtask("subtask"));
+        expected.setSubtasks(subtasks);
+        assertEquals(expected.toString(), ret.getBody().toString());
+    }
+
+    @Test
+    void getSubtasksByCardId_doesntExist() {
+        ResponseEntity<List<Subtask>> ret = cardController.getSubtasksByCardId(10);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
+
+    @Test
+    void getSubtasksByCardId_successful() {
+        ResponseEntity<List<Subtask>> ret = cardController.getSubtasksByCardId(0);
+        System.out.println(ret.getBody().toString());
+        assertEquals(2, ret.getBody().size());
+    }
+
+    @Test
+    void changeSubtaskPosition_outOfBounds() {
+        ResponseEntity<Card> ret = cardController.changeSubtaskPosition(0, 3, 5);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
+
+    @Test
+    void changeSubtaskPosition_shiftDown() {
+        ResponseEntity<Card> ret = cardController.changeSubtaskPosition(0, 0, 1);
+        List<Subtask> expected = new ArrayList<>();
+        Subtask s1 = new Subtask("s1");
+        Subtask s2 = new Subtask("s2");
+        expected.add(s2);
+        expected.add(s1);
+        assertEquals(expected, ret.getBody().getSubtasks());
+    }
+
+    @Test
+    void changeSubtaskPosition_shiftUp() {
+        ResponseEntity<Card> ret = cardController.changeSubtaskPosition(0, 1, 0);
+        List<Subtask> expected = new ArrayList<>();
+        Subtask s1 = new Subtask("s1");
+        Subtask s2 = new Subtask("s2");
+        expected.add(s2);
+        expected.add(s1);
+        assertEquals(expected, ret.getBody().getSubtasks());
+    }
+
+    @Test
+    void deleteSubtask_doesntExist() {
+        ResponseEntity<Card> ret = cardController.deleteSubtask(10,5);
+        assertEquals(ResponseEntity.badRequest().build(), ret);
+    }
+
+    @Test
+    void deleteSubtask_successful() {
+        ResponseEntity<Card> ret = cardController.deleteSubtask(0,0);
+        assertEquals(1, ret.getBody().getSubtasks().size());
+    }
 }

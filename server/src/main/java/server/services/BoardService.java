@@ -49,7 +49,9 @@ public class BoardService {
     public Board add(String title) {
         if (title == null || title.equals(""))
             return null;
-        return boardRepository.save(new Board(title));
+        Board b = new Board(title);
+        boardRepository.save(b);
+        return b;
     }
 
     /**
@@ -78,5 +80,14 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).get();
         boardRepository.delete(board);
         return board;
+    }
+
+    /**
+     * Save board to repository
+     * @param b board to save
+     * @return board
+     */
+    public Board save(Board b) {
+        return boardRepository.save(b);
     }
 }

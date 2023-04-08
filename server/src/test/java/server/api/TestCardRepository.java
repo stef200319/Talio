@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import server.database.CardRepository;
 import commons.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +41,14 @@ public class TestCardRepository implements CardRepository {
 
         c1.setPosition(1);
         c2.setPosition(2);
+
+        List<Subtask> subtasks = new ArrayList<>();
+        Subtask s1 = new Subtask("s1");
+        Subtask s2 = new Subtask("s2");
+        subtasks.add(s1);
+        subtasks.add(s2);
+        c1.setSubtasks(subtasks);
+
         cards.add(c1);
         cards.add(c2);
 
