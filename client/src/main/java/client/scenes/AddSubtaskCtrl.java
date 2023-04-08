@@ -88,6 +88,7 @@ public class AddSubtaskCtrl implements Initializable {
      */
     public void confirm() {
         String t = getTitle();
+        title.clear();
         cardToAddTo = server.addSubtask(cardToAddTo.getId(), t);
         mainCtrl.showViewSubtask(cardToAddTo);
     }

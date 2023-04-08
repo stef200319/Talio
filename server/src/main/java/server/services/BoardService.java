@@ -81,4 +81,13 @@ public class BoardService {
         boardRepository.delete(board);
         return board;
     }
+
+    /**
+     * Save board to repository
+     * @param b board to save
+     * @return board
+     */
+    public Board save(Board b) {
+        return boardRepository.save(b);
+    }
 }
