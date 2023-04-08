@@ -191,12 +191,12 @@ public class TaskDetailsCtrl implements Initializable {
                     checkbox.setText(s.getTitle());
                     checkbox.setSelected(s.getDone());
                     checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable,
+                        @Override
+                        public void changed(ObservableValue<? extends Boolean> observable,
                                         Boolean oldValue, Boolean newValue) {
-                        server.editSubtaskStatus(s.getId(), newValue);
-                        websocket.send("/app/updateSubtask", s);
-                        cardToShow = server.getCardById(cardToShow.getId());
+                            server.editSubtaskStatus(s.getId(), newValue);
+                            websocket.send("/app/updateSubtask", s);
+                            cardToShow = server.getCardById(cardToShow.getId());
                         }
                     });
 
