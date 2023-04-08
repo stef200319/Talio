@@ -32,7 +32,7 @@
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button layoutX="345.0" layoutY="168.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="24.0" style="-fx-border-radius: 50%; -fx-background-radius: 50%;">
+            <Button layoutX="345.0" layoutY="168.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="24.0" onAction="#showHelpScreen" style="-fx-border-radius: 50%; -fx-background-radius: 50%;">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                      <image>

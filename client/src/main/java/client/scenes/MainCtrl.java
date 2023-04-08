@@ -302,6 +302,9 @@ public class MainCtrl {
      * @param boardID boardID of current board
      */
     public void showBoardOverview(Long boardID) {
+        boardOverviewCtrl.setHighlightedByKey(false);
+        HBox hbox = boardOverviewCtrl.getHighlightedTask();
+        boardOverviewCtrl.setHighlightedTask(hbox);
         boardOverviewCtrl.setBoardID(boardID);
         primaryStage.setTitle("Board Overview");
         boardOverviewCtrl.refresh();
