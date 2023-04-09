@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import commons.Subtask;
@@ -28,19 +29,21 @@ public class ViewSubtaskCtrl implements Initializable {
     private Card cardToShow;
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
     @FXML
     private VBox subtaskList;
 
     /**
-     * @param server the server that you want to connect to
-     * @param mainCtrl the main screen?
+     * @param server Server we are connected to
+     * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public ViewSubtaskCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public ViewSubtaskCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.mainCtrl = mainCtrl;
         this.server = server;
-
+        this.websocket = websocket;
     }
 
     /**
@@ -56,14 +59,31 @@ public class ViewSubtaskCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+        websocket.registerForMessages("/topic/updateSubtask", Subtask.class, subtask -> {
+            System.out.println("Websocket subtask working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
+
+        websocket.registerForMessages("/topic/updateCard", Card.class, card -> {
+            System.out.println("Websocket card working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
+
+//        Short polling
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    refresh();
+//                });
+//            }
+//        }, 0, 1000);
     }
 
     /**
@@ -110,6 +130,7 @@ public class ViewSubtaskCtrl implements Initializable {
                     public void changed(ObservableValue<? extends Boolean> observable,
                                         Boolean oldValue, Boolean newValue) {
                         server.editSubtaskStatus(s.getId(), newValue);
+                        websocket.send("/app/updateSubtask", s);
                         cardToShow = server.getCardById(cardToShow.getId());
                     }
                 });
@@ -118,17 +139,20 @@ public class ViewSubtaskCtrl implements Initializable {
                 buttons.setAlignment(Pos.CENTER);
 
                 Button delete = new Button("X");
+                delete.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
                 delete.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         //server.deleteSubtask(s.getId());
                         server.deleteSubtaskFromCard(cardToShow.getId(), s.getId());
+                        websocket.send("/app/updateCard", cardToShow);
                         setCardToShow(server.getCardById(cardToShow.getId()));
-                        refresh();
+//                        refresh(); We are using websocket.
                     }
                 });
 
                 Button edit = new Button("Edit");
+                edit.setStyle("-fx-background-color: #e0cda8;");
                 edit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -190,8 +214,9 @@ public class ViewSubtaskCtrl implements Initializable {
                 int oldPos = Integer.parseInt(db.getString());
                 int newPos = i;
                 Card newCard = server.changeSubtaskPosition(c.getId(), oldPos, newPos);
+                websocket.send("/app/updateCard", newCard);
                 setCardToShow(newCard);
-                refresh();
+//                refresh(); We are using websocket.
             }
         });
         return hBox;

@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import javafx.fxml.FXML;
@@ -15,6 +16,8 @@ public class AddTaskCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
+    private final Websocket websocket;
+
     private long columnToAddId;
     private long boardID;
 
@@ -22,14 +25,15 @@ public class AddTaskCtrl implements Initializable {
     private TextField taskName;
 
     /**
-     *
-     * @param server the server connected to
+     * @param server Server we are connected to
      * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    AddTaskCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    AddTaskCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server=server;
         this.mainCtrl=mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -79,6 +83,7 @@ public class AddTaskCtrl implements Initializable {
      */
     public void confirm() {
         server.addCard(getCard(), columnToAddId);
+        websocket.send("/app/updateCard", getCard());
         taskName.clear();
         mainCtrl.showBoardOverview(boardID);
     }

@@ -2,6 +2,8 @@ package server.api;
 
 import commons.Subtask;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.services.SubtaskService;
 
@@ -85,5 +87,16 @@ public class SubtaskController {
         if(subtask==null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(subtask);
+    }
+
+    /**
+     * Message mapping for websockets
+     * @param subtask subtask that was changed
+     * @return subtask
+     */
+    @MessageMapping("/updateSubtask")
+    @SendTo("/topic/updateSubtask")
+    public Subtask updateSubtask(Subtask subtask) {
+        return subtask;
     }
 }

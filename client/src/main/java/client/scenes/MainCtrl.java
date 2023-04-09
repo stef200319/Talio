@@ -323,10 +323,6 @@ public class MainCtrl {
     }
 
 
-
-
-
-
     /**
      * Connect to client
      */
@@ -629,6 +625,7 @@ public class MainCtrl {
      */
     public void showEditCardTagsBoard(Long boardId) {
         editCardTagsBoardCtrl.setBoardId(boardId);
+        editCardTagsBoardCtrl.refresh();
         primaryStage.setTitle("Edit Card Tags");
         primaryStage.setScene(editCardTagsBoard);
     }
@@ -649,6 +646,7 @@ public class MainCtrl {
      */
     public void showAddCardTagsToCard(Card card) {
         addCardTagsToCardCtrl.setCard(card);
+        addCardTagsToCardCtrl.refresh();
         primaryStage.setTitle("Add Card Tags to Card");
         primaryStage.setScene(addCardTagsToCard);
     }

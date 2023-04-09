@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.CardTag;
 import javafx.application.Platform;
@@ -18,14 +19,13 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 public class EditCardTagsBoardCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
     private Long boardId = null;
 
     private CardTag selectedCardTag;
@@ -48,14 +48,15 @@ public class EditCardTagsBoardCtrl implements Initializable {
 
 
     /**
-     * Injects the needed dependencies
-     * @param server
-     * @param mainCtrl
+     * @param server Server we are connected to
+     * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public EditCardTagsBoardCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public EditCardTagsBoardCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -70,15 +71,20 @@ public class EditCardTagsBoardCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        refresh();
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+//        refresh();
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    refresh();
+//                });
+//            }
+//        }, 0, 1000);
+
+        websocket.registerForMessages("/topic/updateCardTag", CardTag.class, c -> {
+            System.out.println("Websocket cardTag working");
+            Platform.runLater(() -> refresh());
+        });
 
         cardTagsContainer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CardTag>() {
             @Override
@@ -244,8 +250,9 @@ public class EditCardTagsBoardCtrl implements Initializable {
         String newColor = colourToHexCode(cardTagColor.getValue());
         server.editCardTagColor(selectedCardTag, newColor);
         server.editCardTagTitle(selectedCardTag, newTitle);
+        websocket.send("/app/updateCardTag", selectedCardTag);
         changedCardTag = selectedCardTag;
-        refresh();
+//        refresh(); We are using websocket.
     }
 
     /**
@@ -254,6 +261,7 @@ public class EditCardTagsBoardCtrl implements Initializable {
     public void deleteCardTag() {
         if (selectedCardTag == null) return;;
         server.deleteCardTagFromBoard(selectedCardTag);
+        websocket.send("/app/updateCardTag", selectedCardTag);
         refresh();
     }
 
@@ -261,9 +269,10 @@ public class EditCardTagsBoardCtrl implements Initializable {
      * Makes a new card Tag
      */
     public void newCardTag() {
-        server.addCardTagToBoard(new CardTag("New CardTag", "#ff0000", server.getBoardByID(boardId)),
-                boardId);
-        refresh();
+        CardTag cardTag = new CardTag("New CardTag", "#ff0000", server.getBoardByID(boardId));
+        server.addCardTagToBoard(cardTag, boardId);
+        websocket.send("/app/updateCardTag", cardTag);
+//        refresh(); We are using websocket.
         cardTagsContainer.getSelectionModel().select(cardTagsContainer.getItems().size() - 1);
     }
 

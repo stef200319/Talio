@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Board;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ public class CustomizeBoardCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
     private Board boardToShow;
     private long boardID;
@@ -44,14 +46,15 @@ public class CustomizeBoardCtrl implements Initializable {
 
 
     /**
-     *
-     * @param server the server connected to
+     * @param server Server we are connected to
      * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public CustomizeBoardCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public CustomizeBoardCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server=server;
         this.mainCtrl=mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -149,6 +152,7 @@ public class CustomizeBoardCtrl implements Initializable {
      */
     public void setDefaultBoardCenterColour(){
         server.editBoardCenterColour(boardToShow, boardToShow.getDefaultCenterColour());
+        websocket.send("/app/updateBoard", boardToShow);
     }
 
     /**
@@ -156,6 +160,7 @@ public class CustomizeBoardCtrl implements Initializable {
      */
     public void setDefaultBoardSideColour(){
         server.editBoardSideColour(boardToShow, boardToShow.getDefaultSideColour());
+        websocket.send("/app/updateBoard", boardToShow);
     }
 
     /**
@@ -163,6 +168,7 @@ public class CustomizeBoardCtrl implements Initializable {
      */
     public void setDefaultBoardFontType(){
         server.editBoardFontType(boardToShow, boardToShow.getDefaultFontType());
+        websocket.send("/app/updateBoard", boardToShow);
     }
 
     /**
@@ -170,6 +176,7 @@ public class CustomizeBoardCtrl implements Initializable {
      */
     public void setDefaultBoardFontColour(){
         server.editBoardFontColour(boardToShow, boardToShow.getDefaultFontColour());
+        websocket.send("/app/updateBoard", boardToShow);
     }
 
     /**
@@ -182,6 +189,7 @@ public class CustomizeBoardCtrl implements Initializable {
         server.editBoardFontStyleBold(boardToShow, getColumnFontStyleBold());
         server.editBoardFontStyleItalic(boardToShow, getColumnFontStyleItalic());
         server.editBoardFontColour(boardToShow, getNewColumnFontColour());
+        websocket.send("/app/updateBoard", boardToShow);
 
         mainCtrl.showEditBoardTitle(boardID);
     }

@@ -5,6 +5,8 @@ import commons.CardTag;
 import commons.Column;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import server.services.BoardService;
@@ -305,5 +307,19 @@ public class BoardController {
         Board board = boardService.getByBoardId(boardId);
         return ResponseEntity.ok(board);
     }
+
+    /**
+     * Updates the given board and sends it to the "/topic/updateBoard" topic.
+     *
+     * @param board the board to be updated
+     *
+     * @return the updated board
+     */
+    @MessageMapping("/updateBoard")
+    @SendTo("/topic/updateBoard")
+    public Board updateBoard(Board board) {
+        return board;
+    }
+
 
 }

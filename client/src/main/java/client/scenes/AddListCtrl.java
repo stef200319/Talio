@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import commons.Column;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ import java.util.ResourceBundle;
 public class AddListCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
     private long boardToAddId;
 
@@ -22,14 +24,15 @@ public class AddListCtrl implements Initializable {
     private TextField listName;
 
     /**
-     *
-     * @param server the server connected to
+     * @param server Server we are connected to
      * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public AddListCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public AddListCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server=server;
         this.mainCtrl=mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -79,8 +82,9 @@ public class AddListCtrl implements Initializable {
      * adds list to server and returns to overview
      */
     public void confirm() {
-        System.out.println(boardToAddId);
         server.addColumn(getList(), boardToAddId);
+        websocket.send("/app/updateColumn", getList());
+
         listName.clear();
         mainCtrl.showBoardOverview(boardToAddId);
     }

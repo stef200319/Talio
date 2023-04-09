@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import commons.CardTag;
@@ -25,6 +26,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
 
     private ServerUtils server;
     private MainCtrl mainCtrl;
+    private Websocket websocket;
 
 
     @FXML
@@ -48,14 +50,15 @@ public class AddCardTagsToCardCtrl implements Initializable {
     private Card card;
 
     /**
-     * Constructor
-     * @param server
-     * @param mainCtrl
+     * @param server Server we are connected to
+     * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public AddCardTagsToCardCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public AddCardTagsToCardCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+        this.websocket = websocket;
     }
 
     /**
@@ -69,14 +72,24 @@ public class AddCardTagsToCardCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+//        Short polling
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    refresh();
+//                });
+//            }
+//        }, 0, 1000);
+
+        // Websocket
+        websocket.registerForMessages("/topic/updateCardTag", CardTag.class, cardTag -> {
+            System.out.println("Websocket card tag working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
 
         ownedTags.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CardTag>() {
             @Override
@@ -230,7 +243,8 @@ public class AddCardTagsToCardCtrl implements Initializable {
      */
     public void addButtonPressed() {
         server.addCardTagToCard(selectedAvailable, card.getId());
-        refresh();
+        websocket.send("/app/updateCardTag", selectedAvailable);
+//        refresh(); We are using websocket.
     }
 
     /**
@@ -238,7 +252,8 @@ public class AddCardTagsToCardCtrl implements Initializable {
      */
     public void removeButtonPressed() {
         server.deleteCardTagFromCard(selectedOwned, card.getId());
-        refresh();
+        websocket.send("/app/updateCardTag", selectedOwned);
+//        refresh(); We are using websocket.
     }
 
 

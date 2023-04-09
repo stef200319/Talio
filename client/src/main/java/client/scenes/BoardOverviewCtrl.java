@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Board;
 import commons.Card;
@@ -28,14 +29,14 @@ import javafx.scene.text.FontWeight;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 public class BoardOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
+    private final Websocket websocket;
 
     private long boardID = Long.MIN_VALUE;
 
@@ -80,13 +81,15 @@ public class BoardOverviewCtrl implements Initializable {
 
 
     /**
-     * @param server the server that you want to connect to
-     * @param mainCtrl the main screen?
+     * @param server Server we are connected to
+     * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public BoardOverviewCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public BoardOverviewCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.websocket = websocket;
 
     }
 
@@ -103,14 +106,42 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+        websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
+            System.out.println("Websocket column working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+
+//            createList(c); Not working
+
+        });
+
+        websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
+            System.out.println("Websocket card working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
+
+        websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
+            System.out.println("Websocket board working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
+
+//        Short polling
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    refresh();
+//                });
+//            }
+//        }, 0, 1000);
     }
 
     /**
@@ -228,8 +259,9 @@ public class BoardOverviewCtrl implements Initializable {
                 Card oldCard = server.getCardById(oldId);
                 if(oldCard.getColumnId()!=c.getId()) {
                     server.editCardColumn(oldId,c.getId());
+                    websocket.send("/app/updateCard", oldCard);
                 }
-                refresh();
+//                refresh(); We are using websocket.
             }
         });
         // End of dropping card on column
@@ -326,7 +358,8 @@ public class BoardOverviewCtrl implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     server.deleteCard(cards.get(finalI));
-                    refresh();
+                    websocket.send("/app/updateCard", cards.get(finalI));
+//                    refresh(); We are using websocket.
                 }
             });
 
@@ -366,8 +399,9 @@ public class BoardOverviewCtrl implements Initializable {
                 if(event1.getCode()==KeyCode.DELETE || event1.getCode()==KeyCode.BACK_SPACE)
                 {
                     server.deleteCard(this.highlightedCard);
+                    websocket.send("/app/updateCard", this.highlightedCard);
 
-                    refresh();
+//                    refresh(); We are using websocket.
                 }
                 if(event1.getCode()==KeyCode.T)
                 {
@@ -621,6 +655,7 @@ public class BoardOverviewCtrl implements Initializable {
                 if(oldCard.getColumnId()==c.getId()) {              //Same column
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardPosition(oldId, newPos);
+                    websocket.send("/app/updateCard", oldCard);
                     highlightedCard = cards.get(newPos);
                     highlightedCardIndex = newPos-1;
                     highlightedListIndex = c.getPosition()-1;
@@ -630,12 +665,13 @@ public class BoardOverviewCtrl implements Initializable {
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardColumn(oldId,c.getId());
                     server.editCardPosition(oldId, newPos);
+                    websocket.send("/app/updateCard", oldCard);
                     highlightedCard = cards.get(newPos);
                     highlightedCardIndex = newPos-1;
                     highlightedListIndex = c.getPosition()-1;
                     event.setDropCompleted(true);
                 }
-                refresh();
+//                refresh(); We are using websocket.
                 event.consume();
 
             }

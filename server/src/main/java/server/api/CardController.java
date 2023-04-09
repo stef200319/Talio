@@ -1,9 +1,9 @@
 package server.api;
 
-import commons.Card;
-import commons.CardTag;
-import commons.Subtask;
+import commons.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.services.ColumnService;
 import server.services.CardService;
@@ -43,6 +43,13 @@ public class CardController {
     public List<Card> getAllCards() {
         return cardService.getAll();
     }
+
+//    @MessageMapping("/card/addCard")
+//    @SendTo("/topic/card")
+//    public Card addMessage(Card c) {
+//        addCard(c.getTitle(), c.getColumnId());
+//        return c;
+//    }
 
     /**
      * Get a single card whose id matches the input cardId, if a card with the input id exists.
@@ -393,6 +400,19 @@ public class CardController {
         if(c==null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(c);
+    }
+
+    /**
+     * Updates the given card and sends it to the "/topic/updateCard" topic.
+     *
+     * @param card the card to be updated
+     *
+     * @return the updated card
+     */
+    @MessageMapping("/updateCard")
+    @SendTo("/topic/updateCard")
+    public Card updateCard(Card card) {
+        return card;
     }
 
 }

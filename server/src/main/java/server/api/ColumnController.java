@@ -3,6 +3,8 @@ package server.api;
 import commons.Card;
 import commons.Column;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.database.ColumnRepository;
 import server.services.BoardService;
@@ -50,6 +52,20 @@ public class ColumnController {
         return columns.size() > 0? ResponseEntity.ok(columns) : ResponseEntity.notFound().build();
     }
 
+//    /**
+//     * Adds a new column to the board and sends the updated column list to the "/topic/column" topic.
+//     *
+//     * @param c the column to be added to the board
+//     *
+//     * @return the added column
+//     */
+//
+//    @MessageMapping("/column/addColumn")
+//    @SendTo("/topic/column")
+//    public Column addMessage(Column c) {
+//        addColumn(c.getTitle(), c.getId());
+//        return c;
+//    }
 
     /**
      * @param columnId the id of the column which will be retrieved
@@ -255,5 +271,16 @@ public class ColumnController {
 
         List<Card> cards = cardService.getByColumnId(columnId);
         return ResponseEntity.ok(cards);
+    }
+
+    /**
+     * Message mapping for websockets
+     * @param column column that was changed
+     * @return column
+     */
+    @MessageMapping("/updateColumn")
+    @SendTo("/topic/updateColumn")
+    public Column updateColumn(Column column) {
+        return column;
     }
 }

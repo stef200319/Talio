@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.Websocket;
 import com.google.inject.Inject;
 
 
@@ -38,6 +39,7 @@ public class TaskDetailsCtrl implements Initializable {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private final Websocket websocket;
 
 
 
@@ -55,14 +57,15 @@ public class TaskDetailsCtrl implements Initializable {
 
 
     /**
-     * @param server the server that you want to connect to
-     * @param mainCtrl the main screen?
+     * @param server Server we are connected to
+     * @param mainCtrl the main controller
+     * @param websocket websocket for updating
      */
     @Inject
-    public TaskDetailsCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public TaskDetailsCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket) {
         this.mainCtrl = mainCtrl;
         this.server = server;
-
+        this.websocket = websocket;
     }
 
     /**
@@ -80,16 +83,33 @@ public class TaskDetailsCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+//        Short polling
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    refresh();
+//                });
+//            }
+//        }, 0, 1000);
 
         cardTagListView.setStyle("-fx-border-width: 3px; -fx-border-color: white; -fx-focus-color: white");
+
+        // Websocket
+        websocket.registerForMessages("/topic/updateSubtask", Subtask.class, subtask -> {
+            System.out.println("Websocket subtask working");
+            Platform.runLater(() -> refresh());
+        });
+
+        websocket.registerForMessages("/topic/updateCardTag", CardTag.class, cardTag -> {
+            System.out.println("Websocket cardTag working");
+            Platform.runLater(() -> refresh());
+        });
+
+        websocket.registerForMessages("/topic/updateCard", Card.class, card -> {
+            System.out.println("Websocket card working");
+            Platform.runLater(() -> refresh());
+        });
     }
 
     
@@ -155,37 +175,41 @@ public class TaskDetailsCtrl implements Initializable {
      * Refreshes the page
      */
     public void refresh() {
-        subtasksScroll.getChildren().clear();
-
-        if(cardToShow!=null) {
-            cardTitle.setText(cardToShow.getTitle());
-            cardDescription.setText(cardToShow.getDescription());
-
-            List<Subtask> subtasks = cardToShow.getSubtasks();
-            for (int i = 0; i < subtasks.size(); i++) {
-                Subtask s = subtasks.get(i);
-
-                CheckBox checkbox = new CheckBox();
-                checkbox.setText(s.getTitle());
-                checkbox.setSelected(s.getDone());
-                checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable,
-                                        Boolean oldValue, Boolean newValue) {
-                        server.editSubtaskStatus(s.getId(), newValue);
-                        cardToShow = server.getCardById(cardToShow.getId());
-                    }
-                });
-
-                checkbox = enableDragAndDrop(checkbox, cardToShow, i);
-
-                subtasksScroll.getChildren().add(checkbox);
-            }
-        }
-
         if (cardToShow != null) {
-            updateCardTagListViewItems();
-            updateCardTagListViewLook();
+            subtasksScroll.getChildren().clear();
+
+            cardToShow = server.getCardById(cardToShow.getId());
+
+            if (cardToShow != null) {
+                cardTitle.setText(cardToShow.getTitle());
+                cardDescription.setText(cardToShow.getDescription());
+
+                List<Subtask> subtasks = cardToShow.getSubtasks();
+                for (int i = 0; i < subtasks.size(); i++) {
+                    Subtask s = subtasks.get(i);
+                    CheckBox checkbox = new CheckBox();
+                    checkbox.setText(s.getTitle());
+                    checkbox.setSelected(s.getDone());
+                    checkbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                        @Override
+                        public void changed(ObservableValue<? extends Boolean> observable,
+                                        Boolean oldValue, Boolean newValue) {
+                            server.editSubtaskStatus(s.getId(), newValue);
+                            websocket.send("/app/updateSubtask", s);
+                            cardToShow = server.getCardById(cardToShow.getId());
+                        }
+                    });
+
+                    checkbox = enableDragAndDrop(checkbox, cardToShow, i);
+
+                    subtasksScroll.getChildren().add(checkbox);
+                }
+            }
+
+            if (cardToShow != null) {
+                updateCardTagListViewItems();
+                updateCardTagListViewLook();
+            }
         }
     }
 
@@ -224,8 +248,9 @@ public class TaskDetailsCtrl implements Initializable {
                 int oldPos = Integer.parseInt(db.getString());
                 int newPos = i;
                 Card newCard = server.changeSubtaskPosition(c.getId(), oldPos, newPos);
+                websocket.send("/app/updateCard", newCard);
                 setCardToShow(newCard);
-                refresh();
+//                refresh(); We are using websocket.
             }
         });
         return checkBox;

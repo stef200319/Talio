@@ -1048,4 +1048,18 @@ public class ServerUtils {
                 .put(Entity.entity(s, APPLICATION_JSON), Subtask.class);
     }
 
+    /**
+     * Method that gets the card tag with sepcified id
+     * @param id if of the tag
+     * @return cardtag
+     */
+    public CardTag getCardTagById(long id){
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("cardTag/getCardTagById/"+id)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<CardTag>(){});
+    }
+
 }

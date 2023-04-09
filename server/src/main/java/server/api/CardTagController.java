@@ -4,6 +4,8 @@ import commons.Board;
 import commons.Card;
 import commons.CardTag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.services.BoardService;
 import server.services.CardService;
@@ -57,6 +59,11 @@ public class CardTagController {
         return ResponseEntity.ok(cardTag);
     }
 
+//    @MessageMapping("/cardTag/addCardTagToBoard")
+//    @SendTo("/topic/cardTag")
+//    public void addCardTagToBoardMessage(String title) {
+//    }
+
     /**
      * Deletes a cardTag from a board
      * @param cardTagId cardTagId of the corresponding cardTag
@@ -74,6 +81,11 @@ public class CardTagController {
         return ResponseEntity.ok(cardTag);
     }
 
+//    @MessageMapping("/cardTag/deleteCardTagFromBoard")
+//    @SendTo("/topic/cardTag")
+//    public void deleteCardTagFromBoardMessage(long cardTagId) {
+//        deleteCardTagFromBoard(cardTagId);
+//    }
 
     /**
      * adds a cardTag to a card
@@ -95,6 +107,11 @@ public class CardTagController {
         cardService.saveCard(card);
         return ResponseEntity.ok(cardTag);
     }
+
+//    @MessageMapping("/cardTag/addCardTagToCard")
+//    @SendTo("/topic/cardTag")
+//    public void addCardTagToCardMessage(long cardTagId) {
+//    }
 
     /**
      * gets the card tags of a specified board
@@ -131,6 +148,11 @@ public class CardTagController {
         cardService.saveCard(card);
         return ResponseEntity.ok(cardTag);
     }
+
+//    @MessageMapping("/cardTag/deleteCardTagFromCard")
+//    @SendTo("/topic/cardTag")
+//    public void deleteCardTagFromCardMessage(long cardTagId) {
+//    }
 
     /**
      * edits the cardTag color
@@ -180,5 +202,28 @@ public class CardTagController {
         }
     }
 
+    /**
+     * Get card tag by id
+     * @param cardTagId id of the card
+     * @return card with specified id
+     */
+    @GetMapping("/getCardTagById/{cardTagId}")
+    public ResponseEntity<CardTag> getCardTagById(@PathVariable("{cardTagId}") long cardTagId) {
+        if(cardTagService.getById(cardTagId)==null)
+            return ResponseEntity.badRequest().build();
+
+        return ResponseEntity.ok(cardTagService.getById(cardTagId));
+    }
+
+    /**
+     * Message mapping for websockets
+     * @param cardTag cardTag which was changed
+     * @return card
+     */
+    @MessageMapping("/updateCardTag")
+    @SendTo("/topic/updateCardTag")
+    public CardTag updateCardTag(CardTag cardTag) {
+        return cardTag;
+    }
 
 }
