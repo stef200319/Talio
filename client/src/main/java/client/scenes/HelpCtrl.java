@@ -4,6 +4,8 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -13,6 +15,9 @@ public class HelpCtrl {
     private final ServerUtils server;
 
     private final MainCtrl mainCtrl;
+
+    @FXML
+    private Button backFromHelpButton;
 
 
 

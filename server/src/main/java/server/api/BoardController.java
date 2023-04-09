@@ -139,9 +139,7 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardService.getByBoardId(boardId);
-        board.setCenterColour(bgColour);
-        boardService.save(board);
+        Board board = boardService.editCenterColour(boardId, bgColour);
         return ResponseEntity.ok(board);
     }
 
@@ -159,9 +157,7 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardService.getByBoardId(boardId);
-        board.setSideColour(borderColour);
-        boardService.save(board);
+        Board board = boardService.editSideColour(boardId, borderColour);
         return ResponseEntity.ok(board);
     }
 
@@ -179,9 +175,7 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardService.getByBoardId(boardId);
-        board.setFontType(fontType);
-        boardService.save(board);
+        Board board = boardService.editFontType(boardId, fontType);
         return ResponseEntity.ok(board);
     }
 
@@ -198,9 +192,7 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardService.getByBoardId(boardId);
-        board.setFontStyleBold(bold);
-        boardService.save(board);
+        Board board = boardService.editFontStyleBold(boardId, bold);
         return ResponseEntity.ok(board);
     }
 
@@ -218,9 +210,7 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardService.getByBoardId(boardId);
-        board.setFontStyleItalic(italic);
-        boardService.save(board);
+        Board board = boardService.editFontStyleItalic(boardId, italic);
         return ResponseEntity.ok(board);
     }
 
@@ -238,9 +228,7 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Board board = boardService.getByBoardId(boardId);
-        board.setFontColour(fontColour);
-        boardService.save(board);
+        Board board = boardService.editFontColour(boardId, fontColour);
         return ResponseEntity.ok(board);
     }
 

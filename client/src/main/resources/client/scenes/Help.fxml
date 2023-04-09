@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.HelpCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.HelpCtrl">
    <children>
-      <Label alignment="CENTER" layoutX="231.0" layoutY="25.0" prefHeight="26.0" prefWidth="126.0" text="Shortcuts" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+      <Label layoutX="375.0" layoutY="400.0" prefHeight="35.0" prefWidth="249.0" text="Del or backspace         delete highlighted card" />
+      <Label layoutX="221.0" layoutY="282.0" prefHeight="35.0" prefWidth="557.0" text="Esc              when in task details, return to board overview. When in help screen, return to previous scene" />
+      <Label layoutX="365.0" layoutY="225.0" prefHeight="35.0" prefWidth="266.0" text="Enter            open task details of highlighted card" />
+      <Label layoutX="362.0" layoutY="341.0" prefHeight="35.0" prefWidth="273.0" text="Arrow keys           switch through highlighted cards" />
+      <Label layoutX="422.0" layoutY="171.0" prefHeight="35.0" prefWidth="155.0" text="Shift+/      open help screen" />
+      <Pane prefHeight="90.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
+         <children>
+            <Button fx:id="backFromHelpButton" layoutX="38.0" layoutY="33.0" mnemonicParsing="false" onAction="#showPreviousScene" style="-fx-background-color: #e0cda8;" text="Back" />
+            <Text layoutX="441.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shortcuts">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -124,9 +124,7 @@ public class ColumnController {
             return ResponseEntity.badRequest().build();
         }
 
-        Column column = columnRepository.findById(columnId).get();
-        column.setBgColour(bgColour);
-        columnRepository.save(column);
+        Column column = columnService.editBackgroundColour(columnId, bgColour);
         return ResponseEntity.ok(column);
     }
 
@@ -144,9 +142,7 @@ public class ColumnController {
             return ResponseEntity.badRequest().build();
         }
 
-        Column column = columnRepository.findById(columnId).get();
-        column.setBorderColour(borderColour);
-        columnRepository.save(column);
+        Column column = columnService.editBorderColour(columnId, borderColour);
         return ResponseEntity.ok(column);
     }
 
@@ -164,9 +160,7 @@ public class ColumnController {
             return ResponseEntity.badRequest().build();
         }
 
-        Column column = columnRepository.findById(columnId).get();
-        column.setFontType(fontType);
-        columnRepository.save(column);
+        Column column = columnService.editFontType(columnId, fontType);
         return ResponseEntity.ok(column);
     }
 
@@ -183,9 +177,7 @@ public class ColumnController {
             return ResponseEntity.badRequest().build();
         }
 
-        Column column = columnRepository.findById(columnId).get();
-        column.setFontStyleBold(bold);
-        columnRepository.save(column);
+        Column column = columnService.editFontStyleBold(columnId, bold);
         return ResponseEntity.ok(column);
     }
 
@@ -203,9 +195,7 @@ public class ColumnController {
             return ResponseEntity.badRequest().build();
         }
 
-        Column column = columnRepository.findById(columnId).get();
-        column.setFontStyleItalic(italic);
-        columnRepository.save(column);
+        Column column = columnService.editFontStyleItalic(columnId, italic);
         return ResponseEntity.ok(column);
     }
 
@@ -223,20 +213,9 @@ public class ColumnController {
             return ResponseEntity.badRequest().build();
         }
 
-        Column column = columnRepository.findById(columnId).get();
-        column.setFontColour(fontColour);
-        columnRepository.save(column);
+        Column column = columnService.editFontColour(columnId, fontColour);
         return ResponseEntity.ok(column);
     }
-
-
-
-
-
-
-
-
-
 
 
     /**

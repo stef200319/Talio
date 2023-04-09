@@ -59,7 +59,7 @@
       </Pane>
       <Pane layoutX="53.0" layoutY="264.0" prefHeight="138.0" prefWidth="383.0">
          <children>
-            <Text layoutX="27.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Font Type" textAlignment="CENTER" wrappingWidth="96.458984375">
+            <Text layoutX="27.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title Font Type" textAlignment="CENTER" wrappingWidth="148.458984375">
                <font>
                   <Font size="22.0" />
                </font>
@@ -71,7 +71,7 @@
       <Pane layoutX="572.0" layoutY="264.0" prefHeight="138.0" prefWidth="383.0">
          <children>
             <Button fx:id="resetBoardFontColourFill" layoutX="308.0" layoutY="14.0" mnemonicParsing="false" onAction="#setDefaultBoardFontColour" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #e0cda8;" text="Reset" />
-            <Text layoutX="27.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Font Colour Fill" textAlignment="CENTER">
+            <Text layoutX="27.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title Font Colour Fill" textAlignment="CENTER">
                <font>
                   <Font size="22.0" />
                </font>
@@ -81,7 +81,7 @@
       </Pane>
       <Pane layoutX="53.0" layoutY="393.0" prefHeight="138.0" prefWidth="383.0">
          <children>
-            <Text layoutX="36.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Font Style">
+            <Text layoutX="36.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title Font Style">
                <font>
                   <Font size="22.0" />
                </font>
