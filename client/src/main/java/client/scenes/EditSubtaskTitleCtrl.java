@@ -71,13 +71,6 @@ public class EditSubtaskTitleCtrl implements Initializable {
             }
         });
 
-        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
-            System.out.println("Websocket delete card working");
-            Platform.runLater(() -> {
-                if(cardToShow!=null && !server.existsByIdCard(cardToShow.getId()))
-                    showBoardOverview();
-            });
-        });
     }
 
     /**
@@ -139,5 +132,18 @@ public class EditSubtaskTitleCtrl implements Initializable {
         Column c = server.getColumnByColumnId(columnId);
         long boardId = c.getBoardId();
         mainCtrl.showBoardOverview(boardId);
+    }
+
+    /**
+     * Registering for websocket messages
+     */
+    public void registerForMessages() {
+        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+            System.out.println("Websocket delete card working");
+            Platform.runLater(() -> {
+                if(cardToShow!=null && !server.existsByIdCard(cardToShow.getId()))
+                    showBoardOverview();
+            });
+        });
     }
 }

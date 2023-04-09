@@ -13,7 +13,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class LongPolling {
 
-    private String SERVER = null;
+    private static String SERVER = null;
 
     private ExecutorService EXEC = Executors.newSingleThreadExecutor();
 

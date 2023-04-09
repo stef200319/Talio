@@ -14,10 +14,10 @@ import java.util.function.Consumer;
 
 public class Websocket {
 
-    private String SERVER = null;
+    private static String SERVER = null;
 
 
-    private StompSession session = null;
+    private static StompSession session = null;
 
     /**
      * Connect websocket

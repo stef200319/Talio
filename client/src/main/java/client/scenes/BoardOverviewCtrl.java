@@ -106,40 +106,8 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
-            System.out.println("Websocket column working");
 
-            Platform.runLater(() -> {
-                refresh();
-            });
 
-//            createList(c); Not working
-
-        });
-
-        websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
-            System.out.println("Websocket card working");
-
-            Platform.runLater(() -> {
-                refresh();
-            });
-        });
-
-        websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
-            System.out.println("Websocket card delete working");
-
-            Platform.runLater(() -> {
-                refresh();
-            });
-        });
-
-        websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
-            System.out.println("Websocket board working");
-
-            Platform.runLater(() -> {
-                refresh();
-            });
-        });
 
 //        Short polling
 //        new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -244,9 +212,9 @@ public class BoardOverviewCtrl implements Initializable {
 
 
         list.setPadding(new Insets(5));
-        list.setPrefWidth(400); // Set preferred width to 400 pixels
+        list.setPrefWidth(200); // Set preferred width to 400 pixels
         list.setPrefHeight(600); // Set preferred height to 600 pixels
-        list.setMaxWidth(800); // Set max width to 800 pixels
+        list.setMaxWidth(200); // Set max width to 800 pixels
         list.setMinWidth(200); //Set min width to 200
         list.setAlignment(Pos.CENTER);
 
@@ -708,5 +676,43 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void deleteBoard() {
         mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
+    }
+
+    /**
+     * Registering for websocket messages
+     */
+    public void registerForMessages() {
+        websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
+            System.out.println("Websocket column working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+
+        });
+
+        websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
+            System.out.println("Websocket card working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
+
+        websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
+            System.out.println("Websocket card delete working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
+
+        websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
+            System.out.println("Websocket board working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
     }
 }
