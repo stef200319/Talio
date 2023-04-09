@@ -1,7 +1,6 @@
 package server.services;
 
 import commons.Board;
-import commons.Column;
 import org.springframework.stereotype.Service;
 import server.database.BoardRepository;
 

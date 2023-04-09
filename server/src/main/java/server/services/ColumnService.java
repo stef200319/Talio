@@ -1,6 +1,5 @@
 package server.services;
 
-import commons.Card;
 import commons.Column;
 import org.springframework.stereotype.Service;
 import server.database.ColumnRepository;

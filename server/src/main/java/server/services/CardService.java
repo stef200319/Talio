@@ -3,11 +3,7 @@ package server.services;
 import commons.Card;
 import commons.CardTag;
 import commons.Subtask;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import server.database.CardRepository;
 import server.database.SubtaskRepository;
 
