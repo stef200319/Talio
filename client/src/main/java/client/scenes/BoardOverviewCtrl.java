@@ -125,6 +125,14 @@ public class BoardOverviewCtrl implements Initializable {
             });
         });
 
+        websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
+            System.out.println("Websocket card delete working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
+
         websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
             System.out.println("Websocket board working");
 
@@ -358,7 +366,7 @@ public class BoardOverviewCtrl implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     server.deleteCard(cards.get(finalI));
-                    websocket.send("/app/updateCard", cards.get(finalI));
+                    websocket.send("/app/deleteCard", cards.get(finalI));
 //                    refresh(); We are using websocket.
                 }
             });

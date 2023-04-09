@@ -21,7 +21,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
     }
 
     /**
-     * 
+     *
      * @param config
      */
     @Override

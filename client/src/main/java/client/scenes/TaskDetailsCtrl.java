@@ -106,9 +106,18 @@ public class TaskDetailsCtrl implements Initializable {
             Platform.runLater(() -> refresh());
         });
 
+        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+            System.out.println("Websocket delete card working");
+            Platform.runLater(() -> {
+                if(cardToShow!=null && !server.existsByIdCard(cardToShow.getId()))
+                    showBoardOverview();
+            });
+        });
+
         websocket.registerForMessages("/topic/updateCard", Card.class, card -> {
             System.out.println("Websocket card working");
-            Platform.runLater(() -> refresh());
+            if(server.existsByIdCard(cardToShow.getId()))
+                Platform.runLater(() -> refresh());
         });
     }
 
