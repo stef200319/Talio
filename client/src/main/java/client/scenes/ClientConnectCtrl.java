@@ -26,8 +26,10 @@ public class ClientConnectCtrl implements Initializable {
     private Label warningLabel;
 
     /**
-     * @param server the server that you want to connect to
-     * @param mainCtrl the main screen?
+     * @param server
+     * @param mainCtrl
+     * @param websocket
+     * @param longPolling
      */
     @Inject
     public ClientConnectCtrl(ServerUtils server, MainCtrl mainCtrl, Websocket websocket, LongPolling longPolling) {

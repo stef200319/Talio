@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
+@SuppressWarnings({"ParameterName", "StaticVariableName"})
 public class LongPolling {
 
     private static String SERVER = null;

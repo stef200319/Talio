@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+@SuppressWarnings({"ParameterName", "StaticVariableName"})
 public class Websocket {
 
     private static String SERVER = null;

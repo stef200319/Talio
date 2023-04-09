@@ -30,6 +30,7 @@ import java.util.List;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
+@SuppressWarnings({"ParameterName", "StaticVariableName"})
 public class ServerUtils {
 
     private static String SERVER = null;
