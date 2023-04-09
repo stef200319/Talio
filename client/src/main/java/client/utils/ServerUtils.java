@@ -32,7 +32,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 
-    private static final String SERVER = "http://localhost:8080/";
+    private static String SERVER = null;
 
     /**
      * @throws IOException
@@ -1076,4 +1076,11 @@ public class ServerUtils {
             .get(new GenericType<Boolean>(){});
     }
 
+    /**
+     * Sets the server address
+     * @param server new address
+     */
+    public void setSERVER(String server) {
+        this.SERVER = "http://" + server + "/";
+    }
 }

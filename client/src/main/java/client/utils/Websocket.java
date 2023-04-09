@@ -14,10 +14,10 @@ import java.util.function.Consumer;
 
 public class Websocket {
 
-    private static final String SERVER = "http://localhost:8080/";
+    private String SERVER = null;
 
 
-    private StompSession session = connect("ws://localhost:8080/websocket");
+    private StompSession session = null;
 
     /**
      * Connect websocket
@@ -69,6 +69,21 @@ public class Websocket {
      */
     public void send(String dest, Object o) {
         session.send(dest, o);
+    }
+
+    /**
+     * Sets the server address
+     * @param SERVER new server
+     */
+    public void setSERVER(String SERVER) {
+        this.SERVER = SERVER;
+    }
+
+    /**
+     * connects to server
+     */
+    public void connectSession() {
+        session = connect("ws://"+SERVER+"/websocket");
     }
 
 }
