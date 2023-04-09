@@ -4,6 +4,8 @@ import client.utils.ServerUtils;
 import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
+import commons.Column;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -226,6 +228,24 @@ public class CustomizeCardCtrl implements Initializable {
         cardFontType.getItems().addAll("Arial", "Times New Roman", "Verdana", "Tahoma", "Courier New",
                 "Segoe UI", "Calibri", "Helvetica", "Georgia", "Trebuchet MS");
 
+        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+            System.out.println("Websocket delete card working");
+            Platform.runLater(() -> {
+                if(cardToShow!=null)
+                    if(!server.existsByIdCard(cardToShow.getId()))
+                        showBoardOverview();
+            });
+        });
+    }
+
+    /**
+     * Shows the board overview
+     */
+    public void showBoardOverview() {
+        long columnId = cardToShow.getColumnId();
+        Column c = server.getColumnByColumnId(columnId);
+        long boardId = c.getBoardId();
+        mainCtrl.showBoardOverview(boardId);
     }
 
 }

@@ -125,6 +125,14 @@ public class BoardOverviewCtrl implements Initializable {
             });
         });
 
+        websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
+            System.out.println("Websocket card delete working");
+
+            Platform.runLater(() -> {
+                refresh();
+            });
+        });
+
         websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
             System.out.println("Websocket board working");
 
@@ -358,7 +366,7 @@ public class BoardOverviewCtrl implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     server.deleteCard(cards.get(finalI));
-                    websocket.send("/app/updateCard", cards.get(finalI));
+                    websocket.send("/app/deleteCard", cards.get(finalI));
 //                    refresh(); We are using websocket.
                 }
             });
@@ -478,7 +486,9 @@ public class BoardOverviewCtrl implements Initializable {
                     cardContainer.requestFocus();;*/
 
                 }
-                if(event1.getCode()==KeyCode.LEFT && getHighlightedTask()!=null && highlightedListIndex>0)
+                if(event1.getCode()==KeyCode.LEFT && getHighlightedTask()!=null && highlightedListIndex>0 &&
+                        server.getCardsByColumnId(
+                                server.getColumnsByBoardId(boardID).get(highlightedListIndex-1).getId()).size()>0)
                 {
                     highlightedByKey = true;
                     unHighlightTask(highlightedTask, cardContainer);
@@ -495,7 +505,9 @@ public class BoardOverviewCtrl implements Initializable {
                             highlightedListIndex);
                 }
                 if(event1.getCode()==KeyCode.RIGHT && getHighlightedTask()!=null &&
-                        highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1)
+                        highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1
+                        && server.getCardsByColumnId(
+                        server.getColumnsByBoardId(boardID).get(highlightedListIndex+1).getId()).size()>0)
                 {
                     highlightedByKey = true;
                     unHighlightTask(highlightedTask, cardContainer);

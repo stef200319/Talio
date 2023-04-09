@@ -391,6 +391,19 @@ public class CardController {
     }
 
     /**
+     * Checks if card with specified id exists
+     * @param cardId id of the card
+     * @return true if it does else otherwise
+     */
+    @GetMapping("/existsById/{cardId}")
+    @ResponseBody public ResponseEntity<Boolean> existsById(@PathVariable("cardId") long cardId) {
+        Card c = cardService.getById(cardId);
+        if(c==null)
+            return ResponseEntity.ok(false);
+        return ResponseEntity.ok(true);
+    }
+
+    /**
      * Updates the given card and sends it to the "/topic/updateCard" topic.
      *
      * @param card the card to be updated
@@ -402,5 +415,14 @@ public class CardController {
     public Card updateCard(Card card) {
         return card;
     }
+
+    /**
+     * Message for deleting a card
+     * @param card card
+     * @return same card
+     */
+    @MessageMapping("/deleteCard")
+    @SendTo("/topic/deleteCard")
+    public Card deleteCard(Card card) { return card; }
 
 }

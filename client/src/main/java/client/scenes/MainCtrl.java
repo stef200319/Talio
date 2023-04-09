@@ -226,6 +226,8 @@ public class MainCtrl {
         this.taskManagement.setOnKeyPressed(getKeyboardShortcuts());
         this.viewSubtask.setOnKeyPressed(getKeyboardShortcuts());
         this.workspace.setOnKeyPressed(getKeyboardShortcuts());
+        this.joinBoardByKey.setOnKeyPressed(getKeyboardShortcuts());
+
 
         this.customizeCardCtrl = customizeCard.getKey();
         this.customizeCard = new Scene(customizeCard.getValue());
@@ -250,6 +252,16 @@ public class MainCtrl {
         this.addCardTagsToCard = new Scene(addCardTagsToCard.getValue());
         this.addSubtaskCtrl = addSubtask.getKey();
         this.addSubtask = new Scene(addSubtask.getValue());
+
+        this.customizeBoard.setOnKeyPressed(getKeyboardShortcuts());
+        this.confirmDeleteBoard.setOnKeyPressed(getKeyboardShortcuts());
+        this.confirmDeleteColumn.setOnKeyPressed(getKeyboardShortcuts());
+        this.addSubtask.setOnKeyPressed(getKeyboardShortcuts());
+        this.addCardTagsToCard.setOnKeyPressed(getKeyboardShortcuts());
+        this.editCardTagsBoard.setOnKeyPressed(getKeyboardShortcuts());
+        this.editSubtaskTitle.setOnKeyPressed(getKeyboardShortcuts());
+        this.customizeCard.setOnKeyPressed(getKeyboardShortcuts());
+        this.customizeList.setOnKeyPressed(getKeyboardShortcuts());
 
 
         showClientConnect();

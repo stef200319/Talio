@@ -4,6 +4,8 @@ import client.utils.ServerUtils;
 import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
+import commons.Column;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -59,6 +61,15 @@ public class AddSubtaskCtrl implements Initializable {
                     cancel();
             }
         });
+
+        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+            System.out.println("Websocket delete card working");
+            Platform.runLater(() -> {
+                if(cardToAddTo!=null)
+                    if(!server.existsByIdCard(cardToAddTo.getId()))
+                        showBoardOverview();
+            });
+        });
     }
 
     /**
@@ -97,5 +108,15 @@ public class AddSubtaskCtrl implements Initializable {
         cardToAddTo = server.addSubtask(cardToAddTo.getId(), t);
         websocket.send("/app/updateCard", cardToAddTo);
         mainCtrl.showViewSubtask(cardToAddTo);
+    }
+
+    /**
+     * Shows the board overview
+     */
+    public void showBoardOverview() {
+        long columnId = cardToAddTo.getColumnId();
+        Column c = server.getColumnByColumnId(columnId);
+        long boardId = c.getBoardId();
+        mainCtrl.showBoardOverview(boardId);
     }
 }

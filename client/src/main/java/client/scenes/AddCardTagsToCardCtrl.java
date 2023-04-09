@@ -5,6 +5,7 @@ import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
 import commons.CardTag;
+import commons.Column;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -47,7 +48,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
 
     private Long boardId;
 
-    private Card card;
+    private Card cardToChange;
 
     /**
      * @param server Server we are connected to
@@ -83,11 +84,21 @@ public class AddCardTagsToCardCtrl implements Initializable {
 //        }, 0, 1000);
 
         // Websocket
+
+        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+            System.out.println("Websocket delete card working");
+            Platform.runLater(() -> {
+                if(cardToChange!=null && !server.existsByIdCard(cardToChange.getId()))
+                    showBoardOverview();
+            });
+        });
+
         websocket.registerForMessages("/topic/updateCardTag", CardTag.class, cardTag -> {
             System.out.println("Websocket card tag working");
 
             Platform.runLater(() -> {
-                refresh();
+                if(cardToChange!=null && server.existsByIdCard(cardToChange.getId()))
+                    refresh();
             });
         });
 
@@ -148,7 +159,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
      */
     public void updateListViews() {
         List<CardTag> allCardTags = server.getCardTagsByBoardId(boardId);
-        List<CardTag> owned = server.getCardTagsByCardId(card.getId());
+        List<CardTag> owned = server.getCardTagsByCardId(cardToChange.getId());
         List<CardTag> available = new ArrayList<>(allCardTags);
         available.removeAll(owned);
 
@@ -227,7 +238,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
      * @param card
      */
     public void setCard(Card card) {
-        this.card = card;
+        this.cardToChange = card;
         this.boardId = server.getBoardByCardId(card.getId()).getId();
     }
 
@@ -235,14 +246,14 @@ public class AddCardTagsToCardCtrl implements Initializable {
      * shows the taskdetails screen
      */
     public void backButtonPressed() {
-        mainCtrl.showTaskDetails(card);
+        mainCtrl.showTaskDetails(cardToChange);
     }
 
     /**
      * Handles logic for the add button
      */
     public void addButtonPressed() {
-        server.addCardTagToCard(selectedAvailable, card.getId());
+        server.addCardTagToCard(selectedAvailable, cardToChange.getId());
         websocket.send("/app/updateCardTag", selectedAvailable);
 //        refresh(); We are using websocket.
     }
@@ -251,10 +262,18 @@ public class AddCardTagsToCardCtrl implements Initializable {
      * Handles logic for the remove button
      */
     public void removeButtonPressed() {
-        server.deleteCardTagFromCard(selectedOwned, card.getId());
+        server.deleteCardTagFromCard(selectedOwned, cardToChange.getId());
         websocket.send("/app/updateCardTag", selectedOwned);
 //        refresh(); We are using websocket.
     }
 
-
+    /**
+     * Shows the board overview
+     */
+    public void showBoardOverview() {
+        long columnId = cardToChange.getColumnId();
+        Column c = server.getColumnByColumnId(columnId);
+        long boardId = c.getBoardId();
+        mainCtrl.showBoardOverview(boardId);
+    }
 }
