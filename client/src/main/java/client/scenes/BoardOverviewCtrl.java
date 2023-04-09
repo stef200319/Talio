@@ -478,7 +478,9 @@ public class BoardOverviewCtrl implements Initializable {
                     cardContainer.requestFocus();;*/
 
                 }
-                if(event1.getCode()==KeyCode.LEFT && getHighlightedTask()!=null && highlightedListIndex>0)
+                if(event1.getCode()==KeyCode.LEFT && getHighlightedTask()!=null && highlightedListIndex>0 &&
+                        server.getCardsByColumnId(
+                                server.getColumnsByBoardId(boardID).get(highlightedListIndex-1).getId()).size()>0)
                 {
                     highlightedByKey = true;
                     unHighlightTask(highlightedTask, cardContainer);
@@ -495,7 +497,9 @@ public class BoardOverviewCtrl implements Initializable {
                             highlightedListIndex);
                 }
                 if(event1.getCode()==KeyCode.RIGHT && getHighlightedTask()!=null &&
-                        highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1)
+                        highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1
+                        && server.getCardsByColumnId(
+                        server.getColumnsByBoardId(boardID).get(highlightedListIndex+1).getId()).size()>0)
                 {
                     highlightedByKey = true;
                     unHighlightTask(highlightedTask, cardContainer);
