@@ -88,8 +88,8 @@ public class AddCardTagsToCardCtrl implements Initializable {
         websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
             System.out.println("Websocket delete card working");
             Platform.runLater(() -> {
-                    if(cardToChange!=null && !server.existsByIdCard(cardToChange.getId()))
-                        showBoardOverview();
+                if(cardToChange!=null && !server.existsByIdCard(cardToChange.getId()))
+                    showBoardOverview();
             });
         });
 
