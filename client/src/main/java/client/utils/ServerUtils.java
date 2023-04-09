@@ -1062,4 +1062,18 @@ public class ServerUtils {
             .get(new GenericType<CardTag>(){});
     }
 
+    /**
+     * Method that checks if card exists by id
+     * @param id id of the card to check for
+     * @return true if it exists false otherwise
+     */
+    public boolean existsByIdCard(long id) {
+        return ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER)
+            .path("card/existsById/" + id)
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get(new GenericType<Boolean>(){});
+    }
+
 }

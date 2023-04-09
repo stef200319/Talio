@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import client.utils.Websocket;
 import com.google.inject.Inject;
 import commons.Card;
+import commons.Column;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -67,12 +68,22 @@ public class EditCardTitleCtrl implements Initializable {
             }
         });
 
+        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+            System.out.println("Websocket delete card working");
+            Platform.runLater(() -> {
+                if(cardToShow!=null && !server.existsByIdCard(cardToShow.getId()))
+                    showBoardOverview();
+            });
+        });
+
         websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
             System.out.println("Websocket card working");
 
             Platform.runLater(() -> {
-                cardToShow = server.getCardById(cardToShow.getId());
-                setCardToShow(cardToShow);
+                if(cardToShow!=null && server.existsByIdCard(cardToShow.getId())) {
+                    cardToShow = server.getCardById(cardToShow.getId());
+                    setCardToShow(cardToShow);
+                }
             });
         });
     }
@@ -117,5 +128,15 @@ public class EditCardTitleCtrl implements Initializable {
             newTitle.clear();
             mainCtrl.showTaskDetails(cardToShow);
         }
+    }
+
+    /**
+     * Shows the board overview
+     */
+    public void showBoardOverview() {
+        long columnId = cardToShow.getColumnId();
+        Column c = server.getColumnByColumnId(columnId);
+        long boardId = c.getBoardId();
+        mainCtrl.showBoardOverview(boardId);
     }
 }
