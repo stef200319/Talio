@@ -537,7 +537,7 @@ public class BoardOverviewCtrl implements Initializable {
         });
         list.getChildren().add(b);
         b.setAlignment(Pos.BOTTOM_LEFT);
-        b.setStyle("-fx-text-fill: white; -fx-background-color:  #104a03; -fx-font-size: 12px;");
+        b.setStyle("-fx-text-fill: black; -fx-background-color:  #E0CDA8; -fx-font-size: 12px;");
         //End of button for adding a task
 
         columnContainer.getChildren().add(list);

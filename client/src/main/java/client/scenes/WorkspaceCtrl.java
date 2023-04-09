@@ -4,21 +4,37 @@ import client.utils.LongPolling;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Board;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.geometry.Insets;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.text.Font;
 
 
+import java.awt.*;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.TableColumn;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
 
 public class WorkspaceCtrl implements Initializable{
 
@@ -30,22 +46,21 @@ public class WorkspaceCtrl implements Initializable{
 
     @FXML
     private TextField boardTitle;
+    @FXML
+    private HBox boardContainer;
 
-//    Old version for viewing boards
+    @FXML
+    private ScrollPane scrollPane;
+
+//    Table View
 //    @FXML
-//    private HBox boardContainer;
+//    private TableView<Board> tableView;
 //
 //    @FXML
-//    private ScrollPane scrollPane;
-
-    @FXML
-    private TableView<Board> tableView;
-
-    @FXML
-    private TableColumn<Board, String> colBoardName;
-
-    @FXML
-    private TableColumn<Board, Button> colDeleteBoard;
+//    private TableColumn<Board, String> colBoardName;
+//
+//    @FXML
+//    private TableColumn<Board, Button> colDeleteBoard;
 
     /**
      *
@@ -75,11 +90,11 @@ public class WorkspaceCtrl implements Initializable{
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        colBoardName.setCellValueFactory(b -> new SimpleStringProperty(b.getValue().getTitle()));
-
         //Long Polling
         longPolling.registerForUpdates(b -> {
-            data.add(b);
+                Platform.runLater(() -> {
+                    refresh();
+                });
         });
 
         //Keyboard Shortcuts
@@ -92,35 +107,37 @@ public class WorkspaceCtrl implements Initializable{
             });
         }
 
-        colDeleteBoard.setCellValueFactory(boardToDelete -> {
-            Button deleteButton = new Button("X");
-
-            deleteButton.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 10px;");
-
-            deleteButton.setOnAction(event -> {
-                Board board = boardToDelete.getValue();
-                mainCtrl.showConfirmDeleteBoard(board);
-            });
-            return new SimpleObjectProperty<>(deleteButton);
-        });
-
-        tableView.setOnMouseClicked((MouseEvent event) -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                Board selectedBoard = tableView.getSelectionModel().getSelectedItem();
-                if (selectedBoard != null) {
-                    mainCtrl.showBoardOverview(selectedBoard.getId());
-                }
-            }
-        });
-
-        tableView.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                Board selectedBoard = tableView.getSelectionModel().getSelectedItem();
-                if (selectedBoard != null) {
-                    mainCtrl.showBoardOverview(selectedBoard.getId());
-                }
-            }
-        });
+//        Table View
+//        colBoardName.setCellValueFactory(b -> new SimpleStringProperty(b.getValue().getTitle()));
+//        colDeleteBoard.setCellValueFactory(boardToDelete -> {
+//            Button deleteButton = new Button("X");
+//
+//            deleteButton.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 10px;");
+//
+//            deleteButton.setOnAction(event -> {
+//                Board board = boardToDelete.getValue();
+//                mainCtrl.showConfirmDeleteBoard(board);
+//            });
+//            return new SimpleObjectProperty<>(deleteButton);
+//        });
+//
+//        tableView.setOnMouseClicked((MouseEvent event) -> {
+//            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+//                Board selectedBoard = tableView.getSelectionModel().getSelectedItem();
+//                if (selectedBoard != null) {
+//                    mainCtrl.showBoardOverview(selectedBoard.getId());
+//                }
+//            }
+//        });
+//
+//        tableView.setOnKeyPressed(event -> {
+//            if (event.getCode() == KeyCode.ENTER) {
+//                Board selectedBoard = tableView.getSelectionModel().getSelectedItem();
+//                if (selectedBoard != null) {
+//                    mainCtrl.showBoardOverview(selectedBoard.getId());
+//                }
+//            }
+//        });
 
 
 //        Short Polling
@@ -169,15 +186,15 @@ public class WorkspaceCtrl implements Initializable{
      * Method that refreshes the workspace
      */
     public void refresh() {
-//        Old version of refreshing
-//        boardContainer.getChildren().clear();
-//        List<Board> boards = server.getAllBoardsWithoutServers();
-//        for(int i=0;i<boards.size();i++)
-//            createBoard(boards.get(i));
+        boardContainer.getChildren().clear();
+        List<Board> boards = server.getAllBoardsWithoutServers();
+        for(int i=0;i<boards.size();i++)
+            createBoard(boards.get(i));
 
-        var boardList = server.getAllBoardsWithoutServers();
-        data = FXCollections.observableList(boardList);
-        tableView.setItems(data);
+//        Refreshing for Table View
+//        var boardList = server.getAllBoardsWithoutServers();
+//        data = FXCollections.observableList(boardList);
+//        tableView.setItems(data);
     }
 
     /**
@@ -185,54 +202,52 @@ public class WorkspaceCtrl implements Initializable{
      * @param b board to be showcased
      */
 
-//    Old version of creating boards
-//    public void createBoard(Board b) {
-//
-//        VBox board = new VBox();
-//        board.setPadding(new Insets(5));
-//        board.setMinHeight(70); // Set max width to 800 pixels
-//        board.setMinWidth(150); //Set min width to 200
-//        board.setAlignment(Pos.CENTER);
-//        board.setOnMouseClicked(event -> {
-//            mainCtrl.showBoardOverview(b.getId());
-//        });
-//
-//
-//        Button delete = new Button("x");
-//        delete.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                mainCtrl.showConfirmDeleteBoard(b);
-//            }
-//        });
-//
-//        delete.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
-//        delete.setPrefHeight(1);
-//        delete.setPrefWidth(1);
-//
-//
-//        HBox box = new HBox();
-//        box.setAlignment(Pos.TOP_RIGHT);
-//        box.getChildren().add(delete);
-//        board.getChildren().add(box);
-//
-//        Label title = new Label(b.getTitle());
-//        title.setFont(Font.font("System", FontWeight.BOLD, 15));
-//
-//        VBox.setVgrow(title, Priority.ALWAYS);
-//        VBox.setMargin(title, new Insets(0, 0, 5, 0));
-//
-//        title.setAlignment(Pos.CENTER);
-//
-//        board.getChildren().add(title);
-//
-//        board.setOnMouseEntered(event -> title.setStyle("-fx-background-color: #F5DEB3"));
-//        board.setOnMouseExited(event -> title.setStyle("-fx-text-fill: black;"));
-//
-//        boardContainer.getChildren().add(board);
-//        scrollPane.setContent(boardContainer);
-//        scrollPane.setPannable(true);
-//    }
+    public void createBoard(Board b) {
+        VBox board = new VBox();
+        board.setPadding(new Insets(5));
+        board.setMinHeight(70); // Set max width to 800 pixels
+        board.setMinWidth(150); //Set min width to 200
+        board.setAlignment(Pos.CENTER);
+        board.setOnMouseClicked(event -> {
+            mainCtrl.showBoardOverview(b.getId());
+        });
+
+
+        Button delete = new Button("x");
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mainCtrl.showConfirmDeleteBoard(b);
+            }
+        });
+
+        delete.setStyle("-fx-text-fill: white; -fx-background-color: #6e0518; -fx-font-size: 12px;");
+        delete.setPrefHeight(1);
+        delete.setPrefWidth(1);
+
+
+        HBox box = new HBox();
+        box.setAlignment(Pos.TOP_RIGHT);
+        box.getChildren().add(delete);
+        board.getChildren().add(box);
+
+        Label title = new Label(b.getTitle());
+        title.setFont(Font.font("System", FontWeight.BOLD, 15));
+
+        VBox.setVgrow(title, Priority.ALWAYS);
+        VBox.setMargin(title, new Insets(0, 0, 5, 0));
+
+        title.setAlignment(Pos.CENTER);
+
+        board.getChildren().add(title);
+
+        board.setOnMouseEntered(event -> title.setStyle("-fx-background-color: #F5DEB3"));
+        board.setOnMouseExited(event -> title.setStyle("-fx-text-fill: black;"));
+
+        boardContainer.getChildren().add(board);
+        scrollPane.setContent(boardContainer);
+        scrollPane.setPannable(true);
+    }
 
     /**
      * Show client connect scene
