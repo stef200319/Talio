@@ -1,6 +1,7 @@
 package server.services;
 
 import commons.Board;
+import commons.Column;
 import org.springframework.stereotype.Service;
 import server.database.BoardRepository;
 
@@ -90,4 +91,85 @@ public class BoardService {
     public Board save(Board b) {
         return boardRepository.save(b);
     }
+
+
+
+
+    /**Change the Center colour of a board
+     * @param boardId The ID of the board whose title should be changed
+     * @param bgColour Background colour which should replace the old Background colour of the board
+     * @return the edited board saved to the database
+     */
+
+    public Board editCenterColour(long boardId, String bgColour){
+        Board board = getByBoardId(boardId);
+        board.setCenterColour(bgColour);
+        boardRepository.save(board);
+        return board;
+    }
+
+
+    /**Change the Side colour of a board.
+     * @param boardId The ID of the board whose title should be changed
+     * @param borderColour Border colour which should replace the old Border colour of the board
+     * @return the edited board saved to the database
+     */
+    public Board editSideColour(long boardId, String borderColour){
+        Board board = getByBoardId(boardId);
+        board.setSideColour(borderColour);
+        boardRepository.save(board);
+        return board;
+    }
+
+    /**Change the Font-type of a board.
+     * @param boardId The ID of the board whose title should be changed
+     * @param fontType Font Type which should replace the old Font Type of the board
+     * @return the edited board saved to the database
+     */
+    public Board editFontType(long boardId, String fontType){
+        Board board = getByBoardId(boardId);
+        board.setFontType(fontType);
+        boardRepository.save(board);
+        return board;
+    }
+
+
+    /**Change the Boldness of a board, if it exists.
+     * @param boardId The ID of the board whose title should be changed
+     * @param bold Boldness which should replace the old Boldness of the board
+     * @return the edited board saved to the database
+     */
+    public Board editFontStyleBold(long boardId, boolean bold){
+        Board board = getByBoardId(boardId);
+        board.setFontStyleBold(bold);
+        boardRepository.save(board);
+        return board;
+    }
+
+
+    /**Change the Italicness of a board, if it exists.
+     * @param boardId The ID of the board whose title should be changed
+     * @param italic Italicness which should replace the old Boldness of the board
+     * @return the edited board saved to the database
+     */
+    public Board editFontStyleItalic(long boardId, boolean italic){
+        Board board = getByBoardId(boardId);
+        board.setFontStyleItalic(italic);
+        boardRepository.save(board);
+        return board;
+    }
+
+
+    /**Change the Font Colour of a board, if it exists.
+     * @param boardId The ID of the board whose title should be changed
+     * @param fontColour Font Colour which should replace the old Font Colour of the board
+     * @return the edited board saved to the database
+     */
+    public Board editFontColour(long boardId, String fontColour){
+        Board board = getByBoardId(boardId);
+        board.setFontColour(fontColour);
+        boardRepository.save(board);
+        return board;
+    }
+
 }

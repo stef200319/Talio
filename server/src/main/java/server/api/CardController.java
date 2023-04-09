@@ -157,9 +157,7 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardService.getById(cardId);
-        card.setBgColour(bgColour);
-        cardService.saveCard(card);
+        Card card = cardService.editBackgroundColour(cardId, bgColour);
         return ResponseEntity.ok(card);
     }
 
@@ -177,9 +175,7 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardService.getById(cardId);
-        card.setBorderColour(borderColour);
-        cardService.saveCard(card);
+        Card card = cardService.editBorderColour(cardId, borderColour);
         return ResponseEntity.ok(card);
     }
 
@@ -197,9 +193,7 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardService.getById(cardId);
-        card.setFontType(fontType);
-        cardService.saveCard(card);
+        Card card = cardService.editFontType(cardId, fontType);
         return ResponseEntity.ok(card);
     }
 
@@ -216,9 +210,7 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardService.getById(cardId);
-        card.setFontStyleBold(bold);
-        cardService.saveCard(card);
+        Card card = cardService.editFontStyleBold(cardId, bold);
         return ResponseEntity.ok(card);
     }
 
@@ -236,9 +228,7 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardService.getById(cardId);
-        card.setFontStyleItalic(italic);
-        cardService.saveCard(card);
+        Card card = cardService.editFontStyleItalic(cardId, italic);
         return ResponseEntity.ok(card);
     }
 
@@ -256,9 +246,7 @@ public class CardController {
             return ResponseEntity.badRequest().build();
         }
 
-        Card card = cardService.getById(cardId);
-        card.setFontColour(fontColour);
-        cardService.saveCard(card);
+        Card card = cardService.editFontColour(cardId, fontColour);
         return ResponseEntity.ok(card);
     }
 
