@@ -498,7 +498,7 @@ public class BoardOverviewCtrl implements Initializable {
                 }
                 if(event1.getCode()==KeyCode.RIGHT && getHighlightedTask()!=null &&
                         highlightedListIndex<server.getColumnsByBoardId(boardID).size()-1
-                && server.getCardsByColumnId(
+                        && server.getCardsByColumnId(
                         server.getColumnsByBoardId(boardID).get(highlightedListIndex+1).getId()).size()>0)
                 {
                     highlightedByKey = true;
