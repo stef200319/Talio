@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.CreateBoardCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.CreateBoardCtrl">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="575.0" style="-fx-background-color: #F5DEB3; -fx-border-color: black;">
+      <Button layoutX="549.0" layoutY="380.0" mnemonicParsing="false" onAction="#confirm" prefHeight="8.0" prefWidth="59.0" style="-fx-background-color: #e0cda8;" text="Confirm" />
+      <Button layoutX="394.0" layoutY="380.0" mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: #e0cda8;" text="Cancel" />
+      <TextField fx:id="boardName" layoutX="356.0" layoutY="302.0" prefHeight="25.0" prefWidth="289.0" />
+      <Pane prefHeight="90.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
          <children>
-            <TextField fx:id="boardName" layoutX="237.0" layoutY="129.0" prefHeight="25.0" prefWidth="150.0" />
-            <Button layoutX="328.0" layoutY="186.0" mnemonicParsing="false" onAction="#confirm" prefHeight="8.0" prefWidth="59.0" style="-fx-background-color: #104a03;" text="Confirm" textFill="WHITE" />
-            <Button layoutX="187.0" layoutY="186.0" mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: #6e0518;" text="Cancel" textFill="WHITE" />
-            <Label layoutX="187.0" layoutY="133.0" text="Title:">
+            <Text layoutX="421.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Board">
                <font>
-                  <Font name="System Italic" size="12.0" />
+                  <Font name="System Bold" size="26.0" />
                </font>
-            </Label>
-            <Label layoutX="14.0" layoutY="14.0" text="Create Board">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
+            </Text>
+            <Button layoutX="31.0" layoutY="33.0" mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: #e0cda8;" text="Back" />
          </children>
-      </AnchorPane>
+      </Pane>
+      <Text layoutX="393.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title of the new Board">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

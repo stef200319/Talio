@@ -115,4 +115,82 @@ public class ColumnService {
         }
     }
 
+
+    /**Change the Background colour of a column
+     * @param columnId The ID of the column whose title should be changed
+     * @param bgColour Background colour which should replace the old Background colour of the column
+     * @return the edited column saved to the database
+     */
+
+    public Column editBackgroundColour(long columnId, String bgColour){
+        Column column = getById(columnId);
+        column.setBgColour(bgColour);
+        columnRepository.save(column);
+        return column;
+    }
+
+
+    /**Change the Border colour of a column.
+     * @param columnId The ID of the column whose title should be changed
+     * @param borderColour Border colour which should replace the old Border colour of the column
+     * @return the edited column saved to the database
+     */
+    public Column editBorderColour(long columnId, String borderColour){
+        Column column = getById(columnId);
+        column.setBorderColour(borderColour);
+        columnRepository.save(column);
+        return column;
+    }
+
+    /**Change the Font-type of a column.
+     * @param columnId The ID of the column whose title should be changed
+     * @param fontType Font Type which should replace the old Font Type of the column
+     * @return the edited column saved to the database
+     */
+    public Column editFontType(long columnId, String fontType){
+        Column column = getById(columnId);
+        column.setFontType(fontType);
+        columnRepository.save(column);
+        return column;
+    }
+
+
+    /**Change the Boldness of a column, if it exists.
+     * @param columnId The ID of the column whose title should be changed
+     * @param bold Boldness which should replace the old Boldness of the column
+     * @return the edited column saved to the database
+     */
+    public Column editFontStyleBold(long columnId, boolean bold){
+        Column column = getById(columnId);
+        column.setFontStyleBold(bold);
+        columnRepository.save(column);
+        return column;
+    }
+
+
+    /**Change the Italicness of a column, if it exists.
+     * @param columnId The ID of the column whose title should be changed
+     * @param italic Italicness which should replace the old Boldness of the column
+     * @return the edited column saved to the database
+     */
+    public Column editFontStyleItalic(long columnId, boolean italic){
+        Column column = getById(columnId);
+        column.setFontStyleItalic(italic);
+        columnRepository.save(column);
+        return column;
+    }
+
+
+    /**Change the Font Colour of a column, if it exists.
+     * @param columnId The ID of the column whose title should be changed
+     * @param fontColour Font Colour which should replace the old Font Colour of the column
+     * @return the edited column saved to the database
+     */
+    public Column editFontColour(long columnId, String fontColour){
+        Column column = getById(columnId);
+        column.setFontColour(fontColour);
+        columnRepository.save(column);
+        return column;
+    }
+
 }

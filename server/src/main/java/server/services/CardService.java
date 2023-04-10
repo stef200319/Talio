@@ -117,11 +117,87 @@ public class CardService {
      * Change the description of a card
      * @param cardId the id of the card to be changed
      * @param description new description for the card
-     * @return the new card saved to the database
+     * @return the edited card saved to the database
      */
     public Card editDescription(long cardId, String description) {
         Card card = getById(cardId);
         card.setDescription(description);
+        cardRepository.save(card);
+        return card;
+    }
+
+    /**Change the Background colour of a card
+     * @param cardId The ID of the card whose title should be changed
+     * @param bgColour Background colour which should replace the old Background colour of the card
+     * @return the edited card saved to the database
+     */
+
+    public Card editBackgroundColour(long cardId, String bgColour){
+        Card card = getById(cardId);
+        card.setBgColour(bgColour);
+        cardRepository.save(card);
+        return card;
+    }
+
+    /**Change the Border colour of a card, if it exists.
+     * @param cardId The ID of the card whose title should be changed
+     * @param borderColour Border colour which should replace the old Border colour of the card
+     * @return the edited card saved to the database
+     */
+    public Card editBorderColour(long cardId, String borderColour){
+        Card card = getById(cardId);
+        card.setBorderColour(borderColour);
+        cardRepository.save(card);
+        return card;
+    }
+
+    /**Change the Font-type of a Card, if it exists.
+     * @param cardId The ID of the card whose title should be changed
+     * @param fontType Font Type which should replace the old Font Type of the card
+     * @return the edited card saved to the database
+     */
+    public Card editFontType(long cardId, String fontType){
+        Card card = getById(cardId);
+        card.setFontType(fontType);
+        cardRepository.save(card);
+        return card;
+    }
+
+
+    /**Change the Boldness of a card, if it exists.
+     * @param cardId The ID of the card whose title should be changed
+     * @param bold Boldness which should replace the old Boldness of the card
+     * @return the edited card saved to the database
+     */
+    public Card editFontStyleBold(long cardId, boolean bold){
+        Card card = getById(cardId);
+        card.setFontStyleBold(bold);
+        cardRepository.save(card);
+        return card;
+    }
+
+
+    /**Change the Italicness of a card, if it exists.
+     * @param cardId The ID of the card whose title should be changed
+     * @param italic Italicness which should replace the old Boldness of the card
+     * @return the edited card saved to the database
+     */
+    public Card editFontStyleItalic(long cardId, boolean italic){
+        Card card = getById(cardId);
+        card.setFontStyleItalic(italic);
+        cardRepository.save(card);
+        return card;
+    }
+
+
+    /**Change the Font Colour of a card, if it exists.
+     * @param cardId The ID of the card whose title should be changed
+     * @param fontColour Font Colour which should replace the old Font Colour of the card
+     * @return the edited card saved to the database
+     */
+    public Card editFontColour(long cardId, String fontColour){
+        Card card = getById(cardId);
+        card.setFontColour(fontColour);
         cardRepository.save(card);
         return card;
     }
@@ -273,7 +349,6 @@ public class CardService {
     }
 
     /**
-<<<<<<< HEAD
      * Gets the cardTags given a certain cardId
      * @param cardId
      * @return list of cardTags

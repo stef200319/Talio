@@ -149,6 +149,11 @@ public class CustomizeListCtrl implements Initializable {
      * Set the Background Colour of this Column to the Default Column Background Colour
      */
     public void setDefaultColumnBgColour(){
+        String fontColourString = columnToShow.getDefaultBgColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.listBgColourPicker.setValue(Color.web(fontColourString));
         server.editColumnBackgroundColour(columnToShow, columnToShow.getDefaultBgColour());
         websocket.send("/app/updateColumn", columnToShow);
     }
@@ -157,6 +162,11 @@ public class CustomizeListCtrl implements Initializable {
      * Set the Border Colour of this Column to the Default Column Border Colour
      */
     public void setDefaultColumnBorderColour(){
+        String fontColourString = columnToShow.getDefaultBorderColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.listBorderColourPicker.setValue(Color.web(fontColourString));
         server.editColumnBorderColour(columnToShow, columnToShow.getDefaultBorderColour());
         websocket.send("/app/updateColumn", columnToShow);
     }
@@ -165,6 +175,7 @@ public class CustomizeListCtrl implements Initializable {
      * Set the Font-Type of this Column to the Default Column Font-Type
      */
     public void setDefaultColumnFontType(){
+        listFontType.setValue(columnToShow.getDefaultFontType());
         server.editColumnFontType(columnToShow, columnToShow.getDefaultFontType());
         websocket.send("/app/updateColumn", columnToShow);
     }
@@ -173,6 +184,11 @@ public class CustomizeListCtrl implements Initializable {
      * Set the Font Colour of this Column to the Default Column Font Colour
      */
     public void setDefaultColumnFontColour(){
+        String fontColourString = columnToShow.getDefaultFontColour();
+        if (fontColourString.startsWith("#")) {
+            fontColourString = fontColourString.substring(1);
+        }
+        this.listFontColourPicker.setValue(Color.web(fontColourString));
         server.editColumnFontColour(columnToShow, columnToShow.getDefaultFontColour());
         websocket.send("/app/updateColumn", columnToShow);
     }
