@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EditBoardTagsCtrl">
+   <children>
+      <Pane prefHeight="90.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
+         <children>
+            <Button layoutX="32.0" layoutY="30.0" mnemonicParsing="false" onAction="#showWorkspace" style="-fx-background-color: #e0cda8;" text="Back">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Text layoutX="404.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Board Tags" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="57.0" layoutY="125.0" prefHeight="433.0" prefWidth="412.0">
+         <children>
+            <Text layoutX="7.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Board Tags">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+            <ListView fx:id="boardTagsContainer" layoutX="7.0" layoutY="41.0" prefHeight="385.0" prefWidth="381.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="507.0" layoutY="185.0" prefHeight="313.0" prefWidth="412.0">
+         <children>
+            <Text layoutX="47.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour of the tag" wrappingWidth="318.9999999999999">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="47.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title of the tag" wrappingWidth="318.9999999999999">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Button layoutX="296.0" layoutY="235.0" mnemonicParsing="false" onAction="#newBoardTag" style="-fx-background-color: #e0cda8;" text="New tag">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <ColorPicker fx:id="boardTagColor" layoutX="47.0" layoutY="157.0" prefHeight="25.0" prefWidth="319.0" style="-fx-background-color: #e7e3db;" />
+            <Button fx:id="deleteButton" layoutX="108.0" layoutY="235.0" mnemonicParsing="false" onAction="#deleteBoardTag" style="-fx-background-color: #6e0518;" text="Delete" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="saveButton" layoutX="47.0" layoutY="235.0" mnemonicParsing="false" onAction="#saveBoardTag" style="-fx-background-color: #104a03;" text="Save" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <TextField fx:id="boardTagTitle" layoutX="47.0" layoutY="60.0" prefHeight="25.0" prefWidth="319.0" promptText="Title" style="-fx-background-color: #e7e3db;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

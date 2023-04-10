@@ -247,4 +247,11 @@ public class WorkspaceCtrl implements Initializable{
         mainCtrl.showClientConnect();
     }
 
+    /**
+     * shows the editBoardTags scene
+     */
+    public void showEditBoardTags() {
+        mainCtrl.showEditBoardTags();
+    }
+
 }

@@ -721,4 +721,11 @@ public class BoardOverviewCtrl implements Initializable {
             });
         });
     }
+
+    /**
+     * shows the addBoardTags scene
+     */
+    public void showAddBoardTags() {
+        mainCtrl.showAddBoardTagsToBoard(boardID);
+    }
 }

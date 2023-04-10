@@ -858,7 +858,7 @@ public class ServerUtils {
                 .path("boardTag/editBoardTagColor/"+boardTag.getId()+"/"+color)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
-                .post(Entity.entity(boardTag, APPLICATION_JSON), BoardTag.class);
+                .put(Entity.entity(boardTag, APPLICATION_JSON), BoardTag.class);
     }
 
     /**
@@ -874,7 +874,21 @@ public class ServerUtils {
                 .path("boardTag/editBoardTagTitle/"+ boardTag.getId()+"/"+title)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
-                .post(Entity.entity(boardTag, APPLICATION_JSON), BoardTag.class);
+                .put(Entity.entity(boardTag, APPLICATION_JSON), BoardTag.class);
+    }
+
+    /**
+     * Gets boardTgas by boardId
+     * @param id
+     * @return list of boardTags
+     */
+    public List<BoardTag> getBoardTagsByBoardId(Long id) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("board/getBoardTagsByBoardId/" + id)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<BoardTag>>(){});
     }
 
 
@@ -1052,5 +1066,13 @@ public class ServerUtils {
      */
     public void setSERVER(String server) {
         this.SERVER = "http://" + server + "/";
+    }
+
+    /**
+     * getServer that should be temporarily
+     * @return server
+     */
+    public String getServer() {
+        return this.SERVER;
     }
 }

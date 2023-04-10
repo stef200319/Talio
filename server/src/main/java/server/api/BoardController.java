@@ -1,6 +1,7 @@
 package server.api;
 
 import commons.Board;
+import commons.BoardTag;
 import commons.CardTag;
 import commons.Column;
 import org.springframework.http.HttpStatus;
@@ -294,6 +295,21 @@ public class BoardController {
         Long boardId = columnService.getById(columnId).getBoardId();
         Board board = boardService.getByBoardId(boardId);
         return ResponseEntity.ok(board);
+    }
+
+    /**
+     * gets the boardTags given a boardId
+     * @param boardId
+     * @return list of boardTags
+     */
+    @GetMapping("getBoardTagsByBoardId/{boardId}")
+    @ResponseBody public ResponseEntity<List<BoardTag>> getBoardTagsByBoardId(@PathVariable("boardId") long boardId) {
+        if (!boardService.existsById(boardId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<BoardTag> boardTags = boardService.getByBoardId(boardId).getBoardTags();
+        return ResponseEntity.ok(boardTags);
     }
 
     /**

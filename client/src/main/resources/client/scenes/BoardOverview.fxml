@@ -13,7 +13,7 @@
         <Pane fx:id="sidePane" prefHeight="76.0" prefWidth="1000.0" style="-fx-background-color: #F5DEB3;">
          <children>
 
-            <Button fx:id="myBoardsButton" layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#myBoards" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Workspace" textAlignment="CENTER">
+            <Button fx:id="myBoardsButton" layoutY="23.0" mnemonicParsing="false" onAction="#myBoards" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Workspace" textAlignment="CENTER">
 
                <font>
                   <Font size="14.0" />
@@ -27,7 +27,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Label fx:id="boardName" alignment="CENTER" contentDisplay="CENTER" layoutX="370.0" layoutY="19.0" prefHeight="30.0" prefWidth="260.0">
+            <Label fx:id="boardName" alignment="CENTER" contentDisplay="CENTER" layoutX="411.0" layoutY="19.0" prefHeight="38.0" prefWidth="178.0">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>
@@ -41,7 +41,7 @@
                   <Font size="14.0" />
                </font></Button>
 
-            <Button fx:id="createBoardButton" layoutX="247.0" layoutY="23.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: #e0cda8;" text="Create Board " textAlignment="CENTER">
+            <Button fx:id="createBoardButton" layoutX="201.0" layoutY="23.0" mnemonicParsing="false" onAction="#createBoard" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: #e0cda8;" text="Create Board " textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font></Button>
@@ -49,10 +49,15 @@
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <Button layoutX="130.0" layoutY="23.0" mnemonicParsing="false" onAction="#showEditCardTagsBoard" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Card Tags" textAlignment="CENTER">
+            <Button layoutX="100.0" layoutY="23.0" mnemonicParsing="false" onAction="#showEditCardTagsBoard" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Card Tags" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font></Button>
+            <Button layoutX="314.0" layoutY="23.0" mnemonicParsing="false" onAction="#showAddBoardTags" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #e0cda8;" text="Board Tags">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
 
          </children>
       </Pane>
