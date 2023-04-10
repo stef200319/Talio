@@ -241,6 +241,9 @@ public class WorkspaceCtrl implements Initializable{
         mainCtrl.showClientConnect();
     }
 
+    /**
+     * Register for updates from long polling
+     */
     public void registerForUpdates() {
         //Long Polling
         if(register == false) {
