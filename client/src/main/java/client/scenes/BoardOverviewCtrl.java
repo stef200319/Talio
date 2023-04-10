@@ -612,6 +612,7 @@ public class BoardOverviewCtrl implements Initializable {
                 content.putString(Long.toString(cards.get(finalI1).getId()));
                 highlightedTask=card;
                 db.setContent(content);
+                db.setDragView(card.snapshot(null, null));
 
                 event.consume();
             }
@@ -636,7 +637,8 @@ public class BoardOverviewCtrl implements Initializable {
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardPosition(oldId, newPos);
                     websocket.send("/app/updateCard", oldCard);
-                    highlightedCard = cards.get(newPos);
+                    System.out.println(newPos+"  "+cards.size());
+                    highlightedCard = cards.get(newPos-1);;
                     highlightedCardIndex = newPos-1;
                     highlightedListIndex = c.getPosition()-1;
                     event.setDropCompleted(true);
@@ -646,7 +648,7 @@ public class BoardOverviewCtrl implements Initializable {
                     server.editCardColumn(oldId,c.getId());
                     server.editCardPosition(oldId, newPos);
                     websocket.send("/app/updateCard", oldCard);
-                    highlightedCard = cards.get(newPos);
+                    highlightedCard = cards.get(newPos-1);
                     highlightedCardIndex = newPos-1;
                     highlightedListIndex = c.getPosition()-1;
                     event.setDropCompleted(true);
