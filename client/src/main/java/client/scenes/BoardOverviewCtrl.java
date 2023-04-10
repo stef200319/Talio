@@ -23,7 +23,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import org.checkerframework.checker.units.qual.g;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -327,39 +333,6 @@ public class BoardOverviewCtrl implements Initializable {
 
             VBox card = new VBox();
 
-            //Making Description and subtask icon
-            HBox details = new HBox(5);
-            if(cards.get(i).getDescription() != null && cards.get(i).getDescription()!="") {
-                Label description = new Label("D");
-                Font fontList = Font.font(cards.get(i).getFontType(),
-                    FontWeight.BOLD,
-                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
-                    12);
-                description.setFont(fontList);
-                description.setTextFill(Color.web(cards.get(i).getFontColour()));
-                details.getChildren().add(description);
-            }
-
-            if(cards.get(i).getSubtasks()!=null && cards.get(i).getSubtasks().size()!=0) {
-                List<Subtask> subtasks = cards.get(i).getSubtasks();
-                int nrSub = subtasks.size();
-                int nrSubCom = 0;
-                for(Subtask s : subtasks) {
-                    if(s.getDone()==true)
-                        nrSubCom++;
-                }
-                Label subtasksLabel = new Label(nrSubCom+"/"+nrSub);
-                Font fontList = Font.font(cards.get(i).getFontType(),
-                    FontWeight.BOLD,
-                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
-                    12);
-                subtasksLabel.setFont(fontList);
-                subtasksLabel.setTextFill(Color.web(cards.get(i).getFontColour()));
-                details.getChildren().add(subtasksLabel);
-            }
-
-            card.getChildren().add(details);
-            //Finish description and subtasks icon
 
 
             Region r = new Region();
@@ -372,7 +345,7 @@ public class BoardOverviewCtrl implements Initializable {
 
 
             Label s = new Label(cards.get(i).getTitle());
-            s.setMaxWidth(80);
+            //s.setMaxWidth(80);
             Font fontList = Font.font(cards.get(i).getFontType(),
                     cards.get(i).isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
                     cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
@@ -573,6 +546,44 @@ public class BoardOverviewCtrl implements Initializable {
             cardSmall.getChildren().add(cardButtons);
 
             card.getChildren().add(cardSmall);
+
+            //Making Description and subtask icon
+            Region reg = new Region();
+            HBox.setHgrow(reg, Priority.ALWAYS);
+            HBox details = new HBox();
+            if(cards.get(i).getSubtasks()!=null && cards.get(i).getSubtasks().size()!=0) {
+                List<Subtask> subtasks = cards.get(i).getSubtasks();
+                int nrSub = subtasks.size();
+                int nrSubCom = 0;
+                for(Subtask subt : subtasks) {
+                    if(subt.getDone()==true)
+                        nrSubCom++;
+                }
+                Label subtasksLabel = new Label(nrSubCom+"/"+nrSub);
+                fontList = Font.font(cards.get(i).getFontType(),
+                    FontWeight.BOLD,
+                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                    12);
+                subtasksLabel.setFont(fontList);
+                subtasksLabel.setTextFill(Color.web(cards.get(i).getFontColour()));
+                details.getChildren().add(subtasksLabel);
+            }
+
+            details.getChildren().add(reg);
+
+            if(cards.get(i).getDescription() != null && cards.get(i).getDescription()!="") {
+                Label description = new Label("Detailed");
+                fontList = Font.font(cards.get(i).getFontType(),
+                    FontWeight.BOLD,
+                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                    12);
+                description.setFont(fontList);
+                description.setTextFill(Color.web(cards.get(i).getFontColour()));
+                details.getChildren().add(description);
+            }
+
+            card.getChildren().add(details);
+            //Finish description and subtasks icon
 
             card = enableDragAndDrop(card, c, cards, i);
 
