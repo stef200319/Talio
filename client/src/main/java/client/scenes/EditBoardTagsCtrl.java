@@ -19,8 +19,6 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 public class EditBoardTagsCtrl implements Initializable {
@@ -272,6 +270,9 @@ public class EditBoardTagsCtrl implements Initializable {
                 (int) (colour.getBlue() * 255));
     }
 
+    /**
+     * Register for websocket messages
+     */
     public void registerForMessages() {
         if(register==false) {
             websocket.registerForMessages("/topic/updateBoardTag", BoardTag.class, c -> {

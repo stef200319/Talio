@@ -4,7 +4,6 @@ import commons.Board;
 import commons.BoardTag;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Response;
-import org.checkerframework.checker.units.qual.C;
 import org.glassfish.jersey.client.ClientConfig;
 
 import java.util.concurrent.ExecutorService;
