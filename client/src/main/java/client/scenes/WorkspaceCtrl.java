@@ -189,6 +189,7 @@ public class WorkspaceCtrl implements Initializable{
 
     public void createBoard(Board b) {
         VBox board = new VBox();
+        board.setStyle("-fx-background-color: "+b.getCenterColour());
         board.setPadding(new Insets(5));
         board.setMinHeight(70); // Set max width to 800 pixels
         board.setMinWidth(150); //Set min width to 200
