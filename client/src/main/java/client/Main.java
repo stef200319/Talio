@@ -98,6 +98,10 @@ public class Main extends Application {
         var joinBoardKey = FXML.load(JoinBoardByKeyCtrl.class, "client",
                 "scenes", "JoinBoardByKey.fxml");
 
+        var addBoardTagsToBoard = FXML.load(AddBoardTagsToBoardCtrl.class, "client",
+                "scenes", "AddBoardTagsToBoard.fxml");
+        var editBoardTags = FXML.load(EditBoardTagsCtrl.class, "client",
+                "scenes", "EditBoardTags.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
@@ -105,7 +109,7 @@ public class Main extends Application {
                 addTask, taskManagement, workspace, createBoard, editCardTitle, editCardDescription, editList,
             editBoardTitle, viewSubtasks, customizeCard, customizeList, customizeBoard, editSubtaskTitle,
             confirmDeleteColumn, confirmDeleteBoard, help, addSubtask, editCardTagsBoard,
-                addCardTagsToCard, joinBoardKey);
+                addCardTagsToCard, joinBoardKey, addBoardTagsToBoard, editBoardTags);
 
         //Stopping the thread working for long polling in Workspace
         primaryStage.setOnCloseRequest(e -> {

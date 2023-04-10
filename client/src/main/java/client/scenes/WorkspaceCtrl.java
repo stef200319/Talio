@@ -243,6 +243,13 @@ public class WorkspaceCtrl implements Initializable{
     }
 
     /**
+     * shows the editBoardTags scene
+     */
+    public void showEditBoardTags() {
+        mainCtrl.showEditBoardTags();
+    }
+
+    /**
      * Register for updates from long polling
      */
     public void registerForUpdates() {

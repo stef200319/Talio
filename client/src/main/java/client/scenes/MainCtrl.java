@@ -106,6 +106,11 @@ public class MainCtrl {
 
     private Scene joinBoardByKey;
 
+    private AddBoardTagsToBoardCtrl addBoardTagsToBoardCtrl;
+    private Scene addBoardTagsToBoard;
+    private EditBoardTagsCtrl editBoardTagsCtrl;
+    private Scene editBoardTags;
+
 
     /**
      * @param primaryStage
@@ -133,6 +138,8 @@ public class MainCtrl {
      * @param editCardTagsBoard
      * @param addCardTagsToCard
      * @param joinBoardKey
+     * @param addBoardTagsToBoard
+     * @param editBoardTags
      */
     @SuppressWarnings({"checkstyle:ParameterNumber", "checkstyle:MethodLength"})
     public void initialize(Stage primaryStage,
@@ -155,7 +162,9 @@ public class MainCtrl {
                            Pair<AddSubtaskCtrl, Parent> addSubtask,
                            Pair<EditCardTagsBoardCtrl, Parent> editCardTagsBoard,
                            Pair<AddCardTagsToCardCtrl, Parent> addCardTagsToCard,
-                           Pair<JoinBoardByKeyCtrl, Parent> joinBoardKey) {
+                           Pair<JoinBoardByKeyCtrl, Parent> joinBoardKey,
+                           Pair<AddBoardTagsToBoardCtrl, Parent> addBoardTagsToBoard,
+                           Pair<EditBoardTagsCtrl, Parent> editBoardTags) {
         this.primaryStage = primaryStage;
 
         this.addListCtrl = add.getKey();
@@ -263,6 +272,10 @@ public class MainCtrl {
         this.customizeCard.setOnKeyPressed(getKeyboardShortcuts());
         this.customizeList.setOnKeyPressed(getKeyboardShortcuts());
 
+        this.addBoardTagsToBoardCtrl = addBoardTagsToBoard.getKey();
+        this.addBoardTagsToBoard = new Scene(addBoardTagsToBoard.getValue());
+        this.editBoardTagsCtrl = editBoardTags.getKey();
+        this.editBoardTags = new Scene(editBoardTags.getValue());
 
         showClientConnect();
         primaryStage.show();
@@ -708,5 +721,23 @@ public class MainCtrl {
         primaryStage.setScene(editSubtaskTitle);
     }
 
+
+    /**
+     * shows the addBoardTagsToBoard scene
+     * @param boardID
+     */
+    public void showAddBoardTagsToBoard(long boardID) {
+        primaryStage.setScene(addBoardTagsToBoard);
+        primaryStage.setTitle("Add Board Tags to Board");
+        addBoardTagsToBoardCtrl.setBoardId(boardID);
+    }
+
+    /**
+     * shows the editBoardTags scene
+     */
+    public void showEditBoardTags() {
+        primaryStage.setScene(editBoardTags);
+        primaryStage.setTitle("Edit Board Tags");
+    }
 }
 
