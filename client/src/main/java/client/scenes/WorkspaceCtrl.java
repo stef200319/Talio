@@ -32,6 +32,7 @@ public class WorkspaceCtrl implements Initializable{
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private final LongPolling longPolling;
+    private boolean register;
 
     private ObservableList<Board> data;
 
@@ -64,7 +65,7 @@ public class WorkspaceCtrl implements Initializable{
         this.mainCtrl = mainCtrl;
         this.server = server;
         this.longPolling = longPolling;
-
+        register = false;
     }
 
     /**
@@ -81,12 +82,6 @@ public class WorkspaceCtrl implements Initializable{
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Long Polling
-        longPolling.registerForUpdates(b -> {
-            Platform.runLater(() -> {
-                refresh();
-            });
-        });
 
         //Keyboard Shortcuts
         if (this.boardTitle != null){
@@ -168,7 +163,6 @@ public class WorkspaceCtrl implements Initializable{
 
     public void add() {
         server.addBoard(getBoard());
-        refresh();
         boardTitle.clear();
     }
 
@@ -195,6 +189,7 @@ public class WorkspaceCtrl implements Initializable{
 
     public void createBoard(Board b) {
         VBox board = new VBox();
+        board.setStyle("-fx-background-color: "+b.getCenterColour());
         board.setPadding(new Insets(5));
         board.setMinHeight(70); // Set max width to 800 pixels
         board.setMinWidth(150); //Set min width to 200
@@ -248,10 +243,26 @@ public class WorkspaceCtrl implements Initializable{
     }
 
     /**
+<<<<<<< HEAD
      * shows the editBoardTags scene
      */
     public void showEditBoardTags() {
         mainCtrl.showEditBoardTags();
+    }
+    /**
+     * Register for updates from long polling
+     */
+    public void registerForUpdates() {
+        //Long Polling
+        if(register == false) {
+            longPolling.registerForUpdates(b -> {
+                Platform.runLater(() -> {
+                    System.out.println("sad");
+                    refresh();
+                });
+            });
+            register = true;
+        }
     }
 
 }

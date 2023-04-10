@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import commons.Board;
 import commons.Card;
 import commons.Column;
+import commons.Subtask;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,10 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -37,6 +35,7 @@ public class BoardOverviewCtrl implements Initializable {
     private final MainCtrl mainCtrl;
 
     private final Websocket websocket;
+    private boolean register;
 
     private long boardID = Long.MIN_VALUE;
 
@@ -77,7 +76,7 @@ public class BoardOverviewCtrl implements Initializable {
 
     private Column highlightedColumn;
 
-    private HBox highlightedTask;
+    private VBox highlightedTask;
 
 
     /**
@@ -90,7 +89,7 @@ public class BoardOverviewCtrl implements Initializable {
         this.mainCtrl = mainCtrl;
         this.server = server;
         this.websocket = websocket;
-
+        register = false;
     }
 
     /**
@@ -293,15 +292,22 @@ public class BoardOverviewCtrl implements Initializable {
         list.getChildren().add(cardContainer);
         for(int i=0;i<cards.size();i++) {
             int finalI = i;
-            HBox card = new HBox(80);                   //card box
-            card.setAlignment(Pos.CENTER_RIGHT);
+
+            VBox card = new VBox();
+
+
+
+            Region r = new Region();
+            HBox.setHgrow(r, Priority.ALWAYS);
+            HBox cardSmall = new HBox();                   //card box
+            cardSmall.setAlignment(Pos.CENTER_RIGHT);
             card.setStyle("-fx-background-color: "+cards.get(finalI).getBgColour()+"; -fx-border-style: " +
                     "solid; -fx-background-radius: 5px; -fx-border-radius: 5px;" +
                     "-fx-border-color: "+cards.get(finalI).getBorderColour());
 
 
             Label s = new Label(cards.get(i).getTitle());
-            s.setMaxWidth(80);
+            //s.setMaxWidth(80);
             Font fontList = Font.font(cards.get(i).getFontType(),
                     cards.get(i).isFontStyleBold() ? FontWeight.BOLD : FontWeight.NORMAL,
                     cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
@@ -309,7 +315,8 @@ public class BoardOverviewCtrl implements Initializable {
             s.setFont(fontList);
             s.setTextFill(Color.web(cards.get(i).getFontColour()));
 
-            card.getChildren().add(s);
+            cardSmall.getChildren().add(s);
+            cardSmall.getChildren().add(r);                          //region between text and delete button
 
 
             VBox cardButtons = new VBox(5);             //box for details and delete buttons
@@ -320,7 +327,8 @@ public class BoardOverviewCtrl implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     // Do something when the card is clicked
-                    mainCtrl.showTaskDetails(cards.get(finalI));
+                    if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+                        mainCtrl.showTaskDetails(cards.get(finalI));
                 }
             });
 
@@ -339,7 +347,7 @@ public class BoardOverviewCtrl implements Initializable {
                 }
             });
 
-            HBox cardFinal = card;
+            VBox cardFinal = card;
 
 
             EventHandler<MouseEvent>  handler = event -> {
@@ -497,7 +505,47 @@ public class BoardOverviewCtrl implements Initializable {
             });
             cardButtons.getChildren().add(deleteCard);
 
-            card.getChildren().add(cardButtons);
+            cardSmall.getChildren().add(cardButtons);
+
+            card.getChildren().add(cardSmall);
+
+            //Making Description and subtask icon
+            Region reg = new Region();
+            HBox.setHgrow(reg, Priority.ALWAYS);
+            HBox details = new HBox();
+            if(cards.get(i).getSubtasks()!=null && cards.get(i).getSubtasks().size()!=0) {
+                List<Subtask> subtasks = cards.get(i).getSubtasks();
+                int nrSub = subtasks.size();
+                int nrSubCom = 0;
+                for(Subtask subt : subtasks) {
+                    if(subt.getDone()==true)
+                        nrSubCom++;
+                }
+                Label subtasksLabel = new Label(nrSubCom+"/"+nrSub);
+                fontList = Font.font(cards.get(i).getFontType(),
+                    FontWeight.BOLD,
+                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                    12);
+                subtasksLabel.setFont(fontList);
+                subtasksLabel.setTextFill(Color.web(cards.get(i).getFontColour()));
+                details.getChildren().add(subtasksLabel);
+            }
+
+            details.getChildren().add(reg);
+
+            if(cards.get(i).getDescription() != null && cards.get(i).getDescription()!="") {
+                Label description = new Label("Detailed");
+                fontList = Font.font(cards.get(i).getFontType(),
+                    FontWeight.BOLD,
+                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                    12);
+                description.setFont(fontList);
+                description.setTextFill(Color.web(cards.get(i).getFontColour()));
+                details.getChildren().add(description);
+            }
+
+            card.getChildren().add(details);
+            //Finish description and subtasks icon
 
             card = enableDragAndDrop(card, c, cards, i);
 
@@ -526,7 +574,7 @@ public class BoardOverviewCtrl implements Initializable {
     /**
      * @return the currently highlighted task
      */
-    public HBox getHighlightedTask(){return this.highlightedTask;}
+    public VBox getHighlightedTask(){return this.highlightedTask;}
 
     /**
      * sets the newly highlighted card
@@ -538,7 +586,7 @@ public class BoardOverviewCtrl implements Initializable {
      * sets the newly highlighted task
      * @param hbox
      */
-    public void setHighlightedTask(HBox hbox){this.highlightedTask = hbox;}
+    public void setHighlightedTask(VBox hbox){this.highlightedTask = hbox;}
 
     /**
      * method that changes the highlighted by key value
@@ -553,11 +601,11 @@ public class BoardOverviewCtrl implements Initializable {
      * @return the card to be highlighted
      */
 
-    public HBox getCardToHiglight(HBox container,  int indexList, int indexCard)
+    public VBox getCardToHiglight(HBox container,  int indexList, int indexCard)
     {
         VBox list = (VBox)container.getChildren().get(indexList);
         VBox cardList = (VBox)list.getChildren().get(2);
-        HBox cardToHighlight = (HBox) cardList.getChildren().get(indexCard);
+        VBox cardToHighlight = (VBox) cardList.getChildren().get(indexCard);
         return cardToHighlight;
     }
 
@@ -568,7 +616,7 @@ public class BoardOverviewCtrl implements Initializable {
      * @param index
      * @param indexList
      */
-    public void setHighlightedTask(HBox l, VBox vbox, int index, int indexList){
+    public void setHighlightedTask(VBox l, VBox vbox, int index, int indexList){
         this.highlightedTask=l;
         vbox.requestFocus();
         this.highlightedCardIndex = index;
@@ -586,7 +634,7 @@ public class BoardOverviewCtrl implements Initializable {
      * @param l
      * @param vbox
      */
-    public void unHighlightTask(HBox l, VBox vbox){
+    public void unHighlightTask(VBox l, VBox vbox){
 
         l.setEffect(null);
         vbox.requestFocus();
@@ -601,7 +649,7 @@ public class BoardOverviewCtrl implements Initializable {
      * @param i Position of card in that list
      * @return The new card which has drag and drop enabled
      */
-    public HBox enableDragAndDrop(HBox card, Column c, List<Card> cards, int i) {
+    public VBox enableDragAndDrop(VBox card, Column c, List<Card> cards, int i) {
         //Methods for dragging and dropping the card
         int finalI1 = i;
         card.setOnDragDetected(new EventHandler<MouseEvent>() {      //When starting to drag remember the cardId
@@ -688,38 +736,41 @@ public class BoardOverviewCtrl implements Initializable {
      * Registering for websocket messages
      */
     public void registerForMessages() {
-        websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
-            System.out.println("Websocket column working");
+        if(register==false) {
+            websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
+                System.out.println("Websocket column working");
 
-            Platform.runLater(() -> {
-                refresh();
+                Platform.runLater(() -> {
+                    refresh();
+                });
+
             });
 
-        });
+            websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
+                System.out.println("Websocket card working");
 
-        websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
-            System.out.println("Websocket card working");
-
-            Platform.runLater(() -> {
-                refresh();
+                Platform.runLater(() -> {
+                    refresh();
+                });
             });
-        });
 
-        websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
-            System.out.println("Websocket card delete working");
+            websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
+                System.out.println("Websocket card delete working");
 
-            Platform.runLater(() -> {
-                refresh();
+                Platform.runLater(() -> {
+                    refresh();
+                });
             });
-        });
 
-        websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
-            System.out.println("Websocket board working");
+            websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
+                System.out.println("Websocket board working");
 
-            Platform.runLater(() -> {
-                refresh();
+                Platform.runLater(() -> {
+                    refresh();
+                });
             });
-        });
+            register = true;
+        }
     }
 
     /**

@@ -27,6 +27,7 @@ public class EditSubtaskTitleCtrl implements Initializable {
     private Card cardToShow;
 
     private Subtask subtaskToShow;
+    private boolean register;
 
     @FXML
     private Label currentTitle;
@@ -46,6 +47,7 @@ public class EditSubtaskTitleCtrl implements Initializable {
         this.server=server;
         this.mainCtrl=mainCtrl;
         this.websocket = websocket;
+        register = false;
     }
 
     /**
@@ -138,12 +140,15 @@ public class EditSubtaskTitleCtrl implements Initializable {
      * Registering for websocket messages
      */
     public void registerForMessages() {
-        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
-            System.out.println("Websocket delete card working");
-            Platform.runLater(() -> {
-                if(cardToShow!=null && !server.existsByIdCard(cardToShow.getId()))
-                    showBoardOverview();
+        if(register = false) {
+            websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+                System.out.println("Websocket delete card working");
+                Platform.runLater(() -> {
+                    if (cardToShow != null && !server.existsByIdCard(cardToShow.getId()))
+                        showBoardOverview();
+                });
             });
-        });
+            register = true;
+        }
     }
 }

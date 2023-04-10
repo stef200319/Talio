@@ -16,7 +16,7 @@ public class LongPolling {
 
     private static String SERVER = null;
 
-    private static ExecutorService EXEC = Executors.newSingleThreadExecutor();
+    private static ExecutorService EXEC = null;
 
     /**
      * Method which works as a register for updates in long polling for boards
