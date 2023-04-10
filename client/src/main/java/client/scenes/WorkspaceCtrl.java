@@ -32,7 +32,7 @@ public class WorkspaceCtrl implements Initializable{
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private final LongPolling longPolling;
-    public boolean register;
+    private boolean register;
 
     private ObservableList<Board> data;
 

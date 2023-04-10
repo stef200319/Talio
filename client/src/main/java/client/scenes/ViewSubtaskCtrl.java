@@ -31,7 +31,7 @@ public class ViewSubtaskCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private final Websocket websocket;
-    boolean register;
+    private boolean register;
 
     @FXML
     private VBox subtaskList;
