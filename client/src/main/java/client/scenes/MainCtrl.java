@@ -27,7 +27,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -316,7 +316,7 @@ public class MainCtrl {
      */
     public void showBoardOverview(Long boardID) {
         boardOverviewCtrl.setHighlightedByKey(false);
-        HBox hbox = boardOverviewCtrl.getHighlightedTask();
+        VBox hbox = boardOverviewCtrl.getHighlightedTask();
         boardOverviewCtrl.setHighlightedTask(hbox);
         boardOverviewCtrl.setBoardID(boardID);
         primaryStage.setTitle("Board Overview");
@@ -490,7 +490,7 @@ public class MainCtrl {
             {
 
                 boardOverviewCtrl.setHighlightedByKey(false);
-                HBox hbox = boardOverviewCtrl.getHighlightedTask();
+                VBox hbox = boardOverviewCtrl.getHighlightedTask();
                 boardOverviewCtrl.setHighlightedTask(hbox);
                 taskDetailsCtrl.showBoardOverview();
 
