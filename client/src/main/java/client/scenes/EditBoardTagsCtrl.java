@@ -28,6 +28,7 @@ public class EditBoardTagsCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private final Websocket websocket;
+    private boolean register;
     private Long boardId = null;
 
     private BoardTag selectedBoardTag;
@@ -59,6 +60,7 @@ public class EditBoardTagsCtrl implements Initializable {
         this.server = server;
         this.mainCtrl = mainCtrl;
         this.websocket = websocket;
+        register = false;
     }
 
     /**
@@ -73,14 +75,14 @@ public class EditBoardTagsCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    refresh();
+//                });
+//            }
+//        }, 0, 1000);
 
 
         boardTagsContainer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<BoardTag>() {
@@ -232,7 +234,7 @@ public class EditBoardTagsCtrl implements Initializable {
         String newColor = colourToHexCode(boardTagColor.getValue());
         server.editBoardTagColor(selectedBoardTag, newColor);
         server.editBoardTagTitle(selectedBoardTag, newTitle);
-//        websocket.send("/app/updateCardTag", selectedBoardTag);
+        websocket.send("/app/updateBoardTag", selectedBoardTag);
         changedBoardTag = selectedBoardTag;
         refresh();
     }
@@ -243,7 +245,7 @@ public class EditBoardTagsCtrl implements Initializable {
     public void deleteBoardTag() {
         if (selectedBoardTag == null) return;;
         server.deleteBoardTag(selectedBoardTag);
-//        websocket.send("/app/updateBoardTag", selectedBoardTag);
+        websocket.send("/app/updateBoardTag", selectedBoardTag);
         refresh();
     }
 
@@ -253,7 +255,7 @@ public class EditBoardTagsCtrl implements Initializable {
     public void newBoardTag() {
         BoardTag boardTag = new BoardTag("New BoardTag", "#ff0000");
         server.addBoardTag(boardTag);
-//        websocket.send("/app/updateBoardTag", boardTag);
+        websocket.send("/app/updateBoardTag", boardTag);
         refresh();
         boardTagsContainer.getSelectionModel().select(boardTagsContainer.getItems().size() - 1);
     }
@@ -270,15 +272,18 @@ public class EditBoardTagsCtrl implements Initializable {
                 (int) (colour.getBlue() * 255));
     }
 
-//    /**
-//     * Registering for websocket messages
-//     */
-//    public void registerForMessages() {
-//        websocket.registerForMessages("/topic/updateCardTag", BoardTag.class, c -> {
-//            System.out.println("Websocket boardTag working");
-//            Platform.runLater(() -> refresh());
-//        });
-//    }
+    public void registerForMessages() {
+        if(register==false) {
+            websocket.registerForMessages("/topic/updateBoardTag", BoardTag.class, c -> {
+                System.out.println("Websocket board tag working");
+
+                Platform.runLater(() -> {
+                    refresh();
+                });
+            });
+            register = true;
+        }
+    }
 
     /**
      * Shows the workspace

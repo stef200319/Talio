@@ -1,8 +1,10 @@
 package client.utils;
 
 import commons.Board;
+import commons.BoardTag;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Response;
+import org.checkerframework.checker.units.qual.C;
 import org.glassfish.jersey.client.ClientConfig;
 
 import java.util.concurrent.ExecutorService;
@@ -42,6 +44,28 @@ public class LongPolling {
 
         });
 
+    }
+
+    /**
+     * Registers for updates of a board tag
+     * @param consumer consumer
+     */
+    public void registerForUpdatesTags(Consumer<BoardTag> consumer) {
+        EXEC.submit(() -> {
+            while(!Thread.interrupted()) {
+                var res = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER)
+                    .path("boardTag/updates")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get(Response.class);
+                if(res.getStatus() == 204) {
+                    continue;
+                }
+                var bT = res.readEntity(BoardTag.class);
+                consumer.accept(bT);
+            }
+        });
     }
 
     /**

@@ -2,14 +2,19 @@ package server.api;
 
 import commons.Board;
 import commons.BoardTag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 import server.services.BoardService;
 import server.services.BoardTagService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("/boardTag")
@@ -17,6 +22,8 @@ public class BoardTagController {
 
     private final BoardService boardService;
     private final BoardTagService boardTagService;
+    //for long polling
+    private Map<Object, Consumer<BoardTag>> listeners = new HashMap<>();
 
     /**
      * Constructor for BoardTagController
@@ -87,6 +94,9 @@ public class BoardTagController {
         Board board = boardService.getByBoardId(boardId);
         board.addBoardTag(boardTag);
         boardService.save(board);
+
+        listeners.forEach((k, l) -> l.accept(boardTag));
+
         return ResponseEntity.ok(boardTag);
     }
 
@@ -107,6 +117,9 @@ public class BoardTagController {
         Board board = boardService.getByBoardId(boardId);
         board.deleteBoardTag(boardTag);
         boardService.save(board);
+
+        listeners.forEach((k, l) -> l.accept(boardTag));
+
         return ResponseEntity.ok(boardTag);
     }
 
@@ -122,6 +135,8 @@ public class BoardTagController {
         if (!boardTagService.existsById((boardTagId))) {
             return ResponseEntity.badRequest().build();
         }
+
+        listeners.forEach((k, l) -> l.accept(boardTagService.getById(boardTagId)));
 
         BoardTag boardTag = boardTagService.editColor(boardTagId, color);
         return ResponseEntity.ok(boardTag);
@@ -157,6 +172,31 @@ public class BoardTagController {
                 boardService.save(board);
             }
         }
+    }
+
+    /**
+     * Retrieves updates for the board.
+     *
+     * @return a DeferredResult containing a ResponseEntity with the board updates
+     * or a NO_CONTENT response if no updates are available
+     *
+     * @throws Exception if an error occurs while processing the request
+     */
+    @GetMapping("/updates")
+    @ResponseBody public DeferredResult<ResponseEntity<BoardTag>> getUpdates() {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        var res = new DeferredResult<ResponseEntity<BoardTag>>(5000L, noContent);
+
+        var key = new Object();
+        listeners.put(key, b -> {
+            res.setResult(ResponseEntity.ok(b));
+        });
+
+        res.onCompletion(() -> {
+            listeners.remove(key);
+        });
+
+        return res;
     }
 
     /**
