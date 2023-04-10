@@ -37,6 +37,7 @@ public class BoardOverviewCtrl implements Initializable {
     private final MainCtrl mainCtrl;
 
     private final Websocket websocket;
+    private boolean register;
 
     private long boardID = Long.MIN_VALUE;
 
@@ -90,7 +91,7 @@ public class BoardOverviewCtrl implements Initializable {
         this.mainCtrl = mainCtrl;
         this.server = server;
         this.websocket = websocket;
-
+        register = false;
     }
 
     /**
@@ -106,40 +107,8 @@ public class BoardOverviewCtrl implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
-            System.out.println("Websocket column working");
 
-            Platform.runLater(() -> {
-                refresh();
-            });
 
-//            createList(c); Not working
-
-        });
-
-        websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
-            System.out.println("Websocket card working");
-
-            Platform.runLater(() -> {
-                refresh();
-            });
-        });
-
-        websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
-            System.out.println("Websocket card delete working");
-
-            Platform.runLater(() -> {
-                refresh();
-            });
-        });
-
-        websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
-            System.out.println("Websocket board working");
-
-            Platform.runLater(() -> {
-                refresh();
-            });
-        });
 
 //        Short polling
 //        new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -244,9 +213,9 @@ public class BoardOverviewCtrl implements Initializable {
 
 
         list.setPadding(new Insets(5));
-        list.setPrefWidth(400); // Set preferred width to 400 pixels
+        list.setPrefWidth(200); // Set preferred width to 400 pixels
         list.setPrefHeight(600); // Set preferred height to 600 pixels
-        list.setMaxWidth(800); // Set max width to 800 pixels
+        list.setMaxWidth(200); // Set max width to 800 pixels
         list.setMinWidth(200); //Set min width to 200
         list.setAlignment(Pos.CENTER);
 
@@ -549,7 +518,7 @@ public class BoardOverviewCtrl implements Initializable {
         });
         list.getChildren().add(b);
         b.setAlignment(Pos.BOTTOM_LEFT);
-        b.setStyle("-fx-text-fill: white; -fx-background-color:  #104a03; -fx-font-size: 12px;");
+        b.setStyle("-fx-text-fill: black; -fx-background-color:  #E0CDA8; -fx-font-size: 12px;");
         //End of button for adding a task
 
         columnContainer.getChildren().add(list);
@@ -644,6 +613,7 @@ public class BoardOverviewCtrl implements Initializable {
                 content.putString(Long.toString(cards.get(finalI1).getId()));
                 highlightedTask=card;
                 db.setContent(content);
+                db.setDragView(card.snapshot(null, null));
 
                 event.consume();
             }
@@ -668,7 +638,8 @@ public class BoardOverviewCtrl implements Initializable {
                     int newPos = cards.get(finalI2).getPosition();
                     server.editCardPosition(oldId, newPos);
                     websocket.send("/app/updateCard", oldCard);
-                    highlightedCard = cards.get(newPos);
+                    System.out.println(newPos+"  "+cards.size());
+                    highlightedCard = cards.get(newPos-1);;
                     highlightedCardIndex = newPos-1;
                     highlightedListIndex = c.getPosition()-1;
                     event.setDropCompleted(true);
@@ -678,7 +649,7 @@ public class BoardOverviewCtrl implements Initializable {
                     server.editCardColumn(oldId,c.getId());
                     server.editCardPosition(oldId, newPos);
                     websocket.send("/app/updateCard", oldCard);
-                    highlightedCard = cards.get(newPos);
+                    highlightedCard = cards.get(newPos-1);
                     highlightedCardIndex = newPos-1;
                     highlightedListIndex = c.getPosition()-1;
                     event.setDropCompleted(true);
@@ -712,5 +683,46 @@ public class BoardOverviewCtrl implements Initializable {
      */
     public void deleteBoard() {
         mainCtrl.showConfirmDeleteBoard(server.getBoardByID(boardID));
+    }
+
+    /**
+     * Registering for websocket messages
+     */
+    public void registerForMessages() {
+        if(register==false) {
+            websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
+                System.out.println("Websocket column working");
+
+                Platform.runLater(() -> {
+                    refresh();
+                });
+
+            });
+
+            websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
+                System.out.println("Websocket card working");
+
+                Platform.runLater(() -> {
+                    refresh();
+                });
+            });
+
+            websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
+                System.out.println("Websocket card delete working");
+
+                Platform.runLater(() -> {
+                    refresh();
+                });
+            });
+
+            websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
+                System.out.println("Websocket board working");
+
+                Platform.runLater(() -> {
+                    refresh();
+                });
+            });
+            register = true;
+        }
     }
 }

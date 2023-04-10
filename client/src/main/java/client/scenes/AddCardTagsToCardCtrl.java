@@ -28,6 +28,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
     private ServerUtils server;
     private MainCtrl mainCtrl;
     private Websocket websocket;
+    private boolean register;
 
 
     @FXML
@@ -60,6 +61,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
         this.server = server;
         this.mainCtrl = mainCtrl;
         this.websocket = websocket;
+        register = false;
     }
 
     /**
@@ -82,25 +84,6 @@ public class AddCardTagsToCardCtrl implements Initializable {
 //                });
 //            }
 //        }, 0, 1000);
-
-        // Websocket
-
-        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
-            System.out.println("Websocket delete card working");
-            Platform.runLater(() -> {
-                if(cardToChange!=null && !server.existsByIdCard(cardToChange.getId()))
-                    showBoardOverview();
-            });
-        });
-
-        websocket.registerForMessages("/topic/updateCardTag", CardTag.class, cardTag -> {
-            System.out.println("Websocket card tag working");
-
-            Platform.runLater(() -> {
-                if(cardToChange!=null && server.existsByIdCard(cardToChange.getId()))
-                    refresh();
-            });
-        });
 
         ownedTags.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CardTag>() {
             @Override
@@ -275,5 +258,31 @@ public class AddCardTagsToCardCtrl implements Initializable {
         Column c = server.getColumnByColumnId(columnId);
         long boardId = c.getBoardId();
         mainCtrl.showBoardOverview(boardId);
+    }
+
+    /**
+     * Registering for websocket messages
+     */
+    public void registerForMessages() {
+        // Websocket
+        if(register == false) {
+            websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+                System.out.println("Websocket delete card working");
+                Platform.runLater(() -> {
+                    if (cardToChange != null && !server.existsByIdCard(cardToChange.getId()))
+                        showBoardOverview();
+                });
+            });
+
+            websocket.registerForMessages("/topic/updateCardTag", CardTag.class, cardTag -> {
+                System.out.println("Websocket card tag working");
+
+                Platform.runLater(() -> {
+                    if (cardToChange != null && server.existsByIdCard(cardToChange.getId()))
+                        refresh();
+                });
+            });
+            register = true;
+        }
     }
 }

@@ -22,6 +22,7 @@ public class CustomizeCardCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private final Websocket websocket;
+    private boolean register;
 
     private Card cardToShow;
 
@@ -57,6 +58,7 @@ public class CustomizeCardCtrl implements Initializable {
         this.server=server;
         this.mainCtrl=mainCtrl;
         this.websocket = websocket;
+        register = false;
     }
 
     /**
@@ -228,14 +230,7 @@ public class CustomizeCardCtrl implements Initializable {
         cardFontType.getItems().addAll("Arial", "Times New Roman", "Verdana", "Tahoma", "Courier New",
                 "Segoe UI", "Calibri", "Helvetica", "Georgia", "Trebuchet MS");
 
-        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
-            System.out.println("Websocket delete card working");
-            Platform.runLater(() -> {
-                if(cardToShow!=null)
-                    if(!server.existsByIdCard(cardToShow.getId()))
-                        showBoardOverview();
-            });
-        });
+
     }
 
     /**
@@ -246,6 +241,23 @@ public class CustomizeCardCtrl implements Initializable {
         Column c = server.getColumnByColumnId(columnId);
         long boardId = c.getBoardId();
         mainCtrl.showBoardOverview(boardId);
+    }
+
+    /**
+     * Registering for websocket messages
+     */
+    public void registerForMessages() {
+        if(register == false) {
+            websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+                System.out.println("Websocket delete card working");
+                Platform.runLater(() -> {
+                    if (cardToShow != null)
+                        if (!server.existsByIdCard(cardToShow.getId()))
+                            showBoardOverview();
+                });
+            });
+            register = true;
+        }
     }
 
 }

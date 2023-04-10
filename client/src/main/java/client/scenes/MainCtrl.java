@@ -285,6 +285,7 @@ public class MainCtrl {
      */
     public void showWorkspace() {
         primaryStage.setTitle("Workspace");
+        workspaceCtrl.registerForUpdates();
         workspaceCtrl.refresh();
         primaryStage.setScene(workspace);
     }
@@ -319,6 +320,7 @@ public class MainCtrl {
         boardOverviewCtrl.setHighlightedTask(hbox);
         boardOverviewCtrl.setBoardID(boardID);
         primaryStage.setTitle("Board Overview");
+        boardOverviewCtrl.registerForMessages();
         boardOverviewCtrl.refresh();
         primaryStage.setScene(boardOverview);
     }
@@ -340,6 +342,7 @@ public class MainCtrl {
      */
     public void showClientConnect() {
         primaryStage.setTitle("Client Connect");
+        clientConnectCtrl.setWarning();
         primaryStage.setScene(clientConnect);
     }
 
@@ -350,6 +353,7 @@ public class MainCtrl {
      */
     public void showTaskDetails(Card card) {
         taskDetailsCtrl.setCardToShow(card);
+        taskDetailsCtrl.registerForMessages();
         taskDetailsCtrl.refresh();
         primaryStage.setTitle("Task Details");
         primaryStage.setScene(taskDetails);
@@ -432,6 +436,7 @@ public class MainCtrl {
      */
     public void showEditCardTitle(Card cardToShow) {
         editCardTitleCtrl.setCardToShow(cardToShow);
+        editCardTitleCtrl.registerForMessages();
         primaryStage.setTitle("Edit Card Title");
         primaryStage.setScene(editCardTitle);
     }
@@ -443,6 +448,7 @@ public class MainCtrl {
      */
     public void showEditCardDescription(Card cardToShow) {
         editCardDescriptionCtrl.setCardToShow(cardToShow);
+        editCardDescriptionCtrl.registerForMessages();
         primaryStage.setTitle("Edit Card Description");
         primaryStage.setScene(editCardDescription);
     }
@@ -455,6 +461,7 @@ public class MainCtrl {
      */
     public void showCustomizeCard(Card cardToShow) {
         customizeCardCtrl.setCardToShow(cardToShow);
+        customizeCardCtrl.registerForMessages();
         primaryStage.setTitle("Customize Card");
         primaryStage.setScene(customizeCard);
     }
@@ -637,6 +644,7 @@ public class MainCtrl {
      */
     public void showEditCardTagsBoard(Long boardId) {
         editCardTagsBoardCtrl.setBoardId(boardId);
+        editCardTagsBoardCtrl.registerForMessages();
         editCardTagsBoardCtrl.refresh();
         primaryStage.setTitle("Edit Card Tags");
         primaryStage.setScene(editCardTagsBoard);
@@ -658,6 +666,7 @@ public class MainCtrl {
      */
     public void showAddCardTagsToCard(Card card) {
         addCardTagsToCardCtrl.setCard(card);
+        addCardTagsToCardCtrl.registerForMessages();
         addCardTagsToCardCtrl.refresh();
         primaryStage.setTitle("Add Card Tags to Card");
         primaryStage.setScene(addCardTagsToCard);
@@ -669,6 +678,7 @@ public class MainCtrl {
      */
     public void showViewSubtask(Card c) {
         viewSubtaskCtrl.setCardToShow(c);
+        viewSubtaskCtrl.registerForMessages();
         viewSubtaskCtrl.refresh();
         primaryStage.setTitle("Edit Subtasks");
         primaryStage.setScene(viewSubtask);
@@ -680,6 +690,7 @@ public class MainCtrl {
      */
     public void showAddSubtask(Card c) {
         addSubtaskCtrl.setCard(c);
+        addSubtaskCtrl.registerForMessages();
         primaryStage.setTitle("Add Subtask");
         primaryStage.setScene(addSubtask);
     }
@@ -692,6 +703,7 @@ public class MainCtrl {
     public void showEditSubtaskTitle(Card c, Subtask s) {
         editSubtaskTitleCtrl.setCardToShow(c);
         editSubtaskTitleCtrl.setSubtaskToShow(s);
+        editSubtaskTitleCtrl.registerForMessages();
         primaryStage.setTitle("Edit Subtask");
         primaryStage.setScene(editSubtaskTitle);
     }

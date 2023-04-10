@@ -12,12 +12,13 @@ import java.lang.reflect.Type;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+@SuppressWarnings({"ParameterName", "StaticVariableName"})
 public class Websocket {
 
-    private static final String SERVER = "http://localhost:8080/";
+    private static String SERVER = null;
 
 
-    private StompSession session = connect("ws://localhost:8080/websocket");
+    private static StompSession session = null;
 
     /**
      * Connect websocket
@@ -69,6 +70,21 @@ public class Websocket {
      */
     public void send(String dest, Object o) {
         session.send(dest, o);
+    }
+
+    /**
+     * Sets the server address
+     * @param SERVER new server
+     */
+    public void setSERVER(String SERVER) {
+        this.SERVER = SERVER;
+    }
+
+    /**
+     * connects to server
+     */
+    public void connectSession() {
+        session = connect("ws://"+SERVER+"/websocket");
     }
 
 }

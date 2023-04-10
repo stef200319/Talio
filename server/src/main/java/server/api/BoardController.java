@@ -263,6 +263,7 @@ public class BoardController {
 
         Board deletedBoard = boardService.delete(boardId);
 
+        listeners.forEach((k, l) -> l.accept(deletedBoard));
 
         return ResponseEntity.ok(deletedBoard);
     }
