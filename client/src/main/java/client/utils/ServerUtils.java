@@ -289,30 +289,6 @@ public class ServerUtils {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Method that deletes a column
      * @param c column to delete
@@ -659,13 +635,6 @@ public class ServerUtils {
             .accept(APPLICATION_JSON)
             .put(Entity.entity(getCardById(cardId), APPLICATION_JSON), Card.class);
     }
-
-
-
-
-
-
-
 
     /** Method that adds a cardTag to a board so that cards inside of that board can make use of that tag
      * @param cardTag
