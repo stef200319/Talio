@@ -228,14 +228,7 @@ public class CustomizeCardCtrl implements Initializable {
         cardFontType.getItems().addAll("Arial", "Times New Roman", "Verdana", "Tahoma", "Courier New",
                 "Segoe UI", "Calibri", "Helvetica", "Georgia", "Trebuchet MS");
 
-        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
-            System.out.println("Websocket delete card working");
-            Platform.runLater(() -> {
-                if(cardToShow!=null)
-                    if(!server.existsByIdCard(cardToShow.getId()))
-                        showBoardOverview();
-            });
-        });
+
     }
 
     /**
@@ -246,6 +239,20 @@ public class CustomizeCardCtrl implements Initializable {
         Column c = server.getColumnByColumnId(columnId);
         long boardId = c.getBoardId();
         mainCtrl.showBoardOverview(boardId);
+    }
+
+    /**
+     * Registering for websocket messages
+     */
+    public void registerForMessages() {
+        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+            System.out.println("Websocket delete card working");
+            Platform.runLater(() -> {
+                if(cardToShow!=null)
+                    if(!server.existsByIdCard(cardToShow.getId()))
+                        showBoardOverview();
+            });
+        });
     }
 
 }

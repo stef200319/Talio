@@ -11,11 +11,12 @@ import java.util.function.Consumer;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
+@SuppressWarnings({"ParameterName", "StaticVariableName", "MemberName"})
 public class LongPolling {
 
-    private static final String SERVER = "http://localhost:8080/";
+    private static String SERVER = null;
 
-    private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
+    private static ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
     /**
      * Method which works as a register for updates in long polling for boards
@@ -41,6 +42,15 @@ public class LongPolling {
 
         });
 
+    }
+
+    /**
+     * Sets the server address
+     * @param server new address
+     */
+    public void setSERVER(String server) {
+        this.SERVER = "http://" + server + "/";
+        EXEC = Executors.newSingleThreadExecutor();
     }
 
     /**

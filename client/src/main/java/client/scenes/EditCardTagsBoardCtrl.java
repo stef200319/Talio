@@ -81,10 +81,6 @@ public class EditCardTagsBoardCtrl implements Initializable {
 //            }
 //        }, 0, 1000);
 
-        websocket.registerForMessages("/topic/updateCardTag", CardTag.class, c -> {
-            System.out.println("Websocket cardTag working");
-            Platform.runLater(() -> refresh());
-        });
 
         cardTagsContainer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CardTag>() {
             @Override
@@ -286,5 +282,15 @@ public class EditCardTagsBoardCtrl implements Initializable {
                 (int) (colour.getRed() * 255),
                 (int) (colour.getGreen() * 255),
                 (int) (colour.getBlue() * 255));
+    }
+
+    /**
+     * Registering for websocket messages
+     */
+    public void registerForMessages() {
+        websocket.registerForMessages("/topic/updateCardTag", CardTag.class, c -> {
+            System.out.println("Websocket cardTag working");
+            Platform.runLater(() -> refresh());
+        });
     }
 }
