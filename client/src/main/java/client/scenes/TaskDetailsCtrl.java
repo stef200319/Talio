@@ -40,6 +40,7 @@ public class TaskDetailsCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private final Websocket websocket;
+    private boolean register;
 
 
 
@@ -66,6 +67,7 @@ public class TaskDetailsCtrl implements Initializable {
         this.mainCtrl = mainCtrl;
         this.server = server;
         this.websocket = websocket;
+        register = false;
     }
 
     /**
@@ -307,29 +309,32 @@ public class TaskDetailsCtrl implements Initializable {
      */
     public void registerForMessages() {
         // Websocket
-        websocket.registerForMessages("/topic/updateSubtask", Subtask.class, subtask -> {
-            System.out.println("Websocket subtask working");
-            Platform.runLater(() -> refresh());
-        });
-
-        websocket.registerForMessages("/topic/updateCardTag", CardTag.class, cardTag -> {
-            System.out.println("Websocket cardTag working");
-            Platform.runLater(() -> refresh());
-        });
-
-        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
-            System.out.println("Websocket delete card working");
-            Platform.runLater(() -> {
-                if(cardToShow!=null && !server.existsByIdCard(cardToShow.getId()))
-                    showBoardOverview();
-            });
-        });
-
-        websocket.registerForMessages("/topic/updateCard", Card.class, card -> {
-            System.out.println("Websocket card working");
-            if(server.existsByIdCard(cardToShow.getId()))
+        if(register == false) {
+            websocket.registerForMessages("/topic/updateSubtask", Subtask.class, subtask -> {
+                System.out.println("Websocket subtask working");
                 Platform.runLater(() -> refresh());
-        });
+            });
+
+            websocket.registerForMessages("/topic/updateCardTag", CardTag.class, cardTag -> {
+                System.out.println("Websocket cardTag working");
+                Platform.runLater(() -> refresh());
+            });
+
+            websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+                System.out.println("Websocket delete card working");
+                Platform.runLater(() -> {
+                    if (cardToShow != null && !server.existsByIdCard(cardToShow.getId()))
+                        showBoardOverview();
+                });
+            });
+
+            websocket.registerForMessages("/topic/updateCard", Card.class, card -> {
+                System.out.println("Websocket card working");
+                if (server.existsByIdCard(cardToShow.getId()))
+                    Platform.runLater(() -> refresh());
+            });
+            register = true;
+        }
     }
 
 }
