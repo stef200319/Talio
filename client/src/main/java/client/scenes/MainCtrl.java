@@ -285,6 +285,7 @@ public class MainCtrl {
      */
     public void showWorkspace() {
         primaryStage.setTitle("Workspace");
+        workspaceCtrl.registerForUpdates();
         workspaceCtrl.refresh();
         primaryStage.setScene(workspace);
     }

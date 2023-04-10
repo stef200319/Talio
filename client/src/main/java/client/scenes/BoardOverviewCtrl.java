@@ -37,6 +37,7 @@ public class BoardOverviewCtrl implements Initializable {
     private final MainCtrl mainCtrl;
 
     private final Websocket websocket;
+    private boolean register;
 
     private long boardID = Long.MIN_VALUE;
 
@@ -90,7 +91,7 @@ public class BoardOverviewCtrl implements Initializable {
         this.mainCtrl = mainCtrl;
         this.server = server;
         this.websocket = websocket;
-
+        register = false;
     }
 
     /**
@@ -688,37 +689,40 @@ public class BoardOverviewCtrl implements Initializable {
      * Registering for websocket messages
      */
     public void registerForMessages() {
-        websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
-            System.out.println("Websocket column working");
+        if(register==false) {
+            websocket.registerForMessages("/topic/updateColumn", Column.class, c -> {
+                System.out.println("Websocket column working");
 
-            Platform.runLater(() -> {
-                refresh();
+                Platform.runLater(() -> {
+                    refresh();
+                });
+
             });
 
-        });
+            websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
+                System.out.println("Websocket card working");
 
-        websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
-            System.out.println("Websocket card working");
-
-            Platform.runLater(() -> {
-                refresh();
+                Platform.runLater(() -> {
+                    refresh();
+                });
             });
-        });
 
-        websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
-            System.out.println("Websocket card delete working");
+            websocket.registerForMessages("/topic/deleteCard", Card.class, c -> {
+                System.out.println("Websocket card delete working");
 
-            Platform.runLater(() -> {
-                refresh();
+                Platform.runLater(() -> {
+                    refresh();
+                });
             });
-        });
 
-        websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
-            System.out.println("Websocket board working");
+            websocket.registerForMessages("/topic/updateBoard", Board.class, c -> {
+                System.out.println("Websocket board working");
 
-            Platform.runLater(() -> {
-                refresh();
+                Platform.runLater(() -> {
+                    refresh();
+                });
             });
-        });
+            register = true;
+        }
     }
 }
