@@ -22,6 +22,7 @@ public class EditCardDescriptionCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private final Websocket websocket;
+    private boolean register;
 
     private Card cardToShow;
 
@@ -43,6 +44,7 @@ public class EditCardDescriptionCtrl implements Initializable {
         this.server=server;
         this.mainCtrl=mainCtrl;
         this.websocket = websocket;
+        register = false;
     }
 
     /**
@@ -124,24 +126,27 @@ public class EditCardDescriptionCtrl implements Initializable {
      * Registering for websocket messages
      */
     public void registerForMessages() {
-        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
-            System.out.println("Websocket delete card working");
-            Platform.runLater(() -> {
-                if(cardToShow!=null)
-                    if(!server.existsByIdCard(cardToShow.getId()))
-                        showBoardOverview();
+        if(register==false) {
+            websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+                System.out.println("Websocket delete card working");
+                Platform.runLater(() -> {
+                    if (cardToShow != null)
+                        if (!server.existsByIdCard(cardToShow.getId()))
+                            showBoardOverview();
+                });
             });
-        });
 
-        websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
-            System.out.println("Websocket card working");
+            websocket.registerForMessages("/topic/updateCard", Card.class, c -> {
+                System.out.println("Websocket card working");
 
-            Platform.runLater(() -> {
-                if(cardToShow!=null && server.existsByIdCard(cardToShow.getId())) {
-                    cardToShow = server.getCardById(cardToShow.getId());
-                    setCardToShow(cardToShow);
-                }
+                Platform.runLater(() -> {
+                    if (cardToShow != null && server.existsByIdCard(cardToShow.getId())) {
+                        cardToShow = server.getCardById(cardToShow.getId());
+                        setCardToShow(cardToShow);
+                    }
+                });
             });
-        });
+            register = true;
+        }
     }
 }

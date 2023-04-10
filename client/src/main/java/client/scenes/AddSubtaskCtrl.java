@@ -20,6 +20,7 @@ public class AddSubtaskCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private final Websocket websocket;
+    private boolean register;
 
 
     private Card cardToAddTo;
@@ -37,6 +38,7 @@ public class AddSubtaskCtrl implements Initializable {
         this.server = server;
         this.mainCtrl = mainCtrl;
         this.websocket = websocket;
+        register = false;
     }
 
     /**
@@ -117,13 +119,16 @@ public class AddSubtaskCtrl implements Initializable {
      * Registering for websocket messages
      */
     public void registerForMessages() {
-        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
-            System.out.println("Websocket delete card working");
-            Platform.runLater(() -> {
-                if(cardToAddTo!=null)
-                    if(!server.existsByIdCard(cardToAddTo.getId()))
-                        showBoardOverview();
+        if(register==false) {
+            websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
+                System.out.println("Websocket delete card working");
+                Platform.runLater(() -> {
+                    if (cardToAddTo != null)
+                        if (!server.existsByIdCard(cardToAddTo.getId()))
+                            showBoardOverview();
+                });
             });
-        });
+            register = true;
+        }
     }
 }

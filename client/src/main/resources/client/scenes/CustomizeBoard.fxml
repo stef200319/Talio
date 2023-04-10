@@ -4,6 +4,8 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -43,12 +45,26 @@
                   <Font size="22.0" />
                </font>
             </Text>
-            <Button fx:id="resetBoardBgColour" layoutX="308.0" layoutY="11.0" mnemonicParsing="false" onAction="#setDefaultBoardCenterColour" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #e0cda8;" text="Reset" />
+            <Button fx:id="resetBoardBgColour" layoutX="308.0" layoutY="14.0" mnemonicParsing="false" onAction="#setDefaultBoardCenterColour" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #e0cda8; -fx-padding: 0;">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/client/scenes/Images/reset_button.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </Pane>
       <Pane layoutX="572.0" layoutY="126.0" prefHeight="138.0" prefWidth="383.0">
          <children>
-            <Button fx:id="resetBoardBorderColour" layoutX="308.0" layoutY="13.0" mnemonicParsing="false" onAction="#setDefaultBoardSideColour" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #e0cda8;" text="Reset" />
+            <Button fx:id="resetBoardBorderColour" layoutX="308.0" layoutY="13.0" mnemonicParsing="false" onAction="#setDefaultBoardSideColour" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #e0cda8; -fx-padding: 0;">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/client/scenes/Images/reset_button.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <ColorPicker fx:id="boardBorderColourPicker" layoutX="27.0" layoutY="55.0" prefHeight="29.0" prefWidth="330.0" promptText="Select Bg-colour" style="-fx-background-color: #e7e3db;" />
             <Text layoutX="27.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Board Side Colour" textAlignment="CENTER">
                <font>
@@ -64,13 +80,27 @@
                   <Font size="22.0" />
                </font>
             </Text>
-            <Button fx:id="resetBoardFontType" layoutX="308.0" layoutY="14.0" mnemonicParsing="false" onAction="#setDefaultBoardFontType" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #e0cda8;" text="Reset" />
+            <Button fx:id="resetBoardFontType" layoutX="308.0" layoutY="13.0" mnemonicParsing="false" onAction="#setDefaultBoardFontType" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #e0cda8; -fx-padding: 0;">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/client/scenes/Images/reset_button.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <ChoiceBox fx:id="boardFontType" layoutX="27.0" layoutY="51.0" prefHeight="29.0" prefWidth="330.0" style="-fx-background-color: #e7e3db;" />
          </children>
       </Pane>
       <Pane layoutX="572.0" layoutY="264.0" prefHeight="138.0" prefWidth="383.0">
          <children>
-            <Button fx:id="resetBoardFontColourFill" layoutX="308.0" layoutY="14.0" mnemonicParsing="false" onAction="#setDefaultBoardFontColour" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #e0cda8;" text="Reset" />
+            <Button fx:id="resetBoardFontColourFill" layoutX="308.0" layoutY="14.0" mnemonicParsing="false" onAction="#setDefaultBoardFontColour" prefHeight="31.0" prefWidth="48.0" style="-fx-background-color: #e0cda8; -fx-padding: 0;">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/client/scenes/Images/reset_button.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <Text layoutX="27.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title Font Colour Fill" textAlignment="CENTER">
                <font>
                   <Font size="22.0" />

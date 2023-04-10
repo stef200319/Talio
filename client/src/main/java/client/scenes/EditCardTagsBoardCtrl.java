@@ -26,6 +26,7 @@ public class EditCardTagsBoardCtrl implements Initializable {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private final Websocket websocket;
+    private boolean register;
     private Long boardId = null;
 
     private CardTag selectedCardTag;
@@ -57,6 +58,7 @@ public class EditCardTagsBoardCtrl implements Initializable {
         this.server = server;
         this.mainCtrl = mainCtrl;
         this.websocket = websocket;
+        register = false;
     }
 
     /**
@@ -288,9 +290,12 @@ public class EditCardTagsBoardCtrl implements Initializable {
      * Registering for websocket messages
      */
     public void registerForMessages() {
-        websocket.registerForMessages("/topic/updateCardTag", CardTag.class, c -> {
-            System.out.println("Websocket cardTag working");
-            Platform.runLater(() -> refresh());
-        });
+        if(register == false) {
+            websocket.registerForMessages("/topic/updateCardTag", CardTag.class, c -> {
+                System.out.println("Websocket cardTag working");
+                Platform.runLater(() -> refresh());
+            });
+            register = false;
+        }
     }
 }
