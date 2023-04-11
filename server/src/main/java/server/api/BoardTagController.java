@@ -63,9 +63,9 @@ public class BoardTagController {
         if (!boardTagService.existsById(boardTagId)) {
             return ResponseEntity.badRequest().build();
         }
-
-        BoardTag boardTag = boardTagService.delete(boardTagId);
+        BoardTag boardTag = boardTagService.getById(boardTagId);
         deleteBoardTagFromBoards(boardTag);
+        boardTagService.delete(boardTagId);
         return ResponseEntity.ok(boardTag);
     }
 
