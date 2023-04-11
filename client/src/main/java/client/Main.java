@@ -115,5 +115,7 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(e -> {
             workspace.getKey().stop();
         });
+
+        primaryStage.setResizable(false);
     }
 }

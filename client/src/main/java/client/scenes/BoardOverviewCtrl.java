@@ -3,10 +3,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import client.utils.Websocket;
 import com.google.inject.Inject;
-import commons.Board;
-import commons.Card;
-import commons.Column;
-import commons.Subtask;
+import commons.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,10 +13,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -509,42 +508,90 @@ public class BoardOverviewCtrl implements Initializable {
 
             card.getChildren().add(cardSmall);
 
-            //Making Description and subtask icon
-            Region reg = new Region();
-            HBox.setHgrow(reg, Priority.ALWAYS);
-            HBox details = new HBox();
-            if(cards.get(i).getSubtasks()!=null && cards.get(i).getSubtasks().size()!=0) {
-                List<Subtask> subtasks = cards.get(i).getSubtasks();
-                int nrSub = subtasks.size();
-                int nrSubCom = 0;
-                for(Subtask subt : subtasks) {
-                    if(subt.getDone()==true)
-                        nrSubCom++;
+            if ((cards.get(i).getSubtasks()!=null && cards.get(i).getSubtasks().size()!=0) ||
+                    (cards.get(i).getCardTags() != null && cards.get(i).getCardTags().size() != 0) ||
+                    (cards.get(i).getDescription() != null && cards.get(i).getDescription()!="")) {
+
+
+                //Making Description and subtask icon
+                Region reg = new Region();
+                Region reg2 = new Region();
+                HBox.setHgrow(reg, Priority.ALWAYS);
+                HBox.setHgrow(reg2, Priority.ALWAYS);
+                HBox details = new HBox();
+                details.setMaxWidth(190);
+                details.setMinWidth(190);
+
+                Label subtasksLabel = new Label();
+                subtasksLabel.setPrefWidth(30);
+                if(cards.get(i).getSubtasks()!=null && cards.get(i).getSubtasks().size()!=0) {
+                    List<Subtask> subtasks = cards.get(i).getSubtasks();
+                    int nrSub = subtasks.size();
+                    int nrSubCom = 0;
+                    for(Subtask subt : subtasks) {
+                        if(subt.getDone()==true)
+                            nrSubCom++;
+                    }
+                    subtasksLabel.setText(nrSubCom+"/"+nrSub);
+                    fontList = Font.font(cards.get(i).getFontType(),
+                        FontWeight.BOLD,
+                        cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                        12);
+                    subtasksLabel.setFont(fontList);
+                    subtasksLabel.setTextFill(Color.web(cards.get(i).getFontColour()));
                 }
-                Label subtasksLabel = new Label(nrSubCom+"/"+nrSub);
-                fontList = Font.font(cards.get(i).getFontType(),
-                    FontWeight.BOLD,
-                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
-                    12);
-                subtasksLabel.setFont(fontList);
-                subtasksLabel.setTextFill(Color.web(cards.get(i).getFontColour()));
+
                 details.getChildren().add(subtasksLabel);
-            }
 
-            details.getChildren().add(reg);
 
-            if(cards.get(i).getDescription() != null && cards.get(i).getDescription()!="") {
-                Label description = new Label("Detailed");
-                fontList = Font.font(cards.get(i).getFontType(),
-                    FontWeight.BOLD,
-                    cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
-                    12);
-                description.setFont(fontList);
-                description.setTextFill(Color.web(cards.get(i).getFontColour()));
+
+                details.getChildren().add(reg);
+
+                if (cards.get(i).getCardTags() != null && cards.get(i).getCardTags().size() != 0) {
+
+                    GridPane gp = new GridPane();
+                    ScrollPane scrollPane1 = new ScrollPane(gp);
+                    scrollPane1.setMaxWidth(100);
+                    scrollPane1.setMinWidth(100);
+                    scrollPane1.setMinHeight(20);
+                    scrollPane1.setMaxHeight(20);
+                    scrollPane1.setStyle("-fx-background-color: white;");
+                    gp.setStyle("-fx-background-color: white;");
+                    List<CardTag> allTags = server.getCardTagsByCardId(cards.get(finalI).getId());
+                    for (int z = 0; z < allTags.size(); z++) {
+                        CardTag cardTag = allTags.get(z);
+                        Rectangle coloredSquare = new Rectangle(12, 12);
+                        coloredSquare.setFill(Color.web(cardTag.getColor()));
+                        StackPane spane = new StackPane(coloredSquare);
+                        spane.setPadding(new Insets(2, 2, 2, 2));
+                        gp.addRow(Math.floorDiv(z, 5), spane);
+
+                    }
+                    details.getChildren().add(scrollPane1);
+
+                }
+                details.getChildren().add(reg2);
+
+
+                Label description = new Label();
+                description.setPrefWidth(50);
+                if(cards.get(i).getDescription() != null && cards.get(i).getDescription()!="") {
+                    description.setText("Detailed");
+                    fontList = Font.font(cards.get(i).getFontType(),
+                        FontWeight.BOLD,
+                        cards.get(i).isFontStyleItalic() ? FontPosture.ITALIC : FontPosture.REGULAR,
+                        12);
+                    description.setFont(fontList);
+                    description.setTextFill(Color.web(cards.get(i).getFontColour()));
+                }
                 details.getChildren().add(description);
+
+
+
+
+                card.getChildren().add(details);
             }
 
-            card.getChildren().add(details);
             //Finish description and subtasks icon
 
             card = enableDragAndDrop(card, c, cards, i);
