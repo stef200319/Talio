@@ -78,7 +78,11 @@ public class ClientConnectCtrl implements Initializable {
     /**
      * Show the help screen
      */
-    public void showHelpScreen(){mainCtrl.showHelpScreen();}
+    public void showHelpScreen()
+    {
+        mainCtrl.setPreviousSceneAndTitle();
+        mainCtrl.showHelpScreen();
+    }
 
     /**
      * Makes the warning label invisible

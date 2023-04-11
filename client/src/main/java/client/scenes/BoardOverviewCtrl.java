@@ -386,14 +386,6 @@ public class BoardOverviewCtrl implements Initializable {
 
 //                    refresh(); We are using websocket.
                 }
-                if(event1.getCode()==KeyCode.T)
-                {
-                    //show pop up
-                }
-                if(event1.getCode()==KeyCode.C)
-                {
-                    //show pop up
-                }
                 if(event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null &&
                                  highlightedCardIndex<cardContainer.getChildren().size()-1 && !event1.isShiftDown()){
                     if(server.getCardsByColumnId(server.getColumnsByBoardId(boardID).
@@ -422,43 +414,6 @@ public class BoardOverviewCtrl implements Initializable {
 
                     setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
                             cardContainer, highlightedCardIndex, highlightedListIndex);
-
-                }
-                if(event1.isShiftDown() && event1.getCode()==KeyCode.UP && getHighlightedTask()!=null)
-                {
-                    /*highlightedByKey = true;
-                    Card swapCard = server.getCardsByColumnId(server.getColumnsByBoardId(boardID).
-                            get(highlightedListIndex).getId()).get(highlightedCardIndex-1);
-                    highlightedCardIndex--;  //position = index+1; so index is now at the position-1 value
-
-                    server.editCardPosition(highlightedCard.getId(), highlightedCardIndex+1);
-                    server.editCardPosition(swapCard.getId(), highlightedCardIndex+2);
-
-                    //refresh();
-                    cardContainer.requestFocus();
-                    unHighlightTask(this.highlightedTask, cardContainer);
-                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
-                            cardContainer, highlightedCardIndex, highlightedListIndex);
-                    cardContainer.requestFocus();*/
-                }
-                if(event1.isShiftDown() && event1.getCode()==KeyCode.DOWN && getHighlightedTask()!=null)
-                {
-                    /*highlightedByKey = true;
-                    //the card under the highlighted card
-                    Card swapCard = server.getCardsByColumnId(server.getColumnsByBoardId(boardID).
-                            get(highlightedListIndex).getId()).get(highlightedCardIndex+1);
-                    //index moves to the position we want to move the highlighted card to
-                    highlightedCardIndex++;
-
-                    server.editCardPosition(highlightedCard.getId(), highlightedCardIndex+1);
-                    server.editCardPosition(swapCard.getId(), highlightedCardIndex);
-
-                    //refresh();
-                    cardContainer.requestFocus();
-                    unHighlightTask(this.highlightedTask, cardContainer);
-                    setHighlightedTask(getCardToHiglight(columnContainer, highlightedListIndex, highlightedCardIndex),
-                            cardContainer, highlightedCardIndex, highlightedListIndex);
-                    cardContainer.requestFocus();;*/
 
                 }
                 if(event1.getCode()==KeyCode.LEFT && getHighlightedTask()!=null && highlightedListIndex>0 &&
