@@ -6,7 +6,6 @@ import com.google.inject.Inject;
 import commons.Board;
 import commons.BoardTag;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.fxml.Initializable;
