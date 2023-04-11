@@ -23,9 +23,9 @@ import java.util.*;
 
 public class AddBoardTagsToBoardCtrl implements Initializable {
 
-    private ServerUtils server;
-    private MainCtrl mainCtrl;
-    private Websocket websocket;
+    private final ServerUtils server;
+    private final MainCtrl mainCtrl;
+    private final Websocket websocket;
     private boolean register;
 
 
@@ -151,8 +151,8 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
 
     /**
      * Updates the items of a single listview
-     * @param list
-     * @param items
+     * @param list listview of board tags
+     * @param items list of board tags
      */
     public void updateSingleListViewItems(ListView<BoardTag> list, List<BoardTag> items) {
         if (list.getItems().equals(items)) return;
@@ -163,7 +163,7 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
 
     /**
      * Updates the look of a single listview
-     * @param list
+     * @param list listview of board tags
      */
     public void updateSingleListViewLook(ListView<BoardTag> list) {
         list.setCellFactory(new Callback<ListView<BoardTag>, ListCell<BoardTag>>() {
@@ -215,7 +215,7 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
 
     /**
      * Sets the card of this scene
-     * @param boardId
+     * @param boardId board id of the board to be changed
      */
     public void setBoardId(Long boardId) {
         this.boardId = boardId;

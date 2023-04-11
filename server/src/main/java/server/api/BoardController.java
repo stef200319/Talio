@@ -39,9 +39,9 @@ public class BoardController {
     /**
      * @param boardService the service used for the operations which use the board data access object
      * @param columnService the service used for the operations which use the column data access object
-     * @param cardTagService
-     * @param cardService
-     * @param cardTagController
+     * @param cardTagService the service used for the operations which use the card tag data access object
+     * @param cardService the service used for the operations which use the card data access object
+     * @param cardTagController the service used for the operations which use the card tag data access object
      */
     public BoardController(BoardService boardService, ColumnService columnService, CardTagService cardTagService,
                            CardService cardService, CardTagController cardTagController) {
@@ -288,7 +288,7 @@ public class BoardController {
 
     /**
      * Gets a board by a CardId
-     * @param cardId
+     * @param cardId card id of the card that is related with a board
      * @return the board
      */
     @GetMapping("getBoardByCardId/{cardId}")
@@ -303,7 +303,7 @@ public class BoardController {
 
     /**
      * gets the boardTags given a boardId
-     * @param boardId
+     * @param boardId board id of the board that has board tags in it
      * @return list of boardTags
      */
     @GetMapping("getBoardTagsByBoardId/{boardId}")

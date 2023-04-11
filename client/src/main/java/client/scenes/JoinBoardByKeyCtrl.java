@@ -13,7 +13,7 @@ import java.util.List;
 
 public class JoinBoardByKeyCtrl {
 
-    private ServerUtils server;
+    private final ServerUtils server;
 
     @FXML
     private Button confirmButton;
@@ -24,13 +24,13 @@ public class JoinBoardByKeyCtrl {
     @FXML
     private TextField boardKeyField;
 
-    private MainCtrl mainCtrl;
+    private final MainCtrl mainCtrl;
 
     private long prevBoardId;
 
     /**
-     * @param server
-     * @param mainCtrl
+     * @param server Server we are connected to
+     * @param mainCtrl the main controller
      */
     @Inject
     public JoinBoardByKeyCtrl(ServerUtils server, MainCtrl mainCtrl)

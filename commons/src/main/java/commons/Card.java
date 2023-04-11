@@ -181,7 +181,7 @@ public class Card {
 
     /**
      * Settter for the card tags
-     * @param cardTags
+     * @param cardTags set of card tags
      */
     public void setCardTags(Set<CardTag> cardTags) {
         this.tags = cardTags;

@@ -36,8 +36,6 @@ public class WorkspaceCtrl implements Initializable{
     private final LongPolling longPolling;
     private boolean register;
 
-    private ObservableList<Board> data;
-
     @FXML
     private TextField boardTitle;
     @FXML

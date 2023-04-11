@@ -202,7 +202,7 @@ public class EditCardTagsBoardCtrl implements Initializable {
 
     /**
      * Updates the title of the text field
-     * @param title
+     * @param title title of the text field
      */
     public void updateTitleTextField(String title) {
         if (title == null || title.equals(cardTagTitle.getText())) return;
@@ -211,7 +211,7 @@ public class EditCardTagsBoardCtrl implements Initializable {
 
     /**
      * Updates the color picker
-     * @param color
+     * @param color color of the color picker
      */
     public void updateColorPicker(String color) {
         if (color == null || cardTagColor.getValue().toString().equals(color)) return;
@@ -227,7 +227,7 @@ public class EditCardTagsBoardCtrl implements Initializable {
 
     /**
      * Sets the boardId of this scene
-     * @param boardId
+     * @param boardId board id of the board that will be set
      */
     public void setBoardId(long boardId) {
         this.boardId = boardId;
@@ -276,7 +276,7 @@ public class EditCardTagsBoardCtrl implements Initializable {
 
     /**
      * Converts a color to hex string
-     * @param colour
+     * @param colour color that will be hex code
      * @return string of the colour
      */
     public static String colourToHexCode(Color colour) {

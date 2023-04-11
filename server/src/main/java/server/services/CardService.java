@@ -350,7 +350,7 @@ public class CardService {
 
     /**
      * Gets the cardTags given a certain cardId
-     * @param cardId
+     * @param cardId card id of the card that has card tags in it
      * @return list of cardTags
      */
     public List<CardTag> getCardTagsByCardId(long cardId) {
