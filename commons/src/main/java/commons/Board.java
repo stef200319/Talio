@@ -271,4 +271,22 @@ public class Board {
     public String getDefaultFontColour() {
         return defaultFontColour;
     }
+
+    /**
+     * Retrieves the value of the "fontStyleBold" property, which indicates whether the font style is set to bold.
+     *
+     * @return {@code true} if the font style is set to bold, {@code false} otherwise.
+     */
+    public Boolean getFontStyleBold() {
+        return fontStyleBold;
+    }
+
+    /**
+     * Retrieves the value of the "fontStyleItalic" property, which indicates whether the font style is set to italic.
+     *
+     * @return {@code true} if the font style is set to italic, {@code false} otherwise.
+     */
+    public Boolean getFontStyleItalic() {
+        return fontStyleItalic;
+    }
 }

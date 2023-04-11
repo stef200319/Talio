@@ -1,11 +1,13 @@
 package server.api;
 
 import commons.Board;
+import commons.BoardTag;
 import commons.Card;
 import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+
 import server.database.CardTagRepository;
 import server.services.*;
 
@@ -14,42 +16,44 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BoardControllerTest {
 
     private TestBoardRepository boardRepository;
+    private TestBoardTagRepository boardTagRepository;
+
     private TestColumnRepository columnRepository;
     private TestCardRepository cardRepository;
     private TestSubtaskRepository subtaskRepository;
 
     private BoardService boardService;
+
+    private BoardTagService boardTagService;
     private ColumnService columnService;
     private CardService cardService;
     private SubtaskService subtaskService;
 
     private CardTagService cardTagService;
     private BoardController boardController;
+    private BoardTagController boardTagController;
     private ColumnController columnController;
     private CardController cardController;
     private CardTagController cardTagController;
     private CardTagRepository cardTagRepository;
 
 
-
-
-
     @BeforeEach
     void setUp() {
         boardRepository = new TestBoardRepository();
+        boardTagRepository = new TestBoardTagRepository();
         columnRepository = new TestColumnRepository();
         subtaskRepository = new TestSubtaskRepository();
         cardTagRepository = new TestCardTagRepository();
         cardRepository = new TestCardRepository();
 
-
         boardService = new BoardService(boardRepository);
+        boardTagService = new BoardTagService(boardTagRepository);
         columnService = new ColumnService(columnRepository);
         cardService = new CardService(cardRepository, subtaskRepository);
         subtaskService = new SubtaskService(subtaskRepository);
@@ -59,6 +63,7 @@ class BoardControllerTest {
         columnController = new ColumnController(columnRepository, columnService, boardService, cardService);
         cardTagController = new CardTagController(cardTagService, boardService, cardService);
         boardController = new BoardController(boardService, columnService, cardTagService, cardService, cardTagController);
+        boardTagController = new BoardTagController(boardTagService, boardService);
 
     }
 
@@ -209,5 +214,97 @@ class BoardControllerTest {
         assertEquals(allCards, cardController.getAllCards());
         assertEquals(allColumns, columnController.getAllColumns());
     }
+
+    @Test
+    void editBoardCenterColourTest() {
+        ResponseEntity<Board> ret = boardController.addBoard("testing");
+
+        boardController.editBoardCenterColour(ret.getBody().getId(), "black");
+
+        assertEquals(ret.getBody().getCenterColour(), "black");
+
+    }
+
+    @Test
+    void editBoardSideColourTest() {
+        ResponseEntity<Board> ret = boardController.addBoard("testing");
+
+        boardController.editBoardSideColour(ret.getBody().getId(), "yellow");
+
+        assertEquals(ret.getBody().getSideColour(), "yellow");
+    }
+
+    @Test
+    void editBoardFontTypeTest() {
+        ResponseEntity<Board> ret = boardController.addBoard("testing");
+
+        boardController.editBoardFontType(ret.getBody().getId(), "Arial");
+
+        assertEquals(ret.getBody().getFontType(), "Arial");
+    }
+
+    @Test
+    void editBoardFontStyleBoldTest() {
+        ResponseEntity<Board> ret = boardController.addBoard("testing");
+
+        boardController.editBoardFontStyleBold(ret.getBody().getId(), true);
+
+        assertTrue(ret.getBody().getFontStyleBold());
+    }
+
+    @Test
+    void editBoardFontStyleItalicTest() {
+        ResponseEntity<Board> ret = boardController.addBoard("testing");
+
+        boardController.editBoardFontStyleItalic(ret.getBody().getId(), true);
+
+        assertTrue(ret.getBody().getFontStyleItalic());
+    }
+
+    @Test
+    void editBoardFontColourTest() {
+        ResponseEntity<Board> ret = boardController.addBoard("testing");
+
+        boardController.editBoardFontColour(ret.getBody().getId(), "green");
+
+        assertEquals(ret.getBody().getFontColour(), "green");
+    }
+
+    @Test
+    void getBoardByCardIdTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        ResponseEntity<Board> retTestingBoard = boardController.getBoardByCardId(retCard.getBody().getId());
+
+        assertTrue(retBoard.getBody().getId() == retTestingBoard.getBody().getId());
+    }
+
+    @Test
+    void getBoardTagsByBoardIdTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<BoardTag> ret1 = boardTagController.addBoardTag("1", "black");
+
+        ResponseEntity<BoardTag> ret2 = boardTagController.addBoardTag("2", "black");
+
+        List<BoardTag> boardTagList = new ArrayList<>();
+        boardTagList.add(ret1.getBody());
+        boardTagList.add(ret2.getBody());
+
+        boardTagController.addBoardTagToBoard(ret1.getBody().getId(), retBoard.getBody().getId());
+
+        boardTagController.addBoardTagToBoard(ret2.getBody().getId(), retBoard.getBody().getId());
+
+       assertEquals(boardController.getBoardTagsByBoardId(retBoard.getBody().getId()).getBody(), boardTagList);
+
+    }
+
 }
+
+
+
 
