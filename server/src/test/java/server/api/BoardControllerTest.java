@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import server.database.CardTagRepository;
 import server.services.*;
 
@@ -300,6 +302,18 @@ class BoardControllerTest {
         boardTagController.addBoardTagToBoard(ret2.getBody().getId(), retBoard.getBody().getId());
 
        assertEquals(boardController.getBoardTagsByBoardId(retBoard.getBody().getId()).getBody(), boardTagList);
+
+    }
+
+    @Test
+    void updateBoardTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        Board testBoard = boardController.updateBoard(retBoard.getBody());
+
+        boolean result = retBoard.getBody().equals(testBoard);
+
+        assertTrue(result);
 
     }
 

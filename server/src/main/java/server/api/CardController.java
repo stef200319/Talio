@@ -250,10 +250,6 @@ public class CardController {
         return ResponseEntity.ok(card);
     }
 
-
-
-
-
     /**Change the columnId of a card, if it exists. Receive a message on the success of the edit
      * @param cardId The ID of the card whose title should be changed
      * @param columnId columnId which should replace the old columnId of the card
