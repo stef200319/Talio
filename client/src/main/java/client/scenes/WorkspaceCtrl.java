@@ -279,7 +279,13 @@ public class WorkspaceCtrl implements Initializable{
         if(register == false) {
             longPolling.registerForUpdates(b -> {
                 Platform.runLater(() -> {
-                    System.out.println("sad");
+                    System.out.println("Long polling working");
+                    refresh();
+                });
+            });
+            longPolling.registerForUpdatesTags(bT -> {
+                Platform.runLater(() -> {
+                    System.out.println("Long polling boardTag working");
                     refresh();
                 });
             });

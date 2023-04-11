@@ -26,6 +26,7 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
     private ServerUtils server;
     private MainCtrl mainCtrl;
     private Websocket websocket;
+    private boolean register;
 
 
     @FXML
@@ -58,6 +59,7 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
         this.server = server;
         this.mainCtrl = mainCtrl;
         this.websocket = websocket;
+        register = false;
     }
 
     /**
@@ -72,14 +74,14 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        Short polling
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    refresh();
-                });
-            }
-        }, 0, 1000);
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    refresh();
+//                });
+//            }
+//        }, 0, 1000);
 
         ownedTags.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<BoardTag>() {
             @Override
@@ -109,7 +111,6 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
      */
     public void refresh() {
         if (boardId == null) return;
-
         updateListViews();
         updateButtons();
     }
@@ -233,8 +234,7 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
      */
     public void addButtonPressed() {
         server.addBoardTagToBoard(boardId, selectedAvailable);
-//        websocket.send("/app/updateBoardTag", selectedAvailable);
-        refresh();
+        websocket.send("/app/updateBoardTag", selectedAvailable);
     }
 
     /**
@@ -242,8 +242,7 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
      */
     public void removeButtonPressed() {
         server.deleteBoardTagFromBoard(boardId, selectedOwned);
-//        websocket.send("/app/updateBoardTag", selectedOwned);
-        refresh();
+        websocket.send("/app/updateBoardTag", selectedOwned);
     }
 
     /**
@@ -253,27 +252,20 @@ public class AddBoardTagsToBoardCtrl implements Initializable {
         mainCtrl.showBoardOverview(boardId);
     }
 
-//    /**
-//     * Registering for websocket messages
-//     */
-//    public void registerForMessages() {
-//        // Websocket
-//
-//        websocket.registerForMessages("/topic/deleteCard", Card.class, card -> {
-//            System.out.println("Websocket delete card working");
-//            Platform.runLater(() -> {
-//                if(boardToChange!=null && !server.existsByIdCard(boardToChange.getId()))
-//                    showBoardOverview();
-//            });
-//        });
-//
-//        websocket.registerForMessages("/topic/updateCardTag", BoardTag.class, boardTag -> {
-//            System.out.println("Websocket card tag working");
-//
-//            Platform.runLater(() -> {
-//                if(boardToChange!=null && server.existsByIdCard(boardToChange.getId()))
-//                    refresh();
-//            });
-//        });
-//    }
+    /**
+     * Registering for websocket messages
+     */
+    public void registerForMessages() {
+        if(register==false) {
+            websocket.registerForMessages("/topic/updateBoardTag", BoardTag.class, boardTag -> {
+                System.out.println("Websocket board tag working");
+
+                Platform.runLater(() -> {
+                    if (boardToChange != null)
+                        refresh();
+                });
+            });
+            register = true;
+        }
+    }
 }

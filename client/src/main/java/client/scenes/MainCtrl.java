@@ -728,14 +728,18 @@ public class MainCtrl {
      */
     public void showAddBoardTagsToBoard(long boardID) {
         primaryStage.setScene(addBoardTagsToBoard);
+        addBoardTagsToBoardCtrl.registerForMessages();
         primaryStage.setTitle("Add Board Tags to Board");
         addBoardTagsToBoardCtrl.setBoardId(boardID);
+        addBoardTagsToBoardCtrl.refresh();
     }
 
     /**
      * shows the editBoardTags scene
      */
     public void showEditBoardTags() {
+        editBoardTagsCtrl.registerForMessages();
+        editBoardTagsCtrl.refresh();
         primaryStage.setScene(editBoardTags);
         primaryStage.setTitle("Edit Board Tags");
     }
