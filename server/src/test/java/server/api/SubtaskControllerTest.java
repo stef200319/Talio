@@ -4,9 +4,12 @@ import commons.Subtask;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import server.services.SubtaskService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SubtaskControllerTest {
     private TestSubtaskRepository subtaskRepository;
@@ -94,4 +97,14 @@ public class SubtaskControllerTest {
         expected.setId(2);
         assertEquals(expected, subtaskController.getSubtaskById(2).getBody());
     }
+
+    @Test
+    void updateSubtaskTest() {
+        ResponseEntity<Subtask> ret = subtaskController.getSubtaskById(0);
+
+        Subtask expected = subtaskController.updateSubtask(ret.getBody());
+
+        assertTrue(ret.getBody().equals(expected));
+    }
+
 }

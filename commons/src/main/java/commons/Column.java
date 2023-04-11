@@ -254,4 +254,25 @@ public class Column {
     public String getDefaultFontColour() {
         return defaultFontColour;
     }
+
+    /**
+     * Retrieves the current value of the font style bold flag.
+     *
+     * @return The value of the font style bold flag. Returns {@code true} if the font style is bold,
+     *         {@code false} otherwise.
+     */
+    public Boolean getFontStyleBold() {
+        return fontStyleBold;
+    }
+
+    /**
+     * Retrieves the current value of the font style italic flag.
+     *
+     * @return The value of the font style italic flag. Returns {@code true} if the font style is italic,
+     *         {@code false} otherwise.
+     */
+    public Boolean getFontStyleItalic() {
+        return fontStyleItalic;
+    }
+
 }

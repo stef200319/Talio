@@ -1,39 +1,43 @@
 package server.api;
 
+import commons.Board;
 import commons.Card;
 import commons.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
-import server.database.BoardRepository;
-import server.database.CardRepository;
-import server.database.ColumnRepository;
-import server.database.SubtaskRepository;
-import server.services.BoardService;
-import server.services.CardService;
-import server.services.ColumnService;
-import server.services.SubtaskService;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import server.database.*;
+import server.services.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ColumnControllerTest {
 
     private ColumnController columnController;
+    private BoardController boardController;
+    private CardTagController cardTagController;
 
     private ColumnService columnService;
     private BoardService boardService;
     private CardService cardService;
+    private CardTagService cardTagService;
     private SubtaskService subtaskService;
     private ColumnRepository columnRepository;
     private BoardRepository boardRepository;
     private SubtaskRepository subtaskRepository;
     private CardRepository cardRepository;
     private CardController cardController;
+    private CardTagRepository cardTagRepository;
 
 
     @BeforeEach
@@ -42,15 +46,19 @@ class ColumnControllerTest {
         columnRepository = new TestColumnRepository();
         cardRepository = new TestCardRepository();
         subtaskRepository = new TestSubtaskRepository();
+        cardTagRepository = new TestCardTagRepository();
 
         columnService = new ColumnService(columnRepository);
         boardService = new BoardService(boardRepository);
         cardService = new CardService(cardRepository, subtaskRepository);
         subtaskService = new SubtaskService(subtaskRepository);
+        cardTagService = new CardTagService(cardTagRepository);
 
 
         cardController = new CardController(cardService, columnService, subtaskService);
+        cardTagController = new CardTagController(cardTagService, boardService, cardService);
         columnController = new ColumnController(columnRepository, columnService, boardService, cardService);
+        boardController = new BoardController(boardService, columnService, cardTagService, cardService, cardTagController);
 //        columnController = new ColumnController(columnService, boardService, cardService);
     }
 
@@ -195,10 +203,82 @@ class ColumnControllerTest {
         assertEquals(expected, ret.getBody());
     }
 
+    @Test
+    void editColumnBackgroundColourTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("board1");
 
+        ResponseEntity<Column> retColumn = columnController.addColumn("column1", retBoard.getBody().getId());
 
+        columnController.editColumnBackgroundColour(retColumn.getBody().getId(), "black");
 
+        assertEquals(retColumn.getBody().getBgColour(), "black");
+    }
 
+    @Test
+    void editColumnBorderColourTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("board1");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("column1", retBoard.getBody().getId());
+
+        columnController.editColumnBorderColour(retColumn.getBody().getId(), "black");
+
+        assertEquals(retColumn.getBody().getBorderColour(), "black");
+    }
+
+    @Test
+    void editColumnFontTypeTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("board1");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("column1", retBoard.getBody().getId());
+
+        columnController.editColumnFontType(retColumn.getBody().getId(), "Arial");
+
+        assertEquals(retColumn.getBody().getFontType(), "Arial");
+    }
+
+    @Test
+    void editColumnFontStyleBold() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("board1");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("column1", retBoard.getBody().getId());
+
+        columnController.editColumnFontStyleBold(retColumn.getBody().getId(), true);
+
+        assertTrue(retColumn.getBody().getFontStyleBold());
+    }
+
+    @Test
+    void editColumnFontStyleItalic() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("board1");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("column1", retBoard.getBody().getId());
+
+        columnController.editColumnFontStyleItalic(retColumn.getBody().getId(), false);
+
+        assertFalse(retColumn.getBody().getFontStyleItalic());
+    }
+
+    @Test
+    void editColumnFontColourTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("board1");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("column1", retBoard.getBody().getId());
+
+        columnController.editColumnFontColour(retColumn.getBody().getId(), "yellow");
+
+        assertEquals(retColumn.getBody().getFontColour(), "yellow");
+    }
+
+    @Test
+    void updateColumnTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("board1");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("column1", retBoard.getBody().getId());
+
+        Column testColumn = columnController.updateColumn(retColumn.getBody());
+
+        assertTrue(retColumn.getBody().equals(testColumn));
+    }
 
 //     //Todo: we have change this TestColumnRepo
 // //    @Test
