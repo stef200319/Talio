@@ -8,6 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import server.database.*;
 import server.services.BoardService;
 import server.services.CardService;
@@ -162,4 +166,27 @@ class CardTagControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("newTitle", cardTag1.getTitle());
     }
+
+    @Test
+    void getCardTagByIdTest() {
+        ResponseEntity<CardTag> response1 = cardTagController
+            .addCardTagToBoard("cardTagTest", "black", board1.getId());
+
+        ResponseEntity<CardTag> response2 = cardTagController
+            .getCardTagById(response1.getBody().getId());
+
+        assertTrue(response1.getBody().equals(response2.getBody()));
+    }
+
+    @Test
+    void updateCardTagTest() {
+        ResponseEntity<CardTag> response1 = cardTagController
+            .addCardTagToBoard("cardTagTest", "black", board1.getId());
+
+        CardTag cardTag = cardTagController
+            .updateCardTag(response1.getBody());
+
+        assertTrue(response1.getBody().equals(cardTag));
+    }
+
 }

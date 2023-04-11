@@ -6,10 +6,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import server.database.BoardRepository;
 import server.database.BoardTagRepository;
 import server.services.BoardService;
 import server.services.BoardTagService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -130,4 +137,32 @@ class BoardTagControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("newTitle", response.getBody().getTitle());
     }
+
+    @Test
+    void getAllBoardTagsTest() {
+        ResponseEntity<BoardTag> response1 = boardTagController.addBoardTag("test1", "green");
+        ResponseEntity<BoardTag> response2 = boardTagController.addBoardTag("test2", "black");
+        ResponseEntity<BoardTag> response3 = boardTagController.addBoardTag("test3", "yellow");
+
+        BoardTag boardTagInSetUp = new BoardTag("boardTag1", "aaffaa");
+        boardTagInSetUp.setId(1l);
+
+        List<BoardTag> boardTagList = new ArrayList<>();
+        boardTagList.add(boardTagInSetUp);
+        boardTagList.add(response1.getBody());
+        boardTagList.add(response2.getBody());
+        boardTagList.add(response3.getBody());
+
+        assertEquals(boardTagController.getAllBoardTags().getBody(), boardTagList);
+    }
+
+    @Test
+    void updateBoardTagTest() {
+        ResponseEntity<BoardTag> response1 = boardTagController.addBoardTag("test1", "green");
+
+        BoardTag boardTagTest = boardTagController.updateBoardTag(response1.getBody());
+
+        assertTrue(boardTagTest.equals(response1.getBody()));
+    }
+
 }
