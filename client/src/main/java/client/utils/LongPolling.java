@@ -73,7 +73,7 @@ public class LongPolling {
      */
     public void setSERVER(String server) {
         this.SERVER = "http://" + server + "/";
-        EXEC = Executors.newSingleThreadExecutor();
+        EXEC = Executors.newFixedThreadPool(2);
     }
 
     /**

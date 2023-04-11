@@ -816,6 +816,19 @@ public class BoardOverviewCtrl implements Initializable {
                     refresh();
                 });
             });
+
+            websocket.registerForMessages("/topic/updateSubtask", Subtask.class, subtask -> {
+                System.out.println("Websocket subtask working");
+                Platform.runLater(() -> refresh());
+            });
+
+            websocket.registerForMessages("/topic/updateCardTag", CardTag.class, cardTag -> {
+                System.out.println("Websocket card tag working");
+                Platform.runLater(() -> {
+                    refresh();
+                });
+            });
+
             register = true;
         }
     }

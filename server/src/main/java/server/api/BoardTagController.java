@@ -66,6 +66,7 @@ public class BoardTagController {
         BoardTag boardTag = boardTagService.getById(boardTagId);
         deleteBoardTagFromBoards(boardTag);
         boardTagService.delete(boardTagId);
+        listeners.forEach((k, l) -> l.accept(boardTag));
         return ResponseEntity.ok(boardTag);
     }
 
@@ -188,8 +189,8 @@ public class BoardTagController {
         var res = new DeferredResult<ResponseEntity<BoardTag>>(5000L, noContent);
 
         var key = new Object();
-        listeners.put(key, b -> {
-            res.setResult(ResponseEntity.ok(b));
+        listeners.put(key, bT -> {
+            res.setResult(ResponseEntity.ok(bT));
         });
 
         res.onCompletion(() -> {
