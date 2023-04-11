@@ -4,6 +4,7 @@ import client.utils.LongPolling;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Board;
+import commons.BoardTag;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,14 +18,15 @@ import javafx.scene.input.KeyCode;
 import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+
 import javafx.scene.text.FontWeight;
 
 public class WorkspaceCtrl implements Initializable{
@@ -191,7 +193,7 @@ public class WorkspaceCtrl implements Initializable{
         VBox board = new VBox();
         board.setStyle("-fx-background-color: "+b.getCenterColour());
         board.setPadding(new Insets(5));
-        board.setMinHeight(70); // Set max width to 800 pixels
+        board.setMinHeight(120); // Set max width to 800 pixels
         board.setMinWidth(150); //Set min width to 200
         board.setAlignment(Pos.CENTER);
         board.setOnMouseClicked(event -> {
@@ -230,6 +232,26 @@ public class WorkspaceCtrl implements Initializable{
         board.setOnMouseEntered(event -> title.setStyle("-fx-background-color: #F5DEB3"));
         board.setOnMouseExited(event -> title.setStyle("-fx-text-fill: black;"));
 
+        GridPane gp = new GridPane();
+        ScrollPane scrollPane1 = new ScrollPane(gp);
+        scrollPane1.setMaxWidth(116);
+        scrollPane1.setPrefHeight(30);
+        scrollPane1.setStyle("-fx-background-color: white;");
+        gp.setStyle("-fx-background-color: white;");
+        List<BoardTag> allTags = server.getBoardTagsByBoardId(b.getId());
+        for (int i = 0; i < allTags.size(); i++) {
+            BoardTag boardTag = allTags.get(i);
+            Rectangle coloredSquare = new Rectangle(12, 12);
+            coloredSquare.setFill(Color.web(boardTag.getColor()));
+            StackPane s = new StackPane(coloredSquare);
+            s.setPadding(new Insets(2, 2, 2, 2));
+            gp.addRow(Math.floorDiv(i, 6), s);
+
+        }
+        board.getChildren().add(scrollPane1);
+
+
+
         boardContainer.getChildren().add(board);
         scrollPane.setContent(boardContainer);
         scrollPane.setPannable(true);
@@ -243,12 +265,12 @@ public class WorkspaceCtrl implements Initializable{
     }
 
     /**
+<<<<<<< HEAD
      * shows the editBoardTags scene
      */
     public void showEditBoardTags() {
         mainCtrl.showEditBoardTags();
     }
-
     /**
      * Register for updates from long polling
      */
