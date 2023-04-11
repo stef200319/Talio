@@ -129,7 +129,7 @@ public class CardTagService {
 
     /**
      * finds all the cardTags given a board
-     * @param board
+     * @param board board that has card tags
      * @return list of cardtags
      */
     public List<CardTag> findCardTagsByBoard(Board board) {

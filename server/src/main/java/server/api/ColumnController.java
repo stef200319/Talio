@@ -52,6 +52,7 @@ public class ColumnController {
         return columns.size() > 0? ResponseEntity.ok(columns) : ResponseEntity.notFound().build();
     }
 
+//    Old version of websocket
 //    /**
 //     * Adds a new column to the board and sends the updated column list to the "/topic/column" topic.
 //     *

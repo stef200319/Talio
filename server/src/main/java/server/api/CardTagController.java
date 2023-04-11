@@ -26,9 +26,9 @@ public class CardTagController {
 
     /**
      * Constructor of the CardTagController
-     * @param cardTagService
-     * @param boardService
-     * @param cardService
+     * @param cardTagService the service used for the operations which use the card tag data access object
+     * @param boardService the service used for the operations which use the board data access object
+     * @param cardService the service used for the operations which use the card data access object
      */
     public CardTagController(CardTagService cardTagService, BoardService boardService, CardService cardService)
     {
@@ -190,7 +190,7 @@ public class CardTagController {
 
     /**
      * Deletes all the entries of relation between card and cardTag
-     * @param cardTag
+     * @param cardTag card tag that will be deleted
      */
     public void deleteCardTagFromCards(CardTag cardTag) {
         List<Card> cards = cardService.getAll();

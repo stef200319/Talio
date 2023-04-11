@@ -9,38 +9,69 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import commons.Subtask;
+import commons.*;
+import org.hibernate.tool.hbm2ddl.ColumnMetadata;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import commons.Card;
-import server.services.CardService;
-import server.services.ColumnService;
-import server.services.SubtaskService;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import server.database.CardTagRepository;
+import server.services.*;
 
 
 class CardControllerTest {
-    private TestCardRepository cardRepository;
+
+    private TestBoardRepository boardRepository;
+    private TestBoardTagRepository boardTagRepository;
+
     private TestColumnRepository columnRepository;
+    private TestCardRepository cardRepository;
     private TestSubtaskRepository subtaskRepository;
 
-    private CardService cardService;
+    private BoardService boardService;
+
+    private BoardTagService boardTagService;
     private ColumnService columnService;
+    private CardService cardService;
     private SubtaskService subtaskService;
+
+    private CardTagService cardTagService;
+    private BoardController boardController;
+    private BoardTagController boardTagController;
+    private ColumnController columnController;
     private CardController cardController;
+    private CardTagController cardTagController;
+    private CardTagRepository cardTagRepository;
+
 
     @BeforeEach
     void setUp() {
-        this.columnRepository = new TestColumnRepository();
-        this.cardRepository = new TestCardRepository();
-        this.subtaskRepository = new TestSubtaskRepository();
+        boardRepository = new TestBoardRepository();
+        boardTagRepository = new TestBoardTagRepository();
+        columnRepository = new TestColumnRepository();
+        subtaskRepository = new TestSubtaskRepository();
+        cardTagRepository = new TestCardTagRepository();
+        cardRepository = new TestCardRepository();
 
-        cardService = new CardService(cardRepository, subtaskRepository);
+        boardService = new BoardService(boardRepository);
+        boardTagService = new BoardTagService(boardTagRepository);
         columnService = new ColumnService(columnRepository);
+        cardService = new CardService(cardRepository, subtaskRepository);
         subtaskService = new SubtaskService(subtaskRepository);
+        cardTagService = new CardTagService(cardTagRepository);
 
         cardController = new CardController(cardService, columnService, subtaskService);
+        columnController = new ColumnController(columnRepository, columnService, boardService, cardService);
+        cardTagController = new CardTagController(cardTagService, boardService, cardService);
+        boardController = new BoardController(boardService, columnService, cardTagService, cardService, cardTagController);
+        boardTagController = new BoardTagController(boardTagService, boardService);
+
     }
 
 
@@ -325,4 +356,171 @@ class CardControllerTest {
         ResponseEntity<Card> ret = cardController.deleteSubtask(0,0);
         assertEquals(1, ret.getBody().getSubtasks().size());
     }
+
+    @Test
+    void editCardDescriptionTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        cardController.editCardDescription(retCard.getBody().getId(), "testing1212");
+
+        assertEquals(retCard.getBody().getDescription(), "testing1212");
+
+    }
+
+    @Test
+    void editCardBackgroundColourTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        cardController.editCardBackgroundColour(retCard.getBody().getId(), "black");
+
+        assertEquals(retCard.getBody().getBgColour(), "black");
+
+    }
+
+    @Test
+    void editCardBorderColourTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        cardController.editCardBorderColour(retCard.getBody().getId(), "yellow");
+
+        assertEquals(retCard.getBody().getBorderColour(), "yellow");
+
+    }
+
+    @Test
+    void editCardFontTypeTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        cardController.editCardFontType(retCard.getBody().getId(), "Arial");
+
+        assertEquals(retCard.getBody().getFontType(), "Arial");
+
+    }
+
+    @Test
+    void editCardFontStyleBoldTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        cardController.editCardFontStyleBold(retCard.getBody().getId(), true);
+
+        assertTrue(retCard.getBody().getFontStyleBold());
+
+    }
+
+    @Test
+    void editCardFontStyleItalicTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        cardController.editCardFontStyleItalic(retCard.getBody().getId(), false);
+
+        assertFalse(retCard.getBody().getFontStyleItalic());
+
+    }
+
+    @Test
+    void editCardFontColourTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        cardController.editCardFontColour(retCard.getBody().getId(), "blue");
+
+        assertEquals(retCard.getBody().getFontColour(), "blue");
+
+    }
+
+    @Test
+    void getCardTagsByCardIdTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        ResponseEntity<CardTag> ret1 = cardTagController
+            .addCardTagToBoard("1", "black", retBoard.getBody().getId());
+
+        ResponseEntity<CardTag> ret2 = cardTagController
+            .addCardTagToBoard("2", "black", retBoard.getBody().getId());
+
+        List<CardTag> cardTagList = new ArrayList<>();
+        cardTagList.add(ret1.getBody());
+        cardTagList.add(ret2.getBody());
+
+        cardTagController.addCardTagToCard(ret1.getBody().getId(), retCard.getBody().getId());
+        cardTagController.addCardTagToCard(ret2.getBody().getId(), retCard.getBody().getId());
+
+        assertEquals(retCard.getBody().getCardTags(), cardTagList);
+
+    }
+
+    @Test
+    void existsByIdTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        boolean result = cardController.existsById(retCard.getBody().getId()).getBody();
+
+        assertTrue(result);
+
+    }
+
+    @Test
+    void updateCardTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        Card testCard = cardController.updateCard(retCard.getBody());
+
+        assertTrue(retCard.getBody().equals(testCard));
+
+    }
+
+    @Test
+    void deleteCardTest() {
+        ResponseEntity<Board> retBoard = boardController.addBoard("testingBoard");
+
+        ResponseEntity<Column> retColumn = columnController.addColumn("testingColumn", retBoard.getBody().getId());
+
+        ResponseEntity<Card> retCard = cardController.addCard("testingCard", retColumn.getBody().getId());
+
+        Card testCard = cardController.deleteCard(retCard.getBody());
+
+        assertTrue(retCard.getBody().equals(testCard));
+
+    }
+
+
 }

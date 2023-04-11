@@ -580,24 +580,24 @@ public class BoardOverviewCtrl implements Initializable {
 
     /**
      * sets the newly highlighted card
-     * @param card
+     * @param card card to be highlighted
      */
     public void setHighlightedCard(Card card){this.highlightedCard = card;}
 
     /**
      * sets the newly highlighted task
-     * @param hbox
+     * @param hbox Vbox to be highlighted
      */
     public void setHighlightedTask(VBox hbox){this.highlightedTask = hbox;}
 
     /**
      * method that changes the highlighted by key value
-     * @param bool
+     * @param bool boolean for highlighted or not
      */
     public void setHighlightedByKey(boolean bool){this.highlightedByKey = bool;}
 
     /**
-     * @param container
+     * @param container Hbox card in it
      * @param indexList of the list that contains the card
      * @param indexCard of the card
      * @return the card to be highlighted
@@ -613,10 +613,10 @@ public class BoardOverviewCtrl implements Initializable {
 
     /**
      * method that sets the highlighted task
-     * @param l
-     * @param vbox
-     * @param index
-     * @param indexList
+     * @param l Vbox that will be highlighted
+     * @param vbox Vbox to be use for highlighting
+     * @param index index of highlighted card
+     * @param indexList index of highlighted list
      */
     public void setHighlightedTask(VBox l, VBox vbox, int index, int indexList){
         this.highlightedTask=l;
@@ -633,8 +633,8 @@ public class BoardOverviewCtrl implements Initializable {
 
     /**
      * method that unhighlights the task
-     * @param l
-     * @param vbox
+     * @param l Vbox that there will be no highlight anymore
+     * @param vbox Vbox for not highlighting l Vbox
      */
     public void unHighlightTask(VBox l, VBox vbox){
 

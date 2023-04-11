@@ -250,10 +250,6 @@ public class CardController {
         return ResponseEntity.ok(card);
     }
 
-
-
-
-
     /**Change the columnId of a card, if it exists. Receive a message on the success of the edit
      * @param cardId The ID of the card whose title should be changed
      * @param columnId columnId which should replace the old columnId of the card
@@ -275,7 +271,7 @@ public class CardController {
      * Change a position of a Card in the Column it is in, and change the positions of other Cards in the Column which
      * have been affected by the position change. Store all the position changes in the database
      * @param cardId id of the Card whose position needs to be changed
-     * @param newPosition
+     * @param newPosition new position of the card
      * @return Conformation that the positions of the Card and all other Cards have that been affected have been
      * changed
      */
@@ -347,7 +343,7 @@ public class CardController {
     /**
 <<<<<<< HEAD
      * Gets the cardTags given a cardId
-     * @param cardId
+     * @param cardId card id of the card that has card tags
      * @return list of cardTags
      */
     @GetMapping("/getCardTagsByCardId/{cardId}")

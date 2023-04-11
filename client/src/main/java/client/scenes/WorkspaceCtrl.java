@@ -6,7 +6,6 @@ import com.google.inject.Inject;
 import commons.Board;
 import commons.BoardTag;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.fxml.Initializable;
@@ -35,8 +34,6 @@ public class WorkspaceCtrl implements Initializable{
     private final MainCtrl mainCtrl;
     private final LongPolling longPolling;
     private boolean register;
-
-    private ObservableList<Board> data;
 
     @FXML
     private TextField boardTitle;

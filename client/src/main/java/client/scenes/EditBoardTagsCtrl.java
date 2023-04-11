@@ -201,7 +201,7 @@ public class EditBoardTagsCtrl implements Initializable {
 
     /**
      * Updates the title of the text field
-     * @param title
+     * @param title title of the board
      */
     public void updateTitleTextField(String title) {
         if (title == null || title.equals(boardTagTitle.getText())) return;
@@ -210,7 +210,7 @@ public class EditBoardTagsCtrl implements Initializable {
 
     /**
      * Updates the color picker
-     * @param color
+     * @param color color of the color picker
      */
     public void updateColorPicker(String color) {
         if (color == null || boardTagColor.getValue().toString().equals(color)) return;
@@ -241,7 +241,7 @@ public class EditBoardTagsCtrl implements Initializable {
      * Deletes a card Tag
      */
     public void deleteBoardTag() {
-        if (selectedBoardTag == null) return;;
+        if (selectedBoardTag == null) return;
         server.deleteBoardTag(selectedBoardTag);
         websocket.send("/app/updateBoardTag", selectedBoardTag);
         refresh();
@@ -260,7 +260,7 @@ public class EditBoardTagsCtrl implements Initializable {
 
     /**
      * Converts a color to hex string
-     * @param colour
+     * @param colour color that will be hex code
      * @return string of the colour
      */
     public static String colourToHexCode(Color colour) {

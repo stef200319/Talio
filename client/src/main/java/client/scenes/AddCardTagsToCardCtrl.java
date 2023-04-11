@@ -25,9 +25,9 @@ import java.util.*;
 
 public class AddCardTagsToCardCtrl implements Initializable {
 
-    private ServerUtils server;
-    private MainCtrl mainCtrl;
-    private Websocket websocket;
+    private final ServerUtils server;
+    private final MainCtrl mainCtrl;
+    private final Websocket websocket;
     private boolean register;
 
 
@@ -154,8 +154,8 @@ public class AddCardTagsToCardCtrl implements Initializable {
 
     /**
      * Updates the items of a single listview
-     * @param list
-     * @param items
+     * @param list listview of card tags
+     * @param items list of card tags
      */
     public void updateSingleListViewItems(ListView<CardTag> list, List<CardTag> items) {
         if (list.getItems().equals(items)) return;
@@ -166,7 +166,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
 
     /**
      * Updates the look of a single listview
-     * @param list
+     * @param list listview of card tags
      */
     public void updateSingleListViewLook(ListView<CardTag> list) {
         list.setCellFactory(new Callback<ListView<CardTag>, ListCell<CardTag>>() {
@@ -218,7 +218,7 @@ public class AddCardTagsToCardCtrl implements Initializable {
 
     /**
      * Sets the card of this scene
-     * @param card
+     * @param card card to be changed
      */
     public void setCard(Card card) {
         this.cardToChange = card;
